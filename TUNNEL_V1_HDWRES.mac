@@ -1,0 +1,159 @@
+! TUNNEL_V1_HDWRES
+
+/post1
+
+/device,font,3
+/device,font,1
+
+/window,all,dele
+view1w
+windefa,1
+clims
+/annot,dele
+
+set,last
+
+!!
+cmsel,s,compa_hdw_walls
+esla,s
+nsle,s
+
+!pletab,emn_mx
+pletab,emn_my
+cntrlims,,,'WALL_M'
+!pletab,emx_mx
+!pletab,emx_my
+
+plnsol,u,x
+cntrlims,,,'WALL_U'
+
+!!
+cmsel,s,compa_hdw_footing
+esla,s
+nsle,s
+
+!pletab,emn_mx
+pletab,emn_my,1
+cntrlims,,,'FOOT_M'
+!pletab,emx_mx
+!pletab,emx_my
+
+!pletab,emn_nx
+!pletab,emn_ny
+!pletab,emx_nx
+pletab,emx_ny,1
+cntrlims,,,'FOOT_N'
+
+!!
+cmsel,s,compa_hdw_slab
+esla,s
+nsle,s
+
+! engaste
+pletab,emx_mx,1
+cntrlims,,'SLAB_Me'
+! vão
+pletab,emn_my,1
+cntrlims,,,'SLAB_Mv'
+plnsol,u,y
+cntrlims,'SLAB_Umn','SLAB_Umx'
+SLAB_U=SLAB_Umx-SLAB_Umn
+
+!!cmsel,s
+csys,0
+cmsel,s,compa_hdw_botbeam
+lsla,s
+ksll,s
+kplot
+
+!ksel,r,p
+! <manual ksel>
+ksel,r,loc,z,GEO_TUN_length/2,2*GEO_TUN_length
+
+nslk,s
+*get,xmin,node,,mnloc,x
+*get,xmax,node,,mxloc,x
+*get,ymin,node,,mnloc,y
+*get,ymax,node,,mxloc,y
+z=kz(kpnext(0))
+tn1=node(xmin,ymax,z)
+tn2=node(xmax,ymax,z)
+bn1=node(xmin,ymin,z)
+bn2=node(xmax,ymin,z)
+esla,s
+nsle,s
+
+A=0.3
+!W=bh²/6
+W=0.3/6
+
+! pth2beam, topNode1, topNode2, botNode1, botNode2, pathNameRoot, dflKey, pathDiv,    W,    A, avgKey, lcEnv
+pth2beam,tn1, tn2, bn1,bn2,'FRBM',1,100,W,A,1,'nada'
+
+path,'FRBM'
+plpagm,'MP_MIN',10,node
+pthlims,'MP_MIN','BEAM_M'
+
+plpagm,'N_MIN',10,node
+pthlims,'N_MIN','BEAM_N'
+
+plpagm,'DYT_MAX',10,node
+pthlims,'DYT_MAX',,'BEAM_U'
+
+
+
+
+
+!!
+!!
+!!
+
+*cfopen,'RES_HDW',txt
+    *vwrite,FILE_name
+Identification: %c
+
+    *vwrite
+    (' ')
+
+    *vwrite
+    ('Units: kN, kNm, mm')
+
+    *vwrite
+    (' ')
+
+    *vwrite,WALL_M/1000
+    ('Wall M:', F12.2)
+    *vwrite,WALL_U*1e3
+    ('Wall U:', F12.5)
+
+    *vwrite
+    (' ')
+
+    *vwrite,FOOT_M/1000
+    ('Foot M:', F12.2)
+    *vwrite,FOOT_N/1000
+    ('Foot N:', F12.2)
+
+    *vwrite
+    (' ')
+
+    *vwrite,SLAB_Me/1000
+    ('Slb Me:', F12.2)
+    *vwrite,SLAB_Mv/1000
+    ('Slb Mv:', F12.2)
+    *vwrite,SLAB_U*1e3
+    ('Slb U: ', F12.5)
+
+    *vwrite
+    (' ')
+
+    *vwrite,BEAM_M/1000
+    ('Beam M:', F12.2)
+    *vwrite,BEAM_N/1000
+    ('Beam N:', F12.2)
+    *vwrite,BEAM_U*1e3
+    ('Beam U:', F12.5)
+*cfclos
+
+
+

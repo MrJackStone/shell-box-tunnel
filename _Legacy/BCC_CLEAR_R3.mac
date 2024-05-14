@@ -1,0 +1,18 @@
+/prep7
+
+ALLSEL
+
+*get,NCount,NODE,0,COUNT
+
+*if,NCount,GT,0,THEN
+   FDELE,ALL
+   DDELE,ALL
+   ACLEAR,ALL
+   LCLEAR,ALL
+   EDELE,ALL
+   NDELE,ALL
+   ADELE,ALL
+   LDELE,ALL
+   KDELE,ALL
+*endif
+

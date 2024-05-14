@@ -1,0 +1,175 @@
+!!
+!!
+!! 3. SOLID MODEL
+!!
+!!
+! Pré-processo
+/prep7
+
+/view,1,1,2,3
+/angle,1
+/auto,1
+
+SELTOL,1E-8
+
+KCounter=1
+
+! Primeira parede vertical
+xVal=0
+
+KP1=KCounter
+KP2=KCounter+1
+KP3=KCounter+2
+KP4=KCounter+3
+KCounter=KP4+1
+
+K,KP1,xVal,0,0
+K,KP2,xVal,0,GalleryLength
+K,KP3,xVal,Eff_GalleryHeight,GalleryLength
+K,KP4,xVal,Eff_GalleryHeight,0
+
+LSEL,U,LINE,,ALL
+L,KP1,KP2
+*get,L1,LINE,0,NUM,MAX
+L,KP2,KP3
+*get,L2,LINE,0,NUM,MAX
+L,KP3,KP4
+*get,L3,LINE,0,NUM,MAX
+L,KP4,KP1
+*get,L4,LINE,0,NUM,MAX
+
+AL,L1,L2,L3,L4
+
+ALLSEL
+
+! Galerias (paredes centrais, tetos e pisos)
+*do,GalleryModuleIndex,1,GalleryModules,1
+
+   KPA=KP(xVal,0,0)
+   KPB=KP(xVal,0,GalleryLength)
+   KPC=KP(xVal,Eff_GalleryHeight,GalleryLength)
+   KPD=KP(xVal,Eff_GalleryHeight,0)
+
+   KSEL,S,KP,,KPA
+   KSEL,A,KP,,KPB
+   KSEL,A,KP,,KPC
+   KSEL,A,KP,,KPD
+   CM,LastKeypoints,KP
+
+   xVal=xVal+Eff_GalleryWidth
+
+   KP1=KCounter
+   KP2=KCounter+1
+   KP3=KCounter+2
+   KP4=KCounter+3
+   KCounter=KP4+1
+
+   KSEL,U,KP,,ALL
+   K,KP1,xVal,0,0
+   K,KP2,xVal,0,GalleryLength
+   K,KP3,xVal,Eff_GalleryHeight,GalleryLength
+   K,KP4,xVal,Eff_GalleryHeight,0
+   CM,NewKeypoints,KP
+
+   LSEL,U,LINE,,ALL
+   L,KP1,KP2
+   *get,L1,LINE,0,NUM,MAX
+   L,KP2,KP3
+   *get,L2,LINE,0,NUM,MAX
+   L,KP3,KP4
+   *get,L3,LINE,0,NUM,MAX
+   L,KP4,KP1
+   *get,L4,LINE,0,NUM,MAX
+   CM,NewLines,LINE
+
+   AL,L1,L2,L3,L4
+
+   CMSEL,S,LastKeypoints
+   LSLK,S,1
+   CM,LastLines,LINE
+
+   LSEL,R,LOC,Y,0
+   *get,LA,LINE,0,NUM,MIN
+   CMSEL,S,LastLines
+   LSEL,R,LOC,Z,GalleryLength
+   *get,LB,LINE,0,NUM,MIN
+   CMSEL,S,LastLines
+   LSEL,R,LOC,Y,Eff_GalleryHeight
+   *get,LC,LINE,0,NUM,MIN
+   CMSEL,S,LastLines
+   LSEL,R,LOC,Z,0
+   *get,LD,LINE,0,NUM,MIN
+
+   CMSEL,S,NewKeypoints
+   CMSEL,A,LastKeypoints
+
+   LSEL,U,LINE,,ALL
+   L,KP1,KPA
+   *get,L5,LINE,0,NUM,MAX
+   L,KP2,KPB
+   *get,L6,LINE,0,NUM,MAX
+   L,KP3,KPC
+   *get,L7,LINE,0,NUM,MAX
+   L,KP4,KPD
+   *get,L8,LINE,0,NUM,MAX
+   CM,TransLines,LINE
+
+   CMSEL,S,NewLines
+   CMSEL,A,LastLines
+   CMSEL,A,TransLines
+
+   AL,LA,L6,L1,L5
+   AL,L3,L7,LC,L8
+
+*enddo
+
+! Desenhar contorno do talude
+*get,KPMax,KP,,NUM,MAXD
+KT1=KPMax+1
+KT2=KPMax+2
+KT3=KPMax+3
+KT4=KPMax+4
+zT2=TAN(GalleryAlphai)*GalleryDepth
+zT3=GalleryLength-TAN(GalleryAlphaf)*GalleryDepth
+K,KT1,Eff_GalleryWidth/2,Eff_GalleryHeight,0
+K,KT2,Eff_GalleryWidth/2,Eff_GalleryHeight+GalleryDepth,zT2
+K,KT3,Eff_GalleryWidth/2,Eff_GalleryHeight+GalleryDepth,zT3
+K,KT4,Eff_GalleryWidth/2,Eff_GalleryHeight,GalleryLength
+LSEL,U,LINE,,ALL
+L,KT1,KT2
+L,KT2,KT3
+L,KT3,KT4
+CM,COMPL_talude,LINE
+
+! Plotar
+ALLSEL
+/view,1,1,2,3
+/angle,1
+/auto,1
+GPLOT
+/graphics,FULL
+TAKEPIC,'SOLIDMODEL'
+
+ASEL,S,LOC,X,Eff_GalleryWidth
+ASEL,A,LOC,Y,0
+AREVERSE,ALL
+ALLSEL
+
+! Criar componentes
+ASEL,U,LOC,Y,0
+ASEL,U,LOC,Y,Eff_GalleryHeight
+CM,GalleryWallAreas,AREA
+
+ASEL,S,LOC,Y,0
+ASEL,R,LOC,Z,0,GalleryLength
+CM,GalleryFloorAreas,AREA
+
+ASEL,S,LOC,Y,Eff_GalleryHeight
+ASEL,R,LOC,Z,0,GalleryLength
+CM,GalleryRoofAreas,AREA
+
+
+
+
+
+

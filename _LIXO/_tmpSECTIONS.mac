@@ -1,0 +1,33 @@
+! Tunnel walls
+SECTYPE,SEC_WALL,SHELL,,'WALLS'
+SECDATA,WallThk,1
+
+! Tunnel floor slab
+SECTYPE,SEC_FLOOR,SHELL,,'FLOOR'
+SECDATA,FloorThk,1
+
+! Tunnel ceiling slab
+SECTYPE,SEC_ROOF,SHELL,,'ROOF'
+SECDATA,RoofThk,1
+
+! Top slab, left side corbels
+!TUNNEL_V0_SECCORBEL, namePrefix, corbelParallel, corbelOrtho,  baseThk, orthoThk,           corbelLen,           base_SEC, dir
+TUNNEL_V0_SECCORBEL,       'TL_',    GEO_corbelW, GEO_corbelH,  RoofThk,  WallThk,  GEO_corbelXOff_TOP,   SEC_ROOF_LCORBEL, 'X'
+
+! Top slab, right side corbels
+TUNNEL_V0_SECCORBEL,       'TR_',    GEO_corbelW, GEO_corbelH,  RoofThk,  WallThk, -GEO_corbelXOff_TOP,   SEC_ROOF_RCORBEL, 'X'
+
+! Bottom slab, left side corbels
+TUNNEL_V0_SECCORBEL,       'BL_',    GEO_corbelW, GEO_corbelH, FloorThk,  WallThk,  GEO_corbelXOff_BOT,  SEC_FLOOR_LCORBEL, 'X'
+
+! Bottom slab, right side corbels
+TUNNEL_V0_SECCORBEL,       'BR_',    GEO_corbelW, GEO_corbelH, FloorThk,  WallThk, -GEO_corbelXOff_BOT,  SEC_FLOOR_RCORBEL, 'X'
+
+! Walls, bottom corbels
+TUNNEL_V0_SECCORBEL,       'WB_',    GEO_corbelH, GEO_corbelW,  WallThk, FloorThk,  GEO_corbelYOff_BOT,   SEC_WALL_BCORBEL, 'Y'
+
+! Walls, top corbels
+TUNNEL_V0_SECCORBEL,       'WT_',    GEO_corbelH, GEO_corbelW,  WallThk,  RoofThk, -GEO_corbelYOff_BOT,   SEC_WALL_TCORBEL, 'Y'
+
+
+

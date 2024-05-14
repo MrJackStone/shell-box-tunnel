@@ -1,0 +1,704 @@
+!!
+!!
+!! 3. SOLID MODEL
+!!
+!!
+! Area components:
+!    COMPA_Tunnel
+!    COMPA_Floor
+!    COMPA_Roof
+!    COMPA_Walls
+!    COMPA_LeftWall
+!    COMPA_RightWall
+!    COMPA_InnerWalls
+!    COMPA_ROOF_leftCorbel
+!    COMPA_ROOF_rightCorbel
+!    COMPA_ROOF_flat
+!    COMPA_FLOOR_leftCorbel
+!    COMPA_FLOOR_rightCorbel
+!    COMPA_FLOOR_flat
+!    COMPA_WALL_topCorbel
+!    COMPA_WALL_botCorbel
+!    COMPA_WALL_flat
+! Line components:
+!    COMPL_Tunnel
+!    COMPL_Embankment
+!    COMPL_Railway
+! Keypoint components:
+!    COMPK_Tunnel
+
+/prep7
+
+/view,1,1,2,3
+/angle,1
+/auto,1
+
+SELTOL,1E-8
+
+! Activate cartesian coordinate to account for tunnel slope
+CSYS,CS_Tunnel
+
+
+
+!!
+!! 3.1 TUNNEL
+!!
+
+!! 3.1.1 DRAW AREAS
+!!
+
+! First wall
+xVal=0
+
+KCounter=1
+KP1=KCounter
+KP2=KCounter+1
+KP3=KCounter+2
+KP4=KCounter+3
+KCounter=KP4+1
+KTopBeginning=KP4
+
+K,KP1,xVal,0,0
+K,KP2,xVal,0,GalleryLength
+K,KP3,xVal,Eff_GalleryHeight,GalleryLength
+K,KP4,xVal,Eff_GalleryHeight,0
+
+LSEL,U,LINE,,ALL
+L,KP1,KP2
+*get,L1,LINE,0,NUM,MAX
+L,KP2,KP3
+*get,L2,LINE,0,NUM,MAX
+L,KP3,KP4
+*get,L3,LINE,0,NUM,MAX
+L,KP4,KP1
+*get,L4,LINE,0,NUM,MAX
+
+AL,L1,L2,L3,L4
+
+ALLSEL
+
+! Inner walls, floors, and ceilings
+*do,GalleryModuleIndex,1,GalleryModules,1
+
+   KPA=KP(xVal,0,0)
+   KPB=KP(xVal,0,GalleryLength)
+   KPC=KP(xVal,Eff_GalleryHeight,GalleryLength)
+   KPD=KP(xVal,Eff_GalleryHeight,0)
+
+   KSEL,S,KP,,KPA
+   KSEL,A,KP,,KPB
+   KSEL,A,KP,,KPC
+   KSEL,A,KP,,KPD
+   CM,LastKeypoints,KP
+
+   xVal=xVal+Eff_GalleryWidth
+
+   KP1=KCounter
+   KP2=KCounter+1
+   KP3=KCounter+2
+   KP4=KCounter+3
+   KCounter=KP4+1
+
+   KSEL,U,KP,,ALL
+   K,KP1,xVal,0,0
+   K,KP2,xVal,0,GalleryLength
+   K,KP3,xVal,Eff_GalleryHeight,GalleryLength
+   K,KP4,xVal,Eff_GalleryHeight,0
+   CM,NewKeypoints,KP
+
+   LSEL,U,LINE,,ALL
+   L,KP1,KP2
+   *get,L1,LINE,0,NUM,MAX
+   L,KP2,KP3
+   *get,L2,LINE,0,NUM,MAX
+   L,KP3,KP4
+   *get,L3,LINE,0,NUM,MAX
+   L,KP4,KP1
+   *get,L4,LINE,0,NUM,MAX
+   CM,NewLines,LINE
+
+   AL,L1,L2,L3,L4
+
+   CMSEL,S,LastKeypoints
+   LSLK,S,1
+   CM,LastLines,LINE
+
+   LSEL,R,LOC,Y,0
+   *get,LA,LINE,0,NUM,MIN
+   CMSEL,S,LastLines
+   LSEL,R,LOC,Z,GalleryLength
+   *get,LB,LINE,0,NUM,MIN
+   CMSEL,S,LastLines
+   LSEL,R,LOC,Y,Eff_GalleryHeight
+   *get,LC,LINE,0,NUM,MIN
+   CMSEL,S,LastLines
+   LSEL,R,LOC,Z,0
+   *get,LD,LINE,0,NUM,MIN
+
+   CMSEL,S,NewKeypoints
+   CMSEL,A,LastKeypoints
+
+   LSEL,U,LINE,,ALL
+   L,KP1,KPA
+   *get,L5,LINE,0,NUM,MAX
+   L,KP2,KPB
+   *get,L6,LINE,0,NUM,MAX
+   L,KP3,KPC
+   *get,L7,LINE,0,NUM,MAX
+   L,KP4,KPD
+   *get,L8,LINE,0,NUM,MAX
+   CM,TransLines,LINE
+
+   CMSEL,S,NewLines
+   CMSEL,A,LastLines
+   CMSEL,A,TransLines
+
+   AL,LA,L6,L1,L5
+   AL,L3,L7,LC,L8
+
+*enddo
+!
+!
+!! 3.1.2 OBLIQUE CUT ON TUNNEL ENDS
+!!
+*if,GEO_RetMode,EQ,1,AND,GEO_InletAngle,NE,0,THEN
+
+    *get,CSMax,CDSY,,NUM,MAX
+    tmpCS=CSMax+1000
+
+    ALLSEL
+    wpcsys,1,CS_Tunnel
+    WPROTA,,,-GEO_InletAngle
+    ASBW,ALL,,DELETE
+
+    CSWPLA,tmpCS,CART
+    ASEL,U,LOC,Z,0,1E3*GalleryLength
+    ADELE,ALL,,,1
+
+    ALLSEL
+    WPCSYS,1,CS_Tunnel
+    WPOFFS,Eff_GalleryWidth,,GalleryLength
+    WPROTA,,,-GEO_InletAngle
+    ASBW,ALL,,DELETE
+
+    CSWPLA,tmpCS,CART
+    ASEL,S,LOC,Z,0,1E3*GalleryLength
+    ADELE,ALL,,,1
+
+    allsel
+    WPCSYS,1,CS_Tunnel
+    CSYS,CS_Tunnel
+
+*endif
+!
+!
+!! 3.1.3 SLICE AT APPROACH SLABS
+!!
+*if,GEO_APR_status,eq,1,then
+    csslicexy,GEO_APR_z1
+    csslicexy,GEO_APR_z2
+    csslicexy,GEO_APR_z3
+    csslicexy,GEO_APR_z4
+*endif
+!
+!
+!! 3.1.4 CREATE COMPONENTS
+!!
+! Walls
+ALLSEL
+ASEL,U,LOC,Y,0
+ASEL,U,LOC,Y,Eff_GalleryHeight
+CM,COMPA_Walls,AREA
+ASEL,R,LOC,X,0
+CM,COMPA_LeftWall,AREA
+CMSEL,S,COMPA_Walls
+ASEL,R,LOC,X,Eff_GalleryWidth
+CM,COMPA_RightWall,AREA
+CMSEL,S,COMPA_Walls
+CMSEL,U,COMPA_LeftWall
+CMSEL,U,COMPA_RightWall
+CM,COMPA_InnerWalls,AREA
+CMSEL,S,COMPA_Walls
+
+! Floor slab
+ASEL,S,LOC,Y,0
+ASEL,R,LOC,Z,0,GalleryLength
+CM,COMPA_Floor,AREA
+
+! Roof slab
+ASEL,S,LOC,Y,Eff_GalleryHeight
+ASEL,R,LOC,Z,0,GalleryLength
+CM,COMPA_Roof,AREA
+
+! Tunnel
+CMSEL,S,COMPA_Walls
+CMSEL,A,COMPA_Floor
+CMSEL,A,COMPA_Roof
+CM,COMPA_Tunnel,AREA
+LSLA,S
+KSLL,S
+CM,COMPL_Tunnel,LINE
+CM,COMPK_Tunnel,KP
+
+ALLSEL
+
+
+
+!!
+!! 3.2 SPLIT WINGS
+!!
+*if,GEO_RetMode,EQ,1,AND,GEO_WallBotOffset,GT,0,THEN
+
+    ! Walls
+    CMSEL,S,COMPA_Walls
+    CSSLICEXZ,GEO_WallBotOffset
+    CM,COMPA_temp,AREA
+
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,0
+    CM,COMPA_LeftWall,AREA
+
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,Eff_GalleryWidth
+    CM,COMPA_RightWall,AREA
+
+    CMSEL,S,COMPA_temp
+    CMSEL,U,COMPA_LeftWall
+    CMSEL,U,COMPA_RightWall
+    CM,COMPA_InnerWalls,AREA
+
+    CMSEL,S,COMPA_LeftWall
+    CMSEL,A,COMPA_RightWall
+    CMSEL,A,COMPA_InnerWalls
+    CM,COMPA_Walls,AREA
+
+    CMSEL,S,COMPA_Floor
+    CMSEL,A,COMPA_Roof
+    CMSEL,A,COMPA_Walls
+    CM,COMPA_Tunnel,AREA
+
+*endif
+ALLSEL
+NUMMRG,KP
+
+
+
+!!
+!! 3.3 HEADWALLS
+!!
+ASEL,U,AREA,,ALL
+CM,COMPA_HDW_BackBeam,AREA
+CM,COMPA_HDW_BotBeam,AREA
+CM,COMPA_HDW_TopBeam,AREA
+CM,COMPA_HDW_Walls,AREA
+CM,COMPA_HDW_RightWall,AREA
+CM,COMPA_HDW_LeftWall,AREA
+CM,COMPA_HDW_Footing,AREA
+CM,COMPA_HDW_Stiffener,AREA
+CM,COMPA_HDW_Slab,AREA
+*get,parType,PARM,GEO_Headwall,TYPE
+*if,parType,EQ,0,AND,GEO_Headwall,GT,0,THEN
+    GEO_HDW_stiffXOff=InternalWidth/COS(GEO_InletRadians)
+    CMSEL,S,COMPA_Floor
+    CSSLICEYZ,GEO_HDW_stiffXOff
+    CSSLICEYZ,Eff_GalleryWidth-GEO_HDW_stiffXOff
+    CM,COMPA_Floor,AREA
+    /color,CM,LGRA,COMPA_Floor
+    CMSEL,A,COMPA_Walls
+    CMSEL,A,COMPA_Roof
+    CM,COMPA_Tunnel,AREA
+    ALLSEL
+    TUNNEL_V0_HDWSM,CS_Tunnel,CS_HDW_LeftWallEnd,CS_HDW_RightWallEnd
+    TUNNEL_V0_HDWSM,CS_RevTunnel,CS_HDW_LeftWallBeg,CS_HDW_RightWallBeg
+*endif
+ALLSEL
+
+
+
+
+
+!!
+!! 3.4 SPLIT CORBELS
+!!
+ASEL,U,AREA,,ALL
+CM,COMPA_ROOF_leftCorbel,AREA
+CM,COMPA_ROOF_rightCorbel,AREA
+CM,COMPA_ROOF_flat,AREA
+CM,COMPA_FLOOR_leftCorbel,AREA
+CM,COMPA_FLOOR_rightCorbel,AREA
+CM,COMPA_FLOOR_flat,AREA
+CM,COMPA_WALL_topCorbel,AREA
+CM,COMPA_WALL_botCorbel,AREA
+CM,COMPA_WALL_flat,AREA
+
+*if,GEO_corbel,GE,1,THEN
+    ! Roof slab
+    CMSEL,S,COMPA_Roof
+    *do,nthModule,0,GalleryModules,1
+        xWall=nthModule*Eff_GalleryWidth
+        CSSLICEYZ,xWall+GEO_corbelXOff_TOP
+        CSSLICEYZ,xWall-GEO_corbelXOff_TOP
+        CM,COMPA_temp,AREA
+
+        ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_TOP
+        CMSEL,A,COMPA_ROOF_rightCorbel
+        CM,COMPA_ROOF_rightCorbel,AREA
+
+        CMSEL,S,COMPA_temp
+        ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_TOP
+        CMSEL,A,COMPA_ROOF_leftCorbel
+        CM,COMPA_ROOF_leftCorbel,AREA
+
+        CMSEL,S,COMPA_temp
+        ASEL,R,LOC,X,xWall-GEO_corbelXOff_TOP,xWall+GEO_corbelXOff_TOP
+        CMSEL,U,COMPA_ROOF_leftCorbel
+        CMSEL,U,COMPA_ROOF_rightCorbel
+        CM,COMPA_ROOF_flat,AREA
+
+        *get,compType,COMP,COMPA_Roof,TYPE
+        *if,compType,EQ,0,THEN
+            ASEL,U,AREA,,ALL
+            CM,COMPA_Roof,AREA
+        *else
+            CMSEL,S,COMPA_Roof
+        *endif
+        CMSEL,A,COMPA_temp
+        CM,COMPA_Roof,AREA
+    *enddo
+
+    ! Floor slab
+    CMSEL,S,COMPA_Floor
+    *do,nthModule,0,GalleryModules,1
+        xWall=nthModule*Eff_GalleryWidth
+        CSSLICEYZ,xWall+GEO_corbelXOff_BOT
+        CSSLICEYZ,xWall-GEO_corbelXOff_BOT
+        CM,COMPA_temp,AREA
+
+        ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_BOT
+        CMSEL,A,COMPA_FLOOR_rightCorbel
+        CM,COMPA_FLOOR_rightCorbel,AREA
+
+        CMSEL,S,COMPA_temp
+        ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_BOT
+        CMSEL,A,COMPA_FLOOR_leftCorbel
+        CM,COMPA_FLOOR_leftCorbel,AREA
+
+        CMSEL,S,COMPA_temp
+        ASEL,R,LOC,X,xWall-GEO_corbelXOff_BOT,xWall+GEO_corbelXOff_BOT
+        CMSEL,U,COMPA_FLOOR_leftCorbel
+        CMSEL,U,COMPA_FLOOR_rightCorbel
+        CM,COMPA_FLOOR_flat,AREA
+
+        *get,compType,COMP,COMPA_Floor,TYPE
+        *if,compType,EQ,0,THEN
+            ASEL,U,AREA,,ALL
+            CM,COMPA_Floor,AREA
+        *else
+            CMSEL,S,COMPA_Floor
+        *endif
+        CMSEL,A,COMPA_temp
+        CM,COMPA_Floor,AREA
+    *enddo
+
+    ! Walls
+    CMSEL,S,COMPA_Walls
+    CSSLICEXZ,GEO_corbelYOff_BOT
+    CSSLICEXZ,Eff_GalleryHeight-GEO_corbelYOff_TOP
+    CM,COMPA_temp,AREA
+
+    ASEL,R,LOC,Y,GEO_corbelYOff_BOT,Eff_GalleryHeight-GEO_corbelYOff_TOP
+    CM,COMPA_WALL_flat,AREA
+
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,Y,0,GEO_corbelYOff_BOT
+    CM,COMPA_WALL_botCorbel,AREA
+
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,Y,Eff_GalleryHeight-GEO_corbelYOff_TOP,Eff_GalleryHeight
+    CM,COMPA_WALL_topCorbel,AREA
+
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,0
+    CM,COMPA_LeftWall,AREA
+
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,Eff_GalleryWidth
+    CM,COMPA_RightWall,AREA
+
+    CMSEL,S,COMPA_temp
+    CMSEL,U,COMPA_LeftWall
+    CMSEL,U,COMPA_RightWall
+    CM,COMPA_InnerWalls,AREA
+
+    CMSEL,S,COMPA_LeftWall
+    CMSEL,A,COMPA_RightWall
+    CMSEL,A,COMPA_InnerWalls
+    CM,COMPA_Walls,AREA
+
+    CMSEL,S,COMPA_Floor
+    CMSEL,A,COMPA_Roof
+    CMSEL,A,COMPA_Walls
+    CM,COMPA_Tunnel,AREA
+
+    ! Headwalls
+    *if,parType,EQ,0,AND,GEO_Headwall,GT,0,THEN
+        x_LEFT_Top=GEO_corbelXOff_TOP
+        x_LEFT_Bot=GEO_corbelXOff_BOT
+        x_RIGHT_Top=GalleryModules*Eff_GalleryWidth-GEO_corbelXOff_TOP
+        x_RIGHT_Bot=GalleryModules*Eff_GalleryWidth-GEO_corbelXOff_BOT
+
+        y_BOT=GEO_corbelYOff_BOT
+        y_TOP=Eff_GalleryHeight-GEO_corbelYOff_TOP
+
+        CMSEL,S,COMPA_HDW_Slab
+        CSSLICEYZ,x_LEFT_Bot
+        CSSLICEYZ,x_RIGHT_Bot
+        CM,COMPA_HDW_Slab,AREA
+
+        CMSEL,S,COMPA_HDW_Stiffener
+        CSSLICEYZ,x_LEFT_Bot
+        CSSLICEYZ,x_RIGHT_Bot
+        CM,COMPA_HDW_Stiffener,AREA
+
+        CMSEL,S,COMPA_HDW_BackBeam
+        CSSLICEYZ,x_LEFT_Bot
+        CSSLICEYZ,x_RIGHT_Bot
+        CM,COMPA_HDW_BackBeam,AREA
+
+        CMSEL,S,COMPA_HDW_BotBeam
+        CSSLICEYZ,x_LEFT_Bot
+        CSSLICEYZ,x_RIGHT_Bot
+        CM,COMPA_HDW_BotBeam,AREA
+
+        CMSEL,S,COMPA_HDW_TopBeam
+        CSSLICEYZ,x_LEFT_Top
+        CSSLICEYZ,x_RIGHT_Top
+        CM,COMPA_HDW_TopBeam,AREA
+
+        CMSEL,S,COMPA_HDW_LeftWall
+        CSSLICEXZ,y_BOT
+        CSSLICEXZ,y_TOP
+        CM,COMPA_HDW_LeftWall,AREA
+
+        CMSEL,S,COMPA_HDW_RightWall
+        CSSLICEXZ,y_BOT
+        CSSLICEXZ,y_TOP
+        CM,COMPA_HDW_RightWall,AREA
+
+        CMSEL,S,COMPA_HDW_RightWall
+        CMSEL,A,COMPA_HDW_LeftWall
+        CM,COMPA_HDW_Walls,AREA
+
+        ALLSEL
+        CMSEL,U,COMPA_Tunnel
+        CM,COMPA_Headwalls,AREA
+    *endif
+*endif
+ALLSEL
+NUMMRG,KP
+!
+!
+!
+!!
+!! 3.5 APPROACH SLABS
+!!
+*if,GEO_APR_status,eq,1,then
+    CSYS,CS_Tunnel
+    *get,KMXD,KP,,NUM,MAXD
+    K1A=KMXD+1
+    K1B=KMXD+2
+    K2A=KMXD+3
+    K2B=KMXD+4
+    K3A=KMXD+5
+    K3B=KMXD+6
+    K4A=KMXD+7
+    K4B=KMXD+8
+
+    xLeft=0
+    xRight=GEO_TUN_totEffW
+    K , K1A , xRight , GEO_TUN_effH , GEO_APR_z1
+    K , K2A , xRight , GEO_TUN_effH , GEO_APR_z2
+    K , K3A , xLeft  , GEO_TUN_effH , GEO_APR_z3
+    K , K4A , xLeft  , GEO_TUN_effH , GEO_APR_z4
+
+    xREnd=xRight+GEO_APR_length
+    xLEnd=xLeft-GEO_APR_length
+    K , K1B , xREnd , GEO_TUN_effH , GEO_APR_z1L
+    K , K2B , xREnd , GEO_TUN_effH , GEO_APR_z2L
+    K , K3B , xLEnd , GEO_TUN_effH , GEO_APR_z3L
+    K , K4B , xLEnd , GEO_TUN_effH , GEO_APR_z4L
+
+    asel,u,area,,all
+    A , K1A , K1B , K2B , K2A
+    cm,COMPA_approachR,area
+    asel,u,area,,all
+    A , K3A , K3B , K4B , K4A
+    cm,COMPA_approachL,area
+    cmsel,a,COMPA_approachR
+    cm,COMPA_approach,area
+*else
+    asel,u,area,,all
+    cm,COMPA_approach,area
+*endif
+!
+!
+!
+!!
+!! 3.6 AREA DIRECTION
+!!
+CMSEL,S,COMPA_Floor
+ARYORI,-1
+CMSEL,S,COMPA_Roof
+cmsel,a,COMPA_approach
+ARYORI,1
+CMSEL,S,COMPA_LeftWall
+ARXORI,-1                 !!
+CMSEL,S,COMPA_RightWall
+CMSEL,A,COMPA_InnerWalls
+ARXORI,1                  !!
+
+CMSEL,S,COMPA_HDW_Stiffener
+CMSEL,A,COMPA_HDW_Slab
+CMSEL,A,COMPA_HDW_Footing
+ARYORI,-1
+CMSEL,S,COMPA_HDW_LeftWall
+ARXORI,-1
+CMSEL,S,COMPA_HDW_RightWall
+ARXORI,1
+!CMSEL,S,COMPA_HDW_TopBeam
+!COMPA_HDW_BotBeam
+!COMPA_HDW_BackBeam
+
+ALLSEL
+
+
+
+!!
+!! 3.7 EMBANKMENT
+!!
+! NOTE: embankment is drawn for display purposes only.
+CSYS,CS_Tunnel
+
+! Get reference location for cover soil representation
+KSEL,S,LOC,Z,GalleryLength
+KSEL,R,LOC,Y,Eff_GalleryHeight
+*get,KRef,KP,,NUM,MIN
+
+! Draw embankment contour in global cartesian CS
+CSYS,0
+yREF=KY(KRef)
+zREF=KZ(KRef)
+
+! Calculate vertex location for embankment keypoints
+*afun,DEG
+xPT=Eff_GalleryWidth/2
+yPT1=COS(TunnelSlope)*(Eff_GalleryHeight+(RoofThk/2))
+yPT2=yPT1+GalleryDepth
+zPT1=-SIN(TunnelSlope)*(Eff_GalleryHeight+(RoofThk/2))
+zPT2=zPT1+(GalleryDepth/TAN(GalleryThetai))
+yPT3=yPT2
+yPT4=yREF+COS(TunnelSlope)*(RoofThk/2)
+depthFromEnd=yPT2-yPT4
+zPT4=zREF-SIN(TunnelSlope)*(RoofThk/2)
+zPT3=zPT4-(depthFromEnd/TAN(GalleryThetaf))
+*afun,RAD
+
+! Draw embankment contour
+LSEL,U,LINE,,ALL
+*get,KPMax,KP,,NUM,MAXD
+KPT1=KPMax+1
+KPT2=KPMax+2
+KPT3=KPMax+3
+KPT4=KPMax+4
+K,KPT1,xPT,yPT1,zPT1
+K,KPT2,xPT,yPT2,zPT2
+K,KPT3,xPT,yPT3,zPT3
+K,KPT4,xPT,yPT4,zPT4
+L,KPT1,KPT2
+L,KPT2,KPT3
+L,KPT3,KPT4
+
+! Create component
+CM,COMPL_Embankment,LINE
+/color,CM,WHIT,COMPL_Embankment
+
+
+!!
+!! 3.8 RAILWAY LINES
+!!
+! NOTE: railwaylines (indicated as arrows) are drawn for display purposes only.
+
+! Draw arrows marking each railway position
+LSEL,U,LINE,,ALL
+zRailway=zOffset
+*do,nthRailway,1,LOAD_lineCount,1
+
+    gaugeOff=LOAD_gauge/2
+
+    *do,nthLoad,1,2,1
+
+        gaugeOff=-gaugeOff
+
+        *get,KPMax,KP,,NUM,MAXD
+        KPRi=KPMax+1
+        KPRj=KPMax+2
+        KPRk=KPMax+3
+        KPRl=KPMax+4
+        K,KPRi,xPT,yPT2,zRailway+gaugeOff
+        K,KPRj,xPT,yPT2+2,zRailway+gaugeOff
+        K,KPRk,xPT,yPT2+0.5,zRailway-0.3+gaugeOff
+        K,KPRl,xPT,yPT2+0.5,zRailway+0.3+gaugeOff
+        L,KPRi,KPRj
+        L,KPRi,KPRk
+        L,KPRi,KPRl
+
+    *enddo
+
+    zRailway=zRailway+DeltaZOffset
+
+*enddo
+
+! Create component
+CM,COMPL_Railway,LINE
+/color,CM,RED,COMPL_Railway
+
+
+!!
+!! 3.9 CAPTURE IMAGES
+!!
+/color,CM,DGRA,COMPA_Walls
+/color,CM,LGRA,COMPA_Floor
+/color,CM,LGRA,COMPA_Roof
+/color,CM,14,COMPA_Headwalls
+/color,cm,oran,COMPA_approach
+/color,cm,gree,COMPA_Headwalls
+
+! Tunnel
+ALLSEL
+CMSEL,S,COMPA_Tunnel
+CMSEL,S,COMPL_Tunnel
+CMSEL,S,COMPK_Tunnel
+/view,1,1,2,3
+/angle,1
+/auto,1
+GPLOT
+/graphics,FULL
+TAKEPIC,'SM_Tunnel'
+
+! Capture schematic side view (shows railway lines and embankment contour)
+ALLSEL
+KSEL,U,KP,,ALL
+/view,1,-1,0,0
+/pnum,AREA,1
+/number,1
+GPLOT
+TAKEPIC,'SM_Schematic',800
+GPLOT
+
+! Capture top view
+allsel
+/view,1,0,1,0
+/auto,1
+aplot
+takepic,'SM_top',800
+

@@ -1,0 +1,159 @@
+!!
+!!
+!! 1. INPUT DATA
+!!
+!!
+/prep7
+
+! Registrar o tempo de início da solução
+*get,T0,ACTIVE,0,TIME,WALL
+
+! Desativar exibição automática
+/nopr
+IMMED,0
+/uis,REPLOT,0
+/uis,MSGPOP,3
+
+
+
+
+
+!!
+!!
+!! 2. DEFINIÇÕES PRELIMINARES
+!!
+!!
+TUNNEL_V0_ATTR
+
+
+
+
+
+!!
+!!
+!! 3. SOLID MODEL
+!!
+!!
+TUNNEL_V0_SM
+
+
+
+
+
+!!
+!!
+!! 4. FINITE ELEMENT MODEL
+!!
+!!
+TUNNEL_V0_FEM
+
+
+
+
+
+!!
+!!
+!! 5. LOAD STEPS
+!!
+!!
+TUNNEL_V0_LSTEP
+
+
+
+
+
+!!
+!!
+!! 6. SOLVE
+!!
+!!
+/solu
+
+*msg,UI,GalleryIndex
+GALLERY # %4I %/&
+SOLVING THE MODEL...
+
+ALLSEL
+NLDIAG,NRRE,ON
+CNVTOL,F,,0.01,2,0.01
+SAVE
+KEYW,pr_sgui,1
+!!
+!LoadStepCount=2 !!
+!!
+LSSOLVE,1,LoadStepCount,1
+KEYW,pr_sgui,0
+
+
+
+
+
+!!
+!!
+!! 7. POST-PROCESS
+!!
+!!
+/post1
+
+*msg,UI,GalleryIndex
+GALLERY # %4I %/&
+WRITING RESULTS...
+
+SET,LAST
+
+! Element tables
+TUNNEL_V0_ETAB
+
+! Reações sobre o solo
+TUNNEL_V0_REACT
+
+! Write results
+TUNNEL_V0_WRRES
+
+! Escrever resultados
+TUNNEL_V0_MEMO
+
+*msg,UI,GalleryIndex
+GALLERY # %4I %/&
+FINISHED ANALYSIS!
+
+! Reativar exibição automática
+/gopr
+/uis,REPLOT,1
+
+FINISH
+
+/eof
+
+! Escrever conjunto de resultados
+TUNNEL_V0_GROUPMEMO
+
+TUNNEL_V0_SCTDMF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+! TUNNEL_V1_YABOVE, parm,   NZ
+! TUNNEL_V1_YABOVE, arg1, arg2
+
+! Calculate embankment height above node
+*if,GalleryThetai,eq,90,then
+    yBeg=yPT2
+*else
+    *afun,DEG
+    yBeg=yPT1+TAN(GalleryThetai)*(arg2-zPT1)
+    *afun,RAD
+*endif
+*if,GalleryThetaf,eq,90,then
+    yEnd=yPT2
+*else
+    *afun,DEG
+    yEnd=yPT4+TAN(GalleryThetaf)*(zPT4-arg2)
+    *afun,RAD
+*endif
+yPlateau=yPT2
+
+%arg1%=(0>(yBeg<(yPlateau<yEnd)))

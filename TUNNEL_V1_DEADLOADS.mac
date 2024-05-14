@@ -1,0 +1,96 @@
+! TUNNEL_V1_DEADLOADS
+
+! Dead loads (soil weight) on roof and approach slabs
+CMSEL,S,COMPA_Roof
+CMSEL,A,COMPA_approach
+NSLA,S,1
+esla,s
+cm,COMPN_temp,node
+cm,COMPE_temp,elem
+*get,NodeCount,NODE,0,COUNT
+
+*del,ARRN_Roof
+*dim,ARRN_Roof,ARRAY,NodeCount
+*del,ARRFY_Roof
+*dim,ARRFY_Roof,ARRAY,NodeCount
+
+NodeNum=0
+*do,nthNode,1,NodeCount,1
+
+    NodeNum=NDNEXT(NodeNum)
+
+    NX=NX(NodeNum)
+    NY=NY(NodeNum)
+    NZ=NZ(NodeNum)
+
+    apportionedArea=arnode(NodeNum)
+
+    ! Calculate embankment height above node
+    tunnel_v1_yabove, 'yAbove', NZ
+
+    !COMPARE,'nthWaterY','MIN',2,WaterY,yAbove
+    !COMPARE,'nthWaterY','MAX',2,nthWaterY,NY
+
+    SoilPressure=Gammat*(yAbove-NY)
+    DeadNodalLoad=-apportionedArea*SoilPressure
+
+    !F,NodeNum,FY,DeadNodalLoad
+    ARRN_Roof(nthNode)=NodeNum
+    ARRFY_Roof(nthNode)=DeadNodalLoad
+
+*enddo
+
+! Apply loads
+F,ARRN_Roof(1:NodeCount),FY,ARRFY_Roof(1:NodeCount)
+
+! Dead loads (soil pressures) on external walls
+CMSEL,S,COMPA_LeftWall
+CMSEL,A,COMPA_RightWall
+NSLA,S,1
+esla,s
+cm,COMPE_temp,elem
+*get,NodeCount,NODE,,COUNT
+
+*del,ARRN_Walls
+*dim,ARRN_Walls,ARRAY,NodeCount
+*del,ARRFX_Walls
+*dim,ARRFX_Walls,ARRAY,NodeCount
+
+NodeNum=0
+*do,nthNode,1,NodeCount,1
+
+    NodeNum=NDNEXT(NodeNum)
+
+    NX=NX(NodeNum)
+    NY=NY(NodeNum)
+    NZ=NZ(NodeNum)
+
+    apportionedArea=arnode(NodeNum)
+
+    ! Calculate embankment height above node
+    tunnel_v1_yabove, 'yAbove', NZ
+
+    COMPARE,'nthWaterY','MIN',2,WaterY,yAbove
+    COMPARE,'nthWaterY','MAX',2,nthWaterY,NY
+
+    EffectiveSoilPressure=Gammat*(yAbove-nthWaterY)+GammaSUB*(nthWaterY-NY)
+    HorEffectivePressure=EffectiveSoilPressure*RestEPCoefficient-2*SoilCohesion*SQRT(RestEPCoefficient)
+    HorEffectivePressure=(HorEffectivePressure>0)
+
+    WaterPressure=(nthWaterY-NY)*Gammaw
+
+    *if,NX,GT,Eff_GalleryWidth/2,THEN
+        direction=-1
+    *else
+        direction=1
+    *endif
+    DeadNodalLoad=direction*apportionedArea*(HorEffectivePressure+WaterPressure)
+
+    ARRN_Walls(nthNode)=NodeNum
+    ARRFX_Walls(nthNode)=DeadNodalLoad
+
+*enddo
+
+! Apply loads
+F,ARRN_Walls(1:NodeCount),FX,ARRFX_Walls(1:NodeCount)
+

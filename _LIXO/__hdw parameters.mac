@@ -1,0 +1,46 @@
+! GEO_InletAngle
+! GEO_Headwall
+! GEO_HDW_WallThk
+! GEO_HDW_SlabThk
+! GEO_HDW_StiffenerThk
+! GEO_HDW_FootingHeight
+! GEO_HDW_BeamWidth
+
+
+! GEO_InletRadians
+! GEO_InletLength
+! GEO_FootingWidth
+! GEO_FootingDepth
+! GEO_HDW_HeadBeamH
+! GEO_HDW_CornerRadius
+! GEO_HDW_Height
+
+! CS_HDW_LeftWall
+! CS_HDW_RightWall
+! CS_HDW
+
+! FEM_HDW_ESize
+! FEM_HDW_EArea
+
+! SEC_HDW_Wall
+! SEC_HDW_Footing
+! SEC_HDW_Slab
+! SEC_HDW_Stiffener
+! SEC_HDW_Beam
+
+! COMPA_HDW_Stiffener
+! COMPA_HDW_Slab
+! COMPA_HDW_Footing
+! COMPA_HDW_LeftWall
+! COMPA_HDW_RightWall
+! COMPA_HDW_Walls
+! COMPA_HDW_TopBeam
+! COMPA_HDW_BotBeam
+! COMPA_HDW_BackBeam
+
+
+
+
+! WallTopSlope ----> GEO_HDW_WallSlope
+! ExceedingHeight    ----------------> GEO_HDW_HeadBeamH
+! InletWidth  -------------> GEO_InletWidth

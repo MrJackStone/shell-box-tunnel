@@ -1,0 +1,43 @@
+! TUNNEL_V1_SUMMARY
+
+*cfopen,'SUMMARY',txt
+    *vwrite,FILE_name
+Identification: %c
+
+    *vwrite
+    (' ')
+
+    *vwrite,GEO_TUN_length
+    ('Length: ',F8.3)
+    *vwrite,GEO_TUN_width
+    ('Width:  ',F8.3)
+    *vwrite,GEO_TUN_modules
+    ('Modules:',F9.0,tl1,' ')
+    *vwrite,GEO_TUN_slope
+    ('Slope:  ',F8.3, '%')
+
+    *vwrite
+    (' ')
+
+    *vwrite,GEO_TUN_roofThk
+    ('Roof thk: ',F8.3)
+    *vwrite,GEO_TUN_floorThk
+    ('Floor thk:',F8.3)
+    *vwrite,GEO_TUN_wallThk
+    ('Wall thk: ',F8.3)
+    *vwrite,abs(GEO_corbelH)
+    ('Stf thk:  ',F8.3)
+
+    *vwrite
+    (' ')
+
+    *vwrite,LOAD_zoff
+    ('Load Z:      ',F8.3)
+    *vwrite,LOAD_skew
+    ('Load skew:   ',F8.3)
+    *vwrite,GEO_TUN_depth
+    ('Tunnel depth:',F8.3)
+*cfclos
+
+
+/syp,start,'SUMMARY.TXT'

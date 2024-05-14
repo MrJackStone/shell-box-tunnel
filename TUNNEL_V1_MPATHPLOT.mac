@@ -1,0 +1,83 @@
+! TUNNEL_V1_MPATHPLOT, plotTitle, imgName, cntrScale
+! TUNNEL_V1_MPATHPLOT,      arg1,    arg2,      arg3
+
+wnum=1
+
+xMin=-1
+xMax=1.67
+yMin=0
+yMax=1
+
+yBox=yMin+0.07
+
+xText=xMin+0.01
+yText=yMin+0.02
+
+allsel
+cmsel,u,COMPA_Tunnel
+cmsel,a,COMPA_InnerWalls
+
+/window,all,dele
+/window,wnum,xMin,xMax,yBox,yMax
+
+/triad,off
+/annot,dele
+/plopts,info,0
+/plopts,leg1,off
+/plopts,leg2,off
+/plopts,leg3,off
+/plopts,title,off
+/plopts,file,off
+/plopts,logo,off
+/udoc,wnum,type,off
+/udoc,wnum,typ2,off
+
+/view,wnum,-1,0,0
+/auto,wnum
+aplot
+/user,wnum
+go2png,1000
+    /gline,wnum,-1
+    aplot
+    /gline,wnum,0
+    /noerase
+    /polygon,4,xMin,yMin,xMax,yMin,xMax,yBox,xMin,yBox
+    /pspec,0,1,1
+    /tspec,15,1,4
+    *cfopen,temp,tmp
+        *vwrite,arg1
+/tlabel,xText,yText,%c
+    *cfclos
+    /nopr
+    /input,temp,tmp
+    /delete,temp,tmp
+    /gopr
+
+    /udoc,wnum,cntr,0
+    /udoc,wnum,type,off
+    /udoc,wnum,typ2,off
+
+    mpathplot,10,0
+    /window,wnum,off
+
+
+    /window,2,xmin,xmax,ymin,ymax
+    /plopts,info,3
+    /plopts,leg3,on
+    /plopts,frame,off
+    /udoc,2,cntr,right
+    /focus,2,1e6,0,0
+    /user,2
+    *if,arg3,ne,0,then
+        clims,MPATHPLOT_VAR_minScale*arg3,MPATHPLOT_VAR_maxScale*arg3
+    *endif
+    mpathplot,10,1
+    /window,2,dele
+
+endpng,arg2
+
+windefa
+/erase
+/plopts,frame,on
+
+

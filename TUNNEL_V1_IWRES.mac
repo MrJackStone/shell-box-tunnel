@@ -1,0 +1,356 @@
+! TUNNEL_V1_IWRES
+
+pathDiv=50 !100
+
+*afun,deg
+zlen=GEO_TUN_length*cos(GEO_TUN_slopeDeg)
+ylen=GEO_TUN_effH*cos(GEO_TUN_slopeDeg)+GEO_TUN_length*sin(GEO_TUN_slopeDeg)
+aspectRatio=zlen/ylen
+*afun,rad
+windowAspectRatio=0.9*aspectRatio
+
+
+/post1
+
+allsel
+set,first
+esel,s,type,,TYPE_SHELL181
+nsle,s
+etable,'SM_11',smisc,34
+etable,'SM_22',smisc,35
+etable,'SM_12',smisc,36
+
+etable,'SB_11',smisc,37
+etable,'SB_22',smisc,38
+etable,'SB_12',smisc,39
+
+etable,'M11',smisc,4
+
+*del,RES_ENV_IWALL_tBeam
+*del,RES_ENV_IWALL_bBeam
+*do,nthCol,1,GEO_TUN_iCols,1
+    envAName=strcat('RES_ENV_IWALL_col',chrval(nthCol))
+    *del,%envAName%
+*enddo
+*do,nthBeam,1,GEO_TUN_iCols-1,1
+    arrName=strcat('RES_ENV_IWALL_tSpan',chrval(nthBeam))
+    *del,%arrName%
+    arrName=strcat('RES_ENV_IWALL_bSpan',chrval(nthBeam))
+    *del,%arrName%
+*enddo
+
+! Calculate geometric cross-sectional properties
+IWTB_A=GEO_TUN_tBeamH*GEO_TUN_tbB
+IWTB_W=GEO_TUN_tbB*(GEO_TUN_tBeamH**2)/6
+IWBB_A=GEO_TUN_bBeamH*GEO_TUN_bbB
+IWBB_W=GEO_TUN_bbB*(GEO_TUN_bBeamH**2)/6
+IWCOL_A=GEO_TUN_colW*GEO_TUN_colB
+IWCOL_W=GEO_TUN_colB*(GEO_TUN_colW**2)/6
+
+*do,nthLS,1,LoadStepCount,1
+
+    allsel
+    set,nthLS,last
+    etable,refl
+
+    xWall=0
+    *do,nthWall,1,GEO_TUN_modules-1,1
+        xWall=xWall+GEO_TUN_effW
+        beamCS=CS_IWALL_beams(nthWall)
+        csys,CS_Tunnel
+
+        cmsel,s,COMPA_InnerWalls
+        asel,r,loc,x,xWall
+        cm,COMPA_temp,area
+
+        csys,beamCS
+
+        ! Top beam
+        cmsel,s,COMPA_temp
+        cmsel,r,COMPA_tBeam
+        esla,s
+        nsle,s
+        top_n1=node(             0 ,                GEO_TUN_effH , 0)
+        top_n2=node(GEO_TUN_length ,                GEO_TUN_effH , 0)
+        bot_n1=node(             0 , GEO_TUN_effH-GEO_TUN_tBeamH , 0)
+        bot_n2=node(GEO_TUN_length , GEO_TUN_effH-GEO_TUN_tBeamH , 0)
+        pth2beam,     top_n2  , top_n1,   bot_n2,   bot_n1,       'IWTB',      1, pathDiv, IWTB_W, IWTB_A,      1, 'RES_ENV_IWALL_tBeam'
+
+        ! Bottom beam
+        cmsel,s,COMPA_temp
+        cmsel,r,COMPA_bBeam
+        esla,s
+        nsle,s
+        top_n1=node(             0 , GEO_TUN_bBeamH , 0)
+        top_n2=node(GEO_TUN_length , GEO_TUN_bBeamH , 0)
+        bot_n1=node(             0 ,              0 , 0)
+        bot_n2=node(GEO_TUN_length ,              0 , 0)
+        pth2beam,     top_n1  , top_n2,   bot_n1,   bot_n2,       'IWBB',      1, pathDiv, IWBB_W, IWBB_A,      1, 'RES_ENV_IWALL_bBeam'
+
+        ! Columns
+        cmsel,s,COMPA_temp
+        cmsel,r,COMPA_Columns
+        esla,s
+        nsle,s
+        xLoc=0
+        *do,nthCol,1,GEO_TUN_iCols,1
+            top_n1=node(             xLoc ,              GEO_TUN_bBeamH , 0)
+            top_n2=node(             xLoc , GEO_TUN_effH-GEO_TUN_tBeamH , 0)
+            bot_n1=node(xLoc+GEO_TUN_colW ,              GEO_TUN_bBeamH , 0)
+            bot_n2=node(xLoc+GEO_TUN_colW , GEO_TUN_effH-GEO_TUN_tBeamH , 0)
+            colPName=strcat('COL',chrval(nthCol))
+            envAName=strcat('RES_ENV_IWALL_col',chrval(nthCol))
+            pth2beam,     top_n1  , top_n2,   bot_n1,   bot_n2, colPName,      1, pathDiv, IWCOL_W, IWCOL_A,      1, envAName
+            xLoc=xLoc+GEO_TUN_colE
+        *enddo
+
+        ! Beam deflection
+        cmsel,s,COMPA_temp
+        cmsel,u,COMPA_Columns
+        esla,s
+        nsle,s
+        xLoc=GEO_TUN_colW
+        *do,nthBeam,1,GEO_TUN_iCols-1,1
+            ! Top beam
+            bot_n1=node(            xLoc , GEO_TUN_effH-GEO_TUN_tBeamH , 0)
+            bot_n2=node(xLoc+GEO_TUN_opW , GEO_TUN_effH-GEO_TUN_tBeamH , 0)
+            top_n1=node(            xLoc ,                GEO_TUN_effH , 0)
+            top_n2=node(xLoc+GEO_TUN_opW ,                GEO_TUN_effH , 0)
+            tsPName=strcat('IWTS',chrval(nthBeam))
+            envAName=strcat('RES_ENV_IWALL_tSpan',chrval(nthBeam))
+            pth2beam, top_n1, top_n2, bot_n1, bot_n2, tsPName, 1, pathDiv, 1, 1, 1, envAName
+
+            ! Bottom beam
+            top_n1=node(            xLoc , GEO_TUN_bBeamH , 0)
+            top_n2=node(xLoc+GEO_TUN_opW , GEO_TUN_bBeamH , 0)
+            bot_n1=node(            xLoc ,              0 , 0)
+            bot_n2=node(xLoc+GEO_TUN_opW ,              0 , 0)
+            bsPName=strcat('IWBS',chrval(nthBeam))
+            envAName=strcat('RES_ENV_IWALL_bSpan',chrval(nthBeam))
+            pth2beam, top_n1, top_n2, bot_n1, bot_n2, bsPName, 1, pathDiv, 1, 1, 1, envAName
+
+            xLoc=xLoc+GEO_TUN_colE
+        *enddo
+
+    *enddo
+
+*enddo
+
+*del,ARRLIMS_ARR_names
+*dim,ARRLIMS_ARR_names,string,32,GEO_TUN_iCols+2
+ARRLIMS_ARR_names(1,1)='RES_ENV_IWALL_tBeam'
+ARRLIMS_ARR_names(1,2)='RES_ENV_IWALL_bBeam'
+*do,nthCol,1,GEO_TUN_iCols,1
+    arrName=strcat('RES_ENV_IWALL_col',chrval(nthCol))
+    ARRLIMS_ARR_names(1,nthCol+2)=arrName
+*enddo
+arrlims,'MNV_lims'
+MP_min=abs(MNV_lims(1,1))
+MP_max=abs(MNV_lims(2,2))
+N_min=abs(MNV_lims(1,5))
+N_max=abs(MNV_lims(2,6))
+V_min=abs(MNV_lims(1,7))
+V_max=abs(MNV_lims(2,8))
+MP_peak=(MP_min>MP_max)
+N_peak=(N_min>N_max)
+V_peak=(V_min>V_max)
+
+*del,ARRLIMS_ARR_names
+*dim,ARRLIMS_ARR_names,string,32,3*GEO_TUN_iCols-2
+*do,nthCol,1,GEO_TUN_iCols,1
+    arrName=strcat('RES_ENV_IWALL_col',chrval(nthCol))
+    ARRLIMS_ARR_names(1,nthCol)=arrName
+*enddo
+*do,nthBeam,1,GEO_TUN_iCols-1,1
+    arrName=strcat('RES_ENV_IWALL_tSpan',chrval(nthBeam))
+    ARRLIMS_ARR_names(1,GEO_TUN_iCols+(2*nthBeam-1))=arrName
+    arrName=strcat('RES_ENV_IWALL_bSpan',chrval(nthBeam))
+    ARRLIMS_ARR_names(1,GEO_TUN_iCols+(2*nthBeam))=arrName
+*enddo
+arrlims,'D_lims'
+DYT_min=abs(D_lims(1,11))
+DYT_max=abs(D_lims(2,12))
+DXT_min=abs(D_lims(1,9))
+DXT_max=abs(D_lims(2,10))
+DY_peak=(DYT_min>DYT_max)
+DX_peak=(DXT_min>DXT_max)
+D_peak=(DX_peak>DY_peak)
+
+
+
+
+!!
+
+
+
+/window,all,dele
+/device,text,1,75
+cmsel,s,COMPA_InnerWalls
+esla,s
+nsle,s
+
+xWidth=(0.2>(1.67<(windowAspectRatio*0.5)-1)) !0.6  ! 1.67
+
+! Bending moment (in-plane)
+wind1=1
+xmin1=-1
+xmax1=xWidth
+ymin1=0.5
+ymax1=1
+/window,wind1,xmin1,xmax1,ymin1+0.04,ymax1
+! Axial force
+wind2=2
+xmin2=-1
+xmax2=xWidth
+ymin2=0
+ymax2=0.5
+/window,wind2,xmin2,xmax2,ymin2+0.04,ymax2
+! Shear force
+wind3=3
+xmin3=-1
+xmax3=xWidth
+ymin3=-0.5
+ymax3=0
+/window,wind3,xmin3,xmax3,ymin3+0.04,ymax3
+! Deflection
+wind4=4
+xmin4=-1
+xmax4=xWidth
+ymin4=-1
+ymax4=-0.5
+/window,wind4,xmin4,xmax4,ymin4+0.04,ymax4
+
+/view,wind1,-1,0,0
+/view,wind2,-1,0,0
+/view,wind3,-1,0,0
+/view,wind4,-1,0,0
+/angle,all,0
+clims
+wincln,1
+wincln,2
+wincln,3
+wincln,4
+/auto,all
+oplot,wind1,'E11'
+/user,all
+/dist,all,1.4,1
+
+go2png,1800
+    /window,1,on
+    /window,2,on
+    /window,3,on
+    /window,4,on
+    oplot,wind1,'E11'
+
+    /device,vector,off
+    /noerase
+
+    /window,1,off
+    /window,2,off
+    /window,3,off
+    /window,4,off
+
+    ! Bending moment (in-plane)
+    /window,wind1,on
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,1
+
+    PLPTHENV_ARR_paths(1)='IWTB'
+    plpthenv,wind1,xmin1,xmax1,ymin1,ymax1, 'MP', ' ', 1e-3, -0.1*MP_peak, 0, 2,,,,1
+
+    PLPTHENV_ARR_paths(1)='IWBB'
+    plpthenv,wind1,xmin1,xmax1,ymin1,ymax1, 'MP', ' ', 1e-3, -0.1*MP_peak, 0, 1,,,,1
+
+    /device,text,1,75
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,GEO_TUN_iCols
+    *do,nthCol,1,GEO_TUN_iCols,1
+        colPName=strcat('COL',chrval(nthCol))
+        PLPTHENV_ARR_paths(nthCol)=colPName
+    *enddo
+    plpthenv,wind1,xmin1,xmax1,ymin1,ymax1, 'MP', '(a) M. FLETOR [kNm]', 1e-3, -0.1*MP_peak, 0, 3,,,,1
+    /device,text,1,75
+    /window,wind1,off
+
+    ! Axial force
+    /window,wind2,on
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,1
+
+    PLPTHENV_ARR_paths(1)='IWTB'
+    plpthenv,wind2,xmin2,xmax2,ymin2,ymax2, 'N', ' ', 1e-3, -0.1*N_peak, 0, 2,,,,1
+
+    PLPTHENV_ARR_paths(1)='IWBB'
+    plpthenv,wind2,xmin2,xmax2,ymin2,ymax2, 'N', ' ', 1e-3, -0.1*N_peak, 0, 1,,,,1
+
+    /device,text,1,75
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,GEO_TUN_iCols
+    *do,nthCol,1,GEO_TUN_iCols,1
+        colPName=strcat('COL',chrval(nthCol))
+        PLPTHENV_ARR_paths(nthCol)=colPName
+    *enddo
+    plpthenv,wind2,xmin2,xmax2,ymin2,ymax2, 'N', '(b) F. NORMAL [kN]', 1e-3, -0.1*N_peak, 0, 3,,,,1
+    /device,text,1,75
+    /window,wind2,off
+
+    ! Shear force
+    /window,wind3,on
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,1
+
+    PLPTHENV_ARR_paths(1)='IWTB'
+    plpthenv,wind3,xmin3,xmax3,ymin3,ymax3, 'V', ' ', 1e-3, -0.1*V_peak, 0, 2,,,,1
+
+    PLPTHENV_ARR_paths(1)='IWBB'
+    plpthenv,wind3,xmin3,xmax3,ymin3,ymax3, 'V', ' ', 1e-3, -0.1*V_peak, 0, 1,,,,1
+
+    /device,text,1,75
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,GEO_TUN_iCols
+    *do,nthCol,1,GEO_TUN_iCols,1
+        colPName=strcat('COL',chrval(nthCol))
+        PLPTHENV_ARR_paths(nthCol)=colPName
+    *enddo
+    plpthenv,wind3,xmin3,xmax3,ymin3,ymax3, 'V', '(c) F. CORTANTE [kN]', 1e-3, -0.1*V_peak, 0, 3,,,,1
+    /device,text,1,75
+    /window,wind3,off
+
+    ! Deflection
+    /window,wind4,on
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,GEO_TUN_iCols-1
+    *do,nthBeam,1,GEO_TUN_iCols-1,1
+        tsPName=strcat('IWTS',chrval(nthBeam))
+        PLPTHENV_ARR_paths(nthBeam)=tsPName
+    *enddo
+    plpthenv,wind4,xmin4,xmax4,ymin4,ymax4, 'DYB', ' ', 1e3, -0.1*D_peak, 2, 2,,,,1
+
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,GEO_TUN_iCols-1
+    *do,nthBeam,1,GEO_TUN_iCols-1,1
+        bsPName=strcat('IWBS',chrval(nthBeam))
+        PLPTHENV_ARR_paths(nthBeam)=bsPName
+    *enddo
+    plpthenv,wind4,xmin4,xmax4,ymin4,ymax4, 'DYT', ' ', 1e3, -0.1*D_peak, 2, 1,,,,1
+
+    /device,text,1,75
+    *del,PLPTHENV_ARR_paths
+    *dim,PLPTHENV_ARR_paths,char,GEO_TUN_iCols
+    *do,nthCol,1,GEO_TUN_iCols,1
+        colPName=strcat('COL',chrval(nthCol))
+        PLPTHENV_ARR_paths(nthCol)=colPName
+    *enddo
+    plpthenv,wind4,xmin4,xmax4,ymin4,ymax4, 'DXB', '(d) FLECHA [mm]', 1e3, -0.1*D_peak, 2, 3,,,,1
+    /device,text,1,75
+    /window,wind4,off
+    !!
+
+endpng,'RES_IWALL_all'
+/erase
+/device,text,1,100
+
+
+
+
+

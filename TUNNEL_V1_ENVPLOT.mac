@@ -1,0 +1,105 @@
+!! OUTSIDE
+
+
+! ! Bending moment (in-plane)
+!*del,MPATHPLOT_ARR_labels
+!*dim,MPATHPLOT_ARR_labels,,8
+!MPATHPLOT_ARR_labels(1)=    'MP_MAX' , 'MP_MIN' , 'MP_MAX' , 'MP_MIN' , 'MP_MAX' , 'MP_MIN' , 'MP_MAX' , 'MP_MIN'
+!
+!
+!/window,all,dele
+!/window,1,full
+!/view,wnum,-1,0,0
+!/auto,wnum
+!aplot
+!/user,wnum
+
+! Background plot options:
+! nothing
+! NODES      10
+! ELEMENTS   20
+! KEYPOINTS  30
+! LINES      40
+! AREAS      50
+! VOLUMES    60
+! GLOBAL     70
+! REPLOT
+! GLINE: -1, 0, 1
+! VECTOR, 0, 1
+
+! 3 characters. Options for 1st character: _ N E K L A V G R
+!               Options for 2nd character: _ 0 1
+!               Options for 3rd character: _ 0 1
+
+
+
+
+!! INSIDE
+! TUNNEL_V1_ENVPLOT, wnum, xmin, xmax, ymin, ymax, plotTitle, cntrScale, basePScale, precision, bgPlot, imgName, imgRes, supPNG
+! TUNNEL_V1_ENVPLOT, arg1, arg2, arg3, arg4, arg5,      arg6,      arg7,       arg8,      arg9,   ar10,    ar11,   ar12,   ar13
+
+! AR20: yBox
+! AR21: xText
+! AR22: yText
+
+AR20=arg4+0.07
+
+AR21=arg2+0.01
+AR22=arg4+0.02
+
+wincln,arg1
+
+/window,arg1,arg2,arg3,AR20,arg5
+/auto,arg1
+oplot, arg1, ar10
+/user,arg1
+
+*if,ar13,ne,1,then
+    go2png,ar12
+*endif
+
+    oplot, arg1, ar10
+    /device,vector,off
+    /gline,arg1,0
+    /noerase
+
+    /polygon,4,arg2,arg4,arg3,arg4,arg3,AR20,arg2,AR20
+    /pspec,0,1,1
+    /tspec,15,1,4
+    *cfopen,temp,tmp
+        *vwrite,AR21,AR22,arg6
+/tlabel,%f,%f,%c
+    *cfclos
+    /nopr
+    /input,temp,tmp
+    /delete,temp,tmp
+    /gopr
+
+    /udoc,arg1,cntr,0
+    /udoc,arg1,type,off
+    /udoc,arg1,typ2,off
+
+    mpathplot,arg8,0
+
+    /gformat,f,1,arg9
+    /plopts,leg3,1
+    /plopts,info,3
+    /udoc,arg1,cntr,right
+    /udoc,arg1,type,off
+    /udoc,arg1,typ2,off
+    /focus,arg1,1e6,1e6
+    *if,arg7,ne,0,then
+        clims,MPATHPLOT_VAR_minScale*arg7,MPATHPLOT_VAR_maxScale*arg7
+    *endif
+    mpathplot,arg8,1
+
+
+*if,ar13,ne,1,then
+    endpng,ar11
+*endif
+
+/erase
+/plopts,frame,on
+clims
+
+

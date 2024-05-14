@@ -1,0 +1,69 @@
+! TUNNEL_V0_BOUSSINESQ, xOffset, LineAngle, Eff_GalleryHeight, GalleryDepth, GalleryModules, COMPN_Loaded, MinimumSoilCover, Eff_GalleryWidth, GalleryLength,  pi, ElementArea
+
+*do,nthLine,1,LOAD_lineCount,1
+
+    *do,nthPointLoad,1,LOAD_LTPtCount,1
+
+        LoadValue=LOADTRAIN_ARR_loads(nthPointLoad,nthLine)
+        LoadPosition=LOADTRAIN_ARR_positions(nthPointLoad,nthLine)
+
+        zOffset=zOffsets(nthLine)
+
+        QX=xOffset+LoadPosition*COS(LineAngle)
+        QY=Eff_GalleryHeight+GalleryDepth
+        QZ=zOffset+LoadPosition*SIN(LineAngle)
+
+        !!
+        !NSEL,S,LOC,Y,Eff_GalleryHeight
+        !NSEL,R,LOC,X,0,Eff_GalleryWidth*GalleryModules
+        !NSEL,R,LOC,Z,0,GalleryLength
+        CMSEL,S,COMPN_Loaded
+        !!
+        *get,NodeCount,NODE,0,COUNT
+
+        *if,GalleryDepth,LT,MinimumSoilCover,THEN
+
+            *if,QX,GE,0,AND,QX,LE,GalleryModules*Eff_GalleryWidth,THEN
+
+                *if,QZ,GE,0,AND,QZ,LE,GalleryLength,THEN
+
+                    ClosestNode=NODE(QX,QY,QZ)
+                    *get,ExistentLoad,NODE,ClosestNode,F,FY
+                    NewLoad=ExistentLoad+LoadValue
+                    F,ClosestNode,FY,NewLoad
+
+                *endif
+
+            *endif
+
+        *else
+
+            *do,NodeIndex,1,NodeCount,1
+
+                *get,nthNode,NODE,0,NUM,MIN
+
+                NX=NX(nthNode)
+                NY=NY(nthNode)
+                NZ=NZ(nthNode)
+
+                RadialDistance=SQRT(((NX-QX)**2)+((NZ-QZ)**2))
+                RelativeDepth=QY-NY
+
+                *get,ExistentLoad,NODE,nthNode,F,FY
+
+                BoussinesqLoad=3*LoadValue/(2*pi*(RelativeDepth**2)*((1+(RadialDistance/RelativeDepth)**2)**(5/2)))
+                AdditionalLoad=BoussinesqLoad*ElementArea
+                NewLoad=ExistentLoad+AdditionalLoad
+
+                F,nthNode,FY,NewLoad
+
+                NSEL,U,NODE,,nthNode
+
+            *enddo
+
+        *endif
+
+    *enddo
+
+*enddo
+

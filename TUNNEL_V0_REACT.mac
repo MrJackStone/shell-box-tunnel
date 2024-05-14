@@ -1,0 +1,154 @@
+NSEL,S,LOC,Y,-SpringLength
+*get,NodeCount,NODE,0,COUNT
+CM,COMPN_SpringSupports,NODE
+
+MAX_FloorPeakSoilStress=0
+MAX_FloorAvgSoilStress=0
+MAX_FloorMaxUY=0
+MAX_FloorMinUY=0
+
+*do,nthLoadStep,1,LoadStepCount,1
+
+   SET,nthLoadStep
+
+   CMSEL,S,COMPN_SpringSupports
+   *del,YReactions
+   *dim,YReactions,ARRAY,NodeCount
+
+   nodeNum=0
+   *do,NodeIndex,1,NodeCount,1
+      nodeNum=NDNEXT(nodeNum)
+      *get,RY,NODE,nodeNum,RF,FY
+      YReactions(NodeIndex)=RY
+   *enddo
+
+   *vscfun,MaxRY,MAX,YReactions
+   *vscfun,SumRY,SUM,YReactions
+   AvgRY=SumRY/NodeCount
+   FloorPeakSoilStress=ABS(MaxRY/ElementArea)
+   FloorAvgSoilStress=ABS(AvgRY/ElementArea)
+
+   NSEL,S,LOC,Y,0
+   NSEL,R,LOC,X,0,Eff_GalleryWidth*GalleryModules
+   NSEL,R,LOC,Z,0,GEO_TUN_length
+
+   *del,YDisplacements
+   *dim,YDisplacements,ARRAY,NodeCount
+
+   nodeNum=0
+   *do,NodeIndex,1,NodeCount,1
+      nodeNum=NDNEXT(nodeNum)
+      *get,UY,NODE,nodeNum,U,Y
+      YDisplacements(NodeIndex)=ABS(UY)
+   *enddo
+
+   *vscfun,FloorMaxUY,MAX,YDisplacements
+   *vscfun,FloorMinUY,MAX,YDisplacements
+
+   *if,FloorPeakSoilStress,GT,MAX_FloorPeakSoilStress,THEN
+      MAX_FloorPeakSoilStress=FloorPeakSoilStress
+   *endif
+   *if,FloorAvgSoilStress,GT,MAX_FloorAvgSoilStress,THEN
+      MAX_FloorAvgSoilStress=FloorAvgSoilStress
+   *endif
+   *if,FloorMaxUY,GT,MAX_FloorMaxUY,THEN
+      MAX_FloorMaxUY=FloorMaxUY
+   *endif
+   *if,FloorMinUY,GT,MAX_FloorMinUY,THEN
+      MAX_FloorMinUY=FloorMinUY
+   *endif
+
+*enddo
+
+! Vertical stresses along the axis of the bototm slab
+CSYS,CS_Tunnel
+
+*afun,DEG
+zi=-GEO_InletLength*COS(TunnelSlope)
+ze=(GEO_TUN_length+GEO_InletLength)*COS(TunnelSlope)
+yi=-GEO_InletLength*SIN(TunnelSlope)
+ye=(GEO_TUN_length+GEO_InletLength)*SIN(TunnelSlope)
+*afun,RAD
+VIEW1W
+
+LSLA,S
+CM,COMPL_temp,LINE
+ALLSEL
+CMSEL,U,COMPA_Tunnel
+/color,CM,BLUE,COMPL_temp
+/psymb,LDIV,-1
+
+ALLSEL
+PATH,'BS_AXIS',2,,200
+PATH,'BS_AXIS'
+PPATH,1,,GEO_TUN_totEffW/2,yi,zi,CS_Tunnel
+PPATH,2,,GEO_TUN_totEffW/2,ye,ze,CS_Tunnel
+PDEF,'UY',U,Y
+PCALC,ADD,'MSIGMAY','UY',,-1*SoilStiffness*1E-3
+PCALC,ADD,'SIGMAY','UY',,SoilStiffness*1E-3
+
+!PLPAGM,'SIGMAY',50,NODE
+*get,SigmaYMin,PATH,,MIN,'SIGMAY'
+*get,SigmaYMax,PATH,,MAX,'SIGMAY'
+CLIMS,NINT(SigmaYMin-0.5),NINT(SigmaYMax+0.5)
+
+NSLK,S
+/view,1,-1,0,0
+/angle,1,
+/auto,1
+LPLOT
+/dist,1,0.95,1
+/focus,1,,0.05,,2
+GO2PNG,1500
+LPLOT
+/noerase
+APLOT
+PLPAGM,'SIGMAY',50,NODE
+/erase
+ENDPNG,'BS_SOIL_SY'
+CLIMS
+CMDELE,COMPL_temp
+
+
+
+
+
+!!
+SET,FIRST,LAST
+ALLSEL
+PATH,'BS_AXIS',2,,200
+PATH,'BS_AXIS'
+PPATH,1,,GEO_TUN_totEffW/2,yi,zi,CS_Tunnel
+PPATH,2,,GEO_TUN_totEffW/2,ye,ze,CS_Tunnel
+PDEF,'UY',U,Y
+PCALC,ADD,'MSIGMAY','UY',,-1*SoilStiffness*1E-3
+PCALC,ADD,'SIGMAY','UY',,SoilStiffness*1E-3
+
+*get,SigmaYMin,PATH,,MIN,'SIGMAY'
+*get,SigmaYMax,PATH,,MAX,'SIGMAY'
+CLIMS,NINT(SigmaYMin-0.5),NINT(SigmaYMax+0.5)
+
+NSLK,S
+/view,1,-1,0,0
+/angle,1,
+/auto,1
+LPLOT
+/dist,1,0.95,1
+/focus,1,,0.05,,2
+GO2PNG,1500
+LPLOT
+/noerase
+APLOT
+PLPAGM,'SIGMAY',50,NODE
+/erase
+ENDPNG,'BS_SOIL_SY_pp'
+CLIMS
+CMDELE,COMPL_temp
+!!
+
+
+
+
+
+
+

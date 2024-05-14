@@ -1,0 +1,74 @@
+! TUNNEL_V0_HDWATTR
+
+GEO_HDW_CornerRadius=GEO_HDW_WallThk*2
+
+!CoordSys=11
+CS_HDW=200
+CS_HDW_LeftWallBeg=201
+CS_HDW_RightWallBeg=202
+
+CS_HDW_LeftWallEnd=301
+CS_HDW_RightWallEnd=302
+
+!CS_HDW_beg=203
+!CS_HDW_end=303
+
+GEO_InletRadians=GEO_InletAngle*pi/180
+
+GEO_InletWidth=Eff_GalleryWidth*GalleryModules
+GEO_HDW_Height=Eff_GalleryHeight+GEO_HDW_HeadBeamH
+
+MaxIW=(GEO_InletWidth/2)*COS(GEO_InletRadians)
+*if,InternalWidth,GE,MaxIW,THEN
+   InternalWidth=0.9*MaxIW
+*endif
+
+FEM_HDW_EArea=FEM_HDW_ESize**2
+WSpringConstant=SoilStiffness*FEM_HDW_EArea
+WSpringArea=WSpringConstant*SpringLength/SpringElasticModulus
+
+*if,BackfillAngle,GT,FrictionAngle,THEN
+    FrictionAngle=BackfillAngle
+*endif
+SoilSlope=BackfillAngle*pi/180
+fi=FrictionAngle*pi/180
+
+WallLength=GEO_InletLength/COS(GEO_InletRadians)
+GEO_HDW_WallSlope=GEO_HDW_Height/(WallLength-GEO_HDW_WallTopLen) !!
+
+MinimumDepth=GalleryDepth-GEO_HDW_HeadBeamH
+MaximumDepth=GalleryDepth+Eff_GalleryHeight+GEO_FootingDepth
+
+/prep7
+
+! Desativar exibição automática
+/nopr
+IMMED,0
+/uis,REPLOT,0
+
+! Atributos
+R,2,WSpringArea,0,-1
+
+SEC_HDW_Wall=10
+SEC_HDW_Footing=11
+SEC_HDW_Slab=12
+SEC_HDW_Stiffener=13
+SEC_HDW_Beam=15
+
+SECTYPE,SEC_HDW_Wall,SHELL,,MURO
+SECDATA,GEO_HDW_WallThk,1
+
+SECTYPE,SEC_HDW_Slab,SHELL,,PISO
+SECDATA,GEO_HDW_SlabThk,1
+
+SECTYPE,SEC_HDW_Stiffener,SHELL,,BORDAPIS
+SECDATA,GEO_HDW_StiffenerThk,1
+
+SECTYPE,SEC_HDW_Footing,SHELL,,SAPATA
+SECDATA,GEO_HDW_FootingHeight,1
+
+SECTYPE,SEC_HDW_Beam,SHELL,,VIGAS
+SECDATA,GEO_HDW_BeamWidth,1
+
+
+

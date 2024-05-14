@@ -1,0 +1,163 @@
+!!
+!!
+!! 1. INPUT DATA
+!!
+!!
+/prep7
+
+! Registrar o tempo de início da solução
+*get,T0,ACTIVE,0,TIME,WALL
+
+!*cfopen,suspicious,txt
+!    *vwrite,
+!    ('record of suspicious things.')
+!*cfclos
+
+! Desativar exibição automática
+/nopr
+IMMED,0
+/uis,REPLOT,0
+/uis,MSGPOP,3
+!
+!
+!
+!
+!
+!!
+!!
+!! 2. DEFINIÇÕES PRELIMINARES
+!!
+!!
+TUNNEL_V1_ATTR
+!
+!
+!
+!
+!
+!!
+!!
+!! 3. SOLID MODEL
+!!
+!!
+TUNNEL_V1_SM
+!
+!
+!
+!
+!
+!!
+!!
+!! 4. FINITE ELEMENT MODEL
+!!
+!!
+TUNNEL_V1_FEM
+!
+!
+!
+!
+!
+!!
+!!
+!! 5. LOAD STEPS
+!!
+!!
+TUNNEL_V1_LSTEP
+!
+!
+!
+!
+!
+!!
+!!
+!! 6. SOLVE
+!!
+!!
+*msg,UI,FILE_name
+TUNNEL # %s %/&
+SOLVING THE MODEL...
+
+/solu
+
+ALLSEL
+NLDIAG,NRRE,ON
+CNVTOL,F,,0.01,2,0.01
+SAVE
+/uis,abort,off
+KEYW,pr_sgui,1
+LSSOLVE,1,LoadStepCount,1
+KEYW,pr_sgui,0
+
+
+!/eof
+
+
+!!
+!!
+!! 7. POST-PROCESS
+!!
+!!
+*msg,UI,FILE_name
+TUNNEL # %s %/&
+WRITING RESULTS...
+
+/post1
+
+SET,LAST
+
+! Element tables
+TUNNEL_V0_ETAB
+
+! Reações sobre o solo
+TUNNEL_V0_REACT
+
+! Write results
+TUNNEL_V1_WRRES
+
+! Escrever resultados
+TUNNEL_V1_MEMO
+!
+!
+!
+!
+!
+!!
+!!
+!! 8. REPORT
+!!
+!!
+TUNNEL_V1_REPORT
+
+
+*if,GEO_Headwall,eq,1,and,GEO_RetMode,eq,0,then
+    TUNNEL_V1_HDWRES
+*endif
+
+
+*if,GEO_APR_status,eq,1,then
+    TUNNEL_V1_APPSLBRES
+*endif
+
+*msg,UI,FILE_name
+TUNNEL # %s %/&
+FINISHED ANALYSIS!
+
+! Reativar exibição automática
+/gopr
+/uis,REPLOT,1
+
+allsel
+view1w
+windefa
+/annot,dele
+eplot
+
+
+TUNNEL_V1_SUMMARY
+
+FINISH
+
+
+
+
+
+

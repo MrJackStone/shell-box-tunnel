@@ -1,0 +1,82 @@
+! TUNNEL_V0_HDWBOUSSINESQ, -
+
+*get,NodeCount,NODE,0,COUNT
+nthNode=0
+
+*del,ARRN_Loaded
+*dim,ARRN_Loaded,ARRAY,NodeCount
+*del,ARRFX_Load
+*dim,ARRFX_Load,ARRAY,NodeCount
+*del,ARRFZ_Load
+*dim,ARRFZ_Load,ARRAY,NodeCount
+
+*do,NodeIndex,1,NodeCount,1
+
+    nthNode=NDNEXT(nthNode)
+
+    NX=NX(nthNode)
+    NY=NY(nthNode)
+    NZ=NZ(nthNode)
+
+    *if,NZ,LE,GalleryLength/2,THEN
+        xDir=1
+        zDir=-1
+    *else
+        xDir=-1
+        zDir=1
+    *endif
+
+    Depth=GalleryDepth+(Eff_GalleryHeight-NY)
+    *del,AllStressIncreases
+    *dim,AllStressIncreases,ARRAY,LOAD_lineCount
+
+    *do,nthLine,1,LOAD_lineCount,1
+
+        *del,StressIncreases
+        *dim,StressIncreases,ARRAY,LOAD_LTPtCount
+
+        *do,nthPointLoad,1,LOAD_LTPtCount,1
+
+            LoadValue=LOADTRAIN_ARR_loads(nthPointLoad)
+            LoadPosition=LOADTRAIN_ARR_positions(nthPointLoad)
+
+            zOffset=zOffsets(nthLine)
+
+            QX=xOffset+LoadPosition*COS(LineAngle)
+            QY=Eff_GalleryHeight+GalleryDepth
+            QZ=zOffset+LoadPosition*SIN(LineAngle)
+
+            PerpDistance=ABS(QX-NX)
+            FullDistance=SQRT(((NX-QX)**2)+((NZ-QZ)**2)+((NY-QY)**2))
+            RelativeDepth=QY-NY
+
+            *if,QX*direction,LE,NX*direction,OR,FullDistance,EQ,0,THEN
+                HorBoussinesqLoad=0
+            *else
+                ! Fórmula do acréscimo de tensão horizontal devido a força concentrada
+                !   Valor muliplicado por 2 (dois) para compensar pela hipótese de semi-espaço infinito
+                !   na situação de repouso.
+                HorBoussinesqLoad=2*(3*LoadValue*(PerpDistance**2)*RelativeDepth/(2*pi*(FullDistance**5)))
+            *endif
+
+            StressIncreases(nthPointLoad)=HorBoussinesqLoad
+
+        *enddo
+
+        *vscfun,RowStressIncrease,SUM,StressIncreases
+        AllStressIncreases(nthLine)=RowStressIncrease
+
+    *enddo
+
+    *vscfun,StressIncrease,SUM,AllStressIncreases
+    HorLoad=StressIncrease*ElementArea
+
+    ARRN_Loaded(NodeIndex)=nthNode
+    ARRFX_Load(NodeIndex)=xDir*HorLoad*SIN(GEO_InletRadians)
+    ARRFZ_Load(NodeIndex)=zDir*HorLoad*COS(GEO_InletRadians)
+
+*enddo
+
+F,ARRN_Loaded(1:NodeCount),FX,ARRFX_Load(1:NodeCount)
+F,ARRN_Loaded(1:NodeCount),FZ,ARRFZ_Load(1:NodeCount)
+

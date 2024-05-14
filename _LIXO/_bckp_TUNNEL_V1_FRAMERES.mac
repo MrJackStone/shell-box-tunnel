@@ -1,0 +1,698 @@
+! TUNNEL_V1_FRAMERES
+
+pathDiv=100
+
+/post1
+set,last
+
+! Element table: membrane & bending stresses
+esel,s,type,,TYPE_SHELL181
+nsle,s
+etable,'SM_11',smisc,34
+etable,'SM_22',smisc,35
+etable,'SM_12',smisc,36
+
+etable,'SB_11',smisc,37
+etable,'SB_22',smisc,38
+etable,'SB_12',smisc,39
+
+etable,'M11',smisc,4
+
+! Create frame area components
+cmsel,s,COMPA_HDW_columns
+cmsel,a,COMPA_HDW_TopBeam
+cmsel,a,COMPA_HDW_BackBeam
+cm,COMPA_temp,area
+
+cmsel,s,COMPA_temp
+asel,r,loc,z,-GEO_TUN_length,GEO_TUN_length/2
+cm,COMPA_Frame1,area
+
+cmsel,s,COMPA_temp
+cmsel,u,COMPA_Frame1
+cm,COMPA_Frame2,area
+
+csys,CS_Tunnel
+
+cmsel,s,COMPA_Frame1
+cmsel,a,COMPA_Frame2
+esla,s
+nsle,s
+
+! Virtual beam vertices coordinates
+x1=-GEO_HDW_ColWidth
+x2=0
+x3=GEO_TUN_totEffW
+x4=GEO_TUN_totEffW+GEO_HDW_ColWidth
+y1=-GEO_HDW_FootDepth
+y2=0
+y3=GEO_TUN_effH
+y4=GEO_TUN_effH+GEO_HDW_HeadBeamH
+
+! Virtual beam geometric properties
+TBEAM_A=GEO_HDW_HeadBeamH*GEO_HDW_BeamWidth
+TBEAM_W=GEO_HDW_BeamWidth*(GEO_HDW_HeadBeamH**2)/6
+BBEAM_A=GEO_HDW_FootDepth*GEO_HDW_BeamWidth
+BBEAM_W=GEO_HDW_BeamWidth*(GEO_HDW_FootDepth**2)/6
+COL_A=GEO_HDW_ColWidth*GEO_HDW_ColThk
+COL_W=GEO_HDW_ColThk*(GEO_HDW_ColWidth**2)/6
+
+! Frame 1, top beam
+FR1_TBEAM_top_n1=node(x3,y4,0)
+FR1_TBEAM_top_n2=node(x2,y4,0)
+FR1_TBEAM_bot_n1=node(x3,y3,0)
+FR1_TBEAM_bot_n2=node(x2,y3,0)
+
+! Frame 1, bottom beam
+FR1_BBEAM_top_n1=node(x2,y1,0)
+FR1_BBEAM_top_n2=node(x3,y1,0)
+FR1_BBEAM_bot_n1=node(x2,y2,0)
+FR1_BBEAM_bot_n2=node(x3,y2,0)
+
+! Frame 1, left column
+FR1_LCOL_left_n1=node(x1,y3,0)
+FR1_LCOL_left_n2=node(x1,y2,0)
+FR1_LCOL_right_n1=node(x2,y3,0)
+FR1_LCOL_right_n2=node(x2,y2,0)
+
+! Frame 1, right column
+FR1_RCOL_left_n1=node(x4,y2,0)
+FR1_RCOL_left_n2=node(x4,y3,0)
+FR1_RCOL_right_n1=node(x3,y2,0)
+FR1_RCOL_right_n2=node(x3,y3,0)
+
+! Frame 2, top beam
+FR2_TBEAM_top_n1=node(x3,y4,GEO_TUN_length)
+FR2_TBEAM_top_n2=node(x2,y4,GEO_TUN_length)
+FR2_TBEAM_bot_n1=node(x3,y3,GEO_TUN_length)
+FR2_TBEAM_bot_n2=node(x2,y3,GEO_TUN_length)
+
+! Frame 2, bottom beam
+FR2_BBEAM_top_n1=node(x2,y1,GEO_TUN_length)
+FR2_BBEAM_top_n2=node(x3,y1,GEO_TUN_length)
+FR2_BBEAM_bot_n1=node(x2,y2,GEO_TUN_length)
+FR2_BBEAM_bot_n2=node(x3,y2,GEO_TUN_length)
+
+! Frame 2, left column
+FR2_LCOL_left_n1=node(x1,y3,GEO_TUN_length)
+FR2_LCOL_left_n2=node(x1,y2,GEO_TUN_length)
+FR2_LCOL_right_n1=node(x2,y3,GEO_TUN_length)
+FR2_LCOL_right_n2=node(x2,y2,GEO_TUN_length)
+
+! Frame 2, right column
+FR2_RCOL_left_n1=node(x4,y2,GEO_TUN_length)
+FR2_RCOL_left_n2=node(x4,y3,GEO_TUN_length)
+FR2_RCOL_right_n1=node(x3,y2,GEO_TUN_length)
+FR2_RCOL_right_n2=node(x3,y3,GEO_TUN_length)
+
+! Selection components:
+! Frame 1, top beam
+cmsel,s,COMPA_Frame1
+cmsel,r,COMPA_HDW_TopBeam
+asel,r,loc,x2,x3
+esla,s
+nsle,s
+cm,COMPE_FR1_tBeam,elem
+cm,COMPN_FR1_tBeam,node
+! Frame 1, bottom beam
+cmsel,s,COMPA_Frame1
+cmsel,r,COMPA_HDW_BackBeam
+asel,r,loc,x,x2,x3
+esla,s
+nsle,s
+cm,COMPE_FR1_bBeam,elem
+cm,COMPN_FR1_bBeam,node
+! Frame 1, left column
+cmsel,s,COMPA_Frame1
+cmsel,r,COMPA_HDW_Columns
+asel,r,loc,x,x1,x2
+asel,r,loc,y,y2,y3
+esla,s
+nsle,s
+cm,COMPE_FR1_lCol,elem
+cm,COMPN_FR1_lCol,node
+! Frame 1, right column
+cmsel,s,COMPA_Frame1
+cmsel,r,COMPA_HDW_Columns
+asel,r,loc,x,x3,x4
+asel,r,loc,y,y2,y3
+esla,s
+nsle,s
+cm,COMPE_FR1_rCol,elem
+cm,COMPN_FR1_rCol,node
+! Frame 2, top beam
+cmsel,s,COMPA_Frame2
+cmsel,r,COMPA_HDW_TopBeam
+asel,r,loc,x2,x3
+esla,s
+nsle,s
+cm,COMPE_FR2_tBeam,elem
+cm,COMPN_FR2_tBeam,node
+! Frame 2, bottom beam
+cmsel,s,COMPA_Frame2
+cmsel,r,COMPA_HDW_BackBeam
+asel,r,loc,x,x2,x3
+esla,s
+nsle,s
+cm,COMPE_FR2_bBeam,elem
+cm,COMPN_FR2_bBeam,node
+! Frame 2, left column
+cmsel,s,COMPA_Frame2
+cmsel,r,COMPA_HDW_Columns
+asel,r,loc,x,x1,x2
+asel,r,loc,y,y2,y3
+esla,s
+nsle,s
+cm,COMPE_FR2_lCol,elem
+cm,COMPN_FR2_lCol,node
+! Frame 2, right column
+cmsel,s,COMPA_Frame2
+cmsel,r,COMPA_HDW_Columns
+asel,r,loc,x,x3,x4
+asel,r,loc,y,y2,y3
+esla,s
+nsle,s
+cm,COMPE_FR2_rCol,elem
+cm,COMPN_FR2_rCol,node
+
+*del,RES_ENV_tBeam
+*del,RES_ENV_bBeam
+*del,RES_ENV_lCol
+*del,RES_ENV_rCol
+
+*do,nthSet,1,LoadStepCount,1
+
+    set,nthSet,last
+    etable,refl
+
+    cmsel,s,COMPN_FR1_tBeam
+    cmsel,s,COMPE_FR1_tBeam
+    pth2beam, FR1_TBEAM_top_n1, FR1_TBEAM_top_n2, FR1_TBEAM_bot_n1, FR1_TBEAM_bot_n2, 'TBEAM', 1, pathDiv, TBEAM_W, TBEAM_A, 1, 'RES_ENV_tBeam'
+
+    cmsel,s,COMPN_FR1_bBeam
+    cmsel,s,COMPE_FR1_bBeam
+    pth2beam, FR1_BBEAM_top_n1, FR1_BBEAM_top_n2, FR1_BBEAM_bot_n1, FR1_BBEAM_bot_n2, 'BBEAM', 1, pathDiv, BBEAM_W, BBEAM_A, 1, 'RES_ENV_bBeam'
+
+    cmsel,s,COMPN_FR1_lCol
+    cmsel,s,COMPE_FR1_lCol
+    pth2beam, FR1_LCOL_left_n1, FR1_LCOL_left_n2, FR1_LCOL_right_n1, FR1_LCOL_right_n2, 'LCOL',-1,pathDiv,COL_W, COL_A, 1, 'RES_ENV_lCol'
+
+    cmsel,s,COMPN_FR1_rCol
+    cmsel,s,COMPE_FR1_rCol
+    pth2beam, FR1_RCOL_left_n1, FR1_RCOL_left_n2, FR1_RCOL_right_n1, FR1_RCOL_right_n2, 'RCOL',-1,pathDiv,COL_W, COL_A, 1, 'RES_ENV_rCol'
+
+    cmsel,s,COMPN_FR2_tBeam
+    cmsel,s,COMPE_FR2_tBeam
+    pth2beam, FR2_TBEAM_top_n1, FR2_TBEAM_top_n2, FR2_TBEAM_bot_n1, FR2_TBEAM_bot_n2, 'TBEAM',1, pathDiv, TBEAM_W, TBEAM_A, 1, 'RES_ENV_tBeam'
+
+    cmsel,s,COMPN_FR2_bBeam
+    cmsel,s,COMPE_FR2_bBeam
+    pth2beam, FR2_BBEAM_top_n1, FR2_BBEAM_top_n2, FR2_BBEAM_bot_n1, FR2_BBEAM_bot_n2, 'BBEAM',1, pathDiv, BBEAM_W, BBEAM_A, 1, 'RES_ENV_bBeam'
+
+    cmsel,s,COMPN_FR2_lCol
+    cmsel,s,COMPE_FR2_lCol
+    pth2beam, FR2_LCOL_left_n1, FR2_LCOL_left_n2, FR2_LCOL_right_n1, FR2_LCOL_right_n2, 'LCOL',-1,pathDiv,COL_W, COL_A, 1, 'RES_ENV_lCol'
+
+    cmsel,s,COMPN_FR2_rCol
+    cmsel,s,COMPE_FR2_rCol
+    pth2beam, FR2_RCOL_left_n1, FR2_RCOL_left_n2, FR2_RCOL_right_n1, FR2_RCOL_right_n2, 'RCOL',-1,pathDiv,COL_W, COL_A, 1, 'RES_ENV_rCol'
+
+*enddo
+
+/device,text,1,50
+cmsel,s,COMPA_Frame1
+cmsel,a,COMPA_Frame2
+esla,s
+nsle,s
+
+*del,PLPTHENV_ARR_paths
+*dim,PLPTHENV_ARR_paths,char,1
+
+/window,all,dele
+
+! Bending moment (in-plane)
+wind1=1
+xmin1=-1
+xmax1=0.335
+ymin1=0
+ymax1=1
+/window,wind1,xmin1,xmax1,ymin1+0.07,ymax1
+! Axial force
+wind2=2
+xmin2=0.335
+xmax2=1.67
+ymin2=0
+ymax2=1
+/window,wind2,xmin2,xmax2,ymin2+0.07,ymax2
+! Shear force
+wind3=3
+xmin3=-1
+xmax3=0.335
+ymin3=-1
+ymax3=0
+/window,wind3,xmin3,xmax3,ymin3+0.07,ymax3
+! Deflection
+wind4=4
+xmin4=0.335
+xmax4=1.67
+ymin4=-1
+ymax4=0
+/window,wind4,xmin4,xmax4,ymin4+0.07,ymax4
+! Set up windows
+wpcsys,1,CS_Tunnel
+wpcsys,2,CS_Tunnel
+wpcsys,3,CS_Tunnel
+wpcsys,4,CS_Tunnel
+clims
+wincln,1
+wincln,2
+wincln,3
+wincln,4
+/auto,all
+oplot,wind,'E11'
+/user,all
+/dist,all,1.2,1
+
+go2png,1800
+    oplot,wind,'E11'
+    /device,vector,off
+    /noerase
+
+    /window,1,off
+    /window,2,off
+    /window,3,off
+    /window,4,off
+
+    ! Bending moment (in-plane)
+    wind=1
+    /window,wind,on
+    PLPTHENV_ARR_paths(1)='TBEAM'
+    plpthenv,wind1,xmin1,xmax1,ymin1,ymax1, 'MP', ' ', 1e-3, 10, 0, 2,,,,1
+    PLPTHENV_ARR_paths(1)='BBEAM'
+    plpthenv,wind1,xmin1,xmax1,ymin1,ymax1, 'MP', ' ', 1e-3, 10, 0, 1,,,,1
+    PLPTHENV_ARR_paths(1)='LCOL'
+    plpthenv,wind1,xmin1,xmax1,ymin1,ymax1, 'MP', ' ', 1e-3, 10, 0, 3,,,,1
+    PLPTHENV_ARR_paths(1)='RCOL'
+    plpthenv,wind1,xmin1,xmax1,ymin1,ymax1, 'MP', 'M. FLETOR (PLANO) [kNm]', 1e-3, 10, 0, 4,,,,1
+    /window,wind,off
+
+    ! Axial force
+    wind=2
+    /window,wind,on
+    PLPTHENV_ARR_paths(1)='TBEAM'
+    plpthenv,wind2,xmin2,xmax2,ymin2,ymax2, 'N', ' ', 1e-3, 10, 0, 2,,,,1
+    PLPTHENV_ARR_paths(1)='BBEAM'
+    plpthenv,wind2,xmin2,xmax2,ymin2,ymax2, 'N', ' ', 1e-3, 10, 0, 1,,,,1
+    PLPTHENV_ARR_paths(1)='LCOL'
+    plpthenv,wind2,xmin2,xmax2,ymin2,ymax2, 'N', ' ', 1e-3, 10, 0, 3,,,,1
+    PLPTHENV_ARR_paths(1)='RCOL'
+    plpthenv,wind2,xmin2,xmax2,ymin2,ymax2, 'N', 'F. NORMAL [kN]', 1e-3, 10, 0, 4,,,,1
+    /window,wind,off
+
+    ! Shear force
+    wind=3
+    /window,wind,on
+    PLPTHENV_ARR_paths(1)='TBEAM'
+    plpthenv,wind3,xmin3,xmax3,ymin3,ymax3, 'V', ' ', 1e-3, 10, 0, 2,,,,1
+    PLPTHENV_ARR_paths(1)='BBEAM'
+    plpthenv,wind3,xmin3,xmax3,ymin3,ymax3, 'V', ' ', 1e-3, 10, 0, 1,,,,1
+    PLPTHENV_ARR_paths(1)='LCOL'
+    plpthenv,wind3,xmin3,xmax3,ymin3,ymax3, 'V', ' ', 1e-3, 10, 0, 3,,,,1
+    PLPTHENV_ARR_paths(1)='RCOL'
+    plpthenv,wind3,xmin3,xmax3,ymin3,ymax3, 'V', 'F. CORTANTE [kN]', 1e-3, 10, 0, 4,,,,1
+    /window,wind,off
+
+    ! Deflection
+    wind=4
+    /window,wind,on
+    PLPTHENV_ARR_paths(1)='TBEAM'
+    plpthenv,wind4,xmin4,xmax4,ymin4,ymax4, 'DYB', ' ', 1e3, 10, 2, 2,,,,1
+    PLPTHENV_ARR_paths(1)='BBEAM'
+    plpthenv,wind4,xmin4,xmax4,ymin4,ymax4, 'DYB', ' ', 1e3, 10, 2, 1,,,,1
+    PLPTHENV_ARR_paths(1)='LCOL'
+    plpthenv,wind4,xmin4,xmax4,ymin4,ymax4, 'DYB', ' ', 1e3, 10, 2, 3,,,,1
+    PLPTHENV_ARR_paths(1)='RCOL'
+    plpthenv,wind4,xmin4,xmax4,ymin4,ymax4, 'DYB', 'FLECHA [mm]', 1e3, 10, 2, 4,,,,1
+    /window,wind,off
+
+endpng,'RES_FRAME_all'
+
+/erase
+/device,text,1,100
+
+/eof
+!!
+*del,MPATHPLOT_ARR_pathNames
+*dim,MPATHPLOT_ARR_pathNames,char,8
+MPATHPLOT_ARR_pathNames(1)=  'TBEAM' ,  'TBEAM' ,  'BBEAM' ,  'BBEAM' ,   'LCOL' ,   'LCOL' ,   'RCOL' ,   'RCOL'
+
+! Bending moment (in-plane)
+*del,MPATHPLOT_ARR_labels
+*dim,MPATHPLOT_ARR_labels,char,8
+MPATHPLOT_ARR_labels(1)=    'MP_MAX' , 'MP_MIN' , 'MP_MAX' , 'MP_MIN' , 'MP_MAX' , 'MP_MIN' , 'MP_MAX' , 'MP_MIN'
+TUNNEL_V1_ENVPLOT, 1, -1, 1.67, -1, 1, 'M. FLETOR (PLANO) [kNm]', 1e-3, 10, 0, 'E11', 'RES_FRAME_Mp', 1000
+!!
+
+! Bending moment (out-of-plane)
+*del,MPATHPLOT_ARR_labels
+*dim,MPATHPLOT_ARR_labels,char,8
+MPATHPLOT_ARR_labels(1)=    'MB_MAX' , 'MB_MIN' , 'MB_MAX' , 'MB_MIN' , 'MB_MAX' , 'MB_MIN' , 'MB_MAX' , 'MB_MIN'
+TUNNEL_V1_ENVPLOT, 1, -1, 1.67, -1, 1, 'M. FLETOR (TRANSVERSAL) [kNm]', 1e-3, 10, 0, 'E11', 'RES_FRAME_Mt', 1000
+
+! Axial force
+*del,MPATHPLOT_ARR_labels
+*dim,MPATHPLOT_ARR_labels,char,8
+MPATHPLOT_ARR_labels(1)=    'N_MAX' , 'N_MIN' , 'N_MAX' , 'N_MIN' , 'N_MAX' , 'N_MIN' , 'N_MAX' , 'N_MIN'
+TUNNEL_V1_ENVPLOT, 1, -1, 1.67, -1, 1, 'F. NORMAL [kN]', 1e-3, 10, 0, 'E11', 'RES_FRAME_N', 1000
+
+! Shear force
+*del,MPATHPLOT_ARR_labels
+*dim,MPATHPLOT_ARR_labels,char,8
+MPATHPLOT_ARR_labels(1)=    'V_MAX' , 'V_MIN' , 'V_MAX' , 'V_MIN' , 'V_MAX' , 'V_MIN' , 'V_MAX' , 'V_MIN'
+TUNNEL_V1_ENVPLOT, 1, -1, 1.67, -1, 1, 'F. CORTANTE [kN]', 1e-3, 10, 0, 'E11', 'RES_FRAME_V', 1000
+
+! Deflection
+*del,MPATHPLOT_ARR_labels
+*dim,MPATHPLOT_ARR_labels,char,8
+MPATHPLOT_ARR_labels(1)=    'DYB_MAX' , 'DYB_MIN' , 'DYT_MAX' , 'DYT_MIN' , 'DXB_MAX' , 'DXB_MIN' , 'DXT_MAX' , 'DXT_MIN'
+TUNNEL_V1_ENVPLOT, 1, -1, 1.67, -1, 1, 'FLECHA [mm]', 1e3, 10, 3, 'E11', 'RES_FRAME_D', 1000
+
+
+
+
+
+windefa
+
+
+
+
+
+/eof
+
+
+! Top beam
+TBEAM_A=GEO_HDW_HeadBeamH*GEO_HDW_BeamWidth
+TBEAM_W=GEO_HDW_BeamWidth*(GEO_HDW_HeadBeamH**2)/6
+TBEAM_top_n1=node(x3,y4,zFrame)
+TBEAM_top_n2=node(x2,y4,zFrame)
+TBEAM_bot_n1=node(x3,y3,zFrame)
+TBEAM_bot_n2=node(x2,y3,zFrame)
+pths2mn, TBEAM_top_n1, TBEAM_top_n2, TBEAM_bot_n1, TBEAM_bot_n2, 'TBEAM', 'SM_11', 100, TBEAM_W, TBEAM_A, 1
+*vscfun,TBEAM_Mmax,max,PTHS2MN_ARR_bendingMoment
+*vscfun,TBEAM_Mmin,min,PTHS2MN_ARR_bendingMoment
+*vscfun,TBEAM_Nmax,max,PTHS2MN_ARR_axialForce
+*vscfun,TBEAM_Nmin,min,PTHS2MN_ARR_axialForce
+pths2v, TBEAM_top_n1, TBEAM_top_n2, TBEAM_bot_n1, TBEAM_bot_n2, 'TBEAM_M', 'SM_12', 100, , TBEAM_A, 1
+*vscfun,TBEAM_Vmin,min,PTHS2V_ARR_shear
+*vscfun,TBEAM_Vmax,max,PTHS2V_ARR_shear
+pth2dfl,TBEAM_bot_n1,TBEAM_bot_n2,,,'TBEAM','Y',100,,0,1,-1
+*vabs,,1
+*vscfun,TBEAM_Fmax,max,PTH2DFL_ARR_defl
+
+! Bottom beam
+BBEAM_A=GEO_HDW_FootDepth*GEO_HDW_BeamWidth
+BBEAM_W=GEO_HDW_BeamWidth*(GEO_HDW_FootDepth**2)/6
+BBEAM_top_n1=node(x3,y1,zFrame)
+BBEAM_top_n2=node(x2,y1,zFrame)
+BBEAM_bot_n1=node(x3,y2,zFrame)
+BBEAM_bot_n2=node(x2,y2,zFrame)
+pths2mn, BBEAM_top_n1, BBEAM_top_n2, BBEAM_bot_n1, BBEAM_bot_n2, 'BBEAM', 'SM_11', 100, BBEAM_W, BBEAM_A, 1
+*vscfun,BBEAM_Mmax,max,PTHS2MN_ARR_bendingMoment
+*vscfun,BBEAM_Mmin,min,PTHS2MN_ARR_bendingMoment
+*vscfun,BBEAM_Nmax,max,PTHS2MN_ARR_axialForce
+*vscfun,BBEAM_Nmin,min,PTHS2MN_ARR_axialForce
+pths2v, BBEAM_top_n1, BBEAM_top_n2, BBEAM_bot_n1, BBEAM_bot_n2, 'BBEAM_M', 'SM_12', 100, , BBEAM_A, 1
+*vscfun,BBEAM_Vmin,min,PTHS2V_ARR_shear
+*vscfun,BBEAM_Vmax,max,PTHS2V_ARR_shear
+pth2dfl,BBEAM_bot_n2,BBEAM_bot_n1,,,'BBEAM','Y',100,,0
+*vabs,,1
+*vscfun,BBEAM_Fmax,max,PTH2DFL_ARR_defl
+
+COL_A=GEO_HDW_ColWidth*GEO_HDW_ColThk
+COL_W=GEO_HDW_ColThk*(GEO_HDW_ColWidth**2)/6
+
+! Left column
+LCOL_left_n1=node(x1,y3,zFrame)
+LCOL_left_n2=node(x1,y2,zFrame)
+LCOL_right_n1=node(x2,y3,zFrame)
+LCOL_right_n2=node(x2,y2,zFrame)
+pths2mn, LCOL_left_n1, LCOL_left_n2, LCOL_right_n1, LCOL_right_n2, 'LCOL', 'SM_22', 100, COL_W, COL_A, 1
+*vscfun,LCOL_Mmax,max,PTHS2MN_ARR_bendingMoment
+*vscfun,LCOL_Mmin,min,PTHS2MN_ARR_bendingMoment
+*vscfun,LCOL_Nmax,max,PTHS2MN_ARR_axialForce
+*vscfun,LCOL_Nmin,min,PTHS2MN_ARR_axialForce
+pths2v, LCOL_left_n1, LCOL_left_n2, LCOL_right_n1, LCOL_right_n2, 'LCOL_M', 'SM_12', 100, , COL_A, 1
+*vscfun,LCOL_Vmin,min,PTHS2V_ARR_shear
+*vscfun,LCOL_Vmax,max,PTHS2V_ARR_shear
+pth2dfl,LCOL_right_n1,LCOL_right_n2,,,'LCOL','X',100,,0
+*vabs,,1
+*vscfun,LCOL_Fmax,max,PTH2DFL_ARR_defl
+
+! Right column
+RCOL_left_n1=node(x4,y2,zFrame)
+RCOL_left_n2=node(x4,y3,zFrame)
+RCOL_right_n1=node(x3,y2,zFrame)
+RCOL_right_n2=node(x3,y3,zFrame)
+pths2mn, RCOL_left_n1, RCOL_left_n2, RCOL_right_n1, RCOL_right_n2, 'RCOL', 'SM_22', 100, COL_W, COL_A, 1
+*vscfun,RCOL_Mmax,max,PTHS2MN_ARR_bendingMoment
+*vscfun,RCOL_Mmin,min,PTHS2MN_ARR_bendingMoment
+*vscfun,RCOL_Nmax,max,PTHS2MN_ARR_axialForce
+*vscfun,RCOL_Nmin,min,PTHS2MN_ARR_axialForce
+pths2v, RCOL_left_n1, RCOL_left_n2, RCOL_right_n1, RCOL_right_n2, 'RCOL_M', 'SM_12', 100, , COL_A, 1
+*vscfun,RCOL_Vmin,min,PTHS2V_ARR_shear
+*vscfun,RCOL_Vmax,max,PTHS2V_ARR_shear
+pth2dfl,RCOL_right_n1,RCOL_right_n2,,,'RCOL','X',100,,0,1,-1
+*vabs,,1
+*vscfun,RCOL_Fmax,max,PTH2DFL_ARR_defl
+
+! COMPARE, parm, oper, argCount, num1, num2, num3, num4, num5, num6, num7, num8, num8, num9, num10, num11, num12, num13, num14, num15
+compare, 'M_min','min',4,TBEAM_Mmin,BBEAM_Mmin,LCOL_Mmin,RCOL_Mmin
+compare, 'M_max','max',4,TBEAM_Mmax,BBEAM_Mmax,LCOL_Mmax,RCOL_Mmax
+
+compare, 'N_min','min',4,TBEAM_Nmin,BBEAM_Nmin,LCOL_Nmin,RCOL_Nmin
+compare, 'N_max','max',4,TBEAM_Nmax,BBEAM_Nmax,LCOL_Nmax,RCOL_Nmax
+
+compare, 'V_min','min',4,TBEAM_Vmin,BBEAM_Vmin,LCOL_Vmin,RCOL_Vmin
+compare, 'V_max','max',4,TBEAM_Vmax,BBEAM_Vmax,LCOL_Vmax,RCOL_Vmax
+
+compare, 'F_max','max',4,TBEAM_Fmax,BBEAM_Fmax,LCOL_Fmax,RCOL_Fmax
+
+!!
+windefa
+/plopts,info,off
+/plopts,title,off
+/plopts,logo,off
+/plopts,file,off
+/plopts,leg1,0
+/plopts,leg2,0
+/plopts,leg3,0
+/plopts,minm,0
+clims
+
+/window,all,dele
+/window,1,-1,1.67,-1,1
+wpcsys,1,CS_Tunnel
+/auto,1
+eplot
+/user,1
+/dist,1,1.1,1
+go2png,1000
+    /device,vector,on
+    eplot
+    /device,vector,off
+    /noerase
+    path,'TBEAM_B'
+    plpagm,'M',10*TBEAM_Mmax/M_max
+    path,'BBEAM_B'
+    plpagm,'M',10*BBEAM_Mmax/M_max
+    path,'LCOL_B'
+    plpagm,'M',10*LCOL_Mmax/M_max
+    path,'RCOL_B'
+    plpagm,'M',10*RCOL_Mmax/M_max
+    /window,1,off
+
+    /window,1,-1,1.67,-1,1
+    /gformat,f,1,0
+    /user,1
+    /plopts,leg3,1
+    /plopts,info,3
+    /udoc,1,cntr,right
+    /udoc,1,type,off
+    /udoc,1,typ2,off
+    /focus,1,1e6,1e6
+    clims,nint(0.5+M_min/1000),nint(0.5+M_max/1000)
+    /replot
+
+endpng,'REPORT_frameM'
+/erase
+!!
+
+
+!!
+windefa
+/plopts,info,off
+/plopts,title,off
+/plopts,logo,off
+/plopts,file,off
+/plopts,leg1,0
+/plopts,leg2,0
+/plopts,leg3,0
+/plopts,minm,0
+clims
+
+/window,all,dele
+/window,1,-1,1.67,-1,1
+wpcsys,1,CS_Tunnel
+/auto,1
+eplot
+/user,1
+/dist,1,1.1,1
+go2png,1000
+    /device,vector,on
+    eplot
+    /device,vector,off
+    /noerase
+    path,'TBEAM_B'
+    plpagm,'N',10*TBEAM_Nmax/N_max
+    path,'BBEAM_B'
+    plpagm,'N',10*BBEAM_Nmax/N_max
+    path,'LCOL_B'
+    plpagm,'N',10*LCOL_Nmax/N_max
+    path,'RCOL_B'
+    plpagm,'N',10*RCOL_Nmax/N_max
+    /window,1,off
+
+    /window,1,-1,1.67,-1,1
+    /gformat,f,1,0
+    /user,1
+    /plopts,leg3,1
+    /plopts,info,3
+    /udoc,1,cntr,right
+    /udoc,1,type,off
+    /udoc,1,typ2,off
+    /focus,1,1e6,1e6
+    clims,nint(0.5+N_min/1000),nint(0.5+N_max/1000)
+    /replot
+
+endpng,'REPORT_frameN'
+/erase
+!!
+
+
+
+
+!!
+windefa
+/plopts,info,off
+/plopts,title,off
+/plopts,logo,off
+/plopts,file,off
+/plopts,leg1,0
+/plopts,leg2,0
+/plopts,leg3,0
+/plopts,minm,0
+clims
+
+/window,all,dele
+/window,1,-1,1.67,-1,1
+wpcsys,1,CS_Tunnel
+/auto,1
+eplot
+/user,1
+/dist,1,1.1,1
+go2png,1000
+    /device,vector,on
+    eplot
+    /device,vector,off
+    /noerase
+    path,'TBEAM_M'
+    plpagm,'V',10*TBEAM_Vmax/V_max
+    path,'BBEAM_M'
+    plpagm,'V',10*BBEAM_Vmax/V_max
+    path,'LCOL_M'
+    plpagm,'V',10*LCOL_Vmax/V_max
+    path,'RCOL_M'
+    plpagm,'V',10*RCOL_Vmax/V_max
+    /window,1,off
+
+    /window,1,-1,1.67,-1,1
+    /gformat,f,1,0
+    /user,1
+    /plopts,leg3,1
+    /plopts,info,3
+    /udoc,1,cntr,right
+    /udoc,1,type,off
+    /udoc,1,typ2,off
+    /focus,1,1e6,1e6
+    clims,nint(0.5+V_min/1000),nint(0.5+V_max/1000)
+    /replot
+
+endpng,'REPORT_frameV'
+/erase
+!!
+
+!!
+windefa
+/plopts,info,off
+/plopts,title,off
+/plopts,logo,off
+/plopts,file,off
+/plopts,leg1,0
+/plopts,leg2,0
+/plopts,leg3,0
+/plopts,minm,0
+clims
+
+/window,all,dele
+/window,1,-1,1.67,-1,1
+wpcsys,1,CS_Tunnel
+/auto,1
+eplot
+/user,1
+/dist,1,1.1,1
+go2png,1000
+    /device,vector,on
+    eplot
+    /device,vector,off
+    /noerase
+    path,'TBEAM'
+    plpagm,'TBEAM_F',10*TBEAM_Fmax/F_max
+    path,'BBEAM'
+    plpagm,'BBEAM_F',10*BBEAM_Fmax/F_max
+    path,'LCOL'
+    plpagm,'LCOL_F',10*LCOL_Fmax/F_max
+    path,'RCOL'
+    plpagm,'RCOL_F',10*RCOL_Fmax/F_max
+    /window,1,off
+
+    /window,1,-1,1.67,-1,1
+    /gformat,f,1,3
+    /user,1
+    /plopts,leg3,1
+    /plopts,info,3
+    /udoc,1,cntr,right
+    /udoc,1,type,off
+    /udoc,1,typ2,off
+    /focus,1,1e6,1e6
+    clims,0,1000*F_max
+    /replot
+
+endpng,'REPORT_frameF'
+/erase
+!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

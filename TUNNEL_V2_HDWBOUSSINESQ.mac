@@ -1,0 +1,103 @@
+! TUNNEL_V2_HDWBOUSSINESQ, -
+
+
+! Fill array with node selection status
+*del, NLIST_nsel
+*vget,NLIST_nsel,node,,nsel
+
+*do,nthLine,1,LOAD_lineCount,1
+
+    *do,nthPointLoad,1,LOAD_LTPtCount,1
+
+        ForceValue=LOADTRAIN_ARR_loads(nthPointLoad)
+        LoadPosition=LOADTRAIN_ARR_positions(nthPointLoad)
+
+        QX_i=LoadPosition+xOffset
+        QY=GEO_TUN_effH+GalleryDepth
+        QZ_i=zOffsets(nthLine)
+        TUNNEL_V0_LTPOS, QX_i, QZ_i, QX_0, QZ_0, -LOAD_skewRad, 1
+
+        ! Initialize arrays
+        *del, deltaX
+        *del, deltaY
+        *del, deltaZ
+        *del, deltaXSquared
+        *del, deltaYSquared
+        *del, deltaZSquared
+        *del, tmp
+        *del, dist
+        *del, pressures
+        *del, forces
+        *del, appliedForces
+        *del, selNodes
+        *del, beforeHalf
+        *del, afterHalf
+        *del, xDirMult
+        *del, zDirMult
+        *del, xForces
+        *del, zForces
+        *del, appliedXForces
+        *del, appliedZForces
+
+        ! Calculate distances
+        *voper,deltaX,QX,sub,NLIST_x
+        *voper,deltaY,QY,sub,NLIST_y
+        *voper,deltaZ,QZ,sub,NLIST_z
+
+        *vfun, deltaXSquared , pwr , deltaX , 2
+        *vfun, deltaYSquared , pwr , deltaY , 2
+        *vfun, deltaZSquared , pwr , deltaZ , 2
+
+        *voper, tmp  , deltaXSquared , add , deltaYSquared
+        *voper, tmp  ,           tmp , add , deltaZSquared
+        *vfun , dist ,          sqrt , tmp
+
+        ! Calculate force sign
+        *voper, beforeHalf , NLIST_z , le , GEO_TUN_length/2
+        *voper,  afterHalf , NLIST_z , gt , GEO_TUN_length/2
+        *vfun ,   xDirMult , copy , NLIST_z
+        *vfun ,   zDirMult , copy , NLIST_z
+        *vmask, beforeHalf
+        *vfill,   xDirMult , ramp ,  1, 0
+        *vmask, beforeHalf
+        *vfill,   zDirMult , ramp , -1, 0
+        *vmask,  afterHalf
+        *vfill,   xDirMult , ramp , -1, 0
+        *vmask,  afterHalf
+        *vfill,   zDirMult , ramp ,  1, 0
+
+        ! Boussinesq formula: 6*F*r²*z/(2*PI*D^5)
+        *vfun ,       tmp , pwr , dist , 5
+        *voper,       tmp , tmp , mult , 2*PI
+        *vfun ,       tmp , pwr ,  tmp , -1
+        *voper,       tmp , tmp , mult , deltaY
+        *voper,       tmp , tmp , mult , deltaXSquared
+        *voper, pressures , tmp , mult , 6*ForceValue
+
+        ! Calculate nodal forces (X-Z decomposition)
+        *voper,         forces , pressures , mult , NLIST_apportioned
+        *voper,         forces ,    forces , mult , direction
+        *voper,        xForces ,    forces , mult , sin(GEO_InletRadians)
+        *voper,        zForces ,    forces , mult , cos(GEO_InletRadians)
+        *voper,        xForces ,   xForces , mult , xDirMult
+        *voper,        zForces ,   zForces , mult , zDirMult
+
+        *vmask,     NLIST_nsel
+        *vfun , appliedXForces ,      comp , xForces
+        *vfun , appliedZForces ,      comp , zForces
+
+        *vmask,    NLIST_nsel
+        *vfun ,      selNodes ,      comp , NLIST_num
+
+        *get,selCount,parm,selNodes,dim,x
+
+        ! Apply forces
+        f,selNodes(1:selCount),fx,appliedXForces(1:selCount)
+        f,selNodes(1:selCount),fz,appliedZForces(1:selCount)
+
+    *enddo
+
+*enddo
+
+
+

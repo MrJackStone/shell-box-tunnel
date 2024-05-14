@@ -1,0 +1,174 @@
+! TUNNEL_V0_SECRES, LSType, slabPlane
+! TUNNEL_V0_SECRES,   arg1,      arg2
+
+! arg2: [0] XZ ; [1] YZ
+
+*if,arg1,EQ,'DW',THEN
+    MYmax='DW_MY'
+    QXmax='DW_QX'
+    NXmax='DW_NX'
+    UXmax='DW_UX'
+    UYmax='DW_UY'
+
+    MYmin='DW_MY'
+    QXmin='DW_QX'
+    NXmin='DW_NX'
+    UXmin='DW_UX'
+    UYmin='DW_UY'
+
+*elseif,arg1,EQ,'ENV',THEN
+    MYmax='EMX_MY'
+    QXmax='EMX_QX'
+    NXmax='EMX_NX'
+    UXmax='EMX_UX'
+    UYmax='EMX_UY'
+
+    MYmin='EMN_MY'
+    QXmin='EMN_QX'
+    NXmin='EMN_NX'
+    UXmin='EMN_UX'
+    UYmin='EMN_UY'
+*endif
+
+PLETAB,%MYmax%,1
+*get,MSup,PLNSOL,,MAX
+PLETAB,%MYmin%,1
+*get,MSpan,PLNSOL,,MIN
+
+PLETAB,%QXmin%,1
+*get,VMin,PLNSOL,,MIN
+PLETAB,%QXmax%,1
+*get,VMax,PLNSOL,,MAX
+COMPARE,'VSup','ABSMAX',2,VMin,VMax
+
+PLETAB,%NXmin%,1
+*get,NSpan,PLNSOL,,MIN
+
+!!
+CM,COMPE_prev,ELEM
+
+*if,arg2,EQ,0,THEN
+    CM,NDEFLECT_COMPE_spanElements,ELEM
+    NSLE,S
+    CM,COMPN_temp,NODE
+
+    CMSEL,S,COMPN_DEFLECT_leftRef
+    CMSEL,R,COMPN_temp
+    CM,COMPN_tempL,NODE
+    *get,NC,NODE,,COUNT
+    LeftAux1=NDNEXT(0)
+    LeftAux2=NDNEXT(LeftAux1)
+
+    CMSEL,S,COMPN_DEFLECT_rightRef
+    CMSEL,R,COMPN_temp
+    CM,COMPN_tempR,NODE
+
+    LeftNN=0
+    RightNN=0
+    DFL=0
+    *do,nthNode,1,NC,1
+        !! **** EDITING
+        CMSEL,S,COMPN_tempL
+        LeftNN=NDNEXT(LeftNN)
+
+        zCoord=NZ(LeftNN)
+        zRight=zCoord+GEO_ExtraLength
+
+        CMSEL,S,COMPN_tempR
+        RightNN=NDNEXT(0)
+        RightNN=NODE(NX(RightNN),NY(RightNN),zRight)
+
+        *if,LeftNN,EQ,LeftAux1,THEN
+            NNplane=LeftAux2
+        *else
+            NNplane=LeftAux1
+        *endif
+
+        CMSEL,S,COMPN_temp
+        NSEL,A,NODE,,NNplane
+        *get,CSMax,CDSY,,NUM,MAX
+        CS_tmp=CSMax+1
+        CS,CS_tmp,CART,LeftNN,RightNN,NNplane
+        CSYS,CS_tmp
+
+        localY=NY(LeftNN)
+        NSEL,R,LOC,Y,localY
+        CSYS,0
+        !!
+
+        CM,NDEFLECT_COMPN_spanNodes,NODE
+
+        ! NDEFLECT,  NB,     NE,  Dir, DType,TanNode,   Key
+        NDEFLECT,LeftNN,RightNN,'ALL', 'SEC',       , 'MAX'
+        *if,_OUTPUT,GT,DFL,THEN
+            DFL=_OUTPUT
+        *endif
+
+    *enddo
+
+*elseif,arg2,EQ,1,THEN
+    CM,NDEFLECT_COMPE_spanElements,ELEM
+    NSLE,S
+    CM,COMPN_temp,NODE
+
+    CMSEL,S,COMPN_DEFLECT_topRef
+    CMSEL,R,COMPN_temp
+    CM,COMPN_tempT,NODE
+    *get,NC,NODE,,COUNT
+
+    CMSEL,S,COMPN_DEFLECT_botRef
+    CMSEL,R,COMPN_temp
+    CM,COMPN_tempB,NODE
+
+    TopNN=0
+    BotNN=0
+    DFL=0
+    *do,nthNode,1,NC,1
+        CMSEL,S,COMPN_tempT
+        TopNN=NDNEXT(TopNN)
+
+        CMSEL,S,COMPN_tempB
+        BotNN=NDNEXT(BotNN)
+
+        CSYS,CS_Tunnel
+        zCoord=NZ(TopNN)
+        CMSEL,S,COMPN_temp
+        NSEL,R,LOC,Z,zCoord
+        CSYS,0
+
+        CM,NDEFLECT_COMPN_spanNodes,NODE
+
+        ! NDEFLECT,  NB,     NE,  Dir, DType,TanNode,   Key
+        NDEFLECT,TopNN,BotNN,'ALL', 'SEC',       , 'MAX'
+        *if,_OUTPUT,GT,DFL,THEN
+            DFL=_OUTPUT
+        *endif
+
+    *enddo
+*endif
+CMSEL,S,COMPN_temp
+CMSEL,S,COMPE_prev
+
+!!
+!!
+
+
+!!
+PLETAB,%UYmax%,1
+*get,UYMax,PLNSOL,,MAX
+PLETAB,%UYmin%,1
+*get,UYMin,PLNSOL,,MIN
+UY=ABS(ABS(UYMax)-ABS(UYMin))
+
+PLETAB,%UXmax%,1
+*get,UXMax,PLNSOL,,MAX
+PLETAB,%UXmin%,1
+*get,UXMin,PLNSOL,,MIN
+UX=ABS(ABS(UXMax)-ABS(UXMin))
+!!
+
+
+
+
+
+

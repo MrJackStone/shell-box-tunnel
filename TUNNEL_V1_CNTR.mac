@@ -1,0 +1,151 @@
+! TUNNEL_V1_CNTR, window, title, etable, dscale
+! TUNNEL_V1_CNTR,   arg1,  arg2,   arg3,   arg4, arg5,  arg6,   arg7
+
+! AR20: xMin
+! AR21: xMax
+! AR22: yMin
+! AR23: yMax
+! AR24: xTitle
+! AR25: yTitle
+! AR26: yRec
+! AR27: xLegend
+! AR28: minVal
+! AR29: maxVal
+! AR30: minScale
+! AR31: maxScale
+! AR32:
+! AR33:
+! AR34:
+! AR35:
+! AR36:
+! AR37:
+! AR38:
+! AR39:
+
+/view,arg1,1,1,1
+/angle,arg1
+/focus,arg1,auto
+/dist,arg1,auto
+gplot
+
+! Window size & position
+*if,arg1,eq,1,then
+    ! Top left
+    AR20= -1.00
+    AR21= -0.10
+    AR22=  0.00
+    AR23=  0.50
+*elseif,arg1,eq,2,then
+    ! Top right
+    AR20= -0.10
+    AR21=  0.80
+    AR22=  0.00
+    AR23=  0.50
+*elseif,arg1,eq,3,then
+    ! Bottom left
+    AR20= -1.00
+    AR21= -0.10
+    AR22= -0.50
+    AR23=  0.00
+*elseif,arg1,eq,4,then
+    ! Bottom right
+    AR20= -0.10
+    AR21=  0.80
+    AR22= -0.50
+    AR23=  0.00
+*endif
+
+! Title position
+AR24=AR20+0.02
+AR25=AR22+0.01
+
+! Polygon height
+AR26=AR22+0.05
+
+! Legend window width
+AR27=(AR20+AR21)/2
+
+! Rectangle
+/anum,,7
+/polygon, 4 , AR20 , AR22 , AR21 , AR22 , AR21 , AR26 , AR20 , AR26
+/pspec,0,1,1
+
+! Title
+*cfopen,'tmp_tlab',tmp
+    *vwrite,
+    ('/tspec,15,1,4')
+    *vwrite
+    ('/anum,,1')
+    *vwrite,ar24,ar25,arg2
+/tlabel, %g, %g, %c
+*cfclos
+/nopr
+/input,'tmp_tlab',tmp
+/delete,'tmp_tlab',tmp
+/gopr
+
+! Contour plot
+/window , arg1 , AR20 , AR21 ,  AR26 ,  AR23
+/view,arg1,1,1,1
+/auto,arg1
+/edge,arg1,0
+kplot
+/dscale,arg1,arg4
+
+!!
+cm,_COMPE_temp,elem
+cm,_COMPN_temp,node
+esel,s,type,,TYPE_SHELL181
+nsle,s
+/edge,arg1,1
+/device,vector,on
+/type,arg1,0
+pldisp
+/edge,arg1,0
+/type,arg1,3
+/device,vector,off
+cmsel,s,_COMPE_temp
+cmsel,s,_COMPN_temp
+/user,arg1
+!!
+
+pletab,arg3
+*get,AR28,plnsol,,min
+*get,AR29,plnsol,,max
+
+!!
+esel,s,type,,TYPE_SHELL181
+nsle,s
+/edge,arg1,1
+/device,vector,on
+/type,arg1,0
+pldisp
+/edge,arg1,0
+/type,arg1,3
+/device,vector,off
+cmsel,s,_COMPE_temp
+cmsel,s,_COMPN_temp
+cmdele,_COMPE_temp
+cmdele,_COMPN_temp
+!!
+
+/window,arg1,off
+
+! Legend
+AR30=nint(AR28/1000)
+AR31=nint(AR29/1000)
+/window , arg1 , AR20 , AR27 ,  AR26 ,  AR23
+/udoc,arg1,cntr,left
+/contour,arg1,9,AR30,,AR31
+/plopts,info,3
+/plopts,leg3,on
+/plopts,frame,off
+/focus,arg1,1e6,1e6,0,
+pletab,arg3 !!/replot
+/window,arg1,off
+/plopts,info,0
+/plopts,leg3,off
+/plopts,frame,on
+/contour,arg1
+
+
