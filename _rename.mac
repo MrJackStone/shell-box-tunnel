@@ -61,7 +61,7 @@
 ✅ GEO_HDW_BeamWidth     -> GEO_HDW_headBeamWidth
 ✅                       -> GEO_HDW_frontBeamWidth
 ✅                       -> GEO_HDW_backBeamWidth
-GEO_HDW_ColThk        -> GEO_HDW_columnThk
+✅ GEO_HDW_ColThk        -> GEO_HDW_columnThk
 GEO_HDW_pinTopBeam    -> GEO_HDW_beamRoofConnection
 
 GEO_APR_status        -> 

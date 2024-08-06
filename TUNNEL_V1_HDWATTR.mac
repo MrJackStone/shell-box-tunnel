@@ -65,6 +65,6 @@ SECTYPE,SEC_HDW_backBeam,SHELL,,'BBEAM'
 SECDATA,GEO_HDW_backBeamWidth,MAT_CONC
 
 sectype,SEC_HDW_Column,shell,,'COLUMN'
-secdata,GEO_HDW_ColThk
+secdata,GEO_HDW_columnThk
 
 
