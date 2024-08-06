@@ -90,7 +90,7 @@ APPLYING HORIZONTAL LOADS ON WALLS...
 
         ! Tensão horizontal devido à camada de solo
         EffectivePressure=Gammat*SoilHeightAbove
-        HorEffectivePressure=EffectivePressure*ActiveEPCoefficient-2*SoilCohesion*SQRT(ActiveEPCoefficient)
+        HorEffectivePressure=EffectivePressure*ActiveEPCoefficient-2*MAT_SOIL_cohesion*SQRT(ActiveEPCoefficient)
 
         NSEL,S,NODE,,NodeNum
         CMSEL,S,COMPE_temp
@@ -163,7 +163,7 @@ APPLYING HORIZONTAL LOADS ON WINGS...
 
         ! Tensão horizontal devido à camada de solo
         EffectivePressure=Gammat*SoilHeightAbove
-        HorEffectivePressure=EffectivePressure*ActiveEPCoefficient-2*SoilCohesion*SQRT(ActiveEPCoefficient)
+        HorEffectivePressure=EffectivePressure*ActiveEPCoefficient-2*MAT_SOIL_cohesion*SQRT(ActiveEPCoefficient)
 
         NSEL,S,NODE,,NodeNum
         CMSEL,S,COMPE_temp
