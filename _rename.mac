@@ -77,7 +77,7 @@ GEO_APR_thk           ->
 ✅ SoilDensity           -> MAT_SOIL_density
 
 ✅ LineDirection         -> LOAD_LTA_skew
-LOAD_LTName           -> LOAD_LTA_name
+✅ LOAD_LTName           -> LOAD_LTA_name
 LOAD_lineCount        -> LOAD_LTA_count
 LOAD_gauge            -> LOAD_LTA_gauge
 DeltaZOffset          -> LOAD_LTA_spacing

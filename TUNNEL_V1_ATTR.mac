@@ -330,7 +330,7 @@ BuoyancyLoad=Buoyancy*ElementArea
 ! LOADTRAIN, LTname, repetitions, offset, impactCoef, udlLen
 ltCenteringOffset=0!Eff_GalleryWidth/2
 ImpactCoefficient=1 ! Uniform impact coefficient deactivated. Using AREMA formulation (implemented directly in TUNNEL_V1_VERBOUSSINESQ)
-LOADTRAIN, LOAD_LTName,,ltCenteringOffset,ImpactCoefficient, 20
+LOADTRAIN, LOAD_LTA_name,,ltCenteringOffset,ImpactCoefficient, 20
 LOAD_LTPtCount=LOADTRAIN_VAR_count
 
 ! Z coordinate of each railway line

@@ -95,7 +95,7 @@
    (';  RowCount      = ',F3.0,TL1,' ')
    *vwrite,LoadCount
    (';  LoadCount     = ',F3.0,TL1,' ')
-   *vwrite,LOAD_LTName
+   *vwrite,LOAD_LTA_name
    (';  TREM TIPO: ',A8)
    *vwrite,
    (';  Positions      | Loads')
