@@ -259,13 +259,13 @@ GEO_corbelYOff_BOT=GEO_corbelH+(FloorThk/2)+floor_yProjection
 *if,GEO_ROOF_type,eq,1,then
     GEO_pinRoof=1
 
-    GEO_girderCount=NINT((GEO_TUN_length/GEO_roofbc)-0.5)
-    remLength=GEO_TUN_length-(GEO_girderCount*GEO_roofbc)
-    extrmbc=GEO_roofbc+(remLength/2)
+    GEO_girderCount=NINT((GEO_TUN_length/GEO_ROOF_precastWidth)-0.5)
+    remLength=GEO_TUN_length-(GEO_girderCount*GEO_ROOF_precastWidth)
+    extrmbc=GEO_ROOF_precastWidth+(remLength/2)
 
     *del,GEO_girderZ
     *dim,GEO_girderZ,array,GEO_girderCount-1
-    *vfill,GEO_girderZ,ramp,extrmbc,GEO_roofbc
+    *vfill,GEO_girderZ,ramp,extrmbc,GEO_ROOF_precastWidth
 *endif
 
 ! Check corbel status and pinned roof status
@@ -371,7 +371,7 @@ LOAD_z0=LOAD_zoff+((LOAD_lineCount-1)*LOAD_dist)/2
 !! 2.6 MESH
 !!
 *if,GEO_ROOF_type,eq,1,and,GEO_pinGirders,eq,0,then
-    FEM_ROOF_posKRot=MAT_CONC_E*FEM_TUN_esize*(GEO_rooftc**3)/(12*GEO_roofbc)
+    FEM_ROOF_posKRot=MAT_CONC_E*FEM_TUN_esize*(GEO_rooftc**3)/(12*GEO_ROOF_precastWidth)
     FEM_ROOF_negKRot=-FEM_ROOF_posKRot
 *else
     FEM_ROOF_posKRot=1
