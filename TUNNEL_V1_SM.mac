@@ -685,7 +685,7 @@ ALLSEL
         k_3=kp(wallX,GEO_TUN_effH,0)
         kwplan,1,k_1,k_2,k_3
 
-        *do,nthOp,1,GEO_TUN_iCols-1,1
+        *do,nthOp,1,GEO_IWALL_columnCount-1,1
             xOp=GEO_TUN_ozCenter(nthOp)
             asel,u,area,,all
             blc5,xOp,GEO_TUN_oyCenter,GEO_TUN_opW,GEO_TUN_opH
