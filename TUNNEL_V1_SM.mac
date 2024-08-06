@@ -946,7 +946,7 @@ CM,COMPL_Embankment,LINE
 ! Draw arrows marking each railway position
 LSEL,U,LINE,,ALL
 zRailway=zOffset
-*do,nthRailway,1,LOAD_lineCount,1
+*do,nthRailway,1,LOAD_LTA_count,1
 
     gaugeOff=LOAD_gauge/2
 

@@ -9,7 +9,7 @@ QZ_0=LOAD_z0
 
 *get,NodeCount,NODE,0,COUNT
 
-*do,nthLine,1,LOAD_lineCount,1
+*do,nthLine,1,LOAD_LTA_count,1
 
     *do,nthPointLoad,1,LOAD_LTPtCount,1
 

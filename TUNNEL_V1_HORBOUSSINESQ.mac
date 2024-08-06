@@ -33,7 +33,7 @@ QZ_0=LOAD_z0
 *del, NLIST_nsel
 *vget,NLIST_nsel,node,,nsel
 
-*do,nthLine,1,LOAD_lineCount,1
+*do,nthLine,1,LOAD_LTA_count,1
 
     *do,nthPointLoad,1,LOAD_LTPtCount,1
 

@@ -78,7 +78,7 @@ GEO_APR_thk           ->
 
 ✅ LineDirection         -> LOAD_LTA_skew
 ✅ LOAD_LTName           -> LOAD_LTA_name
-LOAD_lineCount        -> LOAD_LTA_count
+✅ LOAD_lineCount        -> LOAD_LTA_count
 LOAD_gauge            -> LOAD_LTA_gauge
 DeltaZOffset          -> LOAD_LTA_spacing
 ImpactCoefficient     -> LOAD_LTA_impactCoefficient

@@ -217,7 +217,7 @@ GEO_corbelYOff_BOT=GEO_CORB_height+(GEO_FLOOR_thk/2)+floor_yProjection
 *if,GEO_APR_status,EQ,1,THEN
     *afun,DEG
 
-    GEO_APR_zAxis=LOAD_zoff+((LOAD_lineCount-1)*LOAD_dist)/2
+    GEO_APR_zAxis=LOAD_zoff+((LOAD_LTA_count-1)*LOAD_dist)/2
     GEO_APR_zAxW=tan(LOAD_LTA_skew)*(Eff_GalleryWidth*GEO_TUN_modules)/2
     GEO_APR_zS=GEO_APR_width/(2*cos(LOAD_LTA_skew))
     GEO_APR_zL=GEO_APR_length*tan(LOAD_LTA_skew)
@@ -335,15 +335,15 @@ LOAD_LTPtCount=LOADTRAIN_VAR_count
 
 ! Z coordinate of each railway line
 *del,zOffsets
-*dim,zOffsets,ARRAY,LOAD_lineCount
+*dim,zOffsets,ARRAY,LOAD_LTA_count
 zOff=zOffset
-*do,nthLine,1,LOAD_lineCount,1
+*do,nthLine,1,LOAD_LTA_count,1
     zOffsets(nthLine)=zOff
     zOff=zOff+DeltaZOffset
 *enddo
 
 ! Z coordinate of point where tunnel axis intersects railway axis (pivot point)
-LOAD_z0=LOAD_zoff+((LOAD_lineCount-1)*LOAD_dist)/2
+LOAD_z0=LOAD_zoff+((LOAD_LTA_count-1)*LOAD_dist)/2
 !
 !
 !
