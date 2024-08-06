@@ -8,7 +8,7 @@
 ✅ RoofThk               -> GEO_ROOF_thk
 ✅ GEO_roofbc            -> GEO_ROOF_precastWidth
 ✅ GEO_rooftc            -> GEO_ROOF_precastHeight
-GEO_pinGirders        -> GEO_ROOF_continuity
+✅ GEO_pinGirders        -> GEO_ROOF_continuity
 GEO_pinRoof           -> GEO_ROOF_wallConnection
 
 FloorThk              -> GEO_FLOOR_floorThk

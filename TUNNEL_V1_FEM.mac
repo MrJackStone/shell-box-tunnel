@@ -489,7 +489,7 @@ NSLA,S,1
 *endif
 
 ! Between roof precast girders
-*if,GEO_ROOF_type,eq,1,and,GEO_pinGirders,eq,0,then
+*if,GEO_ROOF_type,eq,1,and,GEO_ROOF_continuity,eq,0,then
     cmsel,s,COMPA_Roof
     lsla,s
     ! Remove longitudinal lines from selection
