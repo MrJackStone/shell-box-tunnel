@@ -217,9 +217,13 @@ AATT,3,,1,CS_top,SEC_ROOF
     AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Stiffener
 
     CMSEL,S,COMPA_HDW_TopBeam
-    CMSEL,A,COMPA_HDW_BotBeam
-    CMSEL,A,COMPA_HDW_BackBeam
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_Beam
+    AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_headBeam
+
+    CMSEL,s,COMPA_HDW_BotBeam
+    AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_frontBeam
+
+    CMSEL,s,COMPA_HDW_BackBeam
+    AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_backBeam
 
     cmsel,s,COMPA_HDW_Columns
     aatt,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_Column

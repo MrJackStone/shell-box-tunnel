@@ -58,8 +58,9 @@
 ✅ GEO_HDW_SlabThk       -> GEO_HDW_slabThk
 ✅ GEO_HDW_StiffenerThk  -> GEO_HDW_slabStfThk
 ✅ GEO_HDW_FootingHeight -> GEO_HDW_footHeight
-GEO_HDW_BeamWidth     -> GEO_HDW_headBeamWidth
-                      -> GEO_HDW_floorBeamWidth
+✅ GEO_HDW_BeamWidth     -> GEO_HDW_headBeamWidth
+✅                       -> GEO_HDW_frontBeamWidth
+✅                       -> GEO_HDW_backBeamWidth
 GEO_HDW_ColThk        -> GEO_HDW_columnThk
 GEO_HDW_pinTopBeam    -> GEO_HDW_beamRoofConnection
 
@@ -90,3 +91,7 @@ LOAD_LVPos            -> LOAD_LTI_position
 
 ElementSize           -> FEM_TUN_esize
 FEM_HDW_ESize         -> FEM_HDW_esize
+
+
+headBeam, frontBeam, backBeam
+~floorBeam~
