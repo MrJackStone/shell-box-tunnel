@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-GEO_TUN_roofThk    = RoofThk
 GEO_TUN_floorThk   = FloorThk
 GEO_TUN_wallThk    = WallThk
 GEO_TUN_depth      = GalleryDepth
@@ -61,7 +60,7 @@ MassDensity=2500
 *if,parType,NE,0,THEN
     EPSThk=0
 *endif
-TopSlab_EqvMassDensity=2500*(RoofThk-EPSThk)/RoofThk
+TopSlab_EqvMassDensity=2500*(GEO_ROOF_thk-EPSThk)/RoofThk
 
 ! Water mass density
 WaterDensity=1000
@@ -172,7 +171,7 @@ REAL_rigidStrut=5
 *else
     Eff_GalleryWidth=GEO_TUN_moduleWidth+(WallThk+iThk)/2
 *endif
-Eff_GalleryHeight=GEO_TUN_height+(FloorThk+RoofThk)/2
+Eff_GalleryHeight=GEO_TUN_height+(FloorThk+GEO_ROOF_thk)/2
 
 GEO_TUN_effW       = Eff_GalleryWidth
 GEO_TUN_effH       = Eff_GalleryHeight
@@ -224,10 +223,10 @@ ElementArea=ElementSize**2
 *endif
 
 ! Calculate corbel offsets
-roof_xProjection=(RoofThk/2)*(GEO_corbelW/GEO_corbelH)
+roof_xProjection=(GEO_ROOF_thk/2)*(GEO_corbelW/GEO_corbelH)
 roof_yProjection=(WallThk/2)*(GEO_corbelH/GEO_corbelW)
 GEO_corbelXOff_TOP=GEO_corbelW+(WallThk/2)+roof_xProjection
-GEO_corbelYOff_TOP=GEO_corbelH+(RoofThk/2)+roof_yProjection
+GEO_corbelYOff_TOP=GEO_corbelH+(GEO_ROOF_thk/2)+roof_yProjection
 
 floor_xProjection=(FloorThk/2)*(GEO_corbelH/GEO_corbelW)
 floor_yProjection=(WallThk/2)*(GEO_corbelH/GEO_corbelW)
@@ -547,7 +546,7 @@ SECDATA,FloorThk,1
 
 ! Tunnel ceiling slab
 SECTYPE,SEC_ROOF,SHELL,,'ROOF'
-SECDATA,RoofThk,1
+SECDATA,GEO_ROOF_thk,1
 !SECOFFSET,TOP
 
 *if,GEO_APR_status,eq,1,then
@@ -581,10 +580,10 @@ secdata,GEO_TUN_colB,MAT_CONC
     !TUNNEL_V1_SECCORBEL, namePrefix, corbelParallel, corbelOrtho,  baseThk, orthoThk,           corbelLen,           base_SEC,           base_CS,  dir
 
     ! Top slab, left side corbels
-    TUNNEL_V1_SECCORBEL,       'TL_',    GEO_corbelW, GEO_corbelH,  RoofThk,  WallThk,  GEO_corbelXOff_TOP,   SEC_ROOF_LCORBEL, CS_BASE_corbelTop,  'X'
+    TUNNEL_V1_SECCORBEL,       'TL_',    GEO_corbelW, GEO_corbelH,  GEO_ROOF_thk,  WallThk,  GEO_corbelXOff_TOP,   SEC_ROOF_LCORBEL, CS_BASE_corbelTop,  'X'
 
     ! Top slab, right side corbels
-    TUNNEL_V1_SECCORBEL,       'TR_',    GEO_corbelW, GEO_corbelH,  RoofThk,  WallThk, -GEO_corbelXOff_TOP,   SEC_ROOF_RCORBEL, CS_BASE_corbelTop,  'X'
+    TUNNEL_V1_SECCORBEL,       'TR_',    GEO_corbelW, GEO_corbelH,  GEO_ROOF_thk,  WallThk, -GEO_corbelXOff_TOP,   SEC_ROOF_RCORBEL, CS_BASE_corbelTop,  'X'
 
     ! Bottom slab, left side corbels
     TUNNEL_V1_SECCORBEL,       'BL_',    GEO_corbelW, GEO_corbelH, FloorThk,  WallThk,  GEO_corbelXOff_BOT,  SEC_FLOOR_LCORBEL, CS_BASE_corbelBot,  'X'
@@ -596,7 +595,7 @@ secdata,GEO_TUN_colB,MAT_CONC
     TUNNEL_V1_SECCORBEL,       'WB_',    GEO_corbelH, GEO_corbelW,  WallThk, FloorThk,  GEO_corbelYOff_BOT,   SEC_WALL_BCORBEL, CS_BASE_corbelBot,  'Y'
 
     ! Walls, top corbels
-    TUNNEL_V1_SECCORBEL,       'WT_',    GEO_corbelH, GEO_corbelW,  WallThk,  RoofThk, -GEO_corbelYOff_BOT,   SEC_WALL_TCORBEL, CS_BASE_corbelTop,  'Y'
+    TUNNEL_V1_SECCORBEL,       'WT_',    GEO_corbelH, GEO_corbelW,  WallThk,  GEO_ROOF_thk, -GEO_corbelYOff_BOT,   SEC_WALL_TCORBEL, CS_BASE_corbelTop,  'Y'
 
 *endif
 

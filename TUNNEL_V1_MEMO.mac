@@ -39,7 +39,7 @@
    (';  WallThk  = ',F10.4)
    *vwrite,FloorThk
    (';  FloorThk = ',F10.4)
-   *vwrite,RoofThk
+   *vwrite,GEO_ROOF_thk
    (';  RoofThk  = ',F10.4)
    *vwrite,
    ('SOLO:')
@@ -128,7 +128,7 @@
    *vwrite,
    ('ELEMENTO ;      LAJE DE PISO ; LAJE DE COBERTURA ;  PAREDES EXTERNAS ;  PAREDES INTERNAS ;')
    ! Thk
-   *vwrite,FloorThk,RoofThk,WallThk,WallThk
+   *vwrite,FloorThk,GEO_ROOF_thk,WallThk,WallThk
    ('THK      ; ',F17.7,' ; ',F17.7,' ; ',F17.7,' ; ',F17.7,' ;')
    ! MX
    *vwrite,FloorMXMAX*1e-3,RoofMXMAX*1e-3,WallMXMAX*1e-3,IntMXMAX*1e-3

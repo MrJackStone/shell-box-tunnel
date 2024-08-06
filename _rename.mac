@@ -5,7 +5,7 @@
 ✅ Tunneli               -> GEO_TUN_slope
 
 ✅ GEO_roofGirders       -> GEO_ROOF_type
-RoofThk               -> GEO_ROOF_thk
+✅ RoofThk               -> GEO_ROOF_thk
 GEO_roofbc            -> GEO_ROOF_precastWidth
 GEO_rooftc            -> GEO_ROOF_precastHeight
 GEO_pinGirders        -> GEO_ROOF_continuity

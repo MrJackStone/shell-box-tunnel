@@ -48,7 +48,7 @@ x2Offset=0  ! Saída inútil --- remover e compatibilizar com planilha do Excel
 *cfclos
 
 *cfopen,RoofRES,'TXT',,APPEND
-   *vwrite,GalleryDepth,x1Offset,x2Offset,RoofThk,RoofMXMAX,RoofMXMIN,RoofMYMAX,RoofMYMIN,RoofFXMAX,RoofFXMIN,RoofFYMAX,RoofFYMIN,RoofQXMAX,RoofQYMAX
+   *vwrite,GalleryDepth,x1Offset,x2Offset,GEO_ROOF_thk,RoofMXMAX,RoofMXMIN,RoofMYMAX,RoofMYMIN,RoofFXMAX,RoofFXMIN,RoofFYMAX,RoofFYMIN,RoofQXMAX,RoofQYMAX
    (F8.4,'; ',F8.4,'; ',F8.4,'; ',F8.4,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2)
 *cfclos
 

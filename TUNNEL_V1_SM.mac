@@ -907,14 +907,14 @@ zREF=KZ(KRef)
 ! Calculate vertex location for embankment keypoints
 *afun,DEG
 xPT=GEO_TUN_totEffW/2
-yPT1=COS(TunnelSlope)*(Eff_GalleryHeight+(RoofThk/2))
+yPT1=COS(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
 yPT2=yPT1+GalleryDepth
-zPT1=-SIN(TunnelSlope)*(Eff_GalleryHeight+(RoofThk/2))
+zPT1=-SIN(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
 zPT2=zPT1+(GalleryDepth/TAN(GalleryThetai))
 yPT3=yPT2
-yPT4=yREF+COS(TunnelSlope)*(RoofThk/2)
+yPT4=yREF+COS(TunnelSlope)*(GEO_ROOF_thk/2)
 depthFromEnd=yPT2-yPT4
-zPT4=zREF-SIN(TunnelSlope)*(RoofThk/2)
+zPT4=zREF-SIN(TunnelSlope)*(GEO_ROOF_thk/2)
 zPT3=zPT4-(depthFromEnd/TAN(GalleryThetaf))
 *afun,RAD
 
