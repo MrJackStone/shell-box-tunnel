@@ -193,7 +193,7 @@ cm,COMPN_FR2_rCol,node
     cmsel,s,COMPE_FR1_bBeam
     pth2beam, FR1_BBEAM_top_n1, FR1_BBEAM_top_n2, FR1_BBEAM_bot_n1, FR1_BBEAM_bot_n2, 'BBEAM', 1, pathDiv, BBEAM_W, BBEAM_A, 1, 'RES_ENV_bBeam'
 
-    *if,GEO_RetMode,ne,1,then
+    *if,GEO_HDW_type,ne,1,then
         cmsel,s,COMPN_FR1_lCol
         cmsel,s,COMPE_FR1_lCol
         pth2beam, FR1_LCOL_left_n1, FR1_LCOL_left_n2, FR1_LCOL_right_n1, FR1_LCOL_right_n2, 'LCOL',-1,pathDiv,COL_W, COL_A, 1, 'RES_ENV_lCol'
@@ -289,7 +289,7 @@ go2png,1800
     wind=1
     /window,wind,on
 
-    *if,GEO_RetMode,ne,1,then
+    *if,GEO_HDW_type,ne,1,then
         PLPTHENV_ARR_paths(1)='TBEAM'
         plpthenv,wind1,xmin1,xmax1,ymin1,ymax1, 'MP', ' ', 1e-3, 10, 0, 2,,,,1
         PLPTHENV_ARR_paths(1)='BBEAM'
@@ -311,7 +311,7 @@ go2png,1800
     wind=2
     /window,wind,on
 
-    *if,GEO_RetMode,ne,1,then
+    *if,GEO_HDW_type,ne,1,then
         PLPTHENV_ARR_paths(1)='TBEAM'
         plpthenv,wind2,xmin2,xmax2,ymin2,ymax2, 'N', ' ', 1e-3, 10, 0, 2,,,,1
         PLPTHENV_ARR_paths(1)='BBEAM'
@@ -333,7 +333,7 @@ go2png,1800
     wind=3
     /window,wind,on
 
-    *if,GEO_RetMode,ne,1,then
+    *if,GEO_HDW_type,ne,1,then
         PLPTHENV_ARR_paths(1)='TBEAM'
         plpthenv,wind3,xmin3,xmax3,ymin3,ymax3, 'V', ' ', 1e-3, 10, 0, 2,,,,1
         PLPTHENV_ARR_paths(1)='BBEAM'
@@ -355,7 +355,7 @@ go2png,1800
     wind=4
     /window,wind,on
 
-    *if,GEO_RetMode,ne,1,then
+    *if,GEO_HDW_type,ne,1,then
         PLPTHENV_ARR_paths(1)='TBEAM'
         plpthenv,wind4,xmin4,xmax4,ymin4,ymax4, 'DYB', ' ', 1e3, 10, 2, 2,,,,1
         PLPTHENV_ARR_paths(1)='BBEAM'

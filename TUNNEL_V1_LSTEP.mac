@@ -261,7 +261,7 @@ APPLYING BUOYANCY LOADS ON FLOOR SLAB...
 
     !! 5.4.5 WINGS
     !!
-    *if,GEO_RetMode,EQ,1,THEN
+    *if,GEO_HDW_type,EQ,1,THEN
 
         *msg,UI,FILE_name,LoadStepIndex
 TUNNEL # %s %/&

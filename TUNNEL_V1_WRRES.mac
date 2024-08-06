@@ -149,7 +149,7 @@ SECTION: %I / %I
     zSect_eR=zSect_e+GEO_ExtraLength
 
     CSYS,CS_Tunnel
-    *if,GEO_RetMode,EQ,1,THEN
+    *if,GEO_HDW_type,EQ,1,THEN
         TUNNEL_V1_OBLQSECT
         /view,1,0,1,0
         /auto

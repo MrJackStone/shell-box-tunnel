@@ -470,7 +470,7 @@ endpng,'REPORT_WallLoad'
 !!
 !! 8.6 LOADS ON FOOTINGS
 !!
-*if,GEO_RetMode,eq,0,then
+*if,GEO_HDW_type,eq,0,then
     ! Node selection
     cmsel,s,COMPA_HDW_Footing
     nsla,s,1

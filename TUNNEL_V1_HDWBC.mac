@@ -102,7 +102,7 @@ CM,WallSupportElements,ELEM
    EffectiveArea=TotalArea/4
    EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
 
-   *if,GEO_RetMode,EQ,1,THEN
+   *if,GEO_HDW_type,EQ,1,THEN
        *if,zVal,LT,GEO_TUN_length/2,THEN
            XdirMult=-1
            ZdirMult=1

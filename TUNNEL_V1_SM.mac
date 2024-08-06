@@ -161,7 +161,7 @@ ALLSEL
 !
 !! 3.1.2 OBLIQUE CUT AT TUNNEL ENDS
 !!
-*if,GEO_RetMode,EQ,1,AND,GEO_HDW_angle,NE,0,THEN
+*if,GEO_HDW_type,EQ,1,AND,GEO_HDW_angle,NE,0,THEN
 
     *get,CSMax,CDSY,,NUM,MAX
     tmpCS=CSMax+1000
@@ -238,7 +238,7 @@ TUNNEL_V1_BUILDCM
 !!
 !! 3.2 SPLIT WINGS
 !!
-*if,GEO_RetMode,EQ,1,AND,GEO_WallBotOffset,GT,0,THEN
+*if,GEO_HDW_type,EQ,1,AND,GEO_WallBotOffset,GT,0,THEN
 
     ! Walls
     CMSEL,S,COMPA_Walls

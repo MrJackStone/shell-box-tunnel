@@ -122,7 +122,7 @@ KP23=KPMaxD+30
 KP31=KPMaxD+31
 KP32=KPMaxD+32
 
-*if,GEO_RetMode,EQ,0,THEN
+*if,GEO_HDW_type,EQ,0,THEN
 
     !!
     !! FULL INLET
@@ -565,7 +565,7 @@ KP32=KPMaxD+32
     ALLSEL
 
 
-*elseif,GEO_RetMode,EQ,1,THEN
+*elseif,GEO_HDW_type,EQ,1,THEN
 
     !!
     !! WINGS

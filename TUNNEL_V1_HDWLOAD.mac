@@ -3,7 +3,7 @@
 ALLSEL
 CSYS,CS_Tunnel
 
-*if,GEO_RetMode,EQ,0,THEN
+*if,GEO_HDW_type,EQ,0,THEN
 
     *msg,UI,FILE_name
 TUNNEL # %s %/&
@@ -127,7 +127,7 @@ APPLYING HORIZONTAL LOADS ON WALLS...
     F,NodeNumbers(1:NodeCount),FZ,NodalZLoad(1:NodeCount)
     CSYS,CS_Tunnel
 
-*elseif,GEO_RetMode,EQ,1,THEN
+*elseif,GEO_HDW_type,EQ,1,THEN
 
      *msg,UI,FILE_name
 TUNNEL # %s %/&

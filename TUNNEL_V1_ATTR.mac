@@ -162,7 +162,7 @@ GEO_TUN_effW       = Eff_GalleryWidth
 GEO_TUN_effH       = Eff_GalleryHeight
 GEO_TUN_totEffW    = GEO_TUN_effW*GEO_TUN_modules
 
-*if,GEO_RetMode,EQ,1,THEN
+*if,GEO_HDW_type,EQ,1,THEN
     !!GEO_HDW_angle=90
     *afun,DEG
     GEO_ExtraLength=TAN(GEO_HDW_angle)*GEO_TUN_totEffW
