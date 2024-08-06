@@ -105,10 +105,10 @@ WRITING RESULTS...
 SET,LAST
 
 ! Element tables
-TUNNEL_V0_ETAB
+TUNNEL_V1_ETAB
 
 ! Reações sobre o solo
-TUNNEL_V0_REACT
+TUNNEL_V1_REACT
 
 ! Write results
 TUNNEL_V1_WRRES

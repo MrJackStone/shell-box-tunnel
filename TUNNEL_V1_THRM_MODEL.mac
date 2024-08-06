@@ -108,10 +108,10 @@ TUNNEL_V1_THERMALPOST
 
 /eof
 ! Element tables
-TUNNEL_V0_ETAB
+TUNNEL_V1_ETAB
 
 ! Reações sobre o solo
-TUNNEL_V0_REACT
+TUNNEL_V1_REACT
 
 ! Write results
 TUNNEL_V1_WRRES
@@ -149,9 +149,9 @@ FINISH
 /eof
 
 ! Escrever conjunto de resultados
-TUNNEL_V0_GROUPMEMO
+TUNNEL_V1_GROUPMEMO
 
-TUNNEL_V0_SCTDMF
+TUNNEL_V1_SCTDMF
 
 
 

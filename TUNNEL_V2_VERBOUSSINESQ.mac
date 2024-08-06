@@ -24,7 +24,7 @@ QZ_0=LOAD_z0
         QX_i=LoadPosition+xOffset
         QY=GEO_TUN_effH+GalleryDepth
         QZ_i=zOffsets(nthLine)
-        TUNNEL_V0_LTPOS, QX_i, QZ_i, QX_0, QZ_0, -LOAD_skewRad, 1
+        TUNNEL_V1_LTPOS, QX_i, QZ_i, QX_0, QZ_0, -LOAD_skewRad, 1
 
         *if,GalleryDepth,LT,MinimumSoilCover,THEN
 

@@ -584,7 +584,7 @@ secdata,GEO_TUN_colB,MAT_CONC
 *endif
 
 *if,GEO_corbel,GE,1,THEN
-    !TUNNEL_V0_SECCORBEL, namePrefix, corbelParallel, corbelOrtho,  baseThk, orthoThk,           corbelLen,           base_SEC,           base_CS,  dir
+    !TUNNEL_V1_SECCORBEL, namePrefix, corbelParallel, corbelOrtho,  baseThk, orthoThk,           corbelLen,           base_SEC,           base_CS,  dir
 
     ! Top slab, left side corbels
     TUNNEL_V1_SECCORBEL,       'TL_',    GEO_corbelW, GEO_corbelH,  RoofThk,  WallThk,  GEO_corbelXOff_TOP,   SEC_ROOF_LCORBEL, CS_BASE_corbelTop,  'X'
