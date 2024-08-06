@@ -42,8 +42,8 @@ etable,'M11',smisc,4
 ! Calculate geometric cross-sectional properties
 IWTB_A  = GEO_IWALL_topBeamHeight*GEO_IWALL_topBeamWidth
 IWTB_W  = GEO_IWALL_topBeamWidth*(GEO_IWALL_topBeamHeight**2)/6
-IWBB_A  = GEO_TUN_bBeamH*GEO_TUN_bbB
-IWBB_W  = GEO_TUN_bbB*(GEO_TUN_bBeamH**2)/6
+IWBB_A  = GEO_IWALL_botBeamHeight*GEO_TUN_bbB
+IWBB_W  = GEO_TUN_bbB*(GEO_IWALL_botBeamHeight**2)/6
 IWCOL_A = GEO_TUN_colW*GEO_TUN_colB
 IWCOL_W = GEO_TUN_colB*(GEO_TUN_colW**2)/6
 
@@ -81,8 +81,8 @@ IWCOL_W = GEO_TUN_colB*(GEO_TUN_colW**2)/6
         cmsel,r,COMPA_bBeam
         esla,s
         nsle,s
-        top_n1=node(             0 , GEO_TUN_bBeamH , 0)
-        top_n2=node(GEO_TUN_length , GEO_TUN_bBeamH , 0)
+        top_n1=node(             0 , GEO_IWALL_botBeamHeight , 0)
+        top_n2=node(GEO_TUN_length , GEO_IWALL_botBeamHeight , 0)
         bot_n1=node(             0 ,              0 , 0)
         bot_n2=node(GEO_TUN_length ,              0 , 0)
         pth2beam,     top_n1  , top_n2,   bot_n1,   bot_n2,       'IWBB',      1, pathDiv, IWBB_W, IWBB_A,      1, 'RES_ENV_IWALL_bBeam'
@@ -94,9 +94,9 @@ IWCOL_W = GEO_TUN_colB*(GEO_TUN_colW**2)/6
         nsle,s
         xLoc=0
         *do,nthCol,1,GEO_TUN_iCols,1
-            top_n1=node(             xLoc ,              GEO_TUN_bBeamH , 0)
+            top_n1=node(             xLoc ,              GEO_IWALL_botBeamHeight , 0)
             top_n2=node(             xLoc , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0)
-            bot_n1=node(xLoc+GEO_TUN_colW ,              GEO_TUN_bBeamH , 0)
+            bot_n1=node(xLoc+GEO_TUN_colW ,              GEO_IWALL_botBeamHeight , 0)
             bot_n2=node(xLoc+GEO_TUN_colW , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0)
             colPName=strcat('COL',chrval(nthCol))
             envAName=strcat('RES_ENV_IWALL_col',chrval(nthCol))
@@ -121,8 +121,8 @@ IWCOL_W = GEO_TUN_colB*(GEO_TUN_colW**2)/6
             pth2beam, top_n1, top_n2, bot_n1, bot_n2, tsPName, 1, pathDiv, 1, 1, 1, envAName
 
             ! Bottom beam
-            top_n1=node(            xLoc , GEO_TUN_bBeamH , 0)
-            top_n2=node(xLoc+GEO_TUN_opW , GEO_TUN_bBeamH , 0)
+            top_n1=node(            xLoc , GEO_IWALL_botBeamHeight , 0)
+            top_n2=node(xLoc+GEO_TUN_opW , GEO_IWALL_botBeamHeight , 0)
             bot_n1=node(            xLoc ,              0 , 0)
             bot_n2=node(xLoc+GEO_TUN_opW ,              0 , 0)
             bsPName=strcat('IWBS',chrval(nthBeam))

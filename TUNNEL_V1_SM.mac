@@ -704,7 +704,7 @@ ALLSEL
     cmsel,s,COMPA_InnerWalls
     lsla,s
     ksll,s
-    csslicexz,GEO_TUN_bBeamH
+    csslicexz,GEO_IWALL_botBeamHeight
     csslicexz,GEO_TUN_effH-GEO_IWALL_topBeamHeight
     nummrg,kp
     cm,COMPA_InnerWalls,area
@@ -712,7 +712,7 @@ ALLSEL
     cm,COMPA_Walls,area
 
     cmsel,s,COMPA_InnerWalls
-    asel,r,loc,y,0,GEO_TUN_bBeamH
+    asel,r,loc,y,0,GEO_IWALL_botBeamHeight
     cm,COMPA_bBeam,area
     cmsel,s,COMPA_InnerWalls
     asel,r,loc,y,GEO_TUN_effH-GEO_IWALL_topBeamHeight,GEO_TUN_effH
