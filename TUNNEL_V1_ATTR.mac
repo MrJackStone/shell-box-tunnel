@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-GEO_TUN_slope      = Tunneli
 GEO_TUN_roofThk    = RoofThk
 GEO_TUN_floorThk   = FloorThk
 GEO_TUN_wallThk    = WallThk
@@ -190,7 +189,7 @@ GEO_TUN_totEffW    = GEO_TUN_effW*GEO_TUN_modules
 *endif
 
 ! Tunnel slope (in degrees)
-TunnelSlope=ATAN(Tunneli/100)*180/pi
+TunnelSlope=ATAN(GEO_TUN_slope/100)*180/pi
 
 ! Traffic/track direction (in radians)
 LineAngle=LineDirection*pi/180
