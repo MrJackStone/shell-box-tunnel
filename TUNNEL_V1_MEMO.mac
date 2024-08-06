@@ -49,7 +49,7 @@
    (';  FrictionAngle        = ',F10.4)
    *vwrite,MAT_SOIL_cohesion
    (';  SoilCohesion         = ',E12.4)
-   *vwrite,SoilDensity
+   *vwrite,MAT_SOIL_density
    (';  SoilDensity          = ',F10.4)
    *vwrite,MAT_SOIL_stiffness
    (';  SoilStiffness        = ',E12.4)

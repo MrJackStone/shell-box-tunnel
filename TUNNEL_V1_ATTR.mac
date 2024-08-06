@@ -11,8 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-MAT_SOIL_dens = SoilDensity
-
 LOAD_skew     = LineDirection
 LOAD_dist     = DeltaZOffset
 LOAD_impact   = ImpactCoefficient
@@ -312,7 +310,7 @@ MAT_RIGID_Poisson=0.3
 ! Specific weight: water
 Gammaw=WaterDensity*Gravity
 ! Specific weight: dry soil
-Gammat=SoilDensity*Gravity
+Gammat=MAT_SOIL_density*Gravity
 ! Specific weight: saturated soil
 GammaSAT=Gammat+(SaturationIncrement*Gravity)
 ! Specific weight: submerged soil

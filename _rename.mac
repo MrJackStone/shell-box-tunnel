@@ -74,7 +74,7 @@ GEO_APR_thk           ->
 ✅ SoilStiffness         -> MAT_SOIL_stiffness
 ✅ FrictionAngle         -> MAT_SOIL_frictionAngle
 ✅ SoilCohesion          -> MAT_SOIL_cohesion
-SoilDensity           -> MAT_SOIL_density
+✅ SoilDensity           -> MAT_SOIL_density
 
 LineDirection         -> LOAD_LTA_skew
 LOAD_LTName           -> LOAD_LTA_name
