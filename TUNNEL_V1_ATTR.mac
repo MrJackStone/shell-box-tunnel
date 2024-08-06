@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-MAT_SOIL_phi  = FrictionAngle
 MAT_SOIL_c    = SoilCohesion
 MAT_SOIL_dens = SoilDensity
 
@@ -298,9 +297,9 @@ SpringConstant=MAT_SOIL_stiffness*ElementArea
 SpringArea=SpringConstant*SpringLength/SpringElasticModulus
 
 ! Active Earth Pressure Coeficient (Ka)
-ActiveEPCoefficient=TAN((45-(FrictionAngle/2))*pi/180)**2
+ActiveEPCoefficient=TAN((45-(MAT_SOIL_frictionAngle/2))*pi/180)**2
 ! Rest Earth Pressure Coefficient (K0)
-RestEPCoefficient=1-SIN(FrictionAngle*pi/180)
+RestEPCoefficient=1-SIN(MAT_SOIL_frictionAngle*pi/180)
 
 ! Rigid struts
 MAT_RIGID_E=2e9

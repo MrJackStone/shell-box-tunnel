@@ -45,7 +45,7 @@
    ('SOLO:')
    *vwrite,MinimumSoilCover
    (';  MinimumSoilCover     = ',F10.4)
-   *vwrite,FrictionAngle
+   *vwrite,MAT_SOIL_frictionAngle
    (';  FrictionAngle        = ',F10.4)
    *vwrite,SoilCohesion
    (';  SoilCohesion         = ',E12.4)
