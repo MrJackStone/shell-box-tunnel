@@ -40,12 +40,12 @@ etable,'M11',smisc,4
 *enddo
 
 ! Calculate geometric cross-sectional properties
-IWTB_A=GEO_IWALL_topBeamHeight*GEO_TUN_tbB
-IWTB_W=GEO_TUN_tbB*(GEO_IWALL_topBeamHeight**2)/6
-IWBB_A=GEO_TUN_bBeamH*GEO_TUN_bbB
-IWBB_W=GEO_TUN_bbB*(GEO_TUN_bBeamH**2)/6
-IWCOL_A=GEO_TUN_colW*GEO_TUN_colB
-IWCOL_W=GEO_TUN_colB*(GEO_TUN_colW**2)/6
+IWTB_A  = GEO_IWALL_topBeamHeight*GEO_IWALL_topBeamWidth
+IWTB_W  = GEO_IWALL_topBeamWidth*(GEO_IWALL_topBeamHeight**2)/6
+IWBB_A  = GEO_TUN_bBeamH*GEO_TUN_bbB
+IWBB_W  = GEO_TUN_bbB*(GEO_TUN_bBeamH**2)/6
+IWCOL_A = GEO_TUN_colW*GEO_TUN_colB
+IWCOL_W = GEO_TUN_colB*(GEO_TUN_colW**2)/6
 
 *do,nthLS,1,LoadStepCount,1
 

@@ -157,7 +157,7 @@ REAL_rigidStrut=5
     *if,GEO_IWALL_type,eq,0,then
         ! Do nothing
     *elseif,GEO_IWALL_type,eq,1,then
-        GEO_IWALL_thk = ((GEO_TUN_tbB>GEO_TUN_bbB)>GEO_TUN_colB)
+        GEO_IWALL_thk = ((GEO_IWALL_topBeamWidth>GEO_TUN_bbB)>GEO_TUN_colB)
     *endif
 *else
     GEO_IWALL_thk=0
@@ -554,7 +554,7 @@ SECDATA,GEO_ROOF_thk,1
 
 ! Top beam (inner walls)
 sectype,SEC_tBeam,shell,,'TBEAM'
-secdata,GEO_TUN_tbB,MAT_CONC
+secdata,GEO_IWALL_topBeamWidth,MAT_CONC
 
 ! Bottom beam (inner walls)
 sectype,SEC_bBeam,shell,,'BBEAM'
