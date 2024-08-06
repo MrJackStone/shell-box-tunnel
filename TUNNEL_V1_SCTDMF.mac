@@ -1,10 +1,10 @@
 ! TUNNEL_V1_SCTDMF
 
 
-one_sixth=GalleryLength/6
+one_sixth=GEO_TUN_length/6
 *del,sec_positions
 *dim,sec_positions,,7
-sec_positions(1)=0, one_sixth, one_sixth*2, one_sixth*3, one_sixth*4, one_sixth*5, GalleryLength
+sec_positions(1)=0, one_sixth, one_sixth*2, one_sixth*3, one_sixth*4, one_sixth*5, GEO_TUN_length
 
 nsel,s,loc,x,0
 nsel,r,loc,y,0
