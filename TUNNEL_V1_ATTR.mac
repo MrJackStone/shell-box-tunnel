@@ -11,8 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-GEO_TUN_depth      = GalleryDepth
-
 GEO_EMB_thetai     = GalleryThetai
 GEO_EMB_thetaf     = GalleryThetaf
 GEO_EMB_waterDepth = WaterDepth
@@ -196,8 +194,8 @@ ElementArea=ElementSize**2
 
 ! Water level (global cartesian coordinate)
 *if,WaterDepth,GE,0,THEN
-    WaterY=GalleryDepth-WaterDepth+Eff_GalleryHeight
-    WaterHeight=Eff_GalleryHeight+GalleryDepth-WaterDepth
+    WaterY=GEO_EMB_height-WaterDepth+Eff_GalleryHeight
+    WaterHeight=Eff_GalleryHeight+GEO_EMB_height-WaterDepth
 *else
     WaterY=0
     WaterHeight=0
@@ -334,10 +332,10 @@ GammaSAT=Gammat+(SaturationIncrement*Gravity)
 GammaSUB=GammaSAT-Gammaw
 
 ! Tensão vertical devido à camada de cobrimento
-*if,WaterDepth,GE,0,AND,WaterDepth,LT,GalleryDepth,THEN
-    SoilPressure=Gammat*WaterDepth+GammaSAT*(GalleryDepth-WaterDepth)
+*if,WaterDepth,GE,0,AND,WaterDepth,LT,GEO_EMB_height,THEN
+    SoilPressure=Gammat*WaterDepth+GammaSAT*(GEO_EMB_height-WaterDepth)
 *else
-    SoilPressure=Gammat*GalleryDepth
+    SoilPressure=Gammat*GEO_EMB_height
 *endif
 NodalSoilLoad=SoilPressure*ElementArea
 

@@ -908,9 +908,9 @@ zREF=KZ(KRef)
 *afun,DEG
 xPT=GEO_TUN_totEffW/2
 yPT1=COS(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
-yPT2=yPT1+GalleryDepth
+yPT2=yPT1+GEO_EMB_height
 zPT1=-SIN(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
-zPT2=zPT1+(GalleryDepth/TAN(GalleryThetai))
+zPT2=zPT1+(GEO_EMB_height/TAN(GalleryThetai))
 yPT3=yPT2
 yPT4=yREF+COS(TunnelSlope)*(GEO_ROOF_thk/2)
 depthFromEnd=yPT2-yPT4

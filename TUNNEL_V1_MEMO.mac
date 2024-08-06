@@ -19,7 +19,7 @@
    (';  Eff_GalleryHeight = ',F10.4)
    *vwrite,Eff_GalleryWidth
    (';  Eff_GalleryWidth  = ',F10.4)
-   *vwrite,GalleryDepth
+   *vwrite,GEO_EMB_height
    (';  GalleryDepth      = ',F10.4)
    *vwrite,
    ('CONCRETO:')

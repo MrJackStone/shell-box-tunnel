@@ -36,8 +36,8 @@ fi=FrictionAngle*pi/180
 WallLength=GEO_InletLength/COS(GEO_InletRadians)
 GEO_HDW_WallSlope=(GEO_HDW_Height-GEO_HDW_endH)/(WallLength-GEO_HDW_WallTopLen) !!
 
-MinimumDepth=GalleryDepth-GEO_HDW_HeadBeamH
-MaximumDepth=GalleryDepth+Eff_GalleryHeight+GEO_FootingDepth
+MinimumDepth=GEO_EMB_height-GEO_HDW_HeadBeamH
+MaximumDepth=GEO_EMB_height+Eff_GalleryHeight+GEO_FootingDepth
 
 /prep7
 

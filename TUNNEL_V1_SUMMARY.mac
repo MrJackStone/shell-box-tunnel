@@ -35,7 +35,7 @@ Identification: %c
     ('Load Z:      ',F8.3)
     *vwrite,LOAD_skew
     ('Load skew:   ',F8.3)
-    *vwrite,GEO_TUN_depth
+    *vwrite,GEO_EMB_height
     ('Tunnel depth:',F8.3)
 *cfclos
 

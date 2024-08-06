@@ -17,11 +17,11 @@ QZ_0=LOAD_z0
         LoadPosition=LOADTRAIN_ARR_positions(nthPointLoad)
 
         QX_i=LoadPosition+xOffset
-        QY=Eff_GalleryHeight+GalleryDepth
+        QY=Eff_GalleryHeight+GEO_EMB_height
         QZ_i=zOffsets(nthLine)
         TUNNEL_V1_LTPOS, QX_i, QZ_i, QX_0, QZ_0, -LOAD_skewRad, 1
 
-        *if,GalleryDepth,LT,MinimumSoilCover,THEN
+        *if,GEO_EMB_height,LT,MinimumSoilCover,THEN
 
             APPLY_LOAD = 0
 

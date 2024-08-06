@@ -29,7 +29,7 @@
 ✅ GEO_corbelW           -> GEO_CORB_width
 ✅ GEO_corbelH           -> GEO_CORB_height
 
-GalleryDepth          -> GEO_EMB_height
+✅ GalleryDepth          -> GEO_EMB_height
 GalleryThetai         -> GEO_EMB_slopeBeg
 GalleryThetaf         -> GEO_EMB_slopeEnd
 WaterDepth            -> GEO_EMB_waterDepth
