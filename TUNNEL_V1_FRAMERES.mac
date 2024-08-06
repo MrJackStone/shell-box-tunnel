@@ -44,7 +44,7 @@ x1=-GEO_HDW_ColWidth
 x2=0
 x3=GEO_TUN_totEffW
 x4=GEO_TUN_totEffW+GEO_HDW_ColWidth
-y1=-GEO_HDW_FootDepth
+y1=-GEO_HDW_footDepth
 y2=0
 y3=GEO_TUN_effH
 y4=GEO_TUN_effH+GEO_HDW_HeadBeamH
@@ -52,8 +52,8 @@ y4=GEO_TUN_effH+GEO_HDW_HeadBeamH
 ! Virtual beam geometric properties
 TBEAM_A=GEO_HDW_HeadBeamH*GEO_HDW_BeamWidth
 TBEAM_W=GEO_HDW_BeamWidth*(GEO_HDW_HeadBeamH**2)/6
-BBEAM_A=GEO_HDW_FootDepth*GEO_HDW_BeamWidth
-BBEAM_W=GEO_HDW_BeamWidth*(GEO_HDW_FootDepth**2)/6
+BBEAM_A=GEO_HDW_footDepth*GEO_HDW_BeamWidth
+BBEAM_W=GEO_HDW_BeamWidth*(GEO_HDW_footDepth**2)/6
 COL_A=GEO_HDW_ColWidth*GEO_HDW_ColThk
 COL_W=GEO_HDW_ColThk*(GEO_HDW_ColWidth**2)/6
 

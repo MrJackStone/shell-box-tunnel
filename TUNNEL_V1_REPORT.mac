@@ -361,7 +361,7 @@ endpng,'REPORT_RoofLoad'
 cmsel,s,COMPA_Walls
 cmsel,a,COMPA_HDW_Walls
 nsla,s,1
-nsel,u,loc,y,-GEO_HDW_FootDepth
+nsel,u,loc,y,-GEO_HDW_footDepth
 cm,COMPN_temp,node
 ! Line selection
 cmsel,s,COMPL_PLOT

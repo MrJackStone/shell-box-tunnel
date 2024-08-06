@@ -61,7 +61,7 @@ APPLYING HORIZONTAL LOADS ON WALLS...
 
     CMSEL,S,COMPA_HDW_Walls
     NSLA,S,1
-    NSEL,U,LOC,Y,-GEO_FootingDepth
+    NSEL,U,LOC,Y,-GEO_HDW_footDepth
 
     ESLN,S,1
     CM,COMPE_temp,ELEM

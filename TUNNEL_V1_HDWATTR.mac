@@ -31,7 +31,7 @@ WallLength=GEO_HDW_length/COS(GEO_InletRadians)
 GEO_HDW_WallSlope=(GEO_HDW_Height-GEO_HDW_endH)/(WallLength-GEO_HDW_WallTopLen) !!
 
 MinimumDepth=GEO_EMB_height-GEO_HDW_HeadBeamH
-MaximumDepth=GEO_EMB_height+Eff_GalleryHeight+GEO_FootingDepth
+MaximumDepth=GEO_EMB_height+Eff_GalleryHeight+GEO_HDW_footDepth
 
 /prep7
 

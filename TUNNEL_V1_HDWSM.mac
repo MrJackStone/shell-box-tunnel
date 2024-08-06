@@ -31,7 +31,7 @@ x19=x1-GEO_HDW_ColWidth
 x20=x4+GEO_HDW_ColWidth
 
 yTop=Eff_GalleryHeight
-yFoot=-GEO_FootingDepth
+yFoot=-GEO_HDW_footDepth
 yBeam=GEO_HDW_Height
 
 zEnd=GEO_TUN_length

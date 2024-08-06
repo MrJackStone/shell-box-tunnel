@@ -29,8 +29,6 @@ LOAD_zoff     = zOffset
 *vfun,LOAD_pos,COPY,xOffsets
 
 FEM_TUN_esize = ElementSize
-
-GEO_HDW_FootDepth = GEO_FootingDepth
 !
 !
 !
