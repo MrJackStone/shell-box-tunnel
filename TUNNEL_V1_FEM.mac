@@ -527,7 +527,7 @@ NSLA,S,1
 !!
 !! 4.6 PILES
 !!
-*if,GEO_PIL_status,eq,1,then
+*if,GEO_PILE_status,eq,1,then
     cmsel,s,COMPL_pileExt
     latt,MAT_CONC,,TYPE_BEAM188,,,,SEC_pileExt
     lesize,all,1

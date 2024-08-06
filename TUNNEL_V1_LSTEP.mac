@@ -48,7 +48,7 @@ TUNNEL_V1_DEADLOADS
     TUNNEL_V1_HDWLOAD
 *endif
 
-*if,GEO_PIL_status,eq,1,then
+*if,GEO_PILE_status,eq,1,then
     cmsel,s,COMPK_pileBot
     dk,all,ux,0,,,uy,uz,roty
 *endif

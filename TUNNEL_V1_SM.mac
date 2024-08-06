@@ -729,7 +729,7 @@ ALLSEL
 !!
 !! 3.9 PILES
 !!
-*if,GEO_PIL_status,eq,1,then
+*if,GEO_PILE_status,eq,1,then
 
     lsel,u,line,,all
     ksel,u,kp,,all
