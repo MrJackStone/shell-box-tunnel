@@ -109,9 +109,9 @@ TAKEPIC,fName,1200,1,1
 !!
 !! 5.3 THIRD LOAD STEP: VEHICLE LOAD INSIDE TUNNEL
 !!
-*get,parType,parm,LOAD_LVName,type
+*get,parType,parm,LOAD_LTI_name,type
 *if,parType,eq,3,then
-    *if,LOAD_LVName,eq,'TB-450',then
+    *if,LOAD_LTI_name,eq,'TB-450',then
         ALLSEL
         FDELE,ALL,ALL
         LSREAD,1

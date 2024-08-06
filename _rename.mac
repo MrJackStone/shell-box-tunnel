@@ -86,7 +86,7 @@ GEO_APR_thk           ->
 ✅ xOffsets              -> LOAD_LTA_positions
 ✅ zOffset               -> LOAD_LTA_transversalOffset
 
-LOAD_LVName           -> LOAD_LTI_name
+✅ LOAD_LVName           -> LOAD_LTI_name
 LOAD_LVPos            -> LOAD_LTI_position
 
 ElementSize           -> FEM_TUN_esize
