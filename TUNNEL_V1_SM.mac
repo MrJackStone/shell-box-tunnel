@@ -327,7 +327,7 @@ CM,COMPA_WALL_topCorbel,AREA
 CM,COMPA_WALL_botCorbel,AREA
 CM,COMPA_WALL_flat,AREA
 
-*if,GEO_corbel,GE,1,THEN
+*if,GEO_CORB_status,GE,1,THEN
     ! Roof slab
     CMSEL,S,COMPA_Roof
     *do,nthModule,0,GEO_TUN_modules,1

@@ -56,7 +56,7 @@ AATT,1,,1,CS_bot,SEC_FLOOR
 CMSEL,S,COMPA_Roof
 AATT,3,,1,CS_top,SEC_ROOF
 
-*if,GEO_corbel,GE,1,THEN
+*if,GEO_CORB_status,GE,1,THEN
     ! Corbels
     xWall=0
     *do,nthWall,1,GEO_TUN_modules+1,1
@@ -82,7 +82,7 @@ AATT,3,,1,CS_top,SEC_ROOF
             nthWallCS=CS_right
         *endif
 
-        *if,GEO_corbel,EQ,1,OR,GEO_corbel,EQ,2,THEN
+        *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,2,THEN
             ! Top slab, left side
             CMSEL,S,COMPA_ROOF_leftCorbel
             CMSEL,R,COMPA_insideDX
@@ -97,7 +97,7 @@ AATT,3,,1,CS_top,SEC_ROOF
             AATT,1,,1,nthWallCS,nthCS_WALL_top
         *endif
 
-        *if,GEO_corbel,EQ,1,OR,GEO_corbel,EQ,3,THEN
+        *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,3,THEN
             ! Bottom slab, left side
             CMSEL,S,COMPA_FLOOR_leftCorbel
             CMSEL,R,COMPA_insideDX

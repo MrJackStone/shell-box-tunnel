@@ -268,14 +268,14 @@ GEO_corbelYOff_BOT=GEO_corbelH+(GEO_FLOOR_thk/2)+floor_yProjection
 
 ! Check corbel status and pinned roof status
 *if,GEO_ROOF_wallConnection,eq,1,then
-    *if,GEO_corbel,eq,1,then
-        GEO_corbel=3
+    *if,GEO_CORB_status,eq,1,then
+        GEO_CORB_status=3
         *msg,WARN
-WARNING: Pin and corbel are incompatible. GEO_corbel set to 3 (bottom slab only).
-    *elseif,GEO_corbel,eq,2,then
-        GEO_corbel=0
+WARNING: Pin and corbel are incompatible. GEO_CORB_status set to 3 (bottom slab only).
+    *elseif,GEO_CORB_status,eq,2,then
+        GEO_CORB_status=0
         *msg,WARN
-WARNING: Pin and corbel are incompatible. GEO_corbel set to 0 (OFF).
+WARNING: Pin and corbel are incompatible. GEO_CORB_status set to 0 (OFF).
     *endif
 *endif
 
@@ -574,7 +574,7 @@ secdata,GEO_IWALL_columnThk,MAT_CONC
     secdata,GEO_PIL_dInt/2
 *endif
 
-*if,GEO_corbel,GE,1,THEN
+*if,GEO_CORB_status,GE,1,THEN
     !TUNNEL_V1_SECCORBEL, namePrefix, corbelParallel, corbelOrtho,  baseThk, orthoThk,           corbelLen,           base_SEC,           base_CS,  dir
 
     ! Top slab, left side corbels
