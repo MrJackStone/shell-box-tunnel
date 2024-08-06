@@ -159,10 +159,10 @@ AATT,3,,1,CS_top,SEC_ROOF
     ! Mesh roof
     cmsel,s,COMPA_Roof
     aesize,all,FEM_TUN_esize
-    *if,GEO_roofGirders,eq,0,then
+    *if,GEO_ROOF_type,eq,0,then
         ! Without girders
         amesh,all
-    *elseif,GEO_roofGirders,eq,1,then
+    *elseif,GEO_ROOF_type,eq,1,then
         ! With girders
         *do,nthGirder,1,GEO_girderCount,1
             ! Select girder areas
@@ -489,7 +489,7 @@ NSLA,S,1
 *endif
 
 ! Between roof precast girders
-*if,GEO_roofGirders,eq,1,and,GEO_pinGirders,eq,0,then
+*if,GEO_ROOF_type,eq,1,and,GEO_pinGirders,eq,0,then
     cmsel,s,COMPA_Roof
     lsla,s
     ! Remove longitudinal lines from selection

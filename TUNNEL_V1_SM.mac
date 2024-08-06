@@ -209,7 +209,7 @@ TUNNEL_V1_BUILDCM
 !
 !! 3.1.5 SLICE AT PRECAST GIRDERS
 !!
-*if,GEO_roofGirders,eq,1,then
+*if,GEO_ROOF_type,eq,1,then
     cmsel,s,COMPA_Tunnel
     cmsel,u,COMPA_Roof
     *do,nthSlice,1,GEO_girderCount-1,1
@@ -570,7 +570,7 @@ ALLSEL
     cm,COMPA_approachL,area
 
     ! Slice approach slabs at intersections with roof girders
-    *if,GEO_roofGirders,eq,1,then
+    *if,GEO_ROOF_type,eq,1,then
         wpcsys,,CS_Tunnel
         *do,nthSlice,1,GEO_girderCount-1,1
             z=GEO_girderZ(nthSlice)
@@ -610,7 +610,7 @@ ALLSEL
 !!
 !! 3.6 BUILD ROOF GIRDER COMPONENTS
 !!
-*if,GEO_roofGirders,eq,1,then
+*if,GEO_ROOF_type,eq,1,then
     zi=0
     *do,nthGirder,1,GEO_girderCount-1,1
         zf=GEO_girderZ(nthGirder)
@@ -633,7 +633,7 @@ ALLSEL
 !! 3.7 PIN ROOF TO WALLS
 !!
 *if,GEO_pinRoof,eq,1,then
-    *if,GEO_roofGirders,eq,0,then
+    *if,GEO_ROOF_type,eq,0,then
         cmsel,s,COMPA_roof
         cm,COMPA_temp,area
         lsla,s
@@ -643,7 +643,7 @@ ALLSEL
         cm,COMPA_roof,area
         cmsel,s,COMPA_temp
         adele,all,,,1
-    *elseif,GEO_roofGirders,eq,1,then
+    *elseif,GEO_ROOF_type,eq,1,then
         *do,nthGirder,1,GEO_girderCount,1
             compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
             cmsel,s,%compName%
