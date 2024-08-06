@@ -23,7 +23,7 @@ MaxIW=(GEO_InletWidth/2)*COS(GEO_InletRadians)
    GEO_HDW_slabStfWidth=0.9*MaxIW
 *endif
 
-FEM_HDW_EArea=FEM_HDW_ESize**2
+FEM_HDW_EArea=FEM_HDW_esize**2
 WSpringConstant=MAT_SOIL_stiffness*FEM_HDW_EArea
 WSpringArea=WSpringConstant*SpringLength/SpringElasticModulus
 

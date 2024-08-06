@@ -229,7 +229,7 @@ AATT,3,,1,CS_top,SEC_ROOF
     aatt,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_Column
 
     cmsel,s,COMPA_Headwalls
-    AESIZE,ALL,FEM_HDW_ESize
+    AESIZE,ALL,FEM_HDW_esize
     AMESH,ALL
 *endif
 
