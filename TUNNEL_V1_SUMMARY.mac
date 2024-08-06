@@ -33,7 +33,7 @@ Identification: %c
 
     *vwrite,LOAD_zoff
     ('Load Z:      ',F8.3)
-    *vwrite,LOAD_skew
+    *vwrite,LOAD_LTA_skew
     ('Load skew:   ',F8.3)
     *vwrite,GEO_EMB_height
     ('Tunnel depth:',F8.3)

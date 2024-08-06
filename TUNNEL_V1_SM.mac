@@ -540,13 +540,13 @@ ALLSEL
     *if     , GEO_APR_z3 , gt , GEO_APR_z1 , and , GEO_APR_z3 , lt , GEO_APR_z2 , then
         wpcsys,1,CS_Tunnel
         kwpave,kp_R3
-        wprota,,,LOAD_skew
+        wprota,,,LOAD_LTA_skew
         asbw,all,,delete
         wpcsys,1,0
     *elseif , GEO_APR_z4 , gt , GEO_APR_z1 , and , GEO_APR_z4 , lt , GEO_APR_z2 , then
         wpcsys,1,CS_Tunnel
         kwpave,kp_R4
-        wprota,,,LOAD_skew
+        wprota,,,LOAD_LTA_skew
         asbw,all,,delete
         wpcsys,1,0
     *endif
@@ -557,13 +557,13 @@ ALLSEL
     *if     , GEO_APR_z1 , gt , GEO_APR_z3 , and , GEO_APR_z1 , lt , GEO_APR_z4 , then
         wpcsys,1,CS_Tunnel
         kwpave,kp_L1
-        wprota,,,LOAD_skew
+        wprota,,,LOAD_LTA_skew
         asbw,all,,delete
         wpcsys,1,0
     *elseif , GEO_APR_z2 , gt , GEO_APR_z3 , and , GEO_APR_z2 , lt , GEO_APR_z4 , then
         wpcsys,1,CS_Tunnel
         kwpave,kp_L2
-        wprota,,,LOAD_skew
+        wprota,,,LOAD_LTA_skew
         asbw,all,,delete
         wpcsys,1,0
     *endif
@@ -577,9 +577,9 @@ ALLSEL
             *if,z,gt,GEO_APR_z3,and,z,lt,GEO_APR_z4,then
                 cmsel,s,COMPA_approachL
                 wpoffs,,,z
-                wprota,,,LOAD_skew
+                wprota,,,LOAD_LTA_skew
                 asbw,all,,delete
-                wprota,,,-LOAD_skew
+                wprota,,,-LOAD_LTA_skew
                 wpoffs,,,-z
                 cm,COMPA_approachL,area
             *endif
@@ -587,9 +587,9 @@ ALLSEL
                 cmsel,s,COMPA_approachR
                 wpoffs,GEO_TUN_totEffW
                 wpoffs,,,z
-                wprota,,,LOAD_skew
+                wprota,,,LOAD_LTA_skew
                 asbw,all,,delete
-                wprota,,,-LOAD_skew
+                wprota,,,-LOAD_LTA_skew
                 wpoffs,,,-z
                 wpoffs,-GEO_TUN_totEffW
                 cm,COMPA_approachR,area

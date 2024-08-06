@@ -76,7 +76,7 @@ GEO_APR_thk           ->
 ✅ SoilCohesion          -> MAT_SOIL_cohesion
 ✅ SoilDensity           -> MAT_SOIL_density
 
-LineDirection         -> LOAD_LTA_skew
+✅ LineDirection         -> LOAD_LTA_skew
 LOAD_LTName           -> LOAD_LTA_name
 LOAD_lineCount        -> LOAD_LTA_count
 LOAD_gauge            -> LOAD_LTA_gauge

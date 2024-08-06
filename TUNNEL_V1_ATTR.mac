@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-LOAD_skew     = LineDirection
 LOAD_dist     = DeltaZOffset
 LOAD_impact   = ImpactCoefficient
 LOAD_posCount = xOffsetCount
@@ -172,7 +171,7 @@ GEO_TUN_totEffW    = GEO_TUN_effW*GEO_TUN_modules
 TunnelSlope=ATAN(GEO_TUN_slope/100)*180/pi
 
 ! Traffic/track direction (in radians)
-LineAngle=LineDirection*pi/180
+LOAD_LTA_skewRad = LOAD_LTA_skew*(pi/180)
 
 ! Area of shell elements
 ElementArea=ElementSize**2
@@ -219,9 +218,9 @@ GEO_corbelYOff_BOT=GEO_CORB_height+(GEO_FLOOR_thk/2)+floor_yProjection
     *afun,DEG
 
     GEO_APR_zAxis=LOAD_zoff+((LOAD_lineCount-1)*LOAD_dist)/2
-    GEO_APR_zAxW=tan(LOAD_skew)*(Eff_GalleryWidth*GEO_TUN_modules)/2
-    GEO_APR_zS=GEO_APR_width/(2*cos(LOAD_skew))
-    GEO_APR_zL=GEO_APR_length*tan(LOAD_skew)
+    GEO_APR_zAxW=tan(LOAD_LTA_skew)*(Eff_GalleryWidth*GEO_TUN_modules)/2
+    GEO_APR_zS=GEO_APR_width/(2*cos(LOAD_LTA_skew))
+    GEO_APR_zL=GEO_APR_length*tan(LOAD_LTA_skew)
 
     GEO_APR_z1 = GEO_APR_zAxis - GEO_APR_zAxW - GEO_APR_zS
     GEO_APR_z2 = GEO_APR_zAxis - GEO_APR_zAxW + GEO_APR_zS
@@ -626,8 +625,6 @@ MAT_SOIL_k0        = RestEPCoefficient
 !GEO_TUN_effH       = Eff_GalleryHeight
 
 GEO_TUN_totEffW    = GEO_TUN_effW*GEO_TUN_modules
-
-LOAD_skewRad       = LineAngle
 
 GEO_TUN_slopeDeg   = 180*atan(GEO_TUN_slope/100)/PI
 GEO_TUN_slopeRad   = GEO_TUN_slopeDeg*PI/180

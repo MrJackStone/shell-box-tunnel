@@ -89,7 +89,7 @@
    ('CARREGAMENTO:')
    *vwrite,Gravity
    (';  Gravity       = ',F10.4)
-   *vwrite,LineDirection
+   *vwrite,LOAD_LTA_skew
    (';  LineDirection = ',F10.4)
    *vwrite,RowCount
    (';  RowCount      = ',F3.0,TL1,' ')
