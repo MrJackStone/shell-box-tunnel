@@ -11,10 +11,8 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-LOAD_posCount = xOffsetCount
 LOAD_zoff     = zOffset
 *del,LOAD_pos
-*dim,LOAD_pos,ARRAY,LOAD_posCount
 *vfun,LOAD_pos,COPY,xOffsets
 
 FEM_TUN_esize = ElementSize

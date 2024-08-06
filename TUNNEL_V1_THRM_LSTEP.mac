@@ -189,7 +189,7 @@ TAKEPIC,fName,1200,1,1
 lsel,u,line,,all
 cm,COMPL_ltpos,line
 
-*do,xOffIndex,1,xOffsetCount,1
+*do,xOffIndex,1,LOAD_LTA_positionCount,1
 
     xOffset=xOffsets(xOffIndex)
 
@@ -334,7 +334,7 @@ gplot
 /focus,2,0.001,0.001,0.001,1
 /dist,2,0.8,1
 
-*do,nthLTPos,1,xOffsetCount,1
+*do,nthLTPos,1,LOAD_LTA_positionCount,1
     compName=strcat('LTx_',chrval(nthLTPos))
     GO2PNG,800
     aplot

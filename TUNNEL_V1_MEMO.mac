@@ -101,7 +101,7 @@
    (';  Positions      | Loads')
    *vwrite,LOADTRAIN_ARR_positions(1),LOADTRAIN_ARR_loads(1)
    (';  ',F14.4,' | ',E12.4)
-   *vwrite,xOffsetCount
+   *vwrite,LOAD_LTA_positionCount
    (';  xOffsetCount = ',F3.0,TL1,' ')
    *vwrite,xOffsets(1)
    (';  xOffsets     = ',F10.4)
