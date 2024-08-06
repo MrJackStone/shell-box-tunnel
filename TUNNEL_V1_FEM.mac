@@ -117,13 +117,13 @@ AATT,3,,1,CS_top,SEC_ROOF
 *endif
 
 ! Mesh
-*if,GEO_pinRoof,eq,0,then
+*if,GEO_ROOF_wallConnection,eq,0,then
     ! Rigid roof-wall connection
     CMSEL,S,COMPA_Tunnel
     AESIZE,ALL,ElementSize
     AMESH,ALL
 
-*elseif,GEO_pinRoof,eq,1,then
+*elseif,GEO_ROOF_wallConnection,eq,1,then
     ! Pinned roof-wall connection
     cmsel,s,COMPA_Tunnel
     cmsel,u,COMPA_Roof
@@ -435,7 +435,7 @@ NSLA,S,1
 !! 4.5 PINNED CONNECTIONS
 !!
 ! Between roof, walls, and approach slabs
-*if,GEO_APR_status,eq,1,or,GEO_pinRoof,eq,1,then
+*if,GEO_APR_status,eq,1,or,GEO_ROOF_wallConnection,eq,1,then
     csys,CS_Tunnel
 
     cmsel,s,COMPA_Tunnel

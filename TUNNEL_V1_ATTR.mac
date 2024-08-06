@@ -257,7 +257,7 @@ GEO_corbelYOff_BOT=GEO_corbelH+(FloorThk/2)+floor_yProjection
 
 ! Calculate precast girder positions
 *if,GEO_ROOF_type,eq,1,then
-    GEO_pinRoof=1
+    GEO_ROOF_wallConnection=1
 
     GEO_girderCount=NINT((GEO_TUN_length/GEO_ROOF_precastWidth)-0.5)
     remLength=GEO_TUN_length-(GEO_girderCount*GEO_ROOF_precastWidth)
@@ -269,7 +269,7 @@ GEO_corbelYOff_BOT=GEO_corbelH+(FloorThk/2)+floor_yProjection
 *endif
 
 ! Check corbel status and pinned roof status
-*if,GEO_pinRoof,eq,1,then
+*if,GEO_ROOF_wallConnection,eq,1,then
     *if,GEO_corbel,eq,1,then
         GEO_corbel=3
         *msg,WARN

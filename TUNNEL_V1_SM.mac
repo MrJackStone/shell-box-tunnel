@@ -632,7 +632,7 @@ ALLSEL
 !!
 !! 3.7 PIN ROOF TO WALLS
 !!
-*if,GEO_pinRoof,eq,1,then
+*if,GEO_ROOF_wallConnection,eq,1,then
     *if,GEO_ROOF_type,eq,0,then
         cmsel,s,COMPA_roof
         cm,COMPA_temp,area
