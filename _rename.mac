@@ -26,7 +26,7 @@
 ✅ GEO_TUN_colB          -> GEO_IWALL_columnThk
 
 ✅ GEO_corbel            -> GEO_CORB_status
-GEO_corbelW           -> GEO_CORB_width
+✅ GEO_corbelW           -> GEO_CORB_width
 GEO_corbelH           -> GEO_CORB_height
 
 GalleryDepth          -> GEO_EMB_height
