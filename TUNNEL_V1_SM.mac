@@ -668,7 +668,7 @@ ALLSEL
 !!
 !! 3.8 OPEN INNNER WALLS
 !!
-*if,GEO_TUN_modules,gt,1,and,GEO_TUN_iwType,eq,1,then
+*if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
     csys,CS_Tunnel
 
     wallX=0
