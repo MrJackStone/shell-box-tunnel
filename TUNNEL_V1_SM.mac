@@ -945,7 +945,7 @@ CM,COMPL_Embankment,LINE
 
 ! Draw arrows marking each railway position
 LSEL,U,LINE,,ALL
-zRailway=zOffset
+zRailway=LOAD_LTA_transversalOffset
 *do,nthRailway,1,LOAD_LTA_count,1
 
     gaugeOff=LOAD_LTA_gauge/2
