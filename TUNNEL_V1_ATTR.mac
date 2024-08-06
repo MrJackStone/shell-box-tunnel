@@ -560,7 +560,7 @@ secdata,GEO_IWALL_columnThk,MAT_CONC
 *if,GEO_PILE_status,eq,1,then
     ! Piles (external walls)
     sectype,SEC_pileExt,beam,csolid,'PILEEXT'
-    secdata,GEO_PIL_dExt/2
+    secdata,GEO_PILE_EXT_diameter/2
 
     ! Piles (external walls)
     sectype,SEC_pileInt,beam,csolid,'PILEINT'
