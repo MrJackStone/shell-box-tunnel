@@ -23,7 +23,7 @@
    (';  GalleryDepth      = ',F10.4)
    *vwrite,
    ('CONCRETO:')
-   *vwrite,fck
+   *vwrite,MAT_TUN_fck
    (';  fck            = ',E12.4)
    *vwrite,Poisson
    (';  Poisson        = ',F10.4)

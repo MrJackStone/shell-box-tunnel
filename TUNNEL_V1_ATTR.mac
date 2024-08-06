@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-MAT_CONC_fck  = fck
 MAT_SOIL_k    = SoilStiffness
 MAT_SOIL_phi  = FrictionAngle
 MAT_SOIL_c    = SoilCohesion
@@ -292,7 +291,7 @@ setdefa,'GEO_HDW_endH',0
 !! 2.4 MATERIALS
 !!
 ! Concrete's elastic modulus
-ElasticModulus=4760*SQRT(fck*1e-6)*1e6
+ElasticModulus=4760*SQRT(MAT_TUN_fck*1e-6)*1e6
 MAT_CONC_E=ElasticModulus
 
 ! Soil spring stiffness
