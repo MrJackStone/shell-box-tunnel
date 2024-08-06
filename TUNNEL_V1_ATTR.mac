@@ -11,8 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-GEO_TUN_height     = GalleryHeight
-
 GEO_TUN_slope      = Tunneli
 GEO_TUN_roofThk    = RoofThk
 GEO_TUN_floorThk   = FloorThk
@@ -175,7 +173,7 @@ REAL_rigidStrut=5
 *else
     Eff_GalleryWidth=GEO_TUN_moduleWidth+(WallThk+iThk)/2
 *endif
-Eff_GalleryHeight=GalleryHeight+(FloorThk+RoofThk)/2
+Eff_GalleryHeight=GEO_TUN_height+(FloorThk+RoofThk)/2
 
 GEO_TUN_effW       = Eff_GalleryWidth
 GEO_TUN_effH       = Eff_GalleryHeight

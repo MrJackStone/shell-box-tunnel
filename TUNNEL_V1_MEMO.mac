@@ -11,7 +11,7 @@
    (';  GalleryModules    = ',F3.0,TL1,' ')
    *vwrite,GEO_TUN_length
    (';  GalleryLength     = ',F10.4)
-   *vwrite,GalleryHeight
+   *vwrite,GEO_TUN_height
    (';  GalleryHeight     = ',F10.4)
    *vwrite,GEO_TUN_moduleWidth
    (';  GalleryWidth      = ',F10.4)

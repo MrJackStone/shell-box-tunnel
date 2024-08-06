@@ -1,7 +1,7 @@
 ✅ GalleryLength         = GEO_TUN_length
 ✅ GalleryModules        = GEO_TUN_modules
 ✅ GalleryWidth          = GEO_TUN_moduleWidth
-GalleryHeight         = GEO_TUN_height
+✅ GalleryHeight         = GEO_TUN_height
 Tunneli               = GEO_TUN_slope
 
 GEO_roofGirders       = GEO_ROOF_type
