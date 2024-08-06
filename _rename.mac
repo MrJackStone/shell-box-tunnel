@@ -22,7 +22,7 @@
 ✅ GEO_TUN_bBeamH        -> GEO_IWALL_botBeamHeight
 ✅ GEO_TUN_bbB           -> GEO_IWALL_botBeamWidth
 ✅ GEO_TUN_iCols         -> GEO_IWALL_columnCount
-GEO_TUN_colW          -> GEO_IWALL_columnWidth
+✅ GEO_TUN_colW          -> GEO_IWALL_columnWidth
 GEO_TUN_colB          -> GEO_IWALL_columnThk
 
 GEO_corbel            -> GEO_CORB_status

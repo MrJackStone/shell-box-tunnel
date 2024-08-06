@@ -281,9 +281,9 @@ WARNING: Pin and corbel are incompatible. GEO_corbel set to 0 (OFF).
 
 ! Inner wall openings
 *if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
-    GEO_TUN_opW=(GEO_TUN_length-GEO_IWALL_columnCount*GEO_TUN_colW)/(GEO_IWALL_columnCount-1)
+    GEO_TUN_opW=(GEO_TUN_length-GEO_IWALL_columnCount*GEO_IWALL_columnWidth)/(GEO_IWALL_columnCount-1)
     GEO_TUN_opH=GEO_TUN_effH-GEO_IWALL_topBeamHeight-GEO_IWALL_botBeamHeight
-    GEO_TUN_colE=GEO_TUN_opW+GEO_TUN_colW
+    GEO_TUN_colE=GEO_TUN_opW+GEO_IWALL_columnWidth
     ! Relative Z coordinate for opening centers
     *del,GEO_TUN_ozCenter
     *dim,GEO_TUN_ozCenter,array,GEO_IWALL_columnCount-1

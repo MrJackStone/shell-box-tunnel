@@ -44,8 +44,8 @@ IWTB_A  = GEO_IWALL_topBeamHeight*GEO_IWALL_topBeamWidth
 IWTB_W  = GEO_IWALL_topBeamWidth*(GEO_IWALL_topBeamHeight**2)/6
 IWBB_A  = GEO_IWALL_botBeamHeight*GEO_IWALL_botBeamWidth
 IWBB_W  = GEO_IWALL_botBeamWidth*(GEO_IWALL_botBeamHeight**2)/6
-IWCOL_A = GEO_TUN_colW*GEO_TUN_colB
-IWCOL_W = GEO_TUN_colB*(GEO_TUN_colW**2)/6
+IWCOL_A = GEO_IWALL_columnWidth*GEO_TUN_colB
+IWCOL_W = GEO_TUN_colB*(GEO_IWALL_columnWidth**2)/6
 
 *do,nthLS,1,LoadStepCount,1
 
@@ -96,8 +96,8 @@ IWCOL_W = GEO_TUN_colB*(GEO_TUN_colW**2)/6
         *do,nthCol,1,GEO_IWALL_columnCount,1
             top_n1=node(             xLoc ,              GEO_IWALL_botBeamHeight , 0)
             top_n2=node(             xLoc , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0)
-            bot_n1=node(xLoc+GEO_TUN_colW ,              GEO_IWALL_botBeamHeight , 0)
-            bot_n2=node(xLoc+GEO_TUN_colW , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0)
+            bot_n1=node(xLoc+GEO_IWALL_columnWidth ,              GEO_IWALL_botBeamHeight , 0)
+            bot_n2=node(xLoc+GEO_IWALL_columnWidth , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0)
             colPName=strcat('COL',chrval(nthCol))
             envAName=strcat('RES_ENV_IWALL_col',chrval(nthCol))
             pth2beam,     top_n1  , top_n2,   bot_n1,   bot_n2, colPName,      1, pathDiv, IWCOL_W, IWCOL_A,      1, envAName
@@ -109,7 +109,7 @@ IWCOL_W = GEO_TUN_colB*(GEO_TUN_colW**2)/6
         cmsel,u,COMPA_Columns
         esla,s
         nsle,s
-        xLoc=GEO_TUN_colW
+        xLoc=GEO_IWALL_columnWidth
         *do,nthBeam,1,GEO_IWALL_columnCount-1,1
             ! Top beam
             bot_n1=node(            xLoc , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0)
