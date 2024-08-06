@@ -1,4 +1,4 @@
-GEO_TUN_length        = GEO_TUN_length
+GalleryLength         = GEO_TUN_length
 GalleryModules        = GEO_TUN_modules
 GalleryWidth          = GEO_TUN_moduleWidth
 GalleryHeight         = GEO_TUN_height
