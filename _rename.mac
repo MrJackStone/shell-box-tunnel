@@ -54,7 +54,7 @@
 ✅ GEO_RetMode           -> GEO_HDW_type
 ✅ GEO_WingShape         -> GEO_HDW_wingShape
 ✅ GEO_WallBotOffset     -> GEO_HDW_wingBottomOffset
-GEO_HDW_WallThk       -> GEO_HDW_wallThk
+✅ GEO_HDW_WallThk       -> GEO_HDW_wallThk
 GEO_HDW_SlabThk       -> GEO_HDW_slabThk
 GEO_HDW_StiffenerThk  -> GEO_HDW_slabStfThk
 GEO_HDW_FootingHeight -> GEO_HDW_footHeight
