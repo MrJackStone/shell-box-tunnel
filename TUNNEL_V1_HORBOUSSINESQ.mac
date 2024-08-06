@@ -1,5 +1,5 @@
-! TUNNEL_V2_HORBOUSSINESQ, loadDirection, xMin, xMax
-! TUNNEL_V2_HORBOUSSINESQ,          arg1, arg2, arg3
+! TUNNEL_V1_HORBOUSSINESQ, loadDirection, xMin, xMax
+! TUNNEL_V1_HORBOUSSINESQ,          arg1, arg2, arg3
 
 
 ! Force direction (positive or negative X)

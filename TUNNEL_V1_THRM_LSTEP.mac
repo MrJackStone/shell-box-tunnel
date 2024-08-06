@@ -212,7 +212,7 @@ APPLYING LOADS ON ROOF SLAB...
     CMSEL,S,COMPA_Roof
     cmsel,a,COMPA_Approach
     NSLA,S,1
-    tunnel_v2_verboussinesq
+    tunnel_v1_verboussinesq
     ALLSEL
 
 
@@ -225,7 +225,7 @@ APPLYING LOADS ON LEFT WALL...
 
     CMSEL,S,COMPA_LeftWall
     NSLA,S,1
-    tunnel_v2_horboussinesq, 1, 'off', 0
+    tunnel_v1_horboussinesq, 1, 'off', 0
     ALLSEL
 
 
@@ -238,7 +238,7 @@ APPLYING LOADS ON RIGHT WALL...
 
     CMSEL,S,COMPA_RightWall
     NSLA,S,1
-    tunnel_v2_horboussinesq, -1, GEO_TUN_totEffW, 'off'
+    tunnel_v1_horboussinesq, -1, GEO_TUN_totEffW, 'off'
     ALLSEL
 
 
@@ -271,7 +271,7 @@ APPLYING LOADS ON WINGS...
         CMSEL,S,COMPA_HDW_Walls
         CMSEL,A,COMPA_HDW_TopBeam
         NSLA,S,1
-        tunnel_v2_hdwboussinesq
+        tunnel_v1_hdwboussinesq
         ALLSEL
 
     *endif
