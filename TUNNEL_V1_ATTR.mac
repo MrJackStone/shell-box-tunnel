@@ -155,19 +155,19 @@ REAL_rigidStrut=5
 ! Inner wall thickness
 *if,GEO_TUN_modules,gt,1,then
     *if,GEO_IWALL_type,eq,0,then
-        iThk=GEO_TUN_iwThk
+        ! Do nothing
     *elseif,GEO_IWALL_type,eq,1,then
-        compare,'iThk', 'max', 3, GEO_TUN_tbB, GEO_TUN_bbB, GEO_TUN_colB
+        GEO_IWALL_thk = ((GEO_TUN_tbB>GEO_TUN_bbB)>GEO_TUN_colB)
     *endif
 *else
-    iThk=0
+    GEO_IWALL_thk=0
 *endif
 
 ! Calculate effective spans (distance between mid-planes)
-*if,iThk,eq,0,then
+*if,GEO_IWALL_thk,eq,0,then
     Eff_GalleryWidth=GEO_TUN_moduleWidth+GEO_OWALL_thk
 *else
-    Eff_GalleryWidth=GEO_TUN_moduleWidth+(GEO_OWALL_thk+iThk)/2
+    Eff_GalleryWidth=GEO_TUN_moduleWidth+(GEO_OWALL_thk+GEO_IWALL_thk)/2
 *endif
 Eff_GalleryHeight=GEO_TUN_height+(GEO_FLOOR_thk+GEO_ROOF_thk)/2
 
@@ -535,7 +535,7 @@ SECDATA,GEO_OWALL_thk,1
 
 ! Tunnel inner walls
 SECTYPE,SEC_IWALL,SHELL,,'IWALL'
-SECDATA,GEO_OWALL_thk,1
+SECDATA,GEO_IWALL_thk,1
 
 ! Tunnel floor slab
 SECTYPE,SEC_FLOOR,SHELL,,'FLOOR'
