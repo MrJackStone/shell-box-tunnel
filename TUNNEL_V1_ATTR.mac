@@ -12,7 +12,6 @@ Version=1
 !! 2.0 REFACTORING INPUTS
 !!
 GEO_HDW_stffWidth  = InternalWidth
-GEO_HDW_soilAngle  = BackfillAngle
 
 MAT_CONC_fck  = fck
 MAT_SOIL_k    = SoilStiffness

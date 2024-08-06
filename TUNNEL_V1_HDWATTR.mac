@@ -27,12 +27,6 @@ FEM_HDW_EArea=FEM_HDW_ESize**2
 WSpringConstant=SoilStiffness*FEM_HDW_EArea
 WSpringArea=WSpringConstant*SpringLength/SpringElasticModulus
 
-*if,BackfillAngle,GT,FrictionAngle,THEN
-    FrictionAngle=BackfillAngle
-*endif
-SoilSlope=BackfillAngle*pi/180
-fi=FrictionAngle*pi/180
-
 WallLength=GEO_InletLength/COS(GEO_InletRadians)
 GEO_HDW_WallSlope=(GEO_HDW_Height-GEO_HDW_endH)/(WallLength-GEO_HDW_WallTopLen) !!
 
