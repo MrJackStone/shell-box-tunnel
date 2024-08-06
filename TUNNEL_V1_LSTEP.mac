@@ -125,7 +125,7 @@ TAKEPIC,fName,1200,1,1
 
         LV_xcen=(GEO_TUN_effW/2)
 
-        nsel,s,loc,z,LOAD_LVPos-3,LOAD_LVPos+3
+        nsel,s,loc,z,LOAD_LTI_position-3,LOAD_LTI_position+3
         nsel,r,loc,x,LV_xcen-1.5,LV_xcen+1.5
         nsel,inve
         cmsel,r,COMPN_temp
@@ -134,12 +134,12 @@ TAKEPIC,fName,1200,1,1
         sfe,all,1,pres,,5e3
 
         cmsel,s,COMPN_temp
-        n1=node(LV_xcen-1,0,LOAD_LVPos-3)
-        n2=node(LV_xcen+1,0,LOAD_LVPos-3)
-        n3=node(LV_xcen-1,0,LOAD_LVPos)
-        n4=node(LV_xcen+1,0,LOAD_LVPos)
-        n5=node(LV_xcen-1,0,LOAD_LVPos+3)
-        n6=node(LV_xcen+1,0,LOAD_LVPos+3)
+        n1=node(LV_xcen-1,0,LOAD_LTI_position-3)
+        n2=node(LV_xcen+1,0,LOAD_LTI_position-3)
+        n3=node(LV_xcen-1,0,LOAD_LTI_position)
+        n4=node(LV_xcen+1,0,LOAD_LTI_position)
+        n5=node(LV_xcen-1,0,LOAD_LTI_position+3)
+        n6=node(LV_xcen+1,0,LOAD_LTI_position+3)
 
         nsel,s,node,,n1
         nsel,a,node,,n2
