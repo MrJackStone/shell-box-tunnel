@@ -157,7 +157,7 @@ REAL_rigidStrut=5
     *if,GEO_IWALL_type,eq,0,then
         ! Do nothing
     *elseif,GEO_IWALL_type,eq,1,then
-        GEO_IWALL_thk = ((GEO_IWALL_topBeamWidth>GEO_IWALL_botBeamWidth)>GEO_TUN_colB)
+        GEO_IWALL_thk = ((GEO_IWALL_topBeamWidth>GEO_IWALL_botBeamWidth)>GEO_IWALL_columnThk)
     *endif
 *else
     GEO_IWALL_thk=0
@@ -562,7 +562,7 @@ secdata,GEO_IWALL_botBeamWidth,MAT_CONC
 
 ! Columns (inner walls)
 sectype,SEC_columns,shell,,'COLS'
-secdata,GEO_TUN_colB,MAT_CONC
+secdata,GEO_IWALL_columnThk,MAT_CONC
 
 *if,GEO_PIL_status,eq,1,then
     ! Piles (external walls)
