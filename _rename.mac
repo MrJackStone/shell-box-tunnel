@@ -52,7 +52,7 @@
 ✅ GEO_HDW_ColWidth      -> GEO_HDW_columnWidth
 ✅ InternalWidth         -> GEO_HDW_slabStfWidth
 ✅ GEO_RetMode           -> GEO_HDW_type
-GEO_WingShape         -> GEO_HDW_wingShape
+✅ GEO_WingShape         -> GEO_HDW_wingShape
 GEO_WallBotOffset     -> GEO_HDW_wingBottomOffset
 GEO_HDW_WallThk       -> GEO_HDW_wallThk
 GEO_HDW_SlabThk       -> GEO_HDW_slabThk

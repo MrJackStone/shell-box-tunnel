@@ -613,7 +613,7 @@ KP32=KPMaxD+32
     K,KP28,xWingLeft,yTop,zWingLeft
     K,KP30,xWingRight,yTop,zWingRight
 
-    *if,GEO_WingShape,eq,1,then
+    *if,GEO_HDW_wingShape,eq,1,then
         ! Rectangular shape
         k,KP22,xWingLeft,GEO_WallBotOffset,zWingLeft ! kp28
         k,KP23,xWingRight,GEO_WallBotOffset,zWingRight ! kp30
@@ -629,10 +629,10 @@ KP32=KPMaxD+32
     CM,COMPA_HDW_TopBeam,AREA
 
     ASEL,U,AREA,,ALL
-    *if,GEO_WingShape,eq,0,then
+    *if,GEO_HDW_wingShape,eq,0,then
         ! Triangular
         A,KP27,KP28,KP101
-    *elseif,GEO_WingShape,eq,1,then
+    *elseif,GEO_HDW_wingShape,eq,1,then
         ! Rectangular
         A,KP27,KP28,KP22,KP101
     *endif
@@ -640,10 +640,10 @@ KP32=KPMaxD+32
     CM,COMPA_HDW_LeftWall,AREA
 
     ASEL,U,AREA,,ALL
-    *if,GEO_WingShape,eq,0,then
+    *if,GEO_HDW_wingShape,eq,0,then
         ! Triangular
         A,KP29,KP30,KP102
-    *elseif,GEO_WingShape,eq,1,then
+    *elseif,GEO_HDW_wingShape,eq,1,then
         ! Rectangular
         A,KP29,KP30,KP23,KP102
     *endif
