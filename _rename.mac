@@ -49,7 +49,7 @@
 ✅ GEO_FootingDepth      -> GEO_HDW_footDepth
 ✅ GEO_HDW_HeadBeamH     -> GEO_HDW_headBeamHeight
 ✅ GEO_HDW_WallTopLen    -> GEO_HDW_topLength
-GEO_HDW_ColWidth      -> GEO_HDW_columnWidth
+✅ GEO_HDW_ColWidth      -> GEO_HDW_columnWidth
 InternalWidth         -> GEO_HDW_slabStfWidth
 GEO_RetMode           -> GEO_HDW_type
 GEO_WingShape         -> GEO_HDW_wingShape

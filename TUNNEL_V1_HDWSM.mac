@@ -27,8 +27,8 @@ x15=x8
 x16=x15+(GEO_HDW_footWidth/COS(GEO_InletRadians))
 x17=x1
 x18=x4
-x19=x1-GEO_HDW_ColWidth
-x20=x4+GEO_HDW_ColWidth
+x19=x1-GEO_HDW_columnWidth
+x20=x4+GEO_HDW_columnWidth
 
 yTop=Eff_GalleryHeight
 yFoot=-GEO_HDW_footDepth
@@ -162,9 +162,9 @@ KP32=KPMaxD+32
         K,KP18b,x18b,yBeam,zFlatTop
     *endif
 
-    *if,GEO_HDW_ColWidth,gt,0,then
+    *if,GEO_HDW_columnWidth,gt,0,then
 
-        *if,GEO_HDW_ColWidth,ne,GEO_HDW_footWidth,then
+        *if,GEO_HDW_columnWidth,ne,GEO_HDW_footWidth,then
             k,KP19,x19,yFoot,zEnd
             k,KP20,x20,yFoot,zEnd
         *else
@@ -263,7 +263,7 @@ KP32=KPMaxD+32
     L,KP4,KP8
     *get,L10,LINE,0,NUM,MAX
 
-    *if,GEO_HDW_ColWidth,gt,GEO_HDW_footWidth,then
+    *if,GEO_HDW_columnWidth,gt,GEO_HDW_footWidth,then
         l,KP9,KP10
         *get,L11,line,,num,max
         l,KP11,KP12
@@ -272,7 +272,7 @@ KP32=KPMaxD+32
         *get,L11c,line,,num,max
         l,KP12,KP20
         *get,L12c,line,,num,max
-    *elseif,GEO_HDW_ColWidth,gt,0,and,GEO_HDW_ColWidth,le,GEO_HDW_footWidth,then
+    *elseif,GEO_HDW_columnWidth,gt,0,and,GEO_HDW_columnWidth,le,GEO_HDW_footWidth,then
         l,KP9,KP19
         *get,L11a,line,,num,max
         l,KP10,KP19
@@ -353,7 +353,7 @@ KP32=KPMaxD+32
     *endif
 
     ! Columns
-    *if,GEO_HDW_ColWidth,gt,0,then
+    *if,GEO_HDW_columnWidth,gt,0,then
         ! Left column
         l,KP17,KP22
         *get,L31,line,,num,max
@@ -392,7 +392,7 @@ KP32=KPMaxD+32
     lsel,s,line,,all
 
     ! Footings
-    *if,GEO_HDW_ColWidth,gt,0,and,GEO_HDW_ColWidth,le,GEO_HDW_footWidth,then
+    *if,GEO_HDW_columnWidth,gt,0,and,GEO_HDW_columnWidth,le,GEO_HDW_footWidth,then
         AL,L15,L13,L16,L11a,L11b
         AL,L17,L14,L18,L12a,L12b
     *else
@@ -405,7 +405,7 @@ KP32=KPMaxD+32
     ASEL,U,AREA,,ALL
 
     ! Columns
-    *if,GEO_HDW_ColWidth,gt,0,then
+    *if,GEO_HDW_columnWidth,gt,0,then
         asel,u,area,,all
         a,KP1,KP27,KP17,KP22,KP19,KP10
         csslicexz,GEO_TUN_effH
