@@ -16,8 +16,8 @@ QZ=QZ_prime+arg4
 
 ! Draw arrows
 *if,arg6,eq,1,then
-    LARROWYZ, QX,QY,QZ-(LOAD_gauge/2)
-    LARROWYZ, QX,QY,QZ+(LOAD_gauge/2)
+    LARROWYZ, QX,QY,QZ-(LOAD_LTA_gauge/2)
+    LARROWYZ, QX,QY,QZ+(LOAD_LTA_gauge/2)
 *endif
 
 

@@ -50,8 +50,8 @@ QZ_0=LOAD_z0
             *if,APPLY_LOAD,eq,1,then
                 !ClosestNode=NODE(QX,QY,QZ)
                 !F,ClosestNode,FY,-ABS(LoadValue)
-                LeftTrackNode=NODE(QX,QY,QZ-(LOAD_gauge/2))
-                RightTrackNode=NODE(QX,QY,QZ+(LOAD_gauge/2))
+                LeftTrackNode=NODE(QX,QY,QZ-(LOAD_LTA_gauge/2))
+                RightTrackNode=NODE(QX,QY,QZ+(LOAD_LTA_gauge/2))
                 F,LeftTrackNode,FY,-ABS(ForceValue/2)
                 F,RightTrackNode,FY,-ABS(ForceValue/2)
             *endif

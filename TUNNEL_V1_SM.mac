@@ -948,7 +948,7 @@ LSEL,U,LINE,,ALL
 zRailway=zOffset
 *do,nthRailway,1,LOAD_LTA_count,1
 
-    gaugeOff=LOAD_gauge/2
+    gaugeOff=LOAD_LTA_gauge/2
 
     *do,nthLoad,1,2,1
 
