@@ -69,8 +69,8 @@ ETNames(1)='MX', 'MY', 'NX', 'NY', 'QX', 'QY', 'UX', 'UY'
 ETENV,2,LoadStepCount,'ETNames'
 
 ! Element tables: soil pressures on floor slabs
-sadd,'DW_SIGY','DW_UY',,-SoilStiffness*1E-3
-sadd,'EMN_SIGY','EMN_UY',,-SoilStiffness*1E-3
+sadd,'DW_SIGY','DW_UY',,-MAT_SOIL_stiffness*1E-3
+sadd,'EMN_SIGY','EMN_UY',,-MAT_SOIL_stiffness*1E-3
 
 *del,LSOptions
 *dim,LSOptions,CHAR,2

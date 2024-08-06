@@ -87,8 +87,8 @@ PATH,'BS_AXIS'
 PPATH,1,,GEO_TUN_totEffW/2,yi,zi,CS_Tunnel
 PPATH,2,,GEO_TUN_totEffW/2,ye,ze,CS_Tunnel
 PDEF,'UY',U,Y
-PCALC,ADD,'MSIGMAY','UY',,-1*SoilStiffness*1E-3
-PCALC,ADD,'SIGMAY','UY',,SoilStiffness*1E-3
+PCALC,ADD,'MSIGMAY','UY',,-1*MAT_SOIL_stiffness*1E-3
+PCALC,ADD,'SIGMAY','UY',,MAT_SOIL_stiffness*1E-3
 
 !PLPAGM,'SIGMAY',50,NODE
 *get,SigmaYMin,PATH,,MIN,'SIGMAY'
@@ -124,8 +124,8 @@ PATH,'BS_AXIS'
 PPATH,1,,GEO_TUN_totEffW/2,yi,zi,CS_Tunnel
 PPATH,2,,GEO_TUN_totEffW/2,ye,ze,CS_Tunnel
 PDEF,'UY',U,Y
-PCALC,ADD,'MSIGMAY','UY',,-1*SoilStiffness*1E-3
-PCALC,ADD,'SIGMAY','UY',,SoilStiffness*1E-3
+PCALC,ADD,'MSIGMAY','UY',,-1*MAT_SOIL_stiffness*1E-3
+PCALC,ADD,'SIGMAY','UY',,MAT_SOIL_stiffness*1E-3
 
 *get,SigmaYMin,PATH,,MIN,'SIGMAY'
 *get,SigmaYMax,PATH,,MAX,'SIGMAY'

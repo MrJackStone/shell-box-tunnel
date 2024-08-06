@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-MAT_SOIL_k    = SoilStiffness
 MAT_SOIL_phi  = FrictionAngle
 MAT_SOIL_c    = SoilCohesion
 MAT_SOIL_dens = SoilDensity
@@ -55,7 +54,7 @@ SaturationIncrement=100
 SpringElasticModulus=1e9
 ! Soil springs: length
 SpringLength=1
-LongitSpringLength=SpringLength*(SoilStiffness/100e6)
+LongitSpringLength=SpringLength*(MAT_SOIL_stiffness/100e6)
 COMPARE,'LongitSpringLength','MIN',2,LongitSpringLength,SpringLength
 
 ! Gravitational acceleration
@@ -295,7 +294,7 @@ ElasticModulus=4760*SQRT(MAT_TUN_fck*1e-6)*1e6
 MAT_CONC_E=ElasticModulus
 
 ! Soil spring stiffness
-SpringConstant=SoilStiffness*ElementArea
+SpringConstant=MAT_SOIL_stiffness*ElementArea
 SpringArea=SpringConstant*SpringLength/SpringElasticModulus
 
 ! Active Earth Pressure Coeficient (Ka)

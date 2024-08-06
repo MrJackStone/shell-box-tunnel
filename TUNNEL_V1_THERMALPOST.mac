@@ -50,8 +50,8 @@ path,'BSLAB',2,,200
 ppath,1,,GEO_TUN_totEffW/2,yi,zi,CS_Tunnel
 ppath,2,,GEO_TUN_totEffW/2,ye,ze,CS_Tunnel
 pdef,'UY',u,y
-pcalc,add,'SIGMAY','UY',,SoilStiffness*1e-3
-pcalc,add,'NSIGMAY','UY',,-SoilStiffness*1e-3
+pcalc,add,'SIGMAY','UY',,MAT_SOIL_stiffness*1e-3
+pcalc,add,'NSIGMAY','UY',,-MAT_SOIL_stiffness*1e-3
 !!
 
 !!

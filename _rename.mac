@@ -71,7 +71,7 @@ GEO_APR_length        ->
 GEO_APR_thk           -> 
 
 ✅ fck                   -> MAT_TUN_fck
-SoilStiffness         -> MAT_SOIL_stiffness
+✅ SoilStiffness         -> MAT_SOIL_stiffness
 FrictionAngle         -> MAT_SOIL_frictionAngle
 SoilCohesion          -> MAT_SOIL_cohesion
 SoilDensity           -> MAT_SOIL_density

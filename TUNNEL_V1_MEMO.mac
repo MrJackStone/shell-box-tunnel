@@ -51,7 +51,7 @@
    (';  SoilCohesion         = ',E12.4)
    *vwrite,SoilDensity
    (';  SoilDensity          = ',F10.4)
-   *vwrite,SoilStiffness
+   *vwrite,MAT_SOIL_stiffness
    (';  SoilStiffness        = ',E12.4)
    *vwrite,SpringLength
    (';  SpringLength         = ',F10.4)
