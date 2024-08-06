@@ -32,7 +32,7 @@
 ✅ GalleryDepth          -> GEO_EMB_height
 ✅ GalleryThetai         -> GEO_EMB_slopeBeg
 ✅ GalleryThetaf         -> GEO_EMB_slopeEnd
-WaterDepth            -> GEO_EMB_waterDepth
+✅ WaterDepth            -> GEO_EMB_waterDepth
 ! BackfillAngle         -> GEO_EMB_backfillAngle
 
 GEO_PIL_status        -> GEO_PILE_status

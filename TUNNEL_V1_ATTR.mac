@@ -11,8 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-GEO_EMB_waterDepth = WaterDepth
-
 GEO_HDW_stffWidth  = InternalWidth
 GEO_HDW_soilAngle  = BackfillAngle
 
@@ -191,9 +189,9 @@ LineAngle=LineDirection*pi/180
 ElementArea=ElementSize**2
 
 ! Water level (global cartesian coordinate)
-*if,WaterDepth,GE,0,THEN
-    WaterY=GEO_EMB_height-WaterDepth+Eff_GalleryHeight
-    WaterHeight=Eff_GalleryHeight+GEO_EMB_height-WaterDepth
+*if,GEO_EMB_waterDepth,GE,0,THEN
+    WaterY=GEO_EMB_height-GEO_EMB_waterDepth+Eff_GalleryHeight
+    WaterHeight=Eff_GalleryHeight+GEO_EMB_height-GEO_EMB_waterDepth
 *else
     WaterY=0
     WaterHeight=0
@@ -330,8 +328,8 @@ GammaSAT=Gammat+(SaturationIncrement*Gravity)
 GammaSUB=GammaSAT-Gammaw
 
 ! Tensão vertical devido à camada de cobrimento
-*if,WaterDepth,GE,0,AND,WaterDepth,LT,GEO_EMB_height,THEN
-    SoilPressure=Gammat*WaterDepth+GammaSAT*(GEO_EMB_height-WaterDepth)
+*if,GEO_EMB_waterDepth,GE,0,AND,GEO_EMB_waterDepth,LT,GEO_EMB_height,THEN
+    SoilPressure=Gammat*GEO_EMB_waterDepth+GammaSAT*(GEO_EMB_height-GEO_EMB_waterDepth)
 *else
     SoilPressure=Gammat*GEO_EMB_height
 *endif

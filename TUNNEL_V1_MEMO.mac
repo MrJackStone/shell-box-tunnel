@@ -77,7 +77,7 @@
    (';  WaterDensity        = ',F10.4)
    *vwrite,SaturationIncrement
    (';  SaturationIncrement = ',F10.4)
-   *vwrite,WaterDepth
+   *vwrite,GEO_EMB_waterDepth
    (';  WaterDepth          = ',F10.4)
    *vwrite,WaterY
    (';  WaterY              = ',F10.4)
