@@ -1,80 +1,92 @@
 GEO_TUN_length        = GEO_TUN_length
 GalleryModules        = GEO_TUN_modules
-GalleryWidth          = GEO_TUN_width
+GalleryWidth          = GEO_TUN_moduleWidth
 GalleryHeight         = GEO_TUN_height
 Tunneli               = GEO_TUN_slope
-RoofThk               = GEO_TUN_roofThk
-FloorThk              = GEO_TUN_floorThk
-WallThk               = GEO_TUN_wallThk
-GEO_corbel            = GEO_CORB_status
-GEO_corbelW           = GEO_CORB_width
-GEO_corbelH           = GEO_CORB_height
-GEO_TUN_iwThk         = GEO_IWALL_thk
-GEO_TUN_tbB           = GEO_IWALL_topBeamWidth
-GEO_TUN_bbB           = GEO_IWALL_botBeamWidth
-GEO_TUN_colB          = GEO_IWALL_columnThk
-GEO_pinRoof           = GEO_ROOF_wallConnection
+
 GEO_roofGirders       = GEO_ROOF_type
+RoofThk               = GEO_ROOF_thk
 GEO_roofbc            = GEO_ROOF_precastWidth
 GEO_rooftc            = GEO_ROOF_precastHeight
 GEO_pinGirders        = GEO_ROOF_continuity
+GEO_pinRoof           = GEO_ROOF_wallConnection
+
+FloorThk              = GEO_FLOOR_floorThk
+
+WallThk               = GEO_OWALL_wallThk
+
 GEO_TUN_iwType        = GEO_IWALL_type
+GEO_TUN_iwThk         = GEO_IWALL_thk
+GEO_TUN_tBeamH        = GEO_IWALL_topBeamHeight
+GEO_TUN_tbB           = GEO_IWALL_topBeamWidth
+GEO_TUN_bBeamH        = GEO_IWALL_botBeamHeight
+GEO_TUN_bbB           = GEO_IWALL_botBeamWidth
 GEO_TUN_iCols         = GEO_IWALL_columnCount
 GEO_TUN_colW          = GEO_IWALL_columnWidth
-GEO_TUN_tBeamH        = GEO_IWALL_topBeamHeight
-GEO_TUN_bBeamH        = GEO_IWALL_botBeamHeight
-GalleryDepth          = GEO_SOIL_depth
-GalleryThetai         = GEO_SOIL_
-GalleryThetaf         = 
-WaterDepth            = 
-GEO_PIL_status        = 
-GEO_PIL_dExt          = 
-GEO_PIL_dInt          = 
-GEO_PIL_nExt          = 
-GEO_PIL_nInt          = 
-GEO_PIL_length        = 
-GEO_Headwall          = 
-GEO_InletLength       = 
-GEO_InletAngle        = 
-GEO_FootingWidth      = 
-GEO_FootingDepth      = 
-GEO_HDW_HeadBeamH     = 
-GEO_HDW_WallTopLen    = 
-GEO_HDW_ColWidth      = 
-InternalWidth         = 
-GEO_RetMode           = 
-GEO_WingShape         = 
-GEO_WallBotOffset     = 
-GEO_HDW_WallThk       = 
-GEO_HDW_SlabThk       = 
-GEO_HDW_StiffenerThk  = 
-GEO_HDW_FootingHeight = 
-GEO_HDW_BeamWidth     = 
-GEO_HDW_ColThk        = 
-GEO_HDW_pinTopBeam    = 
-BackfillAngle         = 
+GEO_TUN_colB          = GEO_IWALL_columnThk
+
+GEO_corbel            = GEO_CORB_status
+GEO_corbelW           = GEO_CORB_width
+GEO_corbelH           = GEO_CORB_height
+
+GalleryDepth          = GEO_EMB_height
+GalleryThetai         = GEO_EMB_slopeBeg
+GalleryThetaf         = GEO_EMB_slopeEnd
+WaterDepth            = GEO_EMB_waterDepth
+! BackfillAngle         = GEO_EMB_backfillAngle
+
+GEO_PIL_status        = GEO_PILE_status
+GEO_PIL_length        = GEO_PILE_length
+GEO_PIL_nExt          = GEO_PILE_EXT_count
+GEO_PIL_dExt          = GEO_PILE_EXT_diameter
+GEO_PIL_nInt          = GEO_PILE_INT_count
+GEO_PIL_dInt          = GEO_PILE_INT_diameter
+
+GEO_Headwall          = GEO_HDW_status
+GEO_InletLength       = GEO_HDW_length
+GEO_InletAngle        = GEO_HDW_angle
+GEO_FootingWidth      = GEO_HDW_footWidth
+GEO_FootingDepth      = GEO_HDW_footDepth
+GEO_HDW_HeadBeamH     = GEO_HDW_headBeamHeight
+GEO_HDW_WallTopLen    = GEO_HDW_topLength
+GEO_HDW_ColWidth      = GEO_HDW_columnWidth
+InternalWidth         = GEO_HDW_slabStfWidth
+GEO_RetMode           = GEO_HDW_type
+GEO_WingShape         = GEO_HDW_wingShape
+GEO_WallBotOffset     = GEO_HDW_wingBottomOffset
+GEO_HDW_WallThk       = GEO_HDW_wallThk
+GEO_HDW_SlabThk       = GEO_HDW_slabThk
+GEO_HDW_StiffenerThk  = GEO_HDW_slabStfThk
+GEO_HDW_FootingHeight = GEO_HDW_footHeight
+GEO_HDW_BeamWidth     = GEO_HDW_headBeamWidth
+                      = GEO_HDW_floorBeamWidth
+GEO_HDW_ColThk        = GEO_HDW_columnThk
+GEO_HDW_pinTopBeam    = GEO_HDW_beamRoofConnection
+
 GEO_APR_status        = 
 GEO_APR_oneWay        = 
 GEO_APR_width         = 
 GEO_APR_length        = 
 GEO_APR_thk           = 
-fck                   = 
-SoilStiffness         = 
-FrictionAngle         = 
-SoilCohesion          = 
-SoilDensity           = 
-LineDirection         = 
-LOAD_LTName           = 
-LOAD_lineCount        = 
-LOAD_gauge            = 
-DeltaZOffset          = 
-ImpactCoefficient     = 
-xOffsetCount          = 
-*del,xOffsets
-*dim,xOffsets,ARRAY,xOffsetCount
-xOffsets(1)= -23.7, -23.7+5.5/2, -21.45+5.5/2
-zOffset=-5.5
-LOAD_LVName='TB-450'
-LOAD_LVPos=18
-ElementSize=0.4
-FEM_HDW_ESize=0.4
+
+fck                   = MAT_TUN_fck
+SoilStiffness         = MAT_SOIL_stiffness
+FrictionAngle         = MAT_SOIL_frictionAngle
+SoilCohesion          = MAT_SOIL_cohesion
+SoilDensity           = MAT_SOIL_density
+
+LineDirection         = LOAD_LTA_skew
+LOAD_LTName           = LOAD_LTA_name
+LOAD_lineCount        = LOAD_LTA_count
+LOAD_gauge            = LOAD_LTA_gauge
+DeltaZOffset          = LOAD_LTA_spacing
+ImpactCoefficient     = LOAD_LTA_impactCoefficient
+xOffsetCount          = LOAD_LTA_positionCount
+xOffsets              = LOAD_LTA_positions
+zOffset               = LOAD_LTA_transversalOffset
+
+LOAD_LVName           = LOAD_LTI_name
+LOAD_LVPos            = LOAD_LTI_position
+
+ElementSize           = FEM_TUN_esize
+FEM_HDW_ESize         = FEM_HDW_esize
