@@ -47,8 +47,8 @@ KP3=KP(x3,0,zEnd)
 KP4=KP(x4,0,zEnd)
 KP27=KP(x1,yTop,zEnd)
 KP29=KP(x4,yTop,zEnd)
-KP101=KP(x1,GEO_WallBotOffset,zEnd)
-KP102=KP(x4,GEO_WallBotOffset,zEnd)
+KP101=KP(x1,GEO_HDW_wingBottomOffset,zEnd)
+KP102=KP(x4,GEO_HDW_wingBottomOffset,zEnd)
 
 ! Existing keypoint collections for tunnels with more than one module
 *if,GEO_TUN_modules,gt,1,then
@@ -591,8 +591,8 @@ KP32=KPMaxD+32
     KP4=KP(x4,0,zEndRight)
     KP27=KP(x1,yTop,zEndLeft)
     KP29=KP(x4,yTop,zEndRight)
-    KP101=KP(x1,GEO_WallBotOffset,zEndLeft)
-    KP102=KP(x4,GEO_WallBotOffset,zEndRight)
+    KP101=KP(x1,GEO_HDW_wingBottomOffset,zEndLeft)
+    KP102=KP(x4,GEO_HDW_wingBottomOffset,zEndRight)
     KSEL,S,LOC,X,x2
     KP2=KP(x2,0,zEndLeft)
     KSEL,S,LOC,X,x3
@@ -615,8 +615,8 @@ KP32=KPMaxD+32
 
     *if,GEO_HDW_wingShape,eq,1,then
         ! Rectangular shape
-        k,KP22,xWingLeft,GEO_WallBotOffset,zWingLeft ! kp28
-        k,KP23,xWingRight,GEO_WallBotOffset,zWingRight ! kp30
+        k,KP22,xWingLeft,GEO_HDW_wingBottomOffset,zWingLeft ! kp28
+        k,KP23,xWingRight,GEO_HDW_wingBottomOffset,zWingRight ! kp30
     *endif
 
     !! AREAS

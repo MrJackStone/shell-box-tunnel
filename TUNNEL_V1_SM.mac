@@ -238,11 +238,11 @@ TUNNEL_V1_BUILDCM
 !!
 !! 3.2 SPLIT WINGS
 !!
-*if,GEO_HDW_type,EQ,1,AND,GEO_WallBotOffset,GT,0,THEN
+*if,GEO_HDW_type,EQ,1,AND,GEO_HDW_wingBottomOffset,GT,0,THEN
 
     ! Walls
     CMSEL,S,COMPA_Walls
-    CSSLICEXZ,GEO_WallBotOffset
+    CSSLICEXZ,GEO_HDW_wingBottomOffset
     CM,COMPA_temp,AREA
 
     CMSEL,S,COMPA_temp
