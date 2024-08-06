@@ -291,7 +291,7 @@ cm,COMPA_HDW_ColRight,area
 cm,COMPA_HDW_Columns,area
 *get,parType,PARM,GEO_HDW_status,TYPE
 *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-    GEO_HDW_stiffXOff=InternalWidth/COS(GEO_InletRadians)
+    GEO_HDW_stiffXOff=GEO_HDW_slabStfWidth/COS(GEO_InletRadians)
     CMSEL,S,COMPA_Floor
     CSSLICEYZ,GEO_HDW_stiffXOff
     CSSLICEYZ,GEO_TUN_totEffW-GEO_HDW_stiffXOff
