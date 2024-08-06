@@ -17,7 +17,7 @@
 
 ✅ GEO_TUN_iwType        -> GEO_IWALL_type
 ✅ GEO_TUN_iwThk         -> GEO_IWALL_thk
-GEO_TUN_tBeamH        -> GEO_IWALL_topBeamHeight
+✅ GEO_TUN_tBeamH        -> GEO_IWALL_topBeamHeight
 GEO_TUN_tbB           -> GEO_IWALL_topBeamWidth
 GEO_TUN_bBeamH        -> GEO_IWALL_botBeamHeight
 GEO_TUN_bbB           -> GEO_IWALL_botBeamWidth
