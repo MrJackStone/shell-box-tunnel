@@ -161,14 +161,14 @@ ALLSEL
 !
 !! 3.1.2 OBLIQUE CUT AT TUNNEL ENDS
 !!
-*if,GEO_RetMode,EQ,1,AND,GEO_InletAngle,NE,0,THEN
+*if,GEO_RetMode,EQ,1,AND,GEO_HDW_angle,NE,0,THEN
 
     *get,CSMax,CDSY,,NUM,MAX
     tmpCS=CSMax+1000
 
     ALLSEL
     wpcsys,1,CS_Tunnel
-    WPROTA,,,-GEO_InletAngle
+    WPROTA,,,-GEO_HDW_angle
     ASBW,ALL,,DELETE
 
     CSWPLA,tmpCS,CART
@@ -178,7 +178,7 @@ ALLSEL
     ALLSEL
     WPCSYS,1,CS_Tunnel
     WPOFFS,Eff_GalleryWidth,,GEO_TUN_length
-    WPROTA,,,-GEO_InletAngle
+    WPROTA,,,-GEO_HDW_angle
     ASBW,ALL,,DELETE
 
     CSWPLA,tmpCS,CART

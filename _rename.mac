@@ -44,7 +44,7 @@
 
 ✅ GEO_Headwall          -> GEO_HDW_status
 ✅ GEO_InletLength       -> GEO_HDW_length
-GEO_InletAngle        -> GEO_HDW_angle
+✅ GEO_InletAngle        -> GEO_HDW_angle
 GEO_FootingWidth      -> GEO_HDW_footWidth
 GEO_FootingDepth      -> GEO_HDW_footDepth
 GEO_HDW_HeadBeamH     -> GEO_HDW_headBeamHeight

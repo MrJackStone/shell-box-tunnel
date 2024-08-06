@@ -168,9 +168,9 @@ GEO_TUN_effH       = Eff_GalleryHeight
 GEO_TUN_totEffW    = GEO_TUN_effW*GEO_TUN_modules
 
 *if,GEO_RetMode,EQ,1,THEN
-    !!GEO_InletAngle=90
+    !!GEO_HDW_angle=90
     *afun,DEG
-    GEO_ExtraLength=TAN(GEO_InletAngle)*GEO_TUN_totEffW
+    GEO_ExtraLength=TAN(GEO_HDW_angle)*GEO_TUN_totEffW
     *afun,RAD
     GEO_TUN_length=GEO_TUN_length+2*GEO_ExtraLength
 *else

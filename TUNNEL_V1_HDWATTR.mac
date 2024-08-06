@@ -13,7 +13,7 @@ CS_HDW_RightWallEnd=302
 !CS_HDW_beg=203
 !CS_HDW_end=303
 
-GEO_InletRadians=GEO_InletAngle*pi/180
+GEO_InletRadians=GEO_HDW_angle*pi/180
 
 GEO_InletWidth=Eff_GalleryWidth*GEO_TUN_modules
 GEO_HDW_Height=Eff_GalleryHeight+GEO_HDW_HeadBeamH
