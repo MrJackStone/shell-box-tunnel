@@ -59,7 +59,7 @@ AATT,3,,1,CS_top,SEC_ROOF
 *if,GEO_corbel,GE,1,THEN
     ! Corbels
     xWall=0
-    *do,nthWall,1,GalleryModules+1,1
+    *do,nthWall,1,GEO_TUN_modules+1,1
 
         ! Geometric limits
         xLeft=xWall-GEO_corbelXOff_BOT

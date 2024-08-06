@@ -330,7 +330,7 @@ CM,COMPA_WALL_flat,AREA
 *if,GEO_corbel,GE,1,THEN
     ! Roof slab
     CMSEL,S,COMPA_Roof
-    *do,nthModule,0,GalleryModules,1
+    *do,nthModule,0,GEO_TUN_modules,1
         xWall=nthModule*Eff_GalleryWidth
         CSSLICEYZ,xWall+GEO_corbelXOff_TOP
         CSSLICEYZ,xWall-GEO_corbelXOff_TOP
@@ -364,7 +364,7 @@ CM,COMPA_WALL_flat,AREA
 
     ! Floor slab
     CMSEL,S,COMPA_Floor
-    *do,nthModule,0,GalleryModules,1
+    *do,nthModule,0,GEO_TUN_modules,1
         xWall=nthModule*Eff_GalleryWidth
         CSSLICEYZ,xWall+GEO_corbelXOff_BOT
         CSSLICEYZ,xWall-GEO_corbelXOff_BOT
@@ -440,8 +440,8 @@ CM,COMPA_WALL_flat,AREA
     *if,parType,EQ,0,AND,GEO_Headwall,GT,0,THEN
         x_LEFT_Top=GEO_corbelXOff_TOP
         x_LEFT_Bot=GEO_corbelXOff_BOT
-        x_RIGHT_Top=GalleryModules*Eff_GalleryWidth-GEO_corbelXOff_TOP
-        x_RIGHT_Bot=GalleryModules*Eff_GalleryWidth-GEO_corbelXOff_BOT
+        x_RIGHT_Top=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_TOP
+        x_RIGHT_Bot=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_BOT
 
         y_BOT=GEO_corbelYOff_BOT
         y_TOP=Eff_GalleryHeight-GEO_corbelYOff_TOP

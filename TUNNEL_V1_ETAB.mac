@@ -303,7 +303,7 @@ ESLA,S
 !! PAREDES EXTERNAS
 !!
 ASEL,S,LOC,X,0
-ASEL,A,LOC,X,GalleryModules*Eff_GalleryWidth
+ASEL,A,LOC,X,GEO_TUN_modules*Eff_GalleryWidth
 ESLA,S
 
 *get,ECount,ELEM,0,COUNT
@@ -361,7 +361,7 @@ ASEL,S,LOC,Z,0,GEO_TUN_length
 ASEL,U,LOC,Y,0
 ASEL,U,LOC,Y,Eff_GalleryHeight
 ASEL,U,LOC,X,0
-ASEL,U,LOC,X,GalleryModules*Eff_GalleryWidth
+ASEL,U,LOC,X,GEO_TUN_modules*Eff_GalleryWidth
 ESLA,S
 
 *get,ECount,ELEM,0,COUNT

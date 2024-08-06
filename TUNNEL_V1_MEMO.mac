@@ -7,7 +7,7 @@
    (';  Tunnel Id.   = ',A8)
    *vwrite,
    ('GOMETRIA:')
-   *vwrite,GalleryModules
+   *vwrite,GEO_TUN_modules
    (';  GalleryModules    = ',F3.0,TL1,' ')
    *vwrite,GEO_TUN_length
    (';  GalleryLength     = ',F10.4)

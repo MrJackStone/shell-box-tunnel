@@ -32,7 +32,7 @@ MAX_FloorMinUY=0
    FloorAvgSoilStress=ABS(AvgRY/ElementArea)
 
    NSEL,S,LOC,Y,0
-   NSEL,R,LOC,X,0,Eff_GalleryWidth*GalleryModules
+   NSEL,R,LOC,X,0,Eff_GalleryWidth*GEO_TUN_modules
    NSEL,R,LOC,Z,0,GEO_TUN_length
 
    *del,YDisplacements

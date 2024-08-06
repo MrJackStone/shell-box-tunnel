@@ -15,7 +15,7 @@ CS_HDW_RightWallEnd=302
 
 GEO_InletRadians=GEO_InletAngle*pi/180
 
-GEO_InletWidth=Eff_GalleryWidth*GalleryModules
+GEO_InletWidth=Eff_GalleryWidth*GEO_TUN_modules
 GEO_HDW_Height=Eff_GalleryHeight+GEO_HDW_HeadBeamH
 
 MaxIW=(GEO_InletWidth/2)*COS(GEO_InletRadians)

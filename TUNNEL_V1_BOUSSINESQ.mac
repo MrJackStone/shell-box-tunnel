@@ -25,7 +25,7 @@ QZ_0=LOAD_z0
 
             APPLY_LOAD = 0
 
-            *if,QX,GE,0,AND,QX,LE,GalleryModules*Eff_GalleryWidth,THEN
+            *if,QX,GE,0,AND,QX,LE,GEO_TUN_modules*Eff_GalleryWidth,THEN
                 ! CASE: load over tunnel
                 *if,QZ,GE,0,AND,QZ,LE,GEO_TUN_length,THEN
                     APPLY_LOAD = 1
