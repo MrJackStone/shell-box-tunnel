@@ -120,7 +120,7 @@ AATT,3,,1,CS_top,SEC_ROOF
 *if,GEO_ROOF_wallConnection,eq,0,then
     ! Rigid roof-wall connection
     CMSEL,S,COMPA_Tunnel
-    AESIZE,ALL,ElementSize
+    AESIZE,ALL,FEM_TUN_esize
     AMESH,ALL
 
 *elseif,GEO_ROOF_wallConnection,eq,1,then

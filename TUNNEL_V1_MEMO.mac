@@ -113,7 +113,7 @@
    ('ANSYS:')
    *vwrite,CoordSys
    (';  CoordSys     = ',F3.0,TL1,' ')
-   *vwrite,ElementSize
+   *vwrite,FEM_TUN_esize
    (';  ElementSize  = ',F10.4)
    *vwrite,ElementArea
    (';  ElementArea  = ',E12.4)

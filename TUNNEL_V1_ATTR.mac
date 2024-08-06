@@ -9,13 +9,6 @@
 Version=1
 
 !!
-!! 2.0 REFACTORING INPUTS
-!!
-FEM_TUN_esize = ElementSize
-!
-!
-!
-!!
 !! 2.1 CONSTANTS
 !!
 pi=ACOS(-1)
@@ -166,7 +159,7 @@ TunnelSlope=ATAN(GEO_TUN_slope/100)*180/pi
 LOAD_LTA_skewRad = LOAD_LTA_skew*(pi/180)
 
 ! Area of shell elements
-ElementArea=ElementSize**2
+ElementArea=FEM_TUN_esize**2
 
 ! Water level (global cartesian coordinate)
 *if,GEO_EMB_waterDepth,GE,0,THEN
