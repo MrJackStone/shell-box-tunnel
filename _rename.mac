@@ -27,7 +27,7 @@
 
 ✅ GEO_corbel            -> GEO_CORB_status
 ✅ GEO_corbelW           -> GEO_CORB_width
-GEO_corbelH           -> GEO_CORB_height
+✅ GEO_corbelH           -> GEO_CORB_height
 
 GalleryDepth          -> GEO_EMB_height
 GalleryThetai         -> GEO_EMB_slopeBeg

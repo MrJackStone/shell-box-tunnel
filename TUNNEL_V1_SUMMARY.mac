@@ -25,7 +25,7 @@ Identification: %c
     ('Floor thk:',F8.3)
     *vwrite,GEO_OWALL_thk
     ('Wall thk: ',F8.3)
-    *vwrite,abs(GEO_corbelH)
+    *vwrite,abs(GEO_CORB_height)
     ('Stf thk:  ',F8.3)
 
     *vwrite
