@@ -15,7 +15,7 @@
 
 *endif
 
-zFlat=GEO_HDW_WallTopLen*cos(GEO_InletRadians)
+zFlat=GEO_HDW_topLength*cos(GEO_InletRadians)
 zLenSloping=GEO_HDW_length-zFlat
 *if,localZ,le,zFlat,then
     %arg1%=GEO_HDW_Height
