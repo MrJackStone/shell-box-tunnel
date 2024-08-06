@@ -57,7 +57,7 @@
 ✅ GEO_HDW_WallThk       -> GEO_HDW_wallThk
 ✅ GEO_HDW_SlabThk       -> GEO_HDW_slabThk
 ✅ GEO_HDW_StiffenerThk  -> GEO_HDW_slabStfThk
-GEO_HDW_FootingHeight -> GEO_HDW_footHeight
+✅ GEO_HDW_FootingHeight -> GEO_HDW_footHeight
 GEO_HDW_BeamWidth     -> GEO_HDW_headBeamWidth
                       -> GEO_HDW_floorBeamWidth
 GEO_HDW_ColThk        -> GEO_HDW_columnThk
