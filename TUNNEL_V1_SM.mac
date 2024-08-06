@@ -915,7 +915,7 @@ yPT3=yPT2
 yPT4=yREF+COS(TunnelSlope)*(GEO_ROOF_thk/2)
 depthFromEnd=yPT2-yPT4
 zPT4=zREF-SIN(TunnelSlope)*(GEO_ROOF_thk/2)
-zPT3=zPT4-(depthFromEnd/TAN(GalleryThetaf))
+zPT3=zPT4-(depthFromEnd/TAN(GEO_EMB_slopeEnd))
 *afun,RAD
 
 ! Draw embankment contour

@@ -9,11 +9,11 @@
     yBeg=yPT1+TAN(GEO_EMB_slopeBeg)*(arg2-zPT1)
     *afun,RAD
 *endif
-*if,GalleryThetaf,eq,90,then
+*if,GEO_EMB_slopeEnd,eq,90,then
     yEnd=yPT2
 *else
     *afun,DEG
-    yEnd=yPT4+TAN(GalleryThetaf)*(zPT4-arg2)
+    yEnd=yPT4+TAN(GEO_EMB_slopeEnd)*(zPT4-arg2)
     *afun,RAD
 *endif
 yPlateau=yPT2

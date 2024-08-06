@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-GEO_EMB_thetaf     = GalleryThetaf
 GEO_EMB_waterDepth = WaterDepth
 
 GEO_HDW_stffWidth  = InternalWidth
@@ -210,11 +209,11 @@ ElementArea=ElementSize**2
 *else
     GalleryAlphai=90-GEO_EMB_slopeBeg
 *endif
-*get,parType,PARM,GalleryThetaf,TYPE
+*get,parType,PARM,GEO_EMB_slopeEnd,TYPE
 *if,parType,NE,0,THEN
     GalleryAlphaf=0
 *else
-    GalleryAlphaf=90-GalleryThetaf
+    GalleryAlphaf=90-GEO_EMB_slopeEnd
 *endif
 
 ! Calculate corbel offsets
