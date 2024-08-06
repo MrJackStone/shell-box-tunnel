@@ -969,7 +969,7 @@ zRailway=zOffset
 
     *enddo
 
-    zRailway=zRailway+DeltaZOffset
+    zRailway=zRailway+LOAD_LTA_spacing
 
 *enddo
 

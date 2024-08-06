@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-LOAD_dist     = DeltaZOffset
 LOAD_impact   = ImpactCoefficient
 LOAD_posCount = xOffsetCount
 LOAD_zoff     = zOffset
@@ -217,7 +216,7 @@ GEO_corbelYOff_BOT=GEO_CORB_height+(GEO_FLOOR_thk/2)+floor_yProjection
 *if,GEO_APR_status,EQ,1,THEN
     *afun,DEG
 
-    GEO_APR_zAxis=LOAD_zoff+((LOAD_LTA_count-1)*LOAD_dist)/2
+    GEO_APR_zAxis=LOAD_zoff+((LOAD_LTA_count-1)*LOAD_LTA_spacing)/2
     GEO_APR_zAxW=tan(LOAD_LTA_skew)*(Eff_GalleryWidth*GEO_TUN_modules)/2
     GEO_APR_zS=GEO_APR_width/(2*cos(LOAD_LTA_skew))
     GEO_APR_zL=GEO_APR_length*tan(LOAD_LTA_skew)
@@ -339,11 +338,11 @@ LOAD_LTPtCount=LOADTRAIN_VAR_count
 zOff=zOffset
 *do,nthLine,1,LOAD_LTA_count,1
     zOffsets(nthLine)=zOff
-    zOff=zOff+DeltaZOffset
+    zOff=zOff+LOAD_LTA_spacing
 *enddo
 
 ! Z coordinate of point where tunnel axis intersects railway axis (pivot point)
-LOAD_z0=LOAD_zoff+((LOAD_LTA_count-1)*LOAD_dist)/2
+LOAD_z0=LOAD_zoff+((LOAD_LTA_count-1)*LOAD_LTA_spacing)/2
 !
 !
 !

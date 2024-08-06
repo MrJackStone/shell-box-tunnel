@@ -80,7 +80,7 @@ GEO_APR_thk           ->
 ✅ LOAD_LTName           -> LOAD_LTA_name
 ✅ LOAD_lineCount        -> LOAD_LTA_count
 ✅ LOAD_gauge            -> LOAD_LTA_gauge
-DeltaZOffset          -> LOAD_LTA_spacing
+✅ DeltaZOffset          -> LOAD_LTA_spacing
 ImpactCoefficient     -> LOAD_LTA_impactCoefficient
 xOffsetCount          -> LOAD_LTA_positionCount
 xOffsets              -> LOAD_LTA_positions

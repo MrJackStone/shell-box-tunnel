@@ -107,7 +107,7 @@
    (';  xOffsets     = ',F10.4)
    *vwrite,zOffset
    (';  zOffset      = ',F10.4)
-   *vwrite,DeltaZOffset
+   *vwrite,LOAD_LTA_spacing
    (';  DeltaZOffset = ',F10.4)
    *vwrite,
    ('ANSYS:')
