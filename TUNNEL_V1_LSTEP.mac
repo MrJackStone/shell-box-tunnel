@@ -191,7 +191,7 @@ cm,COMPL_ltpos,line
 
 *do,xOffIndex,1,LOAD_LTA_positionCount,1
 
-    xOffset=xOffsets(xOffIndex)
+    xOffset=LOAD_LTA_positions(xOffIndex)
 
     LoadStepIndex=LoadStepIndex+1
 

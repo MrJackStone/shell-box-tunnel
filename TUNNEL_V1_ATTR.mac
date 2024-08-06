@@ -12,9 +12,6 @@ Version=1
 !! 2.0 REFACTORING INPUTS
 !!
 LOAD_zoff     = zOffset
-*del,LOAD_pos
-*vfun,LOAD_pos,COPY,xOffsets
-
 FEM_TUN_esize = ElementSize
 !
 !

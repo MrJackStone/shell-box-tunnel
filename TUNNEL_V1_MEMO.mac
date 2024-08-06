@@ -103,7 +103,7 @@
    (';  ',F14.4,' | ',E12.4)
    *vwrite,LOAD_LTA_positionCount
    (';  xOffsetCount = ',F3.0,TL1,' ')
-   *vwrite,xOffsets(1)
+   *vwrite,LOAD_LTA_positions(1)
    (';  xOffsets     = ',F10.4)
    *vwrite,zOffset
    (';  zOffset      = ',F10.4)
