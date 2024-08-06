@@ -30,7 +30,7 @@
 ✅ GEO_corbelH           -> GEO_CORB_height
 
 ✅ GalleryDepth          -> GEO_EMB_height
-GalleryThetai         -> GEO_EMB_slopeBeg
+✅ GalleryThetai         -> GEO_EMB_slopeBeg
 GalleryThetaf         -> GEO_EMB_slopeEnd
 WaterDepth            -> GEO_EMB_waterDepth
 ! BackfillAngle         -> GEO_EMB_backfillAngle
