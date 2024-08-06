@@ -236,7 +236,7 @@ go2png,1000
     /type,1,3
     cmsel,s,COMPN_CSEC_ALL
     cmsel,s,COMPA_Headwalls
-    asel,r,loc,z,-2*GEO_HDW_Length,GEO_TUN_Length/2
+    asel,r,loc,z,-2*GEO_HDW_length,GEO_TUN_Length/2
     lsla,u
     aplot
     lplot

@@ -67,10 +67,10 @@ MAX_FloorMinUY=0
 CSYS,CS_Tunnel
 
 *afun,DEG
-zi=-GEO_InletLength*COS(TunnelSlope)
-ze=(GEO_TUN_length+GEO_InletLength)*COS(TunnelSlope)
-yi=-GEO_InletLength*SIN(TunnelSlope)
-ye=(GEO_TUN_length+GEO_InletLength)*SIN(TunnelSlope)
+zi=-GEO_HDW_length*COS(TunnelSlope)
+ze=(GEO_TUN_length+GEO_HDW_length)*COS(TunnelSlope)
+yi=-GEO_HDW_length*SIN(TunnelSlope)
+ye=(GEO_TUN_length+GEO_HDW_length)*SIN(TunnelSlope)
 *afun,RAD
 VIEW1W
 

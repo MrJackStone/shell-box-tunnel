@@ -13,9 +13,9 @@ x1=0
 x2=GEO_HDW_stiffXOff
 x3=GEO_TUN_totEffW-GEO_HDW_stiffXOff
 x4=GEO_TUN_totEffW
-x5=-GEO_InletLength*SIN(GEO_InletRadians)
+x5=-GEO_HDW_length*SIN(GEO_InletRadians)
 x6=x5+GEO_HDW_stiffXOff
-x7=x3+(SIN(GEO_InletRadians)*GEO_InletLength)
+x7=x3+(SIN(GEO_InletRadians)*GEO_HDW_length)
 x8=x7+GEO_HDW_stiffXOff
 x9=x1-(GEO_FootingWidth/COS(GEO_InletRadians))
 x10=x1
@@ -35,7 +35,7 @@ yFoot=-GEO_FootingDepth
 yBeam=GEO_HDW_Height
 
 zEnd=GEO_TUN_length
-zFront=GEO_TUN_length+GEO_InletLength
+zFront=GEO_TUN_length+GEO_HDW_length
 
 CSYS,arg1
 allsel
@@ -580,11 +580,11 @@ KP32=KPMaxD+32
     *get,ZMax,KP,,MXLOC,Z
     zEndRight=ZMax
 
-    zWingLeft=zEndLeft-GEO_InletLength*SIN(GEO_InletRadians)
-    zWingRight=zEndRight+GEO_InletLength*SIN(GEO_InletRadians)
+    zWingLeft=zEndLeft-GEO_HDW_length*SIN(GEO_InletRadians)
+    zWingRight=zEndRight+GEO_HDW_length*SIN(GEO_InletRadians)
 
-    xWingLeft=x1-GEO_InletLength*COS(GEO_InletRadians)
-    xWingRight=x4+GEO_InletLength*COS(GEO_InletRadians)
+    xWingLeft=x1-GEO_HDW_length*COS(GEO_InletRadians)
+    xWingRight=x4+GEO_HDW_length*COS(GEO_InletRadians)
 
     ALLSEL
     KP1=KP(x1,0,zEndLeft)
