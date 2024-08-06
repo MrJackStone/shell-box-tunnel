@@ -53,13 +53,13 @@ x2Offset=0  ! Saída inútil --- remover e compatibilizar com planilha do Excel
 *cfclos
 
 *cfopen,WallRES,'TXT',,APPEND
-   *vwrite,GalleryDepth,x1Offset,x2Offset,WallThk,WallMXMAX,WallMXMIN,WallMYMAX,WallMYMIN,WallFXMAX,WallFXMIN,WallFYMAX,WallFYMIN,WallQXMAX,WallQYMAX
+   *vwrite,GalleryDepth,x1Offset,x2Offset,GEO_OWALL_thk,WallMXMAX,WallMXMIN,WallMYMAX,WallMYMIN,WallFXMAX,WallFXMIN,WallFYMAX,WallFYMIN,WallQXMAX,WallQYMAX
    (F8.4,'; ',F8.4,'; ',F8.4,'; ',F8.4,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2)
 *cfclos
 
 *if,InternalWalls,EQ,1,THEN
    *cfopen,IntRES,'TXT',,APPEND
-      *vwrite,GalleryDepth,x1Offset,x2Offset,WallThk,IntMXMAX,IntMXMIN,IntMYMAX,IntMYMIN,IntFXMAX,IntFXMIN,IntFYMAX,IntFYMIN,IntQXMAX,IntQYMAX
+      *vwrite,GalleryDepth,x1Offset,x2Offset,GEO_OWALL_thk,IntMXMAX,IntMXMIN,IntMYMAX,IntMYMIN,IntFXMAX,IntFXMIN,IntFYMAX,IntFYMIN,IntQXMAX,IntQYMAX
       (F8.4,'; ',F8.4,'; ',F8.4,'; ',F8.4,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2)
    *cfclos
 *endif

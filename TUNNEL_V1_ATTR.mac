@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-GEO_TUN_wallThk    = WallThk
 GEO_TUN_depth      = GalleryDepth
 
 GEO_EMB_thetai     = GalleryThetai
@@ -166,9 +165,9 @@ REAL_rigidStrut=5
 
 ! Calculate effective spans (distance between mid-planes)
 *if,iThk,eq,0,then
-    Eff_GalleryWidth=GEO_TUN_moduleWidth+WallThk
+    Eff_GalleryWidth=GEO_TUN_moduleWidth+GEO_OWALL_thk
 *else
-    Eff_GalleryWidth=GEO_TUN_moduleWidth+(WallThk+iThk)/2
+    Eff_GalleryWidth=GEO_TUN_moduleWidth+(GEO_OWALL_thk+iThk)/2
 *endif
 Eff_GalleryHeight=GEO_TUN_height+(GEO_FLOOR_thk+GEO_ROOF_thk)/2
 
@@ -223,13 +222,13 @@ ElementArea=ElementSize**2
 
 ! Calculate corbel offsets
 roof_xProjection=(GEO_ROOF_thk/2)*(GEO_corbelW/GEO_corbelH)
-roof_yProjection=(WallThk/2)*(GEO_corbelH/GEO_corbelW)
-GEO_corbelXOff_TOP=GEO_corbelW+(WallThk/2)+roof_xProjection
+roof_yProjection=(GEO_OWALL_thk/2)*(GEO_corbelH/GEO_corbelW)
+GEO_corbelXOff_TOP=GEO_corbelW+(GEO_OWALL_thk/2)+roof_xProjection
 GEO_corbelYOff_TOP=GEO_corbelH+(GEO_ROOF_thk/2)+roof_yProjection
 
 floor_xProjection=(GEO_FLOOR_thk/2)*(GEO_corbelH/GEO_corbelW)
-floor_yProjection=(WallThk/2)*(GEO_corbelH/GEO_corbelW)
-GEO_corbelXOff_BOT=GEO_corbelW+(WallThk/2)+floor_xProjection
+floor_yProjection=(GEO_OWALL_thk/2)*(GEO_corbelH/GEO_corbelW)
+GEO_corbelXOff_BOT=GEO_corbelW+(GEO_OWALL_thk/2)+floor_xProjection
 GEO_corbelYOff_BOT=GEO_corbelH+(GEO_FLOOR_thk/2)+floor_yProjection
 
 ! Calculate approach slab position
@@ -526,17 +525,17 @@ R,REAL_rigidStrut,REAL_rigidStrut_A,0,-1
 
 ! Tunnel left wall
 SECTYPE,SEC_LWALL,SHELL,,'LWALL'
-SECDATA,WallThk,1
+SECDATA,GEO_OWALL_thk,1
 !SECOFFSET,BOT
 
 ! Tunnel right wall
 SECTYPE,SEC_RWALL,SHELL,,'RWALL'
-SECDATA,WallThk,1
+SECDATA,GEO_OWALL_thk,1
 !SECOFFSET,TOP
 
 ! Tunnel inner walls
 SECTYPE,SEC_IWALL,SHELL,,'IWALL'
-SECDATA,WallThk,1
+SECDATA,GEO_OWALL_thk,1
 
 ! Tunnel floor slab
 SECTYPE,SEC_FLOOR,SHELL,,'FLOOR'
@@ -579,22 +578,22 @@ secdata,GEO_TUN_colB,MAT_CONC
     !TUNNEL_V1_SECCORBEL, namePrefix, corbelParallel, corbelOrtho,  baseThk, orthoThk,           corbelLen,           base_SEC,           base_CS,  dir
 
     ! Top slab, left side corbels
-    TUNNEL_V1_SECCORBEL,       'TL_',    GEO_corbelW, GEO_corbelH,  GEO_ROOF_thk,  WallThk,  GEO_corbelXOff_TOP,   SEC_ROOF_LCORBEL, CS_BASE_corbelTop,  'X'
+    TUNNEL_V1_SECCORBEL,       'TL_',    GEO_corbelW, GEO_corbelH,  GEO_ROOF_thk,  GEO_OWALL_thk,  GEO_corbelXOff_TOP,   SEC_ROOF_LCORBEL, CS_BASE_corbelTop,  'X'
 
     ! Top slab, right side corbels
-    TUNNEL_V1_SECCORBEL,       'TR_',    GEO_corbelW, GEO_corbelH,  GEO_ROOF_thk,  WallThk, -GEO_corbelXOff_TOP,   SEC_ROOF_RCORBEL, CS_BASE_corbelTop,  'X'
+    TUNNEL_V1_SECCORBEL,       'TR_',    GEO_corbelW, GEO_corbelH,  GEO_ROOF_thk,  GEO_OWALL_thk, -GEO_corbelXOff_TOP,   SEC_ROOF_RCORBEL, CS_BASE_corbelTop,  'X'
 
     ! Bottom slab, left side corbels
-    TUNNEL_V1_SECCORBEL,       'BL_',    GEO_corbelW, GEO_corbelH, GEO_FLOOR_thk,  WallThk,  GEO_corbelXOff_BOT,  SEC_FLOOR_LCORBEL, CS_BASE_corbelBot,  'X'
+    TUNNEL_V1_SECCORBEL,       'BL_',    GEO_corbelW, GEO_corbelH, GEO_FLOOR_thk,  GEO_OWALL_thk,  GEO_corbelXOff_BOT,  SEC_FLOOR_LCORBEL, CS_BASE_corbelBot,  'X'
 
     ! Bottom slab, right side corbels
-    TUNNEL_V1_SECCORBEL,       'BR_',    GEO_corbelW, GEO_corbelH, GEO_FLOOR_thk,  WallThk, -GEO_corbelXOff_BOT,  SEC_FLOOR_RCORBEL, CS_BASE_corbelBot,  'X'
+    TUNNEL_V1_SECCORBEL,       'BR_',    GEO_corbelW, GEO_corbelH, GEO_FLOOR_thk,  GEO_OWALL_thk, -GEO_corbelXOff_BOT,  SEC_FLOOR_RCORBEL, CS_BASE_corbelBot,  'X'
 
     ! Walls, bottom corbels
-    TUNNEL_V1_SECCORBEL,       'WB_',    GEO_corbelH, GEO_corbelW,  WallThk, GEO_FLOOR_thk,  GEO_corbelYOff_BOT,   SEC_WALL_BCORBEL, CS_BASE_corbelBot,  'Y'
+    TUNNEL_V1_SECCORBEL,       'WB_',    GEO_corbelH, GEO_corbelW,  GEO_OWALL_thk, GEO_FLOOR_thk,  GEO_corbelYOff_BOT,   SEC_WALL_BCORBEL, CS_BASE_corbelBot,  'Y'
 
     ! Walls, top corbels
-    TUNNEL_V1_SECCORBEL,       'WT_',    GEO_corbelH, GEO_corbelW,  WallThk,  GEO_ROOF_thk, -GEO_corbelYOff_BOT,   SEC_WALL_TCORBEL, CS_BASE_corbelTop,  'Y'
+    TUNNEL_V1_SECCORBEL,       'WT_',    GEO_corbelH, GEO_corbelW,  GEO_OWALL_thk,  GEO_ROOF_thk, -GEO_corbelYOff_BOT,   SEC_WALL_TCORBEL, CS_BASE_corbelTop,  'Y'
 
 *endif
 

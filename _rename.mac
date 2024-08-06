@@ -13,7 +13,7 @@
 
 ✅ FloorThk              -> GEO_FLOOR_thk
 
-WallThk               -> GEO_OWALL_thk
+✅ WallThk               -> GEO_OWALL_thk
 
 GEO_TUN_iwType        -> GEO_IWALL_type
 GEO_TUN_iwThk         -> GEO_IWALL_thk

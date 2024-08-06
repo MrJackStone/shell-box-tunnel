@@ -23,7 +23,7 @@ Identification: %c
     ('Roof thk: ',F8.3)
     *vwrite,GEO_FLOOR_thk
     ('Floor thk:',F8.3)
-    *vwrite,GEO_TUN_wallThk
+    *vwrite,GEO_OWALL_thk
     ('Wall thk: ',F8.3)
     *vwrite,abs(GEO_corbelH)
     ('Stf thk:  ',F8.3)
