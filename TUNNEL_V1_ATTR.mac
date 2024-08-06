@@ -11,7 +11,6 @@ Version=1
 !!
 !! 2.0 REFACTORING INPUTS
 !!
-GEO_TUN_width      = GalleryWidth
 GEO_TUN_height     = GalleryHeight
 
 GEO_TUN_slope      = Tunneli
@@ -172,9 +171,9 @@ REAL_rigidStrut=5
 
 ! Calculate effective spans (distance between mid-planes)
 *if,iThk,eq,0,then
-    Eff_GalleryWidth=GalleryWidth+WallThk
+    Eff_GalleryWidth=GEO_TUN_moduleWidth+WallThk
 *else
-    Eff_GalleryWidth=GalleryWidth+(WallThk+iThk)/2
+    Eff_GalleryWidth=GEO_TUN_moduleWidth+(WallThk+iThk)/2
 *endif
 Eff_GalleryHeight=GalleryHeight+(FloorThk+RoofThk)/2
 

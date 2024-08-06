@@ -13,7 +13,7 @@
    (';  GalleryLength     = ',F10.4)
    *vwrite,GalleryHeight
    (';  GalleryHeight     = ',F10.4)
-   *vwrite,GalleryWidth
+   *vwrite,GEO_TUN_moduleWidth
    (';  GalleryWidth      = ',F10.4)
    *vwrite,Eff_GalleryHeight
    (';  Eff_GalleryHeight = ',F10.4)
