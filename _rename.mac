@@ -47,7 +47,7 @@
 ✅ GEO_InletAngle        -> GEO_HDW_angle
 ✅ GEO_FootingWidth      -> GEO_HDW_footWidth
 ✅ GEO_FootingDepth      -> GEO_HDW_footDepth
-GEO_HDW_HeadBeamH     -> GEO_HDW_headBeamHeight
+✅ GEO_HDW_HeadBeamH     -> GEO_HDW_headBeamHeight
 GEO_HDW_WallTopLen    -> GEO_HDW_topLength
 GEO_HDW_ColWidth      -> GEO_HDW_columnWidth
 InternalWidth         -> GEO_HDW_slabStfWidth
