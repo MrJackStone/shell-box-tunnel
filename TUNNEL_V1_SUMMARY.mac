@@ -21,7 +21,7 @@ Identification: %c
 
     *vwrite,GEO_TUN_roofThk
     ('Roof thk: ',F8.3)
-    *vwrite,GEO_TUN_floorThk
+    *vwrite,GEO_FLOOR_thk
     ('Floor thk:',F8.3)
     *vwrite,GEO_TUN_wallThk
     ('Wall thk: ',F8.3)

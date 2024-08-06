@@ -11,9 +11,9 @@
 ✅ GEO_pinGirders        -> GEO_ROOF_continuity
 ✅ GEO_pinRoof           -> GEO_ROOF_wallConnection
 
-FloorThk              -> GEO_FLOOR_floorThk
+✅ FloorThk              -> GEO_FLOOR_thk
 
-WallThk               -> GEO_OWALL_wallThk
+WallThk               -> GEO_OWALL_thk
 
 GEO_TUN_iwType        -> GEO_IWALL_type
 GEO_TUN_iwThk         -> GEO_IWALL_thk

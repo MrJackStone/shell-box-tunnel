@@ -43,7 +43,7 @@ x1Offset=0
 x2Offset=0  ! Saída inútil --- remover e compatibilizar com planilha do Excel
 
 *cfopen,FloorRES,'TXT',,APPEND
-   *vwrite,GalleryDepth,x1Offset,x2Offset,FloorThk,FloorMXMAX,FloorMXMIN,FloorMYMAX,FloorMYMIN,FloorFXMAX,FloorFXMIN,FloorFYMAX,FloorFYMIN,FloorQXMAX,FloorQYMAX
+   *vwrite,GalleryDepth,x1Offset,x2Offset,GEO_FLOOR_thk,FloorMXMAX,FloorMXMIN,FloorMYMAX,FloorMYMIN,FloorFXMAX,FloorFXMIN,FloorFYMAX,FloorFYMIN,FloorQXMAX,FloorQYMAX
    (F8.4,'; ',F8.4,'; ',F8.4,'; ',F8.4,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2,'; ',F12.2)
 *cfclos
 
