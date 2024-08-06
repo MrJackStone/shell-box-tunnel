@@ -773,7 +773,7 @@ ALLSEL
 
     *if,GEO_TUN_modules,gt,1,then
         lsel,u,line,,all
-        deltaZ=GEO_TUN_length/(GEO_PIL_nInt-1)
+        deltaZ=GEO_TUN_length/(GEO_PILE_INT_count-1)
         *do,innWall,1,GEO_TUN_modules-1,1
             xWall=innWall*GEO_TUN_effW
             z=0
