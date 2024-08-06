@@ -42,7 +42,7 @@
 ✅ GEO_PIL_nInt          -> GEO_PILE_INT_count
 ✅ GEO_PIL_dInt          -> GEO_PILE_INT_diameter
 
-GEO_Headwall          -> GEO_HDW_status
+✅ GEO_Headwall          -> GEO_HDW_status
 GEO_InletLength       -> GEO_HDW_length
 GEO_InletAngle        -> GEO_HDW_angle
 GEO_FootingWidth      -> GEO_HDW_footWidth

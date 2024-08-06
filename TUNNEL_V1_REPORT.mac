@@ -809,7 +809,7 @@ view1w
 !!
 !! 8.11 FRAME ENVELOPES
 !!
-*if,GEO_Headwall,eq,1,then
+*if,GEO_HDW_status,eq,1,then
     TUNNEL_V1_FRAMERES
 *endif
 

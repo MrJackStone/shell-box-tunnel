@@ -43,8 +43,8 @@ ACEL,,Gravity
 ! Apply soil pressures
 TUNNEL_V1_DEADLOADS
 
-*get,parType,PARM,GEO_Headwall,TYPE
-*if,parType,EQ,0,AND,GEO_Headwall,GT,0,THEN
+*get,parType,PARM,GEO_HDW_status,TYPE
+*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
     TUNNEL_V1_HDWLOAD
 *endif
 

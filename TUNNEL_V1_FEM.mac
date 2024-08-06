@@ -199,8 +199,8 @@ AATT,3,,1,CS_top,SEC_ROOF
 !!
 !! 4.2 HEADWALL
 !!
-*get,parType,PARM,GEO_Headwall,TYPE
-*if,parType,EQ,0,AND,GEO_Headwall,GT,0,THEN
+*get,parType,PARM,GEO_HDW_status,TYPE
+*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
     CMSEL,S,COMPA_HDW_LeftWall
     AATT,MAT_CONC,,TYPE_SHELL181,CS_left,SEC_HDW_Wall
 
@@ -343,8 +343,8 @@ NSLA,S,1
 
 !! 4.3.7 HEADWALLS
 !!
-*get,parType,PARM,GEO_Headwall,TYPE
-*if,parType,EQ,0,AND,GEO_Headwall,GT,0,THEN
+*get,parType,PARM,GEO_HDW_status,TYPE
+*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
     TUNNEL_V1_HDWBC
 *endif
 !
@@ -507,7 +507,7 @@ NSLA,S,1
 *endif
 
 ! Between headwall top beam and first/last roof slab girder
-*if,GEO_Headwall,eq,1,and,GEO_HDW_pinTopBeam,eq,0,then
+*if,GEO_HDW_status,eq,1,and,GEO_HDW_pinTopBeam,eq,0,then
     cmsel,s,COMPA_HDW_TopBeam
     lsla,s
     nsll,s,1

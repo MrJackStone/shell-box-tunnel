@@ -128,7 +128,7 @@ TUNNEL_V1_MEMO
 TUNNEL_V1_REPORT
 
 
-*if,GEO_Headwall,eq,1,and,GEO_RetMode,eq,0,then
+*if,GEO_HDW_status,eq,1,and,GEO_RetMode,eq,0,then
     TUNNEL_V1_HDWRES
 *endif
 

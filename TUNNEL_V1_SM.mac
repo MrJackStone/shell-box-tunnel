@@ -289,8 +289,8 @@ CM,COMPA_HDW_Slab,AREA
 cm,COMPA_HDW_ColLeft,area
 cm,COMPA_HDW_ColRight,area
 cm,COMPA_HDW_Columns,area
-*get,parType,PARM,GEO_Headwall,TYPE
-*if,parType,EQ,0,AND,GEO_Headwall,GT,0,THEN
+*get,parType,PARM,GEO_HDW_status,TYPE
+*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
     GEO_HDW_stiffXOff=InternalWidth/COS(GEO_InletRadians)
     CMSEL,S,COMPA_Floor
     CSSLICEYZ,GEO_HDW_stiffXOff
@@ -437,7 +437,7 @@ CM,COMPA_WALL_flat,AREA
     CM,COMPA_Tunnel,AREA
 
     ! Headwalls
-    *if,parType,EQ,0,AND,GEO_Headwall,GT,0,THEN
+    *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
         x_LEFT_Top=GEO_corbelXOff_TOP
         x_LEFT_Bot=GEO_corbelXOff_BOT
         x_RIGHT_Top=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_TOP
@@ -805,7 +805,7 @@ ALLSEL
         cm,COMPL_pileInt,line
     *endif
 
-    *if,GEO_Headwall,eq,1,then
+    *if,GEO_HDW_status,eq,1,then
         cmsel,s,COMPA_HDW_Footing
         lsla,s
         cmsel,s,COMPA_HDW_walls
