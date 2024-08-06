@@ -30,7 +30,6 @@ LOAD_zoff     = zOffset
 
 FEM_TUN_esize = ElementSize
 
-GEO_HDW_FootWidth = GEO_FootingWidth
 GEO_HDW_FootDepth = GEO_FootingDepth
 !
 !
