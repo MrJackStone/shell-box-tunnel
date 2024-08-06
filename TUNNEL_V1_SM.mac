@@ -754,7 +754,7 @@ ALLSEL
             x=kx(K_top)
             y=ky(K_top)
             z=kz(K_top)
-            k,K_bot,x,y-GEO_PIL_length,z
+            k,K_bot,x,y-GEO_PILE_length,z
             csys,CS_Tunnel
             l,K_top,K_bot
 
@@ -787,7 +787,7 @@ ALLSEL
                 x=kx(K_top)
                 y=ky(K_top)
                 z=kz(K_top)
-                k,K_bot,x,y-GEO_PIL_length,z
+                k,K_bot,x,y-GEO_PILE_length,z
                 csys,CS_Tunnel
                 l,K_top,K_bot
 
@@ -833,7 +833,7 @@ ALLSEL
                 csys,0
                 *get,kmxd,kp,,num,maxd
                 K_bot=kmxd+1
-                k,K_bot,kx(kpnum),ky(kpnum)-GEO_PIL_length,kz(kpnum)
+                k,K_bot,kx(kpnum),ky(kpnum)-GEO_PILE_length,kz(kpnum)
                 lsel,u,line,,all
                 l,kpnum,K_bot
                 cmsel,a,COMPL_pileExt
