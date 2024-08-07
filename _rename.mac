@@ -91,3 +91,12 @@ GEO_APR_thk           ->
 
 ✅ ElementSize           -> FEM_TUN_esize
 ✅ FEM_HDW_ESize         -> FEM_HDW_esize
+
+!!                                              !!
+
+✅ GEO_HDW_backBeamWidth      -> GEO_FRAME_backBeamWidth
+GEO_HDW_headBeamHeight     -> GEO_FRAME_headBeamHeight
+GEO_HDW_headBeamWidth      -> GEO_FRAME_headBeamWidth
+GEO_HDW_columnWidth        -> GEO_FRAME_columnWidth
+GEO_HDW_columnThk          -> GEO_FRAME_columnThk
+GEO_HDW_beamRoofConnection -> GEO_FRAME_beamRoofConnection

@@ -77,14 +77,14 @@ SEC_bBeam=7
 SEC_tBeam=8
 SEC_columns=9
 
-SEC_HDW_Wall      = 10
-SEC_HDW_Footing   = 11
-SEC_HDW_Slab      = 12
-SEC_HDW_Stiffener = 13
-SEC_HDW_Column    = 14
-SEC_HDW_headBeam  = 15
-SEC_HDW_frontBeam = 16
-SEC_HDW_backBeam  = 17
+SEC_HDW_Wall       = 10
+SEC_HDW_Footing    = 11
+SEC_HDW_Slab       = 12
+SEC_HDW_Stiffener  = 13
+SEC_HDW_Column     = 14
+SEC_HDW_headBeam   = 15
+SEC_HDW_frontBeam  = 16
+SEC_FRAME_backBeam = 17
 
 SEC_pileInt=20
 SEC_pileExt=21
