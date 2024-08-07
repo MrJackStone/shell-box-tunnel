@@ -226,7 +226,7 @@ AATT,3,,1,CS_top,SEC_ROOF
     AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_backBeam
 
     cmsel,s,COMPA_HDW_Columns
-    aatt,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_Column
+    aatt,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_Column
 
     cmsel,s,COMPA_Headwalls
     AESIZE,ALL,FEM_HDW_esize

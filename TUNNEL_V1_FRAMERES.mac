@@ -54,8 +54,8 @@ TBEAM_A = GEO_FRAME_headBeamHeight*GEO_FRAME_headBeamWidth
 TBEAM_W = GEO_FRAME_headBeamWidth*(GEO_FRAME_headBeamHeight**2)/6
 BBEAM_A = GEO_HDW_footDepth*GEO_FRAME_backBeamWidth
 BBEAM_W = GEO_FRAME_backBeamWidth*(GEO_HDW_footDepth**2)/6
-COL_A   = GEO_FRAME_columnWidth*GEO_HDW_columnThk
-COL_W   = GEO_HDW_columnThk*(GEO_FRAME_columnWidth**2)/6
+COL_A   = GEO_FRAME_columnWidth*GEO_FRAME_columnThk
+COL_W   = GEO_FRAME_columnThk*(GEO_FRAME_columnWidth**2)/6
 
 ! Frame 1, top beam
 FR1_TBEAM_top_n1=node(x3,y4,GEO_ExtraLength)

@@ -64,7 +64,7 @@ SECDATA,GEO_HDW_frontBeamWidth,MAT_CONC
 SECTYPE,SEC_FRAME_backBeam,SHELL,,'BBEAM'
 SECDATA,GEO_FRAME_backBeamWidth,MAT_CONC
 
-sectype,SEC_HDW_Column,shell,,'COLUMN'
-secdata,GEO_HDW_columnThk
+sectype,SEC_FRAME_Column,shell,,'COLUMN'
+secdata,GEO_FRAME_columnThk
 
 
