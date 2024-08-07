@@ -511,7 +511,7 @@ NSLA,S,1
 *endif
 
 ! Between headwall top beam and first/last roof slab girder
-*if,GEO_HDW_status,eq,1,and,GEO_HDW_beamRoofConnection,eq,0,then
+*if,GEO_HDW_status,eq,1,and,GEO_FRAME_beamRoofConnection,eq,0,then
     cmsel,s,COMPA_HDW_TopBeam
     lsla,s
     nsll,s,1
