@@ -47,10 +47,10 @@ x4=GEO_TUN_totEffW+GEO_HDW_columnWidth
 y1=-GEO_HDW_footDepth
 y2=0
 y3=GEO_TUN_effH
-y4=GEO_TUN_effH+GEO_HDW_headBeamHeight
+y4=GEO_TUN_effH+GEO_FRAME_headBeamHeight
 
 ! Virtual beam geometric properties
-TBEAM_A = GEO_HDW_headBeamHeight*GEO_HDW_headBeamWidth
+TBEAM_A = GEO_FRAME_headBeamHeight*GEO_HDW_headBeamWidth
 TBEAM_W = GEO_HDW_headBeamWidth*(GEO_HDW_headBeamHeight**2)/6
 BBEAM_A = GEO_HDW_footDepth*GEO_FRAME_backBeamWidth
 BBEAM_W = GEO_FRAME_backBeamWidth*(GEO_HDW_footDepth**2)/6

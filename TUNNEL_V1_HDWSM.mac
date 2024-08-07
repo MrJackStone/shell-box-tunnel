@@ -7,7 +7,7 @@ CS_HDW_RightWall=arg3
 !!
 !! GEOMETRIC PARAMETERS
 !!
-GEO_HDW_Height=Eff_GalleryHeight+GEO_HDW_headBeamHeight
+GEO_HDW_Height=Eff_GalleryHeight+GEO_FRAME_headBeamHeight
 
 x1=0
 x2=GEO_HDW_stiffXOff

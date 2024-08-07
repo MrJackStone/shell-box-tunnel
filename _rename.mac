@@ -95,7 +95,7 @@ GEO_APR_thk           ->
 !!                                              !!
 
 ✅ GEO_HDW_backBeamWidth      -> GEO_FRAME_backBeamWidth
-GEO_HDW_headBeamHeight     -> GEO_FRAME_headBeamHeight
+✅ GEO_HDW_headBeamHeight     -> GEO_FRAME_headBeamHeight
 GEO_HDW_headBeamWidth      -> GEO_FRAME_headBeamWidth
 GEO_HDW_columnWidth        -> GEO_FRAME_columnWidth
 GEO_HDW_columnThk          -> GEO_FRAME_columnThk
