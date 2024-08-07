@@ -40,10 +40,10 @@ esla,s
 nsle,s
 
 ! Virtual beam vertices coordinates
-x1=-GEO_HDW_columnWidth
+x1=-GEO_FRAME_columnWidth
 x2=0
 x3=GEO_TUN_totEffW
-x4=GEO_TUN_totEffW+GEO_HDW_columnWidth
+x4=GEO_TUN_totEffW+GEO_FRAME_columnWidth
 y1=-GEO_HDW_footDepth
 y2=0
 y3=GEO_TUN_effH
@@ -54,8 +54,8 @@ TBEAM_A = GEO_FRAME_headBeamHeight*GEO_FRAME_headBeamWidth
 TBEAM_W = GEO_FRAME_headBeamWidth*(GEO_FRAME_headBeamHeight**2)/6
 BBEAM_A = GEO_HDW_footDepth*GEO_FRAME_backBeamWidth
 BBEAM_W = GEO_FRAME_backBeamWidth*(GEO_HDW_footDepth**2)/6
-COL_A   = GEO_HDW_columnWidth*GEO_HDW_columnThk
-COL_W   = GEO_HDW_columnThk*(GEO_HDW_columnWidth**2)/6
+COL_A   = GEO_FRAME_columnWidth*GEO_HDW_columnThk
+COL_W   = GEO_HDW_columnThk*(GEO_FRAME_columnWidth**2)/6
 
 ! Frame 1, top beam
 FR1_TBEAM_top_n1=node(x3,y4,GEO_ExtraLength)
