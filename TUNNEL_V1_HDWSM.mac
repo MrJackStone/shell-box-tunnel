@@ -148,7 +148,7 @@ KP32=KPMaxD+32
     K,KP17,x17,yBeam,zEnd
     K,KP18,x18,yBeam,zEnd
 
-    *if,GEO_HDW_topLength,GT,2*GEO_HDW_headBeamWidth,THEN
+    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
 
         x17b=-GEO_HDW_topLength*SIN(GEO_InletRadians)
         x18b=x18+GEO_HDW_topLength*SIN(GEO_InletRadians)
@@ -316,7 +316,7 @@ KP32=KPMaxD+32
     LARC,Left_PI1,KFL,Left_AX1   !!
     *get,L25,LINE,0,NUM,MAX
 
-    *if,GEO_HDW_topLength,GT,2*GEO_HDW_headBeamWidth,THEN
+    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
         LARC,KP17b,Left_PI2,Left_AX2
         *get,L26,LINE,0,NUM,MAX
         L,KP17,KP17b
@@ -332,7 +332,7 @@ KP32=KPMaxD+32
     LARC,Right_PI1,KFR,Right_AX1 !!
     *get,L28,LINE,0,NUM,MAX
 
-    *if,GEO_HDW_topLength,GT,2*GEO_HDW_headBeamWidth,THEN
+    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
         LARC,KP18b,Right_PI2,Right_AX2
         *get,L29,LINE,0,NUM,MAX
         L,KP18,KP18b
@@ -427,7 +427,7 @@ KP32=KPMaxD+32
         asel,u,area,,all
     *endif
 
-    *if,GEO_HDW_topLength,GT,2*GEO_HDW_headBeamWidth,THEN
+    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
         AL,L21,L7,L19,L16
         *if,GEO_HDW_endH,gt,0,then
             AL,L27,L26,L26b,L23,L7,L25,FHL   !!
@@ -449,7 +449,7 @@ KP32=KPMaxD+32
         ASEL,U,AREA,,ALL
     *endif
 
-    *if,GEO_HDW_topLength,GT,2*GEO_HDW_headBeamWidth,THEN
+    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
         AL,L22,L10,L20,L17
         *if,GEO_HDW_endH,gt,0,then
             AL,L30,L29,L29b,L24,L10,L28,FHR !!
@@ -473,7 +473,7 @@ KP32=KPMaxD+32
     LSLA,S
     KSLL,S
     CSSLICEXZ,Eff_GalleryHeight
-    *if,GEO_HDW_topLength,GT,2*GEO_HDW_headBeamWidth,THEN
+    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
         CSSLICEXY,zFlatTop
     *endif
     CM,COMPA_HDW_LeftWall,AREA
@@ -482,7 +482,7 @@ KP32=KPMaxD+32
     LSLA,S
     KSLL,S
     CSSLICEXZ,Eff_GalleryHeight
-    *if,GEO_HDW_topLength,GT,2*GEO_HDW_headBeamWidth,THEN
+    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
         CSSLICEXY,zFlatTop
     *endif
     CM,COMPA_HDW_RightWall,AREA
@@ -492,7 +492,7 @@ KP32=KPMaxD+32
     CMSEL,A,COMPA_HDW_Walls
     CM,COMPA_HDW_Walls,AREA
 
-    *if,GEO_HDW_topLength,GT,2*GEO_HDW_headBeamWidth,THEN
+    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
         CMSEL,S,COMPA_HDW_Footing
         LSLA,S
         KSLL,S
