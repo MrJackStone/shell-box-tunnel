@@ -1,0 +1,310 @@
+!!                                                                                                !!
+!!                                                                                                !!
+!! 1. INPUT DATA                                                                                  !!
+!!                                                                                                !!
+!!                                                                                                !!
+! Tunnel identification number
+FILE_name='mlvd'
+
+!!                                                                                                !!
+!! 1.1 GEOMETRY                                                                                   !!
+!!                                                                                                !!
+
+!! 1.1.1 TUNNEL                                                                                   !!
+!!                                                                                                !!
+
+!! 1.1.1.1 GLOBAL                                                                                 !!
+! Length
+GEO_TUN_length=11.4
+
+! Number of cells
+GalleryModules=1
+
+! Inner cell width
+GalleryWidth=6.6
+
+! Inner cell height
+GalleryHeight=4.55
+
+! Tunnel inclination along its longitudinal direction (%)
+Tunneli=1
+
+!! 1.1.1.2 SECTIONS                                                                               !!
+! Top slab thickness
+RoofThk=0.65
+
+! Floor slab thickness
+FloorThk=0.30
+
+! External wall thickness
+WallThk=0.50
+
+! Corbel status
+!    [0] OFF
+!    [1] ON (top and bottom slabs)
+!    [2] Top slab only
+!    [3] Bottom slab only
+GEO_corbel=3
+! Corbel width
+GEO_corbelW=1.5
+! Corbel height
+GEO_corbelH=-0.65
+
+! For GEO_TUN_modules > 1 only:
+! Inner wall thickness
+GEO_TUN_iwThk=0.4
+
+! For GEO_TUN_iwType=1 only:
+! Top beam width (inner walls)
+GEO_TUN_tbB=0.4
+
+! Bottom beam width (inner walls)
+GEO_TUN_bbB=0.4
+
+! Column width (inner walls)
+GEO_TUN_colB=0.4
+
+!! 1.1.1.3 ROOF OPTIONS                                                                           !!
+! Connection between top slab and walls:
+!    [0] RIGID
+!    [1] PINNED
+! Note: automatically set to 1 (PINNED) if GEO_roofGirders=1.
+GEO_pinRoof=0
+
+! Roof slab type:
+!    [0] Flat slab
+!    [1] Precast girders
+GEO_roofGirders=0
+
+! Roof precast girder width (for GEO_roofGirders=1 only)
+GEO_roofbc=0.50
+
+! Roof slab topping depth (for GEO_roofGirders=1 only)
+GEO_rooftc=0.20
+
+! Connection between girders (for GEO_roofGirders=1 only):
+!    [0] SEMI-RIGID
+!    [1] PINNED
+GEO_pinGirders=0
+
+!! 1.1.1.4 INNER WALL OPTIONS                                                                     !!
+! Inner wall option (for GEO_TUN_modules > 1):
+!    [0] Solid wall
+!    [1] Columns and beams
+GEO_TUN_iwType=1
+
+! Number of columns (>= 2)
+GEO_TUN_iCols=4
+
+! Column width
+GEO_TUN_colW=0.8
+
+! Top beam depth
+GEO_TUN_tBeamH=1.2
+
+! Bottom beam depth
+GEO_TUN_bBeamH=1.5
+
+!! 1.1.1.5 SOIL                                                                                   !!
+! Tunnel depth (measured at the beginning of the length)
+GalleryDepth=1.2
+
+! Soil slope at the beginning of the tunnel
+GalleryThetai=34
+
+! Soil slope at the end of the tunnel
+GalleryThetaf=34
+
+! Depth of water level ( <0 : off)
+WaterDepth=-1
+
+!! 1.1.1.6 PILES                                                                                  !!
+! Include piles:
+!    [0] OFF
+!    [1] ON
+GEO_PIL_status=0
+
+! External wall pile diameter
+GEO_PIL_dExt=0.6
+
+! Internal wall pile diameter
+GEO_PIL_dInt=0.7
+
+! Number of piles along each external wall
+GEO_PIL_nExt=1
+
+! Number of piles along each internal wall
+GEO_PIL_nInt=0.8
+
+! Pile length
+GEO_PIL_length=20
+
+
+!! 1.1.2 HEADWALL                                                                                 !!
+!!                                                                                                !!
+
+!! 1.1.2.1 GLOBAL                                                                                 !!
+! Include or exclude from model:
+!    [0] OFF
+!    [1] ON
+GEO_Headwall=1
+
+! Inlet length
+GEO_InletLength=1.5
+
+! Inlet angle
+GEO_InletAngle=62
+
+! Footing width
+GEO_FootingWidth=1.4
+
+! Footing depth
+GEO_FootingDepth=1.1
+
+! Height above tunnel
+GEO_HDW_HeadBeamH=1.1
+
+! Length of the walls at the top
+GEO_HDW_WallTopLen=0
+
+! Column width
+GEO_HDW_ColWidth=0.8
+
+! Slab stiffener width
+InternalWidth=1.25
+
+! Headwall mode:
+!    [0] Full inlet
+!    [1] wings
+GEO_RetMode=1
+
+! Wing shape
+!   [0] Triangular
+!   [1] Rectangular
+GEO_WingShape=1
+
+! Wall bottom offset (for GEO_RetMode=1 only)
+GEO_WallBotOffset=0
+
+!! 1.1.2.2 SECTIONS                                                                               !!
+! Wall thickness
+GEO_HDW_WallThk=0.5
+
+! Slab thickness
+GEO_HDW_SlabThk=0.4
+
+! Slab stiffener thickness
+GEO_HDW_StiffenerThk=0.4
+
+! Footing height
+GEO_HDW_FootingHeight=0.4
+
+! Beam width
+GEO_HDW_BeamWidth=0.4
+
+! Column thickness
+GEO_HDW_ColThk=0.4
+
+!! 1.1.2.3 STRUCTURAL OPTIONS                                                                     !!
+! Pinned connection between roof slab and top headwall beam:
+!    [0] NO (rigid connection)
+!    [1] YES (pinned)
+GEO_HDW_pinTopBeam=1
+
+!! 1.1.2.4 SOIL                                                                                   !!
+! Backfill slope angle
+BackfillAngle=30
+
+
+!! 1.1.3 APPROACH SLAB                                                                            !!
+!!                                                                                                !!
+! Include in the model:
+!    [0] OFF
+!    [1] ON
+GEO_APR_status=0
+
+! One-way connection between approach slab and roof slab:
+!    [0] OFF (couple UY)
+!    [1] ON (unidirectional LINK180 springs)
+GEO_APR_oneWay=0
+
+! Approach slab width
+GEO_APR_width=20
+
+! Approach slab length
+GEO_APR_length=4
+
+! Approach slab thickness
+GEO_APR_thk=0.30
+
+
+
+!!                                                                                                !!
+!! 1.2 MATERIALS                                                                                  !!
+!!                                                                                                !!
+! Concrete fck
+fck=40e6
+
+! Soil stiffness
+SoilStiffness=24E6
+
+! Soil friction angle
+FrictionAngle=28
+! Cohesion
+SoilCohesion=15
+! Mass density
+SoilDensity=2000
+
+
+
+!!                                                                                                !!
+!! 1.3 LOADS                                                                                      !!
+!!                                                                                                !!
+! Railway line skew angle
+LineDirection=-62
+
+! Load train name
+LOAD_LTName='COOPER E-80'
+
+! Number of train lines
+LOAD_lineCount=3
+
+! Railway gauge
+LOAD_gauge=1
+
+! Distance between train lines
+DeltaZOffset=4.5
+
+! Impact coefficient for dynamic loads
+ImpactCoefficient=1.6
+
+! Load train positions along railway line
+xOffsetCount=3
+*del,xOffsets
+*dim,xOffsets,ARRAY,xOffsetCount
+xOffsets(1)= -23.7, -23.7+5.5/2, -21.45+5.5/2
+
+! First railway line position along tunnel length (measured from the beginning of the tunnel)
+zOffset=-5.5
+
+! Load vehicle
+LOAD_LVName='TB-450'
+
+! Load vehicle position
+LOAD_LVPos=18
+
+
+
+!!                                                                                                !!
+!! 1.5 ANALYSIS OPTIONS                                                                           !!
+!!                                                                                                !!
+! Element size (tunnel)
+ElementSize=0.4
+
+! Element size (headwall)
+FEM_HDW_ESize=0.4
+
+
+
+!!                                                                                                !!
+TUNNEL_V1_MODEL
