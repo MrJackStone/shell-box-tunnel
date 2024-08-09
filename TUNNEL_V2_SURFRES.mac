@@ -1,0 +1,31 @@
+! TUNNEL_V2_SURFRES, LSType, slabPlane
+! TUNNEL_V2_SURFRES,   arg1,      arg2
+
+! arg2: [0] XZ ; [1] YZ
+
+*if,arg1,EQ,'DW',THEN
+    UYmax='DW_UY'
+    UYmin='DW_UY'
+    sigY='DW_SIGY'
+
+*elseif,arg1,EQ,'ENV',THEN
+    UYmax='EMX_UY'
+    UYmin='EMN_UY'
+    sigY='EMN_SIGY'
+*endif
+
+PLETAB,%UYmin%,1
+*get,UYMin,PLNSOL,,MIN
+UY=ABS(UYMin)
+
+pletab,%sigY%
+*get,SIGY,plnsol,,max
+
+*vget,allUY,node,1,u,y,,,0
+*vfun,comp,comp,allUY
+
+!compress
+
+
+
+

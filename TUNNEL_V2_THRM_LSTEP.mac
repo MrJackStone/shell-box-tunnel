@@ -1,0 +1,368 @@
+!!
+!!
+!! 5. LOAD STEPS
+!!
+!!
+/solu
+
+ALLSEL
+
+ANTYPE,0
+NLGEOM,ON
+
+NSUBST,SubstepCount,SubstepCount*2,SubstepCount/2
+
+OUTRES,ERASE
+OUTRES,ALL,LAST
+
+FCUM,ADD
+
+! Get nodal number, location, and quantity in array form for all nodes
+*del,NLIST_x
+*del,NLIST_y
+*del,NLIST_z
+*vget,NLIST_num,node,,nlist
+*vget,NLIST_x,node,,loc,x
+*vget,NLIST_y,node,,loc,y
+*vget,NLIST_z,node,,loc,z
+*get,NLIST_count,parm,NLIST_num,dim,x
+*del,NLIST_apportioned
+*dim,NLIST_apportioned,,NLIST_count
+*do,nthNode,1,NLIST_count,1
+    nodenum=NLIST_num(nthNode)
+    NLIST_apportioned(nthNode)=arnode(nodenum)
+*enddo
+
+!!
+!! 5.1 FIRST LOAD STEP: DEAD LOADS
+!!
+LoadStepIndex=1
+
+ACEL,,Gravity
+
+! Apply soil pressures
+TUNNEL_V2_DEADLOADS
+
+*get,parType,PARM,GEO_HDW_status,TYPE
+*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
+    TUNNEL_V2_HDWLOAD
+*endif
+
+*if,GEO_PILE_status,eq,1,then
+    cmsel,s,COMPK_pileBot
+    dk,all,ux,0,,,uy,uz,roty
+*endif
+
+ALLSEL
+TIME,LoadStepIndex
+LSWRITE,1
+
+
+!! 5.1.5 CAPTURE IMAGE
+!!
+/psymb,FBCS,0
+/pbc,F,,1
+/pbc,U,,0
+/pbc,ROT,,0
+/device,VECTOR,ON
+/edge,ALL,1
+/eshape,0
+ESEL,S,MAT,,1
+VIEW4W
+EPLOT
+fName=STRCAT('LOADS4W_',CHRVAL(LoadStepIndex))
+/graphics,FULL
+TAKEPIC,fName,1200,1,1
+/device,VECTOR,OFF
+/edge,ALL,0
+
+
+
+!!
+!! 5.2 SECOND LOAD STEP: TEMPERATURE VARIATION
+!!
+*get,parmType,PARM,LOAD_thermal,TYPE
+*if,parmType,EQ,0,AND,LOAD_thermal,NE,0,THEN
+    LoadStepIndex=LoadStepIndex+1
+    ALLSEL
+    LSREAD,1
+    FDELE,ALL,ALL
+    ACEL,0,Gravity/100,0
+    ESEL,S,TYPE,,1
+    NSLE,S
+    BF,ALL,TEMP,LOAD_thermal
+
+    ANTYPE,0,NEW
+    ALLSEL
+    TIME,LoadStepIndex
+
+    NSUBST,SubstepCount,SubstepCount*2,SubstepCount/2
+
+    OUTRES,ERASE
+    OUTRES,ALL,LAST
+
+    LSWRITE,LoadStepIndex
+*endif
+!
+/eof
+!
+!!
+!! 5.3 THIRD LOAD STEP: VEHICLE LOAD INSIDE TUNNEL
+!!
+*get,parType,parm,LOAD_LTI_name,type
+*if,parType,eq,3,then
+    *if,LOAD_LTI_name,eq,'TB-450',then
+        ALLSEL
+        FDELE,ALL,ALL
+        LSREAD,1
+
+        csys,CS_Tunnel
+        LoadStepIndex=LoadStepIndex+1
+        cmsel,s,COMPA_floor
+        esla,s
+        nsle,s
+        cm,COMPN_temp,node
+
+        LV_xcen=(GEO_TUN_effW/2)
+
+        nsel,s,loc,z,LOAD_LTI_position-3,LOAD_LTI_position+3
+        nsel,r,loc,x,LV_xcen-1.5,LV_xcen+1.5
+        nsel,inve
+        cmsel,r,COMPN_temp
+
+        esln,s,1
+        sfe,all,1,pres,,5e3
+
+        cmsel,s,COMPN_temp
+        n1=node(LV_xcen-1,0,LOAD_LTI_position-3)
+        n2=node(LV_xcen+1,0,LOAD_LTI_position-3)
+        n3=node(LV_xcen-1,0,LOAD_LTI_position)
+        n4=node(LV_xcen+1,0,LOAD_LTI_position)
+        n5=node(LV_xcen-1,0,LOAD_LTI_position+3)
+        n6=node(LV_xcen+1,0,LOAD_LTI_position+3)
+
+        nsel,s,node,,n1
+        nsel,a,node,,n2
+        nsel,a,node,,n3
+        nsel,a,node,,n4
+        nsel,a,node,,n5
+        nsel,a,node,,n6
+
+        f,all,fy,-75e3
+
+        ALLSEL
+        TIME,LoadStepIndex
+
+        NSUBST,SubstepCount,SubstepCount*2,SubstepCount/2
+
+        OUTRES,ERASE
+        OUTRES,ALL,LAST
+
+        LSWRITE,LoadStepIndex
+
+        csys,0
+
+        /psymb,FBCS,0
+        /pbc,F,,1
+        /pbc,U,,0
+        /pbc,ROT,,0
+        /psf,pres,norm,2,0,on
+        /device,VECTOR,ON
+        /edge,ALL,1
+        /eshape,0
+        ESEL,S,MAT,,1
+        VIEW4W
+        EPLOT
+        fName='LOAD_vehicle'
+        /graphics,FULL
+        TAKEPIC,fName,1200,1,1
+        /device,VECTOR,OFF
+        /edge,ALL,0
+    *endif
+*endif
+!
+!
+!
+!!
+!! 5.4 REMAINING LOAD STEPS: LOAD TRAIN MOVEMENT
+!!
+lsel,u,line,,all
+cm,COMPL_ltpos,line
+
+*do,xOffIndex,1,LOAD_LTA_positionCount,1
+
+    xOffset=LOAD_LTA_positions(xOffIndex)
+
+    LoadStepIndex=LoadStepIndex+1
+
+    ! Import loading from first load step
+    ALLSEL
+    FDELE,ALL,ALL
+    sfedele,all,all,all
+    LSREAD,1
+
+
+    !! 5.4.1 ROOF & APPROACH SLAB
+    !!
+    *msg,UI,FILE_name,LoadStepIndex
+TUNNEL # %s %/&
+LOAD STEP %4I %/&
+APPLYING LOADS ON ROOF SLAB...
+
+    CMSEL,S,COMPA_Roof
+    cmsel,a,COMPA_Approach
+    NSLA,S,1
+    tunnel_v2_verboussinesq
+    ALLSEL
+
+
+    !! 5.4.2 LEFT WALL
+    !!
+    *msg,UI,FILE_name,LoadStepIndex
+TUNNEL # %s %/&
+LOAD STEP %4I %/&
+APPLYING LOADS ON LEFT WALL...
+
+    CMSEL,S,COMPA_LeftWall
+    NSLA,S,1
+    tunnel_v2_horboussinesq, 1, 'off', 0
+    ALLSEL
+
+
+    !! 5.4.3 RIGHT WALL
+    !!
+    *msg,UI,FILE_name,LoadStepIndex
+TUNNEL # %s %/&
+LOAD STEP %4I %/&
+APPLYING LOADS ON RIGHT WALL...
+
+    CMSEL,S,COMPA_RightWall
+    NSLA,S,1
+    tunnel_v2_horboussinesq, -1, GEO_TUN_totEffW, 'off'
+    ALLSEL
+
+
+    !! 5.4.4 FLOOR SLAB
+    !!
+    CMSEL,S,COMPA_Floor
+    NSLA,S,1
+    ! Water buoyancy pressure
+    *if,WaterHeight,GT,0,THEN
+
+        *msg,UI,FILE_name,LoadStepIndex
+TUNNEL # %s %/&
+LOAD STEP %4I %/&
+APPLYING BUOYANCY LOADS ON FLOOR SLAB...
+
+        F,ALL,FY,BuoyancyLoad
+
+    *endif
+    ALLSEL
+
+    !! 5.4.5 WINGS
+    !!
+    *if,GEO_HDW_type,EQ,1,THEN
+
+        *msg,UI,FILE_name,LoadStepIndex
+TUNNEL # %s %/&
+LOAD STEP %4I %/&
+APPLYING LOADS ON WINGS...
+
+        CMSEL,S,COMPA_HDW_Walls
+        CMSEL,A,COMPA_HDW_TopBeam
+        NSLA,S,1
+        tunnel_v2_hdwboussinesq
+        ALLSEL
+
+    *endif
+
+
+
+    !! 5.4.6 CAPTURE IMAGE
+    !!
+    /psymb,FBCS,0
+    /pbc,F,,1
+    /pbc,U,,0
+    /pbc,ROT,,0
+    /device,VECTOR,ON
+    /edge,ALL,1
+    /eshape,0
+    ESEL,S,MAT,,1
+    VIEW4W
+    EPLOT
+    fName=STRCAT('LOADS4W_',CHRVAL(LoadStepIndex))
+    /graphics,FULL
+    TAKEPIC,fName,1200,1,1
+    /device,VECTOR,OFF
+    /edge,ALL,0
+    !
+    !
+    !! 5.4.7 WRITE LOAD STEP
+    !!
+    ANTYPE,0,NEW
+    ALLSEL
+    TIME,LoadStepIndex
+
+    NSUBST,SubstepCount,SubstepCount*2,SubstepCount/2
+
+    OUTRES,ERASE
+    OUTRES,ALL,LAST
+
+    LSWRITE,LoadStepIndex
+
+*enddo
+
+LoadStepCount=LoadStepIndex
+
+! Capture images: load train positions
+allsel
+view1w
+/view,1,1,1,1
+/window,2,-1,0.335,0,1
+/view,2,0,0,1
+/auto,2
+
+/gtype,ALL,node,0
+/gtype,ALL,elem,0
+/gtype,ALL,area,1
+/gtype,ALL,line,1
+/gtype,ALL,keyp,0
+/auto,1
+gplot
+/focus,1,0.001,0.001,0.001,1
+/dist,1,0.8,1
+/focus,2,0.001,0.001,0.001,1
+/dist,2,0.8,1
+
+*do,nthLTPos,1,LOAD_LTA_positionCount,1
+    compName=strcat('LTx_',chrval(nthLTPos))
+    GO2PNG,800
+    aplot
+    /noerase
+    cmsel,s,%compName%
+    lplot
+    /replot
+    /erase
+    ENDPNG,compName
+*enddo
+
+/gtype,ALL,node,1
+/gtype,ALL,elem,1
+/gtype,ALL,area,1
+/gtype,ALL,line,1
+/gtype,ALL,keyp,1
+/window,2,dele
+
+
+
+
+
+
+
+
+
+
+
+
+
+

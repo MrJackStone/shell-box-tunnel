@@ -1,0 +1,42 @@
+! TUNNEL_V2_SECCORBEL, namePrefix, corbelParallel, corbelOrtho, baseThk, orthoThk, corbelLen, base_SEC, base_CS,  dir
+! TUNNEL_V2_SECCORBEL,       arg1,           arg2,        arg3,    arg4,     arg5,      arg6,     arg7,    arg8, arg9
+
+xWall=0
+*do,nthWall,1,GEO_TUN_modules+1,1
+    nthCS=arg8+nthWall
+    nthSEC=arg7+nthWall
+
+    fcnName=STRCAT(arg1,CHRVAL(nthWall))
+
+    *if,arg3,gt,0,then
+
+        ! CORBELFCN, parName, corbelParallel, corbelOrtho, baseThk, orthoThk, corbelLen, direction,  csys
+        CORBELFCN, fcnName,           arg2,        arg3,    arg4,     arg5,      arg6,      arg9, nthCS
+
+        SECTYPE,nthSEC,SHELL,,%fcnName%
+        SECDATA,arg4,MAT_CONC
+        !SECOFFSET,BOT
+
+        *cfopen,'tmp_secfun',tmp
+            *vwrite,fcnName
+            ('SECFUNCTION,%',A8,'%,nthCS')
+        *cfclos
+        /nopr
+        /input,'tmp_secfun',tmp
+        /delete,'tmp_secfun',tmp
+        /gopr
+
+    *elseif,arg3,lt,0,then
+
+        sectype,nthSec,shell,,%fcnName%
+        secdata,abs(arg3),MAT_CONC
+
+    *endif
+
+    xWall=xWall+GEO_TUN_effW
+
+*enddo
+
+
+
+

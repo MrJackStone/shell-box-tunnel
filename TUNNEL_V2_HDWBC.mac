@@ -1,0 +1,317 @@
+! TUNNEL_V2_HDWBC
+
+! Apoios
+ALLSEL
+ASUM,DEFAULT
+
+CSYS,CS_Tunnel
+
+TYPE,TYPE_LINK180
+MAT,MAT_SOIL
+REAL,REAL_hdwSprings
+
+! Floor slab and footing vertical supports
+NSEL,S,LOC,Y,0
+CMSEL,S,COMPA_HDW_Walls
+LSLA,S
+NSLL,U,1
+NSEL,U,LOC,Z,0,GEO_TUN_length
+CMSEL,S,COMPA_HDW_Footing
+NSLA,A,1
+*get,NodeCount,NODE,0,COUNT
+
+ESLN,S,1
+CM,InfSupportElements,ELEM
+
+*do,NodeIndex,1,NodeCount,1
+
+   CMSEL,S,InfSupportElements
+
+   *get,nthNode,NODE,0,NUM,MIN
+   xVal=NX(nthNode)
+   yVal=NY(nthNode)
+   zVal=NZ(nthNode)
+
+   CM,PreviousNodes,NODE
+   NSEL,S,NODE,,nthNode
+   ESLN,R,0
+   *get,ElementCount,ELEM,0,COUNT
+   CMSEL,S,PreviousNodes
+
+   *del,ElemAreas
+   *dim,ElemAreas,ARRAY,ElementCount
+
+   *do,ElementIndex,1,ElementCount,1
+      *get,nthElement,ELEM,0,NUM,MIN
+      *get,ElemArea,ELEM,nthElement,AREA
+      ElemAreas(ElementIndex)=ElemArea
+      ESEL,U,ELEM,,nthElement
+   *enddo
+   *vscfun,TotalArea,SUM,ElemAreas
+
+   EffectiveArea=TotalArea/4
+   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+
+   *get,MaxNode,NODE,0,NUM,MAXD
+   NewNode=MaxNode+1
+   N,NewNode,xVal,yVal-EffSpringLength,zVal
+   E,NewNode,nthNode
+
+   D,NewNode,UX,0,,,,UY,UZ
+
+   NSEL,U,NODE,,nthNode
+
+*enddo
+
+! Lateral wall supports
+CMSEL,S,COMPA_HDW_LeftWall
+CMSEL,A,COMPA_HDW_RightWall
+NSLA,S,1
+NSEL,U,LOC,Y,-GEO_HDW_footDepth
+*get,NodeCount,NODE,0,COUNT
+
+ESLN,S,1
+CM,WallSupportElements,ELEM
+
+*do,NodeIndex,1,NodeCount,1
+
+   CMSEL,S,WallSupportElements
+
+   *get,nthNode,NODE,0,NUM,MIN
+   xVal=NX(nthNode)
+   yVal=NY(nthNode)
+   zVal=NZ(nthNode)
+
+   CM,PreviousNodes,NODE
+   NSEL,S,NODE,,nthNode
+   ESLN,R,0
+   *get,ElementCount,ELEM,0,COUNT
+   CMSEL,S,PreviousNodes
+
+   *del,ElemAreas
+   *dim,ElemAreas,ARRAY,ElementCount
+
+   *do,ElementIndex,1,ElementCount,1
+      *get,nthElement,ELEM,0,NUM,MIN
+      *get,ElemArea,ELEM,nthElement,AREA
+      ElemAreas(ElementIndex)=ElemArea
+      ESEL,U,ELEM,,nthElement
+   *enddo
+   *vscfun,TotalArea,SUM,ElemAreas
+
+   EffectiveArea=TotalArea/4
+   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+
+   *if,GEO_HDW_type,EQ,1,THEN
+       *if,zVal,LT,GEO_TUN_length/2,THEN
+           XdirMult=-1
+           ZdirMult=1
+        *else
+            XdirMult=1
+            ZdirMult=-1
+        *endif
+        xSpringEndOffset=XdirMult*EffSpringLength*SIN(GEO_InletRadians)
+        zSpringEndOffset=ZdirMult*EffSpringLength*COS(GEO_InletRadians)
+   *else
+        *if,xVal,LT,Eff_GalleryWidth/2,THEN
+           XdirMult=-1
+        *else
+            XdirMult=1
+        *endif
+        *if,zVal,LT,GEO_TUN_length/2,THEN
+            ZdirMult=1
+        *else
+            ZdirMult=-1
+        *endif
+        xSpringEndOffset=XdirMult*EffSpringLength*COS(GEO_InletRadians)
+        zSpringEndOffset=ZdirMult*EffSpringLength*SIN(GEO_InletRadians)
+   *endif
+
+   *get,MaxNode,NODE,0,NUM,MAXD
+   NewNode=MaxNode+1
+   N,NewNode,xVal+xSpringEndOffset,yVal,zVal+zSpringEndOffset
+   E,NewNode,nthNode
+
+   D,NewNode,UX,0,,,,UY,UZ
+
+   NSEL,U,NODE,,nthNode
+
+*enddo
+
+! Wall lateral supports below floor slab
+CMSEL,S,COMPA_HDW_LeftWall
+CMSEL,A,COMPA_HDW_RightWall
+NSLA,S,1
+NSEL,R,LOC,Y,-GEO_HDW_footDepth,0
+NSEL,U,LOC,Y,0
+*get,NodeCount,NODE,0,COUNT
+
+ESLN,S,1
+CM,LowerWallSupportElements,ELEM
+
+*do,NodeIndex,1,NodeCount,1
+
+   CMSEL,S,LowerWallSupportElements
+
+   *get,nthNode,NODE,0,NUM,MIN
+   xVal=NX(nthNode)
+   yVal=NY(nthNode)
+   zVal=NZ(nthNode)
+
+   *if,xVal,LT,Eff_GalleryWidth/2,THEN
+       XdirMult=1
+   *else
+       XdirMult=-1
+   *endif
+   *if,zVal,LT,GEO_TUN_length/2,THEN
+       ZdirMult=-1
+   *else
+       ZdirMult=1
+   *endif
+
+   CM,PreviousNodes,NODE
+   NSEL,S,NODE,,nthNode
+   ESLN,R,0
+   *get,ElementCount,ELEM,0,COUNT
+   CMSEL,S,PreviousNodes
+
+   *del,ElemAreas
+   *dim,ElemAreas,ARRAY,ElementCount
+
+   *do,ElementIndex,1,ElementCount,1
+      *get,nthElement,ELEM,0,NUM,MIN
+      *get,ElemArea,ELEM,nthElement,AREA
+      ElemAreas(ElementIndex)=ElemArea
+      ESEL,U,ELEM,,nthElement
+   *enddo
+   *vscfun,TotalArea,SUM,ElemAreas
+
+   EffectiveArea=TotalArea/4
+   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+
+   *get,MaxNode,NODE,0,NUM,MAXD
+   NewNode=MaxNode+1
+   N,NewNode,xVal+XdirMult*EffSpringLength*COS(GEO_InletRadians),yVal,zVal+ZdirMult*EffSpringLength*SIN(GEO_InletRadians)
+   E,NewNode,nthNode
+
+   D,NewNode,UX,0,,,,UY,UZ
+
+   NSEL,U,NODE,,nthNode
+
+*enddo
+
+! Bottom beams (front and back)
+CMSEL,S,COMPA_HDW_BotBeam
+CMSEL,A,COMPA_HDW_BackBeam
+NSLA,S,1
+*get,NodeCount,NODE,0,COUNT
+
+ESLN,S,1
+CM,BotBeamSupportElements,ELEM
+
+*do,NodeIndex,1,NodeCount,1
+
+   CMSEL,S,BotBeamSupportElements
+
+   *get,nthNode,NODE,0,NUM,MIN
+   xVal=NX(nthNode)
+   yVal=NY(nthNode)
+   zVal=NZ(nthNode)
+
+   *if,zVal,LT,GEO_TUN_length/2,THEN
+       dirMult=-1
+   *else
+       dirMult=1
+   *endif
+
+   CM,PreviousNodes,NODE
+   NSEL,S,NODE,,nthNode
+   ESLN,R,0
+   *get,ElementCount,ELEM,0,COUNT
+   CMSEL,S,PreviousNodes
+
+   *del,ElemAreas
+   *dim,ElemAreas,ARRAY,ElementCount
+
+   *do,ElementIndex,1,ElementCount,1
+      *get,nthElement,ELEM,0,NUM,MIN
+      *get,ElemArea,ELEM,nthElement,AREA
+      ElemAreas(ElementIndex)=ElemArea
+      ESEL,U,ELEM,,nthElement
+   *enddo
+   *vscfun,TotalArea,SUM,ElemAreas
+
+   EffectiveArea=TotalArea/4
+   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+
+   *get,MaxNode,NODE,0,NUM,MAXD
+   NewNode=MaxNode+1
+   N,NewNode,xVal,yVal,zVal+dirMult*EffSpringLength
+   E,NewNode,nthNode
+
+   D,NewNode,UX,0,,,,UY,UZ
+
+   NSEL,U,NODE,,nthNode
+
+*enddo
+
+! Frame beams (top and bottom) and columns
+CMSEL,S,COMPA_HDW_TopBeam
+CMSEL,A,COMPA_HDW_BackBeam
+cmsel,a,COMPA_HDW_Columns
+NSLA,S,1
+*get,NodeCount,NODE,0,COUNT
+
+ESLN,S,1
+CM,TopBeamSupportElements,ELEM
+
+*do,NodeIndex,1,NodeCount,1
+
+   CMSEL,S,TopBeamSupportElements
+
+   *get,nthNode,NODE,0,NUM,MIN
+   xVal=NX(nthNode)
+   yVal=NY(nthNode)
+   zVal=NZ(nthNode)
+
+   *if,zVal,LT,GEO_TUN_length/2,THEN
+       dirMult=1
+   *else
+       dirMult=-1
+   *endif
+
+   CM,PreviousNodes,NODE
+   NSEL,S,NODE,,nthNode
+   ESLN,R,0
+   *get,ElementCount,ELEM,0,COUNT
+   CMSEL,S,PreviousNodes
+
+   *del,ElemAreas
+   *dim,ElemAreas,ARRAY,ElementCount
+
+   *do,ElementIndex,1,ElementCount,1
+      *get,nthElement,ELEM,0,NUM,MIN
+      *get,ElemArea,ELEM,nthElement,AREA
+      ElemAreas(ElementIndex)=ElemArea
+      ESEL,U,ELEM,,nthElement
+   *enddo
+   *vscfun,TotalArea,SUM,ElemAreas
+
+   EffectiveArea=TotalArea/4
+   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+
+   *get,MaxNode,NODE,0,NUM,MAXD
+   NewNode=MaxNode+1
+   N,NewNode,xVal,yVal,zVal+dirMult*EffSpringLength
+   E,NewNode,nthNode
+
+   D,NewNode,UX,0,,,,UY,UZ
+
+   NSEL,U,NODE,,nthNode
+
+*enddo
+
+ALLSEL
+CSYS,0
+
+

@@ -1,0 +1,824 @@
+! TUNNEL_V2_REPORT
+
+!!
+!! 8.1 PARAMETERS
+!!
+esel,s,type,,TYPE_SHELL181
+plnsol,u,sum
+*get,UY_ref,plnsol,min
+scl=abs(GEO_TUN_height/UY_ref)
+sigdig,'POST_dscale',scl,1
+POST_dscale=(500<POST_dscale/2)
+
+POST_csecCount=3
+POST_isoVScale=1
+POST_isoZoom=0.85
+POST_2dVScale=1
+*del,POST_csecZ
+*dim,POST_csecZ,array,POST_csecCount
+POST_csecZ(1)= 0.1*GEO_TUN_length, GEO_TUN_length/2, 0.9*GEO_TUN_length
+
+/device,font,3,Arial,1000,0,-64,0,0,,,
+/device,font,1,Arial,1000,0,-42,0,0,,,
+/device,text,1,100
+/tspec,15,1.5,4,0,0
+/annot,dele
+!
+!
+!
+!!
+!! 8.2 SELECTION COMPONENTS
+!!
+csys,CS_Tunnel
+
+!! 8.2.1 LINES TO BE PLOTTED
+!!
+
+!! 8.2.1.1 TUNNEL
+cmsel,s,COMPA_Tunnel
+lsla,s
+cm,COMPL_Tunnel,line
+lsel,s,loc,x,0
+lsel,a,loc,x,GEO_TUN_totEffW
+cmsel,r,COMPL_Tunnel
+cm,COMPL_Plot_Tunnel,line
+lsel,s,loc,y,0
+lsel,a,loc,y,GEO_TUN_effH
+cmsel,r,COMPL_Plot_Tunnel
+lsel,a,loc,z,0
+lsel,a,loc,z,GEO_TUN_length
+cmsel,r,COMPL_Tunnel
+cm,COMPL_Plot_Tunnel,line
+!
+!! 8.2.1.2 APPROACH SLABS
+cmsel,s,COMPA_Approach
+lsla,s
+ksll,s
+cm,COMPK_Approach,kp
+*get,xMin,kp,,mnloc,x
+*get,xMax,kp,,mxloc,x
+ksel,s,loc,x,xMin
+ksel,a,loc,x,xMax
+cmsel,r,COMPK_Approach
+lslk,s,1
+cm,COMPL_Plot_Approach,line
+ksel,s,loc,x,0
+cmsel,r,COMPK_Approach
+*get,zMin,kp,,mnloc,z
+*get,zMax,kp,,mxloc,z
+lslk,s,1
+cmsel,a,COMPL_Plot_Approach
+cm,COMPL_Plot_Approach,line
+kv1=kp(0,GEO_TUN_effH,zMin)
+kv2=kp(0,GEO_TUN_effH,zMax)
+ksel,s,kp,,kv1
+ksel,a,kp,,kv2
+lslk,s
+cmsel,a,COMPL_Plot_Approach
+cm,COMPL_Plot_Approach,line
+ksel,s,loc,x,GEO_TUN_totEffW
+cmsel,r,COMPK_Approach
+*get,zMin,kp,,mnloc,z
+*get,zMax,kp,,mxloc,z
+lslk,s,1
+cmsel,a,COMPL_Plot_Approach
+cm,COMPL_Plot_Approach,line
+kv1=kp(GEO_TUN_totEffW,GEO_TUN_effH,zMin)
+kv2=kp(GEO_TUN_totEffW,GEO_TUN_effH,zMax)
+ksel,s,kp,,kv1
+ksel,a,kp,,kv2
+lslk,s
+cmsel,a,COMPL_Plot_Approach
+cm,COMPL_Plot_Approach,line
+!
+!! 8.2.1.3 HEADWALLS
+cmsel,s,COMPA_Headwalls
+lsla,s
+cm,COMPL_Plot_Headwalls,line
+!
+!! 8.2.1.4 ALL BODIES
+cmsel,s,COMPL_Plot_Tunnel
+cmsel,a,COMPL_Plot_Approach
+cmsel,a,COMPL_Plot_Headwalls
+cm,COMPL_PLOT,line
+!
+!! 8.2.2 AUXILIARY KEYPOINTS
+!!
+ksel,s,loc,z,0
+ksel,a,loc,z,GEO_TUN_Length
+cmsel,s,COMPL_Plot_Tunnel
+ksll,r
+cm,COMPK_Aux,kp
+!
+!! 8.2.3 CROSS-SECTION NODES
+!!
+cmsel,s,COMPA_Tunnel
+lsla,s
+lsel,r,loc,x,0
+lsel,r,loc,y,0
+nsll,s,1
+cm,COMPN_ref,node
+nsel,u,node,,all
+cm,COMPN_CSEC_ALL,node
+*do,nthPos,1,POST_csecCount,1
+    z=POST_csecZ(nthPos)
+    cmsel,s,COMPN_ref
+    nodeNum=node(0,0,z)
+    nodalZ=nz(nodeNum)
+    cmsel,s,COMPA_Tunnel
+    nsla,s,1
+    nsel,r,loc,z,nodalZ
+    compName=strcat('COMPN_CSEC_',chrval(nthPos))
+    cm,%compName%,node
+    cmsel,a,COMPN_CSEC_ALL
+    cm,COMPN_CSEC_ALL,node
+*enddo
+!
+!
+!! 8.2.4 ELEMENTS
+!!
+! Frames
+cmsel,s,COMPA_HDW_Columns
+cmsel,a,COMPA_HDW_TopBeam
+cmsel,a,COMPA_HDW_BackBeam
+esla,s
+cm,COMPE_Frame,elem
+! Approach slabs
+cmsel,s,COMPA_Approach
+esla,s
+cm,COMPE_Approach,elem
+! Headwalls
+cmsel,s,COMPA_HDW_Walls
+cmsel,a,COMPA_HDW_Footing
+cmsel,a,COMPA_HDW_BotBeam
+cmsel,a,COMPA_HDW_Slab
+cmsel,a,COMPA_HDW_Stiffener
+esla,s
+cm,COMPE_Headwalls,elem
+! Tunnel
+cmsel,s,COMPA_Tunnel
+esla,s
+cm,COMPE_Tunnel,elem
+! Soil springs
+esel,s,mat,,MAT_SOIL
+cm,COMPE_Soil,elem
+!
+!
+!! 8.2.4 COMPONENT COLORS
+!!
+allsel
+/pnum,mat,1
+/number,1
+/color,defa
+
+/color,cm,15,COMPL_PLOT
+/color,cm,0,COMPK_Aux
+/color,cm,0,COMPN_CSEC_ALL
+/color,cm,14,COMPA_Headwalls
+
+/color,cm,13,COMPE_Tunnel
+/color,cm,13,COMPA_Tunnel
+
+/color,cm,14,COMPE_Approach
+/color,cm,14,COMPE_Headwalls
+/color,cm,15,COMPE_Frame
+/color,cm,11,COMPE_Soil
+
+/color,cm,11,COMPL_Embankment
+/color,cm,12,COMPL_Railway
+
+/color,outl,15
+!
+!
+!
+!!
+!! 8.3 NODAL LOADS ON CROSS-SECTIONS
+!!
+set,last
+
+! Window display settings
+/plopts,INFO,0
+/plopts,LEG1,0
+/plopts,LEG2,0
+/plopts,LEG3,0
+/plopts,FRAME,1
+/plopts,TITLE,0
+/plopts,MINM,0
+/plopts,FILE,0
+/plopts,SPNO,0
+/plopts,LOGO,0
+/plopts,WINS,0
+/plopts,WP,0
+/plopts,DATE,0
+/triad,OFF
+/window,all,dele
+/psymb,cs,0
+/pbc,f,1
+!
+!
+!! 8.3.1 MAIN WINDOW (ISOMETRIC)
+!!
+/window,1,dele
+/window,1,-1,1,-1,1
+/window,1,on
+wpcsys,1,CS_Tunnel
+/view,1,1,1,1
+/auto,1
+/vscale,1,POST_isoVScale
+/type,1,3
+cmsel,s,COMPL_PLOT
+lplot
+go2png,1000
+    /dist,1,POST_isoZoom,1
+    lplot
+    /noerase
+    /user,1
+    /type,1,3
+    cmsel,s,COMPN_CSEC_ALL
+    cmsel,s,COMPA_Headwalls
+    asel,r,loc,z,-2*GEO_HDW_length,GEO_TUN_Length/2
+    lsla,u
+    aplot
+    lplot
+    asel,inve
+    cmsel,r,COMPA_Headwalls
+    nplot
+    aplot
+    nsel,u,node,,all
+    nplot
+    /window,1,off
+    cmsel,s,COMPK_Aux
+    cmsel,s,COMPA_Tunnel
+    lsla,r
+    !
+    !
+    !! 8.3.2 WINDOW 2: SECTION #1
+    !!
+    cmsel,s,COMPN_CSEC_1
+    TUNNEL_V2_WPLO, 2, 1, 1.67, 0.334, 1, CS_Tunnel, POST_2dVScale
+    !
+    !
+    !! 8.3.3 WINDOW 3: SECTION #2
+    !!
+    cmsel,s,COMPN_CSEC_2
+    TUNNEL_V2_WPLO, 3, 1, 1.67, -0.334, 0.334, CS_Tunnel, POST_2dVScale
+    !
+    !
+    !! 8.3.4 WINDOW 4: SECTION #3
+    !!
+    cmsel,s,COMPN_CSEC_3
+    TUNNEL_V2_WPLO, 4, 1, 1.67, -1, -0.334, CS_Tunnel, POST_2dVScale
+
+    /erase
+    /title
+
+    /window,all,dele
+    /window,1,-1,1.67,-1,1
+endpng,'REPORT_SecForces'
+!
+!
+!
+!!
+!! 8.4 LOADS ON ROOF
+!!
+cmsel,s,COMPA_Roof
+nsla,s,1
+asel,s,area,,all
+cmsel,u,COMPA_RightWall
+lsla,s
+esel,u,elem,,all
+
+/window,all,dele
+/annot,dele
+
+! First load step (dead loads)
+set,1,last
+/window,1,-1,1.67,0.1,1
+/view,1,1,0,0
+/angle,1,0
+/window,1,on
+cmsel,s,COMPL_PLOT
+lplot
+/auto,1
+lplot
+/user,1
+go2png,1000
+    ! Top half: 1st load step
+    /anum,,7
+    /polygon,4,-1,0,1.67,0,1.67,0.1,-1,0.1
+    /pspec,0,1,1
+    /tspec,15,1.5,4,
+    /anum,,1
+    /tlabel,-0.95,0.03,'(a) SEM TREM-TIPO'
+    shownpres,'FY','ABSMAX'
+
+    /gline,1,-1
+    aplot
+    /gline,1,0
+    /noerase
+    nplot
+    /window,1,off
+    /annot,dele
+
+    ! Bottom half: last load step
+    set,last,last
+    /window,2,-1,1.67,-0.9,0
+    /view,2,1,0,0
+    /angle,2,0
+    /window,2,on
+    cmsel,s,COMPK_Aux
+    kplot
+    /auto,2
+    lplot
+    /user,2
+
+    /anum,,7
+    /polygon,4,-1,-1,1.67,-1,1.67,-0.9,-1,-0.9
+    /pspec,0,1,1
+    /tspec,15,1.5,4,
+    /anum,,1
+    /tlabel,-0.95,-0.97,'(b) COM TREM-TIPO'
+    shownpres,'FY','ABSMAX'
+
+    /gline,2,-1
+    aplot
+    /gline,2,0
+    nplot
+    /window,2,off
+endpng,'REPORT_RoofLoad'
+
+/erase
+/annot,dele
+/window,1,full
+/gline,all,0
+!
+!
+!
+!!
+!! 8.5 LOADS ON WALLS
+!!
+! Node selection
+cmsel,s,COMPA_Walls
+cmsel,a,COMPA_HDW_Walls
+nsla,s,1
+nsel,u,loc,y,-GEO_HDW_footDepth
+cm,COMPN_temp,node
+! Line selection
+cmsel,s,COMPL_PLOT
+cmsel,s,COMPA_Approach
+lsla,u
+! Area selection
+asel,s,area,,all
+cmsel,u,COMPA_Roof
+cmsel,u,COMPA_Approach
+! Keypoint selection
+cmsel,s,COMPK_Aux
+
+/window,all,dele
+/annot,dele
+
+set,1,last
+/window,1,-1,0.8,0.1,1
+/view,1,0,1,0
+/angle,1,90
+/angle,1,GEO_TUN_slopeDeg,xm,1
+/window,1,on
+lplot
+/auto,1
+lplot
+/user,1
+go2png,1000
+
+    ! Top half: 1st load step
+    /anum,,7
+    /polygon,4,-1,0,1.67,0,1.67,0.1,-1,0.1
+    /pspec,0,1,1
+    /tspec,15,1.5,4,
+    /anum,,1
+    /tlabel,-0.95,0.03,'(a) SEM TREM-TIPO'
+    shownpres,'FX','ABSMAX'
+
+    /gline,1,-1
+    aplot
+    /gline,1,0
+    /noerase
+    nplot
+    nsel,u,node,,all
+    /window,1,off
+
+    /annot,dele
+    /window,3,0.8,1.67,0.1,1
+    wpcsys,3,CS_Tunnel
+    /window,3,on
+    kplot
+    /auto,3
+    lplot
+    /user,3
+    cmsel,s,COMPN_temp
+    nplot
+    /window,3,off
+    /annot,dele
+
+    ! Bottom half: last load step
+    set,last,last
+    /window,2,-1,0.8,-0.9,0
+    /view,2,0,1,0
+    /angle,2,90
+    /angle,2,GEO_TUN_slopeDeg,xm,1
+    /window,2,on
+    kplot
+    /auto,2
+    lplot
+    /user,2
+
+    /anum,,7
+    /polygon,4,-1,-1,1.67,-1,1.67,-0.9,-1,-0.9
+    /pspec,0,1,1
+    /tspec,15,1.5,4,
+    /anum,,1
+    /tlabel,-0.95,-0.97,'(b) COM TREM-TIPO'
+    shownpres,'FX','ABSMAX'
+
+    /gline,2,-1
+    aplot
+    /gline,2,0
+    nplot
+    nsel,u,node,,all
+    /window,2,off
+
+    /annot,dele
+    /window,4,0.8,1.67,-0.9,0
+    wpcsys,4,CS_Tunnel
+    /window,4,on
+    kplot
+    /auto,4
+    lplot
+    /user,4
+    cmsel,s,COMPN_temp
+    nplot
+    /window,4,off
+
+endpng,'REPORT_WallLoad'
+
+/erase
+/annot,dele
+/window,1,full
+/gline,all,0
+!
+!
+!
+!!
+!! 8.6 LOADS ON FOOTINGS
+!!
+*if,GEO_HDW_type,eq,0,then
+    ! Node selection
+    cmsel,s,COMPA_HDW_Footing
+    nsla,s,1
+    cm,COMPN_temp,node
+    ! Line selection
+    cmsel,s,COMPL_PLOT
+    cmsel,s,COMPA_Approach
+    lsla,u
+    ! Area selection
+    cmsel,s,COMPA_Tunnel
+    cmsel,a,COMPA_Headwalls
+    ! Keypoint selection
+    cmsel,s,COMPK_Aux
+
+    /window,all,dele
+    /annot,dele
+
+    set,1,last
+    /window,1,-1,0.8,0.1,1
+    /view,1,1,0,0
+    /angle,1,0
+    /window,1,on
+    lplot
+    /auto,1
+    lplot
+    /user,1
+
+    go2png,1000
+
+        /anum,,7
+        /polygon,4,-1,0,1.67,0,1.67,0.1,-1,0.1
+        /pspec,0,1,1
+        /tspec,15,1.5,4,
+        /anum,,1
+        /tlabel,-0.95,0.03,'(a) INDEPENDENTE DO TREM-TIPO'
+        shownpres,'FY','ABSMAX'
+
+        /gline,1,-1
+        aplot
+        /gline,1,0
+        /noerase
+        nplot
+        nsel,u,node,,all
+        /window,1,off
+
+        /annot,dele
+        /window,3,0.8,1.67,0.1,1
+        wpcsys,3,CS_Tunnel
+        /window,3,on
+        kplot
+        /auto,3
+        lplot
+        /user,3
+        cmsel,s,COMPN_temp
+        nplot
+        /window,3,off
+
+    endpng,'REPORT_FootLoad'
+
+    /erase
+    /annot,dele
+    /window,1,full
+    /gline,all,0
+    /pbc,f,0
+*endif
+!
+!
+!
+!!
+!! 8.8 VEHICLE INSIDE TUNNEL
+!!
+!/prep7
+
+view1w
+windefa
+wincln,1
+
+allsel
+!lsclear,all
+!lsread,2
+set,2
+
+lsla,s
+
+/pbc,f,,1
+/pbc,nfor,,0
+/pbc,nmom,,0
+/pbc,cp,,0
+/pbc,acel,,0
+/pbc,rfor,,0
+/psf,pres,,2
+!/vscale,
+
+/window,all,dele
+x13=0.6
+/window,1,-1,x13,0.5,1
+/window,2,x13,1.67,0,1
+/window,3,-1,x13,0,0.5
+
+/view,1,1,0,0
+wpcsys,2,CS_Tunnel
+/view,3,0,1,0
+
+/auto,1
+/auto,2
+/auto,3
+aplot
+/dist,1,1.1,1
+/angle,1,0
+/angle,3,90
+aplot
+/user,1
+/user,2
+/user,3
+/type,1,0
+/edge,all,1
+/pnum,sval,0
+
+/anum,,7
+/polygon,4,-1,-0.1,1.67,-0.1,1.67,0,-1,0
+/pspec,0,1,1
+/tspec,15,1.5,4,
+/anum,,1
+/tlabel,-0.95,-0.07,'(a) TREM-TIPO RODOV. NO INTERIOR DA PI'
+
+cmsel,u,compa_roof
+esla,s
+nsle,s
+
+go2png,1000
+    /gline,all,-1
+    aplot
+    /gline,all,1
+    /noerase
+    cmsel,s,compa_floor
+    esla,r
+    nsle,r
+    eplot
+    /erase
+endpng,'REPORT_FloorLoad'
+
+/annot,dele
+/pbc,f,0
+/psf,defa
+/type,1,3
+clims
+!/post1
+!
+!
+!
+!!
+!! 8.9 MESH
+!!
+allsel
+/eshape,0
+/color,outl,4
+
+/window , all , dele
+/window , 1 , -1.0 , 0.80 , -0.2 ,  1.0
+/window , 2 ,  0.8 , 1.67 , -0.2 ,  1.0
+/window , 3 , -1.0 , 0.80 , -1.0 , -0.2
+/window , 4 ,  0.8 , 1.67 , -1.0 , -0.2
+
+/edge,all,0
+
+/view,1,1,1,1
+/view,2,0,1,0
+/view,3,1,0,0
+/view,4,0,0,1
+
+/angle,2,0
+/angle,2,GEO_TUN_slopeDeg,xm,1
+/angle,3,0
+wpcsys,4,CS_Tunnel
+
+esel,s,type,,1
+nsle,s
+eplot
+/auto,all
+eplot
+/user,1
+/user,2
+/user,3
+/user,4
+allsel
+cmsel,s,COMPA_Roof
+nsla,s,1
+esln,u
+esla,a
+nsle,s
+eplot
+
+takepic,'REPORT_mesh',1200
+
+/color,outl,15
+!
+!
+!
+!!
+!! 8.10 GENERAL RESULTS
+!!
+set,last
+
+esel,s,type,,TYPE_SHELL181
+nsle,s
+cmsel,s,COMPK_Aux
+
+/annot,dele
+/window , all , dele
+/gformat,F,1,0
+/udoc,all,cntr,left
+
+!! 8.10.1 DEFORMED SHAPE
+!!
+! Title
+/anum,,7
+/polygon , 4 , -1.00 , 0.50 , 0.80 , 0.50 , 0.80 , 0.55 , -1.00 , 0.55
+/pspec,0,1,1
+/tspec,15,1,4,
+/anum,,1
+/tlabel,-0.98,0.51,'(a) DEFORMADA (AMPLIADA %POST_dscale%x)'
+! Row with three windows
+/window,  1 , -1.0 , -0.4 ,  0.55 ,  1.00
+/window,  2 , -0.4 ,  0.2 ,  0.55 ,  1.00
+/window,  3 ,  0.2 ,  0.8 ,  0.55 ,  1.00
+! Left: isometric view; Center: side view; Right: front view
+/view,1,1,1,1
+/view,2,1,0,0
+/view,3,0,0,1
+wpcsys,3,CS_Tunnel
+/angle,2,0
+/edge,all,1
+/dscale,all,POST_dscale
+/auto,all
+
+go2png,1500
+
+    pldisp,2
+    /noerase
+    /window,1,off
+    /window,2,off
+    /window,3,off
+    !
+    !
+    !! 8.10.2 CONTOUR PLOTS
+    !!
+
+    !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)
+    TUNNEL_V2_CNTR, 1, '(b) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
+    !
+    !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)
+    TUNNEL_V2_CNTR, 2, '(c) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
+    !
+    !! 8.10.2.3 AXIAL FORCE
+    TUNNEL_V2_CNTR, 3, '(d) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
+    !
+    !! 8.10.2.4 SHEAR FORCE
+    TUNNEL_V2_CNTR, 4, '(e) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
+    !
+    !
+    !! 8.10.3 SOIL PRESSURE
+    !!
+    ! Title
+    /polygon , 4 , -1.00 , -1.00 , 0.80 , -1.00 , 0.80 , -0.95 , -1.00 , -0.95
+    /pspec,0,1,1
+    /tspec,15,1,4,
+    /tlabel,-0.98,-0.99,'(f) PRES. SOBRE O SOLO [kPa]'
+
+    wnum=5
+    /window , wnum , dele
+    /window , wnum , -1.0 ,  0.8 , -0.95 , -0.50
+    /window,wnum,on
+    /view,wnum,-1,0,0
+    /auto,wnum
+    kplot
+    /dist,wnum,1.15,1
+    /focus,wnum,0,-0.1,0,2
+    /user,wnum
+    /gline,wnum,-1
+    asel,s,area,,all
+    lsla,s
+    aplot
+    /gline,wnum,0
+    cmsel,s,COMPL_PLOT
+    cmsel,a,COMPL_Embankment
+    cmsel,a,COMPL_Railway
+    lplot
+    path,'BS_AXIS'
+    plpagm,'MSIGMAY',30
+    /window,wnum,off
+
+    ! Legend
+    /window , wnum , -1.0 , -0.8 , -0.95 , -0.50
+    /udoc,wnum,cntr,left
+    /udoc,wnum,type,off
+    /udoc,wnum,typ2,off
+    /plopts,info,3
+    /plopts,leg3,on
+    /plopts,frame,off
+    /focus,wnum,1e6,1e6,0,
+
+    cmsel,s,COMPA_floor
+    esla,s
+    nsle,s
+    asel,u,area,,all
+    lsel,u,line,,all
+    /focus,wnum,1e6,1e6,0
+    /dist,1e6
+    pletab,'emn_sigy'
+    *get,minVal,plnsol,,min
+    *get,maxVal,plnsol,,max
+    minScale=nint(minVal)
+    maxScale=nint(maxVal)
+    /contour,wnum,9,minScale,,maxScale
+
+    /window,wnum,off
+    /plopts,info,0
+    /plopts,leg3,off
+    /plopts,frame,on
+    /contour,wnum
+
+endpng,'REPORT_contours'
+
+/annot,dele
+/replot
+/erase
+
+tunnel_v2_temporary     !!
+
+/gformat,defa
+view1w
+/udoc,all,cntr,bottom
+!
+!
+!
+!!
+!! 8.11 FRAME ENVELOPES
+!!
+*if,GEO_HDW_status,eq,1,then
+    TUNNEL_V2_FRAMERES
+*endif
+
+windefa
+
+*if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
+    TUNNEL_V2_IWRES
+*endif
+
+
+tunnel_v2_tunres
+

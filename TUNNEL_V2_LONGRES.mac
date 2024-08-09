@@ -1,0 +1,48 @@
+! TUNNEL_V2_LONGRES
+
+*del,Mmax
+*del,Mmin
+*del,Vmax
+*del,Vmin
+*del,Nmax
+*del,Nmin
+
+*if,arg1,EQ,'DW',THEN
+
+    MXmax='DW_MX'
+    QYmax='DW_QY'
+    NYmax='DW_NY'
+
+    MXmin='DW_MX'
+    QYmin='DW_QY'
+    NYmin='DW_NY'
+
+*elseif,arg1,EQ,'ENV',THEN
+
+    MXmax='EMX_MX'
+    QYmax='EMX_QY'
+    NYmax='EMX_NY'
+
+    MXmin='EMN_MX'
+    QYmin='EMN_QY'
+    NYmin='EMN_NY'
+
+*endif
+
+PLETAB,%MXmax%,1
+*get,Mmax,PLNSOL,,MAX
+PLETAB,%MXmin%,1
+*get,Mmin,PLNSOL,,MIN
+
+PLETAB,%QYmin%,1
+*get,Vmin,PLNSOL,,MIN
+PLETAB,%QYmax%,1
+*get,Vmax,PLNSOL,,MAX
+COMPARE,'Vmax','ABSMAX',2,VMin,VMax
+
+PLETAB,%NYmin%,1
+*get,Nmin,PLNSOL,,MIN
+PLETAB,%NYmax%,1
+*get,Nmax,PLNSOL,,MAX
+
+

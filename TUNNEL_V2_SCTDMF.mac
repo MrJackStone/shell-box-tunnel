@@ -1,0 +1,55 @@
+! TUNNEL_V2_SCTDMF
+
+
+one_sixth=GEO_TUN_length/6
+*del,sec_positions
+*dim,sec_positions,,7
+sec_positions(1)=0, one_sixth, one_sixth*2, one_sixth*3, one_sixth*4, one_sixth*5, GEO_TUN_length
+
+nsel,s,loc,x,0
+nsel,r,loc,y,0
+cm,compn_llc,node
+esel,s,type,,1
+nsle,s,active
+cm,compn_active,node
+
+*do,nthPos,1,7,1
+    cmsel,s,compn_llc
+    z_pos=sec_positions(nthPos)
+    nnode=NODE(0,0,z_pos)
+    zcoord = NZ(nnode)
+    nsel,s,loc,z,0,z_pos
+    cmsel,r,compn_active
+    esln,s
+    llc=node(0,0,zcoord)
+    ulc=node(0,Eff_GalleryHeight,zcoord)
+    urc=node(Eff_GalleryWidth,Eff_GalleryHeight,zcoord)
+    lrc=node(Eff_GalleryWidth,0,zcoord)
+    pname=STRCAT('SEC',CHRVAL(nthPos))
+    path,%pname%,5,,200
+    ppath,1,llc
+    ppath,2,ulc
+    ppath,3,urc
+    ppath,4,lrc
+    ppath,5,llc
+    path,%pname%
+    pdef,'mx_min',ETABLE,'MX_MIN'
+    pdef,'mx_max',ETABLE,'MX_MAX'
+    !allsel
+    /view,1,0,0,1
+    /auto,1
+    lplot
+    imgtitle=STRCAT(STRCAT('SECTION #',CHRVAL(nthPos)),' Mx (min)')
+    /title,%imgtitle%
+    plpagm,'mx_min',10,NODE
+    ifname1=STRCAT('path_mx_min - SEC #',CHRVAL(nthPos))
+    takepic,ifname1,1200
+    imgtitle=STRCAT(STRCAT('SECTION #',CHRVAL(nthPos)),' Mx (max)')
+    /title,%imgtitle%
+    plpagm,'mx_max',10,NODE
+    ifname2=STRCAT('path_mx_max - SEC #',CHRVAL(nthPos))
+    takepic,ifname2,1200
+    /title,
+*enddo
+
+

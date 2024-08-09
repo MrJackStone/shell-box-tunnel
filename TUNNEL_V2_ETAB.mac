@@ -1,0 +1,435 @@
+! TUNNEL_V2_ETAB
+
+
+SET,FIRST
+
+! Criar tabelas
+ETABLE,FX,SMISC,1
+ETABLE,FY,SMISC,2
+ETABLE,MX,SMISC,4
+ETABLE,MY,SMISC,5
+ETABLE,MT,SMISC,6
+ETABLE,QX,SMISC,7
+ETABLE,QY,SMISC,8
+ETABLE,DESLOCY,U,Y
+ETABLE,DESLOCX,U,X
+
+ESEL,S,MAT,,1
+/view,,1,1,1
+/auto,1
+/eshape,1
+
+
+!!
+!! COMBINAR LOAD STEPS: OBTER VALORES MÁXIMOS E MÍNIMOS DAS ELEMENT TABLES
+!!
+! MX
+SMAX,MX_MAX,MX
+SMIN,MX_MIN,MX
+! MY
+SMAX,MY_MAX,MY
+SMIN,MY_MIN,MY
+! MT
+SMAX,MT_MAX,MT
+! FX
+SMAX,FX_MAX,FX
+SMIN,FX_MIN,FX
+! FY
+SMAX,FY_MAX,FY
+SMIN,FY_MIN,FY
+! QX
+SMAX,QX_MAX,QX
+! QY
+SMAX,QY_MAX,QY
+! DESLOCX
+SMAX,DESLOCX_MAX,DESLOCX
+SMIN,DESLOCX_MIN,DESLOCX
+! DESLOCY
+SMAX,DESLOCY_MAX,DESLOCY
+SMIN,DESLOCY_MIN,DESLOCY
+
+! Componentes para cálculo de flecha
+CSYS,CS_Tunnel
+ESEL,S,TYPE,,1
+NSEL,S,LOC,X,0
+NSEL,R,LOC,Y,Eff_GalleryHeight
+NSLE,R
+CM,COMPN_leftExt,NODE
+*get,NC,NODE,,COUNT
+ESEL,S,TYPE,,1
+NSEL,S,LOC,X,Eff_GalleryWidth
+NSEL,R,LOC,Y,Eff_GalleryHeight
+NSLE,R
+CM,COMPN_rightExt,NODE
+maxDeflection=0
+CSYS,0
+
+*do,nthLoadStep,1,LoadStepCount,1
+
+   ESEL,S,MAT,,1
+   SET,nthLoadStep
+   ETABLE,REFL
+
+   ! MX
+   SMAX,MX_MAX,MX_MAX,MX,1,1
+   SMIN,MX_MIN,MX_MIN,MX,1,1
+   ! MY
+   SMAX,MY_MAX,MY_MAX,MY,1,1
+   SMIN,MY_MIN,MY_MIN,MY,1,1
+   ! MT
+   SABS,1
+   SMAX,MT_MAX,MT_MAX,MT,1,1
+   SABS,0
+   ! FX
+   SMAX,FX_MAX,FX_MAX,FX,1,1
+   SMIN,FX_MIN,FX_MIN,FX,1,1
+   ! FY
+   SMAX,FY_MAX,FY_MAX,FY,1,1
+   SMIN,FY_MIN,FY_MIN,FY,1,1
+   ! QX
+   SABS,1
+   SMAX,QX_MAX,QX_MAX,QX,1,1
+   SABS,0
+   ! QY
+   SABS,1
+   SMAX,QY_MAX,QY_MAX,QY,1,1
+   SABS,0
+   ! DESLOCX
+   SMAX,DESLOCX_MAX,DESLOCX_MAX,DESLOCX,1,1
+   SMIN,DESLOCX_MIN,DESLOCX_MIN,DESLOCX,1,1
+   ! DESLOCY
+   SMAX,DESLOCY_MAX,DESLOCY_MAX,DESLOCY,1,1
+   SMIN,DESLOCY_MIN,DESLOCY_MIN,DESLOCY,1,1
+
+   !TUNNEL_V2_DEFLECT
+   ! output: maxDeflection
+
+*enddo
+RoofSlab_maxDeflection=maxDeflection
+
+ESEL,S,TYPE,,1
+NSLE,S,ACTIVE
+/show
+PLETAB,'FX_MAX',1
+/graphics,FULL
+TAKEPIC,'FX_MAX',1200
+/show
+PLETAB,'FX_MIN',1
+/graphics,FULL
+TAKEPIC,'FX_MIN',1200
+/show
+PLETAB,'FY_MAX',1
+/graphics,FULL
+TAKEPIC,'FY_MAX',1200
+/show
+PLETAB,'FY_MIN',1
+/graphics,FULL
+TAKEPIC,'FY_MIN',1200
+/show
+PLETAB,'MX_MAX',1
+/graphics,FULL
+TAKEPIC,'MX_MAX',1200
+/show
+PLETAB,'MX_MIN',1
+/graphics,FULL
+TAKEPIC,'MX_MIN',1200
+/show
+PLETAB,'MY_MAX',1
+/graphics,FULL
+TAKEPIC,'MY_MAX',1200
+/show
+PLETAB,'MY_MIN',1
+/graphics,FULL
+TAKEPIC,'MY_MIN',1200
+/show
+PLETAB,'QX_MAX',1
+/graphics,FULL
+TAKEPIC,'QX_MAX',1200
+/show
+PLETAB,'QY_MAX',1
+/graphics,FULL
+TAKEPIC,'QY_MAX',1200
+
+! MX
+ETINDEX,'MX_MAX'
+MXPosIndex=_OUTPUT
+ETINDEX,'MX_MIN'
+MXNegIndex=_OUTPUT
+
+! MY
+ETINDEX,'MY_MAX'
+MYPosIndex=_OUTPUT
+ETINDEX,'MY_MIN'
+MYNegIndex=_OUTPUT
+
+! MT
+ETINDEX,'MT_MAX'
+MTIndex=_OUTPUT
+
+! FX
+ETINDEX,'FX_MAX'
+FXPosIndex=_OUTPUT
+ETINDEX,'FX_MIN'
+FXNegIndex=_OUTPUT
+
+! FY
+ETINDEX,'FY_MAX'
+FYPosIndex=_OUTPUT
+ETINDEX,'FY_MIN'
+FYNegIndex=_OUTPUT
+
+! QX
+ETINDEX,'QX_MAX'
+QXIndex=_OUTPUT
+
+! QY
+ETINDEX,'QY_MAX'
+QYIndex=_OUTPUT
+
+ALLSEL
+
+
+!!
+!! LAJE DE PISO
+!!
+ASEL,S,LOC,Y,0
+ASEL,R,LOC,Z,0,GEO_TUN_length
+ESLA,S
+
+*get,ECount,ELEM,0,COUNT
+*get,EMin,ELEM,,NUM,MIN
+
+! Inicializar vetores
+*del,MXPosValues
+*del,MXNegValues
+*del,MYPosValues
+*del,MYNegValues
+*del,FXPosValues
+*del,FXNegValues
+*del,FYPosValues
+*del,FYNegValues
+*del,QXValues
+*del,QYValues
+*dim,MXPosValues,ARRAY,ECount
+*dim,MXNegValues,ARRAY,ECount
+*dim,MYPosValues,ARRAY,ECount
+*dim,MYNegValues,ARRAY,ECount
+*dim,FXPosValues,ARRAY,ECount
+*dim,FXNegValues,ARRAY,ECount
+*dim,FYPosValues,ARRAY,ECount
+*dim,FYNegValues,ARRAY,ECount
+*dim,QXValues,ARRAY,ECount
+*dim,QYValues,ARRAY,ECount
+! Coletar dados das element tables
+*vget,MXPosValues(1),ELEM,EMin,ETAB,'MX_MAX',,,0
+*vget,MXNegValues(1),ELEM,EMin,ETAB,'MX_MIN',,,0
+*vget,MYPosValues(1),ELEM,EMin,ETAB,'MY_MAX',,,0
+*vget,MYNegValues(1),ELEM,EMin,ETAB,'MY_MIN',,,0
+*vget,FXPosValues(1),ELEM,EMin,ETAB,'FX_MAX',,,0
+*vget,FXNegValues(1),ELEM,EMin,ETAB,'FX_MIN',,,0
+*vget,FYPosValues(1),ELEM,EMin,ETAB,'FY_MAX',,,0
+*vget,FYNegValues(1),ELEM,EMin,ETAB,'FY_MIN',,,0
+*vget,QXValues(1),ELEM,EMin,ETAB,'QX_MAX',,,0
+*vget,QYValues(1),ELEM,EMin,ETAB,'QY_MAX',,,0
+! Obter máximos e mínimos
+*vscfun,FloorMXMax,MAX,MXPosValues
+*vscfun,FloorMXMin,MIN,MXNegValues
+*vscfun,FloorMYMax,MAX,MYPosValues
+*vscfun,FloorMYMin,MIN,MYNegValues
+*vscfun,FloorFXMax,MAX,FXPosValues
+*vscfun,FloorFXMin,MIN,FXNegValues
+*vscfun,FloorFYMax,MAX,FYPosValues
+*vscfun,FloorFYMin,MIN,FYNegValues
+*vscfun,FloorQXMax,MAX,QXValues
+*vscfun,FloorQYMax,MAX,QYValues
+
+
+!!
+!! LAJE DE TETO
+!!
+ASEL,S,LOC,Y,Eff_GalleryHeight
+ASEL,R,LOC,Z,0,GEO_TUN_length
+ESLA,S
+
+*get,ECount,ELEM,0,COUNT
+*get,EMin,ELEM,,NUM,MIN
+
+! Inicializar vetores
+*del,MXPosValues
+*del,MXNegValues
+*del,MYPosValues
+*del,MYNegValues
+*del,FXPosValues
+*del,FXNegValues
+*del,FYPosValues
+*del,FYNegValues
+*del,QXValues
+*del,QYValues
+*dim,MXPosValues,ARRAY,ECount
+*dim,MXNegValues,ARRAY,ECount
+*dim,MYPosValues,ARRAY,ECount
+*dim,MYNegValues,ARRAY,ECount
+*dim,FXPosValues,ARRAY,ECount
+*dim,FXNegValues,ARRAY,ECount
+*dim,FYPosValues,ARRAY,ECount
+*dim,FYNegValues,ARRAY,ECount
+*dim,QXValues,ARRAY,ECount
+*dim,QYValues,ARRAY,ECount
+! Coletar dados das element tables
+*vget,MXPosValues(1),ELEM,EMin,ETAB,'MX_MAX',,,0
+*vget,MXNegValues(1),ELEM,EMin,ETAB,'MX_MIN',,,0
+*vget,MYPosValues(1),ELEM,EMin,ETAB,'MY_MAX',,,0
+*vget,MYNegValues(1),ELEM,EMin,ETAB,'MY_MIN',,,0
+*vget,FXPosValues(1),ELEM,EMin,ETAB,'FX_MAX',,,0
+*vget,FXNegValues(1),ELEM,EMin,ETAB,'FX_MIN',,,0
+*vget,FYPosValues(1),ELEM,EMin,ETAB,'FY_MAX',,,0
+*vget,FYNegValues(1),ELEM,EMin,ETAB,'FY_MIN',,,0
+*vget,QXValues(1),ELEM,EMin,ETAB,'QX_MAX',,,0
+*vget,QYValues(1),ELEM,EMin,ETAB,'QY_MAX',,,0
+! Obter máximos e mínimos
+*vscfun,RoofMXMax,MAX,MXPosValues
+*vscfun,RoofMXMin,MIN,MXNegValues
+*vscfun,RoofMYMax,MAX,MYPosValues
+*vscfun,RoofMYMin,MIN,MYNegValues
+*vscfun,RoofFXMax,MAX,FXPosValues
+*vscfun,RoofFXMin,MIN,FXNegValues
+*vscfun,RoofFYMax,MAX,FYPosValues
+*vscfun,RoofFYMin,MIN,FYNegValues
+*vscfun,RoofQXMax,MAX,QXValues
+*vscfun,RoofQYMax,MAX,QYValues
+
+
+!!
+!! PAREDES EXTERNAS
+!!
+ASEL,S,LOC,X,0
+ASEL,A,LOC,X,GEO_TUN_modules*Eff_GalleryWidth
+ESLA,S
+
+*get,ECount,ELEM,0,COUNT
+*get,EMin,ELEM,,NUM,MIN
+
+! Inicializar vetores
+*del,MXPosValues
+*del,MXNegValues
+*del,MYPosValues
+*del,MYNegValues
+*del,FXPosValues
+*del,FXNegValues
+*del,FYPosValues
+*del,FYNegValues
+*del,QXValues
+*del,QYValues
+*dim,MXPosValues,ARRAY,ECount
+*dim,MXNegValues,ARRAY,ECount
+*dim,MYPosValues,ARRAY,ECount
+*dim,MYNegValues,ARRAY,ECount
+*dim,FXPosValues,ARRAY,ECount
+*dim,FXNegValues,ARRAY,ECount
+*dim,FYPosValues,ARRAY,ECount
+*dim,FYNegValues,ARRAY,ECount
+*dim,QXValues,ARRAY,ECount
+*dim,QYValues,ARRAY,ECount
+! Coletar dados das element tables
+*vget,MXPosValues(1),ELEM,EMin,ETAB,'MX_MAX',,,0
+*vget,MXNegValues(1),ELEM,EMin,ETAB,'MX_MIN',,,0
+*vget,MYPosValues(1),ELEM,EMin,ETAB,'MY_MAX',,,0
+*vget,MYNegValues(1),ELEM,EMin,ETAB,'MY_MIN',,,0
+*vget,FXPosValues(1),ELEM,EMin,ETAB,'FX_MAX',,,0
+*vget,FXNegValues(1),ELEM,EMin,ETAB,'FX_MIN',,,0
+*vget,FYPosValues(1),ELEM,EMin,ETAB,'FY_MAX',,,0
+*vget,FYNegValues(1),ELEM,EMin,ETAB,'FY_MIN',,,0
+*vget,QXValues(1),ELEM,EMin,ETAB,'QX_MAX',,,0
+*vget,QYValues(1),ELEM,EMin,ETAB,'QY_MAX',,,0
+! Obter máximos e mínimos
+*vscfun,WallMXMax,MAX,MXPosValues
+*vscfun,WallMXMin,MIN,MXNegValues
+*vscfun,WallMYMax,MAX,MYPosValues
+*vscfun,WallMYMin,MIN,MYNegValues
+*vscfun,WallFXMax,MAX,FXPosValues
+*vscfun,WallFXMin,MIN,FXNegValues
+*vscfun,WallFYMax,MAX,FYPosValues
+*vscfun,WallFYMin,MIN,FYNegValues
+*vscfun,WallQXMax,MAX,QXValues
+*vscfun,WallQYMax,MAX,QYValues
+
+
+!!
+!! PAREDES INTERNAS
+!!
+ASEL,S,LOC,Z,0,GEO_TUN_length
+ASEL,U,LOC,Y,0
+ASEL,U,LOC,Y,Eff_GalleryHeight
+ASEL,U,LOC,X,0
+ASEL,U,LOC,X,GEO_TUN_modules*Eff_GalleryWidth
+ESLA,S
+
+*get,ECount,ELEM,0,COUNT
+*get,EMin,ELEM,,NUM,MIN
+
+*if,ECount,NE,0,THEN
+
+   InternalWalls=1
+
+   ! Inicializar vetores
+   *del,MXPosValues
+   *del,MXNegValues
+   *del,MYPosValues
+   *del,MYNegValues
+   *del,FXPosValues
+   *del,FXNegValues
+   *del,FYPosValues
+   *del,FYNegValues
+   *del,QXValues
+   *del,QYValues
+   *dim,MXPosValues,ARRAY,ECount
+   *dim,MXNegValues,ARRAY,ECount
+   *dim,MYPosValues,ARRAY,ECount
+   *dim,MYNegValues,ARRAY,ECount
+   *dim,FXPosValues,ARRAY,ECount
+   *dim,FXNegValues,ARRAY,ECount
+   *dim,FYPosValues,ARRAY,ECount
+   *dim,FYNegValues,ARRAY,ECount
+   *dim,QXValues,ARRAY,ECount
+   *dim,QYValues,ARRAY,ECount
+   ! Coletar dados das element tables
+   *vget,MXPosValues(1),ELEM,EMin,ETAB,'MX_MAX',,,0
+   *vget,MXNegValues(1),ELEM,EMin,ETAB,'MX_MIN',,,0
+   *vget,MYPosValues(1),ELEM,EMin,ETAB,'MY_MAX',,,0
+   *vget,MYNegValues(1),ELEM,EMin,ETAB,'MY_MIN',,,0
+   *vget,FXPosValues(1),ELEM,EMin,ETAB,'FX_MAX',,,0
+   *vget,FXNegValues(1),ELEM,EMin,ETAB,'FX_MIN',,,0
+   *vget,FYPosValues(1),ELEM,EMin,ETAB,'FY_MAX',,,0
+   *vget,FYNegValues(1),ELEM,EMin,ETAB,'FY_MIN',,,0
+   *vget,QXValues(1),ELEM,EMin,ETAB,'QX_MAX',,,0
+   *vget,QYValues(1),ELEM,EMin,ETAB,'QY_MAX',,,0
+   ! Obter máximos e mínimos
+   *vscfun,IntMXMax,MAX,MXPosValues
+   *vscfun,IntMXMin,MIN,MXNegValues
+   *vscfun,IntMYMax,MAX,MYPosValues
+   *vscfun,IntMYMin,MIN,MYNegValues
+   *vscfun,IntFXMax,MAX,FXPosValues
+   *vscfun,IntFXMin,MIN,FXNegValues
+   *vscfun,IntFYMax,MAX,FYPosValues
+   *vscfun,IntFYMin,MIN,FYNegValues
+   *vscfun,IntQXMax,MAX,QXValues
+   *vscfun,IntQYMax,MAX,QYValues
+
+*else
+
+   InternalWalls=0
+
+   IntMXMax=0
+   IntMXMin=0
+   IntMYMax=0
+   IntMYMin=0
+
+   IntFXMax=0
+   IntFXMin=0
+   IntFYMax=0
+   IntFYMin=0
+
+   IntQXMax=0
+   IntQYMax=0
+
+*endif

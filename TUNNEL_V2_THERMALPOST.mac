@@ -1,0 +1,283 @@
+/device,font,3,Arial,1000,0,-64,0,0,,,
+/device,font,1,Arial,1000,0,-42,0,0,,,
+/device,text,1,50
+/tspec,15,1.5,4,0,0
+/device,text,1,100
+/annot,dele
+
+/post1
+
+set,1,last
+
+esel,s,real,,REAL_longSprings
+esel,r,type,,2
+cm,e,elem
+
+nsle,s
+esel,s,type,,1
+nsle,u
+cm,n,node
+
+cmsel,s,e
+nsle,s
+dfn188,0.1
+smult,'SIGFRIC','DFN188',,1/16
+plls,'SIGFRIC','SIGFRIC',0.1
+
+
+!!
+
+! TUNNEL_V2_THERMALPOST
+
+/post1
+
+set,1,last
+
+
+*afun,DEG
+zi=0
+ze=GEO_TUN_length*COS(TunnelSlope)
+yi=0
+ye=GEO_TUN_length*SIN(TunnelSlope)
+*afun,RAD
+
+!!
+asel,s,area,,all
+lsla,s
+esel,s,type,,TYPE_SHELL181
+nsle,s
+path,'BSLAB',2,,200
+ppath,1,,GEO_TUN_totEffW/2,yi,zi,CS_Tunnel
+ppath,2,,GEO_TUN_totEffW/2,ye,ze,CS_Tunnel
+pdef,'UY',u,y
+pcalc,add,'SIGMAY','UY',,MAT_SOIL_stiffness*1e-3
+pcalc,add,'NSIGMAY','UY',,-MAT_SOIL_stiffness*1e-3
+!!
+
+!!
+!    esel,s,type,,2
+!    esel,r,real,,REAL_longSprings
+!    dfn188
+!    nsle,s
+!    path,'BSOLO',2,,200
+!    ppath,1,,GEO_TUN_totEffW/2,yi,zi,CS_Tunnel
+!    ppath,2,,GEO_TUN_totEffW/2,ye,ze,CS_Tunnel
+!    pdef,'UY',u,y
+!    pdef,'DFN',etab,'DFN188'
+!    pcalc,add,'SIGFRIC','DFN',,100/16
+!!
+
+path,'BSLAB'
+
+/annot,dele
+
+view1w
+windefa
+/window,all,dele
+/window,1,-1,1.67,0.3,1
+/window,2,-1,1.67,-0.5,0.25
+wincln,1
+wincln,2
+/view,1,1,0,0
+/view,2,1,0,0
+/angle,1,0
+/angle,2,0
+/auto,1
+/auto,2
+/plopts,logo,off
+
+/anum,,7
+/polygon,4,-1,0.25,1.67,0.25,1.67,0.3,-1,0.3
+/pspec,0,1,1
+/tspec,15,1.5,4,
+/anum,,1
+/tlabel,-0.95,0.26,'(a) TENS. VERTICAL TRANSMITIDA AO SOLO [kPa]'
+
+/anum,,7
+/polygon,4,-1,-0.55,1.67,-0.55,1.67,-0.5,-1,-0.5
+/pspec,0,1,1
+/tspec,15,1.5,4,
+/anum,,1
+/tlabel,-0.95,-0.54,'(b) TENS. DE ATRITO SOLO-CONCRETO [kPa]'
+
+aplot
+!/dist,1,1.1,1
+!/dist,2,1.1,1
+/user,1
+/user,2
+/plopts,info,0
+!/plopts,leg2,on
+/plopts,leg3,on
+/udoc,1,cntr,left
+/udoc,2,cntr,left
+/gformat,f,1,0
+
+go2png,1200
+    /gline,1,1
+    /gline,2,-1
+    aplot
+    /window,1,on
+    /window,2,off
+    /noerase
+    /plopts,info,3
+    !/plopts,leg3,off
+    plpagm,'NSIGMAY',30
+
+!    path,'BSOLO'
+!    /window,1,off
+!    /window,2,on
+!    plpagm,'SIGFRIC',30
+
+    /window,1,off
+    /window,2,on
+    /type,2,0
+    esel,s,type,,2
+    esel,r,real,,2
+    nsle,s
+    set,2,last
+    etable,'DFN180',smisc,1
+    sabs,1
+    sadd,'FRICT','DFN180',,1/(1e3*0.16)
+    !pletab,'FRICT',0
+    plls,'FRICT','FRICT',0.05
+
+
+
+
+endpng,'sigmaNormFric'
+/erase
+
+!!
+set,2,last
+
+cmsel,s,compa_roof
+asel,r,loc,x,GEO_TUN_totEffW/2,GEO_TUN_totEffW
+cm,compa_unsel,area
+cmsel,s,compa_tunnel
+cmsel,u,compa_rightwall
+cmsel,u,compa_unsel
+esla,s
+esel,s,type,,1 !!
+nsle,s
+
+fctd=1.75e6
+fcd=1e6*40/1.4
+fyd=1e6*500/1.15
+
+etable,'sz',s,y
+sadd,'sMPA','sz',,1e-6
+etable,'thk',smisc,17
+sadd,'zero','thk','thk',1,-1
+smult,'fSd_kn','sMPA','thk',1000,1
+smax,'fSd_tr','fSd_kn','zero'
+sadd,'fRd_c','thk',,fctd/1000
+sadd,'fRd_s','thk',,0.035*(fcd*1e-3)/2
+sadd,'fRd_t','fRd_c','fRd_s',1,1
+sexp,'approv','fRd_t','fSd_tr',-1,1
+sadd,'approv','approv',,100
+sadd,'lack','fSd_tr','fRd_t',1,-1
+sexp,'asminmlt','lack','fRd_s',1,-1
+
+
+/window,1,dele
+view1w
+/window,1,-1,0.33,0,1
+/window,2,0.33,1.67,0,1
+/window,3,-1,0.33,-1,0
+/window,4,0.33,1.67,-1,0
+/gline,all,1
+/dscale,all,off
+windefa,
+wincln,
+clims
+
+/view,1,0.5,0.27,0.83
+/view,2,0.5,0.27,0.83
+/view,3,0.5,0.27,0.83
+/view,4,0.5,0.27,0.83
+/eshape,1
+/graphics,power
+
+/auto,all
+eplot
+/user,all
+
+/window,1,off
+/window,2,off
+/window,3,off
+/window,4,off
+
+/anum,,7
+/polygon,4,-1,0,0.33,0,0.33,0.05,-1,0.05
+/pspec,0,1,1
+/tspec,15,1.5,4,
+/anum,,1
+/tlabel,-0.95,0.01,'(a) TENS. AXIAL SOLICITANTE [MPa]'
+
+/anum,,7
+/polygon,4,0.33,0,1.67,0,1.67,0.05,0.33,0.05
+/pspec,0,1,1
+/tspec,15,1.5,4,
+/anum,,1
+/tlabel,0.38,0.01,'(b) FOR. AXIAL SOLICITANTE (Sd) [kN]'
+
+/anum,,7
+/polygon,4,-1,-1,0.33,-1,0.33,-0.95,-1,-0.95
+/pspec,0,1,1
+/tspec,15,1.5,4,
+/anum,,1
+/tlabel,-0.95,-0.99,'(c) FOR. AXIAL RESISTENTE (Rd) [kN]'
+
+/anum,,7
+/polygon,4,0.33,-1,1.67,-1,1.67,-0.95,0.33,-0.95
+/pspec,0,1,1
+/tspec,15,1.5,4,
+/anum,,1
+/tlabel,0.38,-0.99,'(d) APROVEITAMENTO (Sd/Rd) [%]'
+
+go2png,1200
+    /window,1,on
+    /udoc,1,cntr,off
+    plnsol,s,z
+    /noerase
+    /focus,1,1e6
+    /udoc,1,cntr,right
+    /gformat,f,1,2
+    /plopts,info,3
+    /plopts,leg3,1
+    pletab,'sMPA',1
+    /window,1,off
+
+    /window,2,on
+    /udoc,2,cntr,right
+    /gformat,f,1,0
+    pletab,'fSd_tr',1
+    /window,2,off
+
+    /window,3,on
+    /udoc,3,cntr,right
+    /gformat,f,1,0
+    pletab,'fRd_t',1
+    /window,3,off
+
+    /window,4,on
+    /udoc,4,cntr,right
+    /gformat,f,1,1
+    pletab,'approv',1
+
+
+endpng,'SZtherm'
+/erase
+
+
+
+
+!!
+!!
+!!
+TUNNEL_V2_ETAB
+TUNNEL_V2_REACT
+TUNNEL_V2_WRRES
+TUNNEL_V2_MEMO
+TUNNEL_V2_REPORT
+
