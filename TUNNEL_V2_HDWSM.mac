@@ -1,688 +1,670 @@
 ! TUNNEL_V2_HDWSM, refCS, CS_HDW_LeftWall, CS_HDW_RightWall
 ! TUNNEL_V2_HDWSM,  arg1,            arg2,             arg3
 
-CS_HDW_LeftWall=arg2
-CS_HDW_RightWall=arg3
 
-!!
-!! GEOMETRIC PARAMETERS
-!!
-GEO_HDW_Height=Eff_GalleryHeight+GEO_FRAME_headBeamHeight
+CS_HDW_LeftWall  = arg2
+CS_HDW_RightWall = arg3
 
-x1=0
-x2=GEO_HDW_stiffXOff
-x3=GEO_TUN_totEffW-GEO_HDW_stiffXOff
-x4=GEO_TUN_totEffW
-x5=-GEO_HDW_length*SIN(GEO_InletRadians)
-x6=x5+GEO_HDW_stiffXOff
-x7=x3+(SIN(GEO_InletRadians)*GEO_HDW_length)
-x8=x7+GEO_HDW_stiffXOff
-x9=x1-(GEO_HDW_footWidth/COS(GEO_InletRadians))
-x10=x1
-x11=x4
-x12=x11+(GEO_HDW_footWidth/COS(GEO_InletRadians))
-x13=x5-(GEO_HDW_footWidth/COS(GEO_InletRadians))
-x14=x5
-x15=x8
-x16=x15+(GEO_HDW_footWidth/COS(GEO_InletRadians))
-x17=x1
-x18=x4
-x19=x1-GEO_FRAME_columnWidth
-x20=x4+GEO_FRAME_columnWidth
+!!                                                                                                !!
+!! A.  Geometric parameters                                                                       !!
+!!                                                                                                !!
+GEO_HDW_Height = Eff_GalleryHeight+GEO_FRAME_headBeamHeight
 
-yTop=Eff_GalleryHeight
-yFoot=-GEO_HDW_footDepth
-yBeam=GEO_HDW_Height
+x1  = 0
+x2  = GEO_HDW_stiffXOff
+x3  = GEO_TUN_totEffW-GEO_HDW_stiffXOff
+x4  = GEO_TUN_totEffW
+x5  = -GEO_HDW_length*SIN(GEO_InletRadians)
+x6  = x5+GEO_HDW_stiffXOff
+x7  = x3+(SIN(GEO_InletRadians)*GEO_HDW_length)
+x8  = x7+GEO_HDW_stiffXOff
+x9  = x1-(GEO_HDW_footWidth/COS(GEO_InletRadians))
+x10 = x1
+x11 = x4
+x12 = x11+(GEO_HDW_footWidth/COS(GEO_InletRadians))
+x13 = x5-(GEO_HDW_footWidth/COS(GEO_InletRadians))
+x14 = x5
+x15 = x8
+x16 = x15+(GEO_HDW_footWidth/COS(GEO_InletRadians))
+x17 = x1
+x18 = x4
+x19 = x1-GEO_FRAME_columnWidth
+x20 = x4+GEO_FRAME_columnWidth
 
-zEnd=GEO_TUN_length
-zFront=GEO_TUN_length+GEO_HDW_length
+yTop  = Eff_GalleryHeight
+yFoot = -GEO_HDW_footDepth
+yBeam = GEO_HDW_Height
 
-CSYS,arg1
+zEnd   = GEO_TUN_length
+zFront = GEO_TUN_length+GEO_HDW_length
+
+csys,arg1
 allsel
 
 ! Existing keypoints
-KP1=KP(x1,0,zEnd)
-KP2=KP(x2,0,zEnd)
-KP3=KP(x3,0,zEnd)
-KP4=KP(x4,0,zEnd)
-KP27=KP(x1,yTop,zEnd)
-KP29=KP(x4,yTop,zEnd)
-KP101=KP(x1,GEO_HDW_wingBottomOffset,zEnd)
-KP102=KP(x4,GEO_HDW_wingBottomOffset,zEnd)
+KP1   = KP(x1,0,zEnd)
+KP2   = KP(x2,0,zEnd)
+KP3   = KP(x3,0,zEnd)
+KP4   = KP(x4,0,zEnd)
+KP27  = KP(x1,yTop,zEnd)
+KP29  = KP(x4,yTop,zEnd)
+KP101 = KP(x1,GEO_HDW_wingBottomOffset,zEnd)
+KP102 = KP(x4,GEO_HDW_wingBottomOffset,zEnd)
 
 ! Existing keypoint collections for tunnels with more than one module
 *if,GEO_TUN_modules,gt,1,then
-    ksel,u,kp,,all
+  ksel,u,kp,,all
+  cm,COMPK_IKP_2to3,kp
+  cm,COMPK_IKP_BLtoBR,kp
+  xi=x2
+  *do,nthModule,1,GEO_TUN_modules-1,1
+    xi=xi+GEO_TUN_effW
+
+    ksel,s,loc,y,0
+    KP_i=kp(xi,0,zEnd)
+    ksel,s,kp,,KP_i
+    cmsel,a,COMPK_IKP_2to3
     cm,COMPK_IKP_2to3,kp
+
+    ksel,s,loc,y,GEO_TUN_effH
+    KP_j=kp(xi,GEO_TUN_effH,zEnd)
+    ksel,s,kp,,KP_j
+    cmsel,a,COMPK_IKP_BLtoBR
     cm,COMPK_IKP_BLtoBR,kp
-    xi=x2
-    *do,nthModule,1,GEO_TUN_modules-1,1
-        xi=xi+GEO_TUN_effW
-
-        ksel,s,loc,y,0
-        KP_i=kp(xi,0,zEnd)
-        ksel,s,kp,,KP_i
-        cmsel,a,COMPK_IKP_2to3
-        cm,COMPK_IKP_2to3,kp
-
-        ksel,s,loc,y,GEO_TUN_effH
-        KP_j=kp(xi,GEO_TUN_effH,zEnd)
-        ksel,s,kp,,KP_j
-        cmsel,a,COMPK_IKP_BLtoBR
-        cm,COMPK_IKP_BLtoBR,kp
-
-    *enddo
+  *enddo
 *else
-    ksel,u,kp,,all
-    cm,COMPK_IKP_2to3,kp
-    cm,COMPK_IKP_BLtoBR,kp
+  ksel,u,kp,,all
+  cm,COMPK_IKP_2to3,kp
+  cm,COMPK_IKP_BLtoBR,kp
 *endif
 allsel
 
-
-
 ! New keypoints
 *get,KPMaxD,KP,,NUM,MAXD
-KP5=KPMaxD+1
-KP6=KPMaxD+2
-KP7=KPMaxD+3
-KP8=KPMaxD+4
-KP9=KPMaxD+5
-KP10=KPMaxD+6
-KP11=KPMaxD+7
-KP12=KPMaxD+8
-KP13=KPMaxD+9
-KP14=KPMaxD+10
-KP15=KPMaxD+11
-KP16=KPMaxD+12
-KP17=KPMaxD+13
-KP18=KPMaxD+14
+KP5  = KPMaxD+1
+KP6  = KPMaxD+2
+KP7  = KPMaxD+3
+KP8  = KPMaxD+4
+KP9  = KPMaxD+5
+KP10 = KPMaxD+6
+KP11 = KPMaxD+7
+KP12 = KPMaxD+8
+KP13 = KPMaxD+9
+KP14 = KPMaxD+10
+KP15 = KPMaxD+11
+KP16 = KPMaxD+12
+KP17 = KPMaxD+13
+KP18 = KPMaxD+14
 
-Left_PI1=KPMaxD+15
-Left_AX1=KPMaxD+16
-Left_PI2=KPMaxD+17
-Left_AX2=KPMaxD+18
-Right_PI1=KPMaxD+19
-Right_AX1=KPMaxD+20
-Right_PI2=KPMaxD+21
-Right_AX2=KPMaxD+22
+Left_PI1  = KPMaxD+15
+Left_AX1  = KPMaxD+16
+Left_PI2  = KPMaxD+17
+Left_AX2  = KPMaxD+18
+Right_PI1 = KPMaxD+19
+Right_AX1 = KPMaxD+20
+Right_PI2 = KPMaxD+21
+Right_AX2 = KPMaxD+22
 
-KP28=KPMaxD+23
-KP30=KPMaxD+24
+KP28 = KPMaxD+23
+KP30 = KPMaxD+24
 
-KP21=KPMaxD+25
-KP25=KPMaxD+26
+KP21 = KPMaxD+25
+KP25 = KPMaxD+26
 
-KP19=KPMaxD+27
-KP20=KPMaxD+28
-KP22=KPMaxD+29
-KP23=KPMaxD+30
+KP19 = KPMaxD+27
+KP20 = KPMaxD+28
+KP22 = KPMaxD+29
+KP23 = KPMaxD+30
 
 ! Keypoints for wall height at the front greater than zero
-KP31=KPMaxD+31
-KP32=KPMaxD+32
+KP31 = KPMaxD+31
+KP32 = KPMaxD+32
 
 *if,GEO_HDW_type,EQ,0,THEN
 
-    !!
-    !! FULL INLET
-    !!
+  !!                                                                                            !!
+  !! B.  Full inlet                                                                             !!
+  !!                                                                                            !!
 
-    !! KEYPOINTS
-    !!
-    K,KP5,x5,0,zFront
-    K,KP6,x6,0,zFront
-    K,KP7,x7,0,zFront
-    K,KP8,x8,0,zFront
+  !! Keypoints                                                                                  !!
+  K , KP5 , x5 , 0 , zFront
+  K , KP6 , x6 , 0 , zFront
+  K , KP7 , x7 , 0 , zFront
+  K , KP8 , x8 , 0 , zFront
 
-    K,KP9,x9,yFoot,zEnd
-    K,KP10,x10,yFoot,zEnd
-    K,KP11,x11,yFoot,zEnd
-    K,KP12,x12,yFoot,zEnd
+  K , KP9  , x9  , yFoot , zEnd
+  K , KP10 , x10 , yFoot , zEnd
+  K , KP11 , x11 , yFoot , zEnd
+  K , KP12 , x12 , yFoot , zEnd
 
-    K,KP13,x13,yFoot,zFront
-    K,KP14,x14,yFoot,zFront
-    K,KP15,x15,yFoot,zFront
-    K,KP16,x16,yFoot,zFront
+  K , KP13 , x13 , yFoot , zFront
+  K , KP14 , x14 , yFoot , zFront
+  K , KP15 , x15 , yFoot , zFront
+  K , KP16 , x16 , yFoot , zFront
 
-    K,KP17,x17,yBeam,zEnd
-    K,KP18,x18,yBeam,zEnd
+  K , KP17 , x17 , yBeam , zEnd
+  K , KP18 , x18 , yBeam , zEnd
 
-    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
 
-        x17b=-GEO_HDW_topLength*SIN(GEO_InletRadians)
-        x18b=x18+GEO_HDW_topLength*SIN(GEO_InletRadians)
+    x17b = -GEO_HDW_topLength*SIN(GEO_InletRadians)
+    x18b = x18+GEO_HDW_topLength*SIN(GEO_InletRadians)
 
-        zFlatTop=zEnd+(GEO_TUN_effH*sin(GEO_TUN_slopeRad))+GEO_HDW_topLength*COS(GEO_InletRadians)   !!
+    zFlatTop = zEnd+(GEO_TUN_effH*sin(GEO_TUN_slopeRad))+GEO_HDW_topLength*COS(GEO_InletRadians)   !!
 
-        KP17b=KPMaxD+25
-        KP18b=KPMaxD+26
+    KP17b = KPMaxD+25
+    KP18b = KPMaxD+26
 
-        K,KP17b,x17b,yBeam,zFlatTop
-        K,KP18b,x18b,yBeam,zFlatTop
+    K , KP17b , x17b , yBeam , zFlatTop
+    K , KP18b , x18b , yBeam , zFlatTop
+  *endif
+
+  *if,GEO_FRAME_columnWidth,gt,0,then
+
+    *if,GEO_FRAME_columnWidth,ne,GEO_HDW_footWidth,then
+      k , KP19 , x19 , yFoot , zEnd
+      k , KP20 , x20 , yFoot , zEnd
+    *else
+      KP19 = KP9
+      KP20 = KP12
     *endif
 
-    *if,GEO_FRAME_columnWidth,gt,0,then
+    k , KP22 , x19 , yBeam , zEnd
+    k , KP23 , x20 , yBeam , zEnd
 
-        *if,GEO_FRAME_columnWidth,ne,GEO_HDW_footWidth,then
-            k,KP19,x19,yFoot,zEnd
-            k,KP20,x20,yFoot,zEnd
-        *else
-            KP19=KP9
-            KP20=KP12
-        *endif
+  *endif
 
-        k,KP22,x19,yBeam,zEnd
-        k,KP23,x20,yBeam,zEnd
+  *if,GEO_HDW_endH,gt,0,then
+    k , KP31 , x5 , GEO_HDW_endH , zFront
+    k , KP32 , x8 , GEO_HDW_endH , zFront
+    KFL = KP31
+    KFR = KP32
+  *else
+    KFL = KP5
+    KFR = KP8
+  *endif
 
-    *endif
+  ! Left wall
+  CSKP , CS_HDW_LeftWall , CART , KP5 , KP1 , KP17
+  CSYS , CS_HDW_LeftWall
 
+  KP17x    = KX(KP17)
+  KP17y    = KY(KP17)
+  xCenter1 = GEO_HDW_CornerRadius
+  yCenter1 = GEO_HDW_endH
+  xCenter2 = KP17x
+  yCenter2 = KP17y-GEO_HDW_CornerRadius
+
+  ThetaAngle         = ATAN((xCenter2-xCenter1-GEO_HDW_topLength)/(yCenter2-yCenter1))
+  HorDelta           = GEO_HDW_CornerRadius*COS(ThetaAngle)
+  VerDelta           = GEO_HDW_CornerRadius*SIN(ThetaAngle)
+  HorHalfDelta       = GEO_HDW_CornerRadius*COS(ThetaAngle/2)
+  VerHalfDelta       = GEO_HDW_CornerRadius*SIN(ThetaAngle/2)
+  HorHalfDeltaPlus45 = GEO_HDW_CornerRadius*COS((PI/4)+(ThetaAngle/2))
+  VerHalfDeltaPlus45 = GEO_HDW_CornerRadius*SIN((PI/4)+(ThetaAngle/2))
+
+  K , Left_PI1 , xCenter1-HorDelta                             , yCenter1+VerDelta           , 0
+  K , Left_AX1 , xCenter1-HorHalfDelta                         , yCenter1+VerHalfDelta       , 0
+  K , Left_PI2 , xCenter2-HorDelta-GEO_HDW_topLength           , yCenter2+VerDelta           , 0
+  K , Left_AX2 , xCenter2-HorHalfDeltaPlus45-GEO_HDW_topLength , yCenter2+VerHalfDeltaPlus45 , 0
+
+  ! Right wall
+  CSKP,CS_HDW_RightWall,CART,KP8,KP4,KP18
+  CSYS,CS_HDW_RightWall
+  K , Right_PI1 , xCenter1-HorDelta                             , yCenter1+VerDelta           , 0
+  K , Right_AX1 , xCenter1-HorHalfDelta                         , yCenter1+VerHalfDelta       , 0
+  K , Right_PI2 , xCenter2-HorDelta-GEO_HDW_topLength           , yCenter2+VerDelta           , 0
+  K , Right_AX2 , xCenter2-HorHalfDeltaPlus45-GEO_HDW_topLength , yCenter2+VerHalfDeltaPlus45 , 0
+
+  CSYS,arg1
+
+  !! Lines                                                                                      !!
+  allsel
+  lsel,u,line,,all
+
+  KSEL,S,KP,,KP1
+  KSEL,A,KP,,KP2
+  LSLK,S,1
+  *get,L1,LINE,0,NUM,MAX
+  LSEL,U,LINE,,ALL
+
+  KSEL,S,KP,,KP2
+  KSEL,A,KP,,KP3
+  cmsel,a,COMPK_IKP_2to3
+  LSLK,S,1
+  *get,L2,LINE,0,NUM,MAX
+  cm,COMPL_IL_2,line
+  LSEL,U,LINE,,ALL
+
+  KSEL,S,KP,,KP3
+  KSEL,A,KP,,KP4
+  LSLK,S,1
+  *get,L3,LINE,0,NUM,MAX
+  LSEL,U,LINE,,ALL
+  KSEL,S,KP,,ALL
+
+  L,KP5,KP6
+  *get,L4,LINE,0,NUM,MAX
+  L,KP6,KP7
+  *get,L5,LINE,0,NUM,MAX
+  L,KP7,KP8
+  *get,L6,LINE,0,NUM,MAX
+  L,KP1,KP5
+  *get,L7,LINE,0,NUM,MAX
+  L,KP2,KP6
+  *get,L8,LINE,0,NUM,MAX
+  L,KP3,KP7
+  *get,L9,LINE,0,NUM,MAX
+  L,KP4,KP8
+  *get,L10,LINE,0,NUM,MAX
+
+  *if,GEO_FRAME_columnWidth,gt,GEO_HDW_footWidth,then
+    l,KP9,KP10
+    *get,L11,line,,num,max
+    l,KP11,KP12
+    *get,L12,line,,num,max
+    l,KP9,KP19
+    *get,L11c,line,,num,max
+    l,KP12,KP20
+    *get,L12c,line,,num,max
+  *elseif,GEO_FRAME_columnWidth,gt,0,and,GEO_HDW_columnWidth,le,GEO_HDW_footWidth,then
+    l,KP9,KP19
+    *get,L11a,line,,num,max
+    l,KP10,KP19
+    *get,L11b,line,,num,max
+    l,KP12,KP20
+    *get,L12a,line,,num,max
+    L,KP11,KP20
+    *get,L12b,line,,num,max
+  *else
+    l,KP9,KP10
+    *get,L11,line,,num,max
+    l,KP11,KP12
+    *get,L12,line,,num,max
+  *endif
+
+  L,KP13,KP14
+  *get,L13,LINE,0,NUM,MAX
+  L,KP15,KP16
+  *get,L14,LINE,0,NUM,MAX
+  L,KP9,KP13
+  *get,L15,LINE,0,NUM,MAX
+  L,KP10,KP14
+  *get,L16,LINE,0,NUM,MAX
+  L,KP11,KP15
+  *get,L17,LINE,0,NUM,MAX
+  L,KP12,KP16
+  *get,L18,LINE,0,NUM,MAX
+  L,KP10,KP1
+  *get,L19,LINE,0,NUM,MAX
+  L,KP11,KP4
+  *get,L20,LINE,0,NUM,MAX
+  L,KP14,KP5
+  *get,L21,LINE,0,NUM,MAX
+  L,KP15,KP8
+  *get,L22,LINE,0,NUM,MAX
+
+  L,KP1,KP17
+  *get,L23,LINE,0,NUM,MAX
+  L,KP4,KP18
+  *get,L24,LINE,0,NUM,MAX
+  LARC,Left_PI1,KFL,Left_AX1
+  *get,L25,LINE,0,NUM,MAX
+
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+    LARC,KP17b,Left_PI2,Left_AX2
+    *get,L26,LINE,0,NUM,MAX
+    L,KP17,KP17b
+    *get,L26b,LINE,0,NUM,MAX
+  *else
+    LARC,KP17,Left_PI2,Left_AX2
+    *get,L26,LINE,0,NUM,MAX
+  *endif
+
+  L,Left_PI1,Left_PI2
+  *get,L27,LINE,0,NUM,MAX
+
+  LARC,Right_PI1,KFR,Right_AX1
+  *get,L28,LINE,0,NUM,MAX
+
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+    LARC,KP18b,Right_PI2,Right_AX2
+    *get,L29,LINE,0,NUM,MAX
+    L,KP18,KP18b
+    *get,L29b,LINE,0,NUM,MAX
+  *else
+    LARC,KP18,Right_PI2,Right_AX2
+    *get,L29,LINE,0,NUM,MAX
+  *endif
+
+  L,Right_PI1,Right_PI2
+  *get,L30,LINE,0,NUM,MAX
+
+  *if,GEO_HDW_endH,gt,0,then
+    l,KP5,KP31
+    *get,FHL,line,,num,max
+    l,KP8,KP32
+    *get,FHR,line,,num,max
+  *endif
+
+  ! Columns
+  *if,GEO_FRAME_columnWidth,gt,0,then
+    ! Left column
+    l,KP17,KP22
+    *get,L31,line,,num,max
+    l,KP22,KP19
+    *get,L32,line,,num,max
+    ! Right column
+    l,KP18,KP23
+    *get,L33,line,,num,max
+    l,KP23,KP20
+    *get,L34,line,,num,max
+  *endif
+
+  ALLSEL
+
+
+  !! Areas                                                                                      !!
+  ASEL,U,AREA,,ALL
+
+  AL,L7,L4,L8,L1
+  AL,L9,L6,L10,L3
+  CMSEL,A,COMPA_HDW_Stiffener
+  CM,COMPA_HDW_Stiffener,AREA
+  ASEL,U,AREA,,ALL
+
+  cmsel,s,COMPL_IL_2
+  lsel,a,line,,L2
+  lsel,a,line,,L5
+  lsel,a,line,,L8
+  lsel,a,line,,L9
+  !AL,L8,L5,L9,L2
+  al,all,L8
+  CMSEL,A,COMPA_HDW_Slab
+  CM,COMPA_HDW_Slab,AREA
+  ASEL,U,AREA,,ALL
+  lsel,s,line,,all
+
+  ! Footings
+  *if,GEO_FRAME_columnWidth,gt,0,and,GEO_HDW_columnWidth,le,GEO_HDW_footWidth,then
+    AL,L15,L13,L16,L11a,L11b
+    AL,L17,L14,L18,L12a,L12b
+  *else
+    AL,L15,L13,L16,L11
+    AL,L17,L14,L18,L12
+  *endif
+
+  CMSEL,A,COMPA_HDW_Footing
+  CM,COMPA_HDW_Footing,AREA
+  ASEL,U,AREA,,ALL
+
+  ! Columns
+  *if,GEO_FRAME_columnWidth,gt,0,then
+    asel,u,area,,all
+    a,KP1,KP27,KP17,KP22,KP19,KP10
+    csslicexz,GEO_TUN_effH
+    csslicexz,0
+    cmsel,a,COMPA_HDW_ColLeft
+    cm,COMPA_HDW_ColLeft,area
+
+    asel,u,area,,all
+    a,KP4,KP29,KP18,KP23,KP20,KP11
+    csslicexz,GEO_TUN_effH
+    csslicexz,0
+    cmsel,a,COMPA_HDW_ColRight
+    cm,COMPA_HDW_ColRight,area
+
+    cmsel,s,COMPA_HDW_Columns
+    cmsel,a,COMPA_HDW_ColLeft
+    cmsel,a,COMPA_HDW_ColRight
+    cm,COMPA_HDW_Columns,area
+    asel,u,area,,all
+  *endif
+
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+    AL,L21,L7,L19,L16
     *if,GEO_HDW_endH,gt,0,then
-        k,KP31,x5,GEO_HDW_endH,zFront
-        k,KP32,x8,GEO_HDW_endH,zFront
-        KFL=KP31
-        KFR=KP32
+      AL,L27,L26,L26b,L23,L7,L25,FHL
     *else
-        KFL=KP5
-        KFR=KP8
+      AL,L27,L26,L26b,L23,L7,L25
     *endif
-
-    ! Left wall
-    CSKP,CS_HDW_LeftWall,CART,KP5,KP1,KP17
-    CSYS,CS_HDW_LeftWall
-
-    KP17x=KX(KP17)
-    KP17y=KY(KP17)
-    xCenter1=GEO_HDW_CornerRadius
-    yCenter1=GEO_HDW_endH
-    xCenter2=KP17x
-    yCenter2=KP17y-GEO_HDW_CornerRadius
-
-    ThetaAngle=ATAN((xCenter2-xCenter1-GEO_HDW_topLength)/(yCenter2-yCenter1))
-    HorDelta=GEO_HDW_CornerRadius*COS(ThetaAngle)
-    VerDelta=GEO_HDW_CornerRadius*SIN(ThetaAngle)
-    HorHalfDelta=GEO_HDW_CornerRadius*COS(ThetaAngle/2)
-    VerHalfDelta=GEO_HDW_CornerRadius*SIN(ThetaAngle/2)
-    HorHalfDeltaPlus45=GEO_HDW_CornerRadius*COS((PI/4)+(ThetaAngle/2))
-    VerHalfDeltaPlus45=GEO_HDW_CornerRadius*SIN((PI/4)+(ThetaAngle/2))
-
-    K,Left_PI1,                              xCenter1-HorDelta , yCenter1+VerDelta           , 0
-    K,Left_AX1,                          xCenter1-HorHalfDelta , yCenter1+VerHalfDelta       , 0
-    K,Left_PI2,           xCenter2-HorDelta-GEO_HDW_topLength , yCenter2+VerDelta           , 0
-    K,Left_AX2, xCenter2-HorHalfDeltaPlus45-GEO_HDW_topLength , yCenter2+VerHalfDeltaPlus45 , 0
-
-    ! Right wall
-    CSKP,CS_HDW_RightWall,CART,KP8,KP4,KP18
-    CSYS,CS_HDW_RightWall
-    K,Right_PI1,xCenter1-HorDelta,yCenter1+VerDelta,0
-    K,Right_AX1,xCenter1-HorHalfDelta,yCenter1+VerHalfDelta,0
-    K,Right_PI2,xCenter2-HorDelta-GEO_HDW_topLength,yCenter2+VerDelta,0
-    K,Right_AX2,xCenter2-HorHalfDeltaPlus45-GEO_HDW_topLength,yCenter2+VerHalfDeltaPlus45,0
-
-    CSYS,arg1
-
-
-    !! LINES
-    !!
-    ALLSEL
-    LSEL,U,LINE,,ALL
-
-    KSEL,S,KP,,KP1
-    KSEL,A,KP,,KP2
-    LSLK,S,1
-    *get,L1,LINE,0,NUM,MAX
-    LSEL,U,LINE,,ALL
-
-    KSEL,S,KP,,KP2
-    KSEL,A,KP,,KP3
-    cmsel,a,COMPK_IKP_2to3
-    LSLK,S,1
-    *get,L2,LINE,0,NUM,MAX
-    cm,COMPL_IL_2,line
-    LSEL,U,LINE,,ALL
-
-    KSEL,S,KP,,KP3
-    KSEL,A,KP,,KP4
-    LSLK,S,1
-    *get,L3,LINE,0,NUM,MAX
-    LSEL,U,LINE,,ALL
-    KSEL,S,KP,,ALL
-
-    L,KP5,KP6
-    *get,L4,LINE,0,NUM,MAX
-    L,KP6,KP7
-    *get,L5,LINE,0,NUM,MAX
-    L,KP7,KP8
-    *get,L6,LINE,0,NUM,MAX
-    L,KP1,KP5
-    *get,L7,LINE,0,NUM,MAX
-    L,KP2,KP6
-    *get,L8,LINE,0,NUM,MAX
-    L,KP3,KP7
-    *get,L9,LINE,0,NUM,MAX
-    L,KP4,KP8
-    *get,L10,LINE,0,NUM,MAX
-
-    *if,GEO_FRAME_columnWidth,gt,GEO_HDW_footWidth,then
-        l,KP9,KP10
-        *get,L11,line,,num,max
-        l,KP11,KP12
-        *get,L12,line,,num,max
-        l,KP9,KP19
-        *get,L11c,line,,num,max
-        l,KP12,KP20
-        *get,L12c,line,,num,max
-    *elseif,GEO_FRAME_columnWidth,gt,0,and,GEO_HDW_columnWidth,le,GEO_HDW_footWidth,then
-        l,KP9,KP19
-        *get,L11a,line,,num,max
-        l,KP10,KP19
-        *get,L11b,line,,num,max
-        l,KP12,KP20
-        *get,L12a,line,,num,max
-        L,KP11,KP20
-        *get,L12b,line,,num,max
-    *else
-        l,KP9,KP10
-        *get,L11,line,,num,max
-        l,KP11,KP12
-        *get,L12,line,,num,max
-    *endif
-
-    L,KP13,KP14
-    *get,L13,LINE,0,NUM,MAX
-    L,KP15,KP16
-    *get,L14,LINE,0,NUM,MAX
-    L,KP9,KP13
-    *get,L15,LINE,0,NUM,MAX
-    L,KP10,KP14
-    *get,L16,LINE,0,NUM,MAX
-    L,KP11,KP15
-    *get,L17,LINE,0,NUM,MAX
-    L,KP12,KP16
-    *get,L18,LINE,0,NUM,MAX
-    L,KP10,KP1
-    *get,L19,LINE,0,NUM,MAX
-    L,KP11,KP4
-    *get,L20,LINE,0,NUM,MAX
-    L,KP14,KP5
-    *get,L21,LINE,0,NUM,MAX
-    L,KP15,KP8
-    *get,L22,LINE,0,NUM,MAX
-
-    L,KP1,KP17
-    *get,L23,LINE,0,NUM,MAX
-    L,KP4,KP18
-    *get,L24,LINE,0,NUM,MAX
-    LARC,Left_PI1,KFL,Left_AX1   !!
-    *get,L25,LINE,0,NUM,MAX
-
-    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-        LARC,KP17b,Left_PI2,Left_AX2
-        *get,L26,LINE,0,NUM,MAX
-        L,KP17,KP17b
-        *get,L26b,LINE,0,NUM,MAX
-    *else
-        LARC,KP17,Left_PI2,Left_AX2
-        *get,L26,LINE,0,NUM,MAX
-    *endif
-
-    L,Left_PI1,Left_PI2
-    *get,L27,LINE,0,NUM,MAX
-
-    LARC,Right_PI1,KFR,Right_AX1 !!
-    *get,L28,LINE,0,NUM,MAX
-
-    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-        LARC,KP18b,Right_PI2,Right_AX2
-        *get,L29,LINE,0,NUM,MAX
-        L,KP18,KP18b
-        *get,L29b,LINE,0,NUM,MAX
-    *else
-        LARC,KP18,Right_PI2,Right_AX2
-        *get,L29,LINE,0,NUM,MAX
-    *endif
-
-    L,Right_PI1,Right_PI2
-    *get,L30,LINE,0,NUM,MAX
-
-    *if,GEO_HDW_endH,gt,0,then
-        l,KP5,KP31
-        *get,FHL,line,,num,max
-        l,KP8,KP32
-        *get,FHR,line,,num,max
-    *endif
-
-    ! Columns
-    *if,GEO_FRAME_columnWidth,gt,0,then
-        ! Left column
-        l,KP17,KP22
-        *get,L31,line,,num,max
-        l,KP22,KP19
-        *get,L32,line,,num,max
-        ! Right column
-        l,KP18,KP23
-        *get,L33,line,,num,max
-        l,KP23,KP20
-        *get,L34,line,,num,max
-    *endif
-
-    ALLSEL
-
-
-    !! AREAS
-    !!
-    ASEL,U,AREA,,ALL
-
-    AL,L7,L4,L8,L1
-    AL,L9,L6,L10,L3
-    CMSEL,A,COMPA_HDW_Stiffener
-    CM,COMPA_HDW_Stiffener,AREA
-    ASEL,U,AREA,,ALL
-
-    cmsel,s,COMPL_IL_2
-    lsel,a,line,,L2
-    lsel,a,line,,L5
-    lsel,a,line,,L8
-    lsel,a,line,,L9
-    !AL,L8,L5,L9,L2
-    al,all,L8
-    CMSEL,A,COMPA_HDW_Slab
-    CM,COMPA_HDW_Slab,AREA
-    ASEL,U,AREA,,ALL
-    lsel,s,line,,all
-
-    ! Footings
-    *if,GEO_FRAME_columnWidth,gt,0,and,GEO_HDW_columnWidth,le,GEO_HDW_footWidth,then
-        AL,L15,L13,L16,L11a,L11b
-        AL,L17,L14,L18,L12a,L12b
-    *else
-        AL,L15,L13,L16,L11
-        AL,L17,L14,L18,L12
-    *endif
-
-    CMSEL,A,COMPA_HDW_Footing
-    CM,COMPA_HDW_Footing,AREA
-    ASEL,U,AREA,,ALL
-
-    ! Columns
-    *if,GEO_FRAME_columnWidth,gt,0,then
-        asel,u,area,,all
-        a,KP1,KP27,KP17,KP22,KP19,KP10
-        csslicexz,GEO_TUN_effH
-        csslicexz,0
-        cmsel,a,COMPA_HDW_ColLeft
-        cm,COMPA_HDW_ColLeft,area
-
-        asel,u,area,,all
-        a,KP4,KP29,KP18,KP23,KP20,KP11
-        csslicexz,GEO_TUN_effH
-        csslicexz,0
-        cmsel,a,COMPA_HDW_ColRight
-        cm,COMPA_HDW_ColRight,area
-
-        cmsel,s,COMPA_HDW_Columns
-        cmsel,a,COMPA_HDW_ColLeft
-        cmsel,a,COMPA_HDW_ColRight
-        cm,COMPA_HDW_Columns,area
-        asel,u,area,,all
-    *endif
-
-    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-        AL,L21,L7,L19,L16
-        *if,GEO_HDW_endH,gt,0,then
-            AL,L27,L26,L26b,L23,L7,L25,FHL   !!
-        *else
-            AL,L27,L26,L26b,L23,L7,L25
-        *endif
-        CMSEL,A,COMPA_HDW_LeftWall
-        CM,COMPA_HDW_LeftWall,AREA
-        ASEL,U,AREA,,ALL
-    *else
-        AL,L21,L7,L19,L16
-        *if,GEO_HDW_endH,gt,0,then
-            AL,L27,L26,L23,L7,L25,FHL  !!
-        *else
-            AL,L27,L26,L23,L7,L25
-        *endif
-        CMSEL,A,COMPA_HDW_LeftWall
-        CM,COMPA_HDW_LeftWall,AREA
-        ASEL,U,AREA,,ALL
-    *endif
-
-    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-        AL,L22,L10,L20,L17
-        *if,GEO_HDW_endH,gt,0,then
-            AL,L30,L29,L29b,L24,L10,L28,FHR !!
-        *else
-            AL,L30,L29,L29b,L24,L10,L28
-        *endif
-        CMSEL,A,COMPA_HDW_RightWall
-        CM,COMPA_HDW_RightWall,AREA
-    *else
-        AL,L22,L10,L20,L17
-        *if,GEO_HDW_endH,gt,0,then
-            AL,L30,L29,L24,L10,L28,FHR    !!
-        *else
-            AL,L30,L29,L24,L10,L28
-        *endif
-        CMSEL,A,COMPA_HDW_RightWall
-        CM,COMPA_HDW_RightWall,AREA
-    *endif
-
-    CMSEL,S,COMPA_HDW_LeftWall
-    LSLA,S
-    KSLL,S
-    CSSLICEXZ,Eff_GalleryHeight
-    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-        CSSLICEXY,zFlatTop
-    *endif
-    CM,COMPA_HDW_LeftWall,AREA
-
-    CMSEL,S,COMPA_HDW_RightWall
-    LSLA,S
-    KSLL,S
-    CSSLICEXZ,Eff_GalleryHeight
-    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-        CSSLICEXY,zFlatTop
-    *endif
-    CM,COMPA_HDW_RightWall,AREA
-
-    CMSEL,S,COMPA_HDW_RightWall
     CMSEL,A,COMPA_HDW_LeftWall
-    CMSEL,A,COMPA_HDW_Walls
-    CM,COMPA_HDW_Walls,AREA
-
-    *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-        CMSEL,S,COMPA_HDW_Footing
-        LSLA,S
-        KSLL,S
-        CSSLICEXY,zFlatTop
-        CM,COMPA_HDW_Footing,AREA
-
-        CMSEL,S,COMPA_HDW_Slab
-        LSLA,S
-        KSLL,S
-        CSSLICEXY,zFlatTop
-        CM,COMPA_HDW_Slab,AREA
-
-        CMSEL,S,COMPA_HDW_Stiffener
-        LSLA,S
-        KSLL,S
-        CSSLICEXY,zFlatTop
-        CM,COMPA_HDW_Stiffener,AREA
-
-        ! Draw second top beam
-        !KSEL,S,LOC,Z,zFlatTop
-        !KSEL,R,LOC,Y,YTop,yBeam
-        !CM,COMPK_temp,KP
-        !*get,xMin
+    CM,COMPA_HDW_LeftWall,AREA
+    ASEL,U,AREA,,ALL
+  *else
+    AL,L21,L7,L19,L16
+    *if,GEO_HDW_endH,gt,0,then
+      AL,L27,L26,L23,L7,L25,FHL
+    *else
+      AL,L27,L26,L23,L7,L25
     *endif
+    CMSEL,A,COMPA_HDW_LeftWall
+    CM,COMPA_HDW_LeftWall,AREA
+    ASEL,U,AREA,,ALL
+  *endif
 
-    ksel,s,loc,z,zEnd,zEnd+GEO_HDW_length
-    nummrg,kp
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+    AL,L22,L10,L20,L17
+    *if,GEO_HDW_endH,gt,0,then
+      AL,L30,L29,L29b,L24,L10,L28,FHR !!
+    *else
+      AL,L30,L29,L29b,L24,L10,L28
+    *endif
+    CMSEL,A,COMPA_HDW_RightWall
+    CM,COMPA_HDW_RightWall,AREA
+  *else
+    AL,L22,L10,L20,L17
+    *if,GEO_HDW_endH,gt,0,then
+      AL,L30,L29,L24,L10,L28,FHR    !!
+    *else
+      AL,L30,L29,L24,L10,L28
+    *endif
+    CMSEL,A,COMPA_HDW_RightWall
+    CM,COMPA_HDW_RightWall,AREA
+  *endif
 
-    CMSEL,S,COMPA_HDW_Walls
+  CMSEL,S,COMPA_HDW_LeftWall
+  LSLA,S
+  KSLL,S
+  CSSLICEXZ,Eff_GalleryHeight
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+    CSSLICEXY,zFlatTop
+  *endif
+  CM,COMPA_HDW_LeftWall,AREA
+
+  CMSEL,S,COMPA_HDW_RightWall
+  LSLA,S
+  KSLL,S
+  CSSLICEXZ,Eff_GalleryHeight
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+    CSSLICEXY,zFlatTop
+  *endif
+  CM,COMPA_HDW_RightWall,AREA
+
+  CMSEL,S,COMPA_HDW_RightWall
+  CMSEL,A,COMPA_HDW_LeftWall
+  CMSEL,A,COMPA_HDW_Walls
+  CM,COMPA_HDW_Walls,AREA
+
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+    CMSEL,S,COMPA_HDW_Footing
     LSLA,S
     KSLL,S
-    ASEL,U,AREA,,ALL
-    KBL=KP(0,Eff_GalleryHeight,zEnd)
-    KTL=KP(0,GEO_HDW_Height,zEnd)
-    KBR=KP(Eff_GalleryWidth*GEO_TUN_modules,Eff_GalleryHeight,zEnd)
-    KTR=KP(Eff_GalleryWidth*GEO_TUN_modules,GEO_HDW_Height,zEnd)
-    cmsel,s,COMPK_IKP_BLtoBR
-    ksel,a,kp,,KBL
-    ksel,a,kp,,KTL
-    ksel,a,kp,,KBR
-    ksel,a,kp,,KTR
-    lslk,s,1
-    l,KTL,KTR
-    !A,KBL,KBR,KTR,KTL
-    al,all
-    CMSEL,A,COMPA_HDW_TopBeam
-    CM,COMPA_HDW_TopBeam,AREA
+    CSSLICEXY,zFlatTop
+    CM,COMPA_HDW_Footing,AREA
 
-    ALLSEL
-    ASEL,U,AREA,,ALL
-    A,KP14,KP15,KP8,KP7,KP6,KP5
-    CMSEL,A,COMPA_HDW_BotBeam
-    CM,COMPA_HDW_BotBeam,AREA
+    CMSEL,S,COMPA_HDW_Slab
+    LSLA,S
+    KSLL,S
+    CSSLICEXY,zFlatTop
+    CM,COMPA_HDW_Slab,AREA
 
-    ALLSEL
-    ASEL,U,AREA,,ALL
-    cmsel,s,COMPK_IKP_2to3
-    ksel,a,kp,,KP10
-    ksel,a,kp,,KP11
-    ksel,a,kp,,KP4
-    ksel,a,kp,,KP3
-    ksel,a,kp,,KP2
-    ksel,a,kp,,KP1
-    lslk,s,1
-    l,KP10,KP11
-    !A,KP10,KP11,KP4,KP3,KP2,KP1
-    al,all
-    CMSEL,A,COMPA_HDW_BackBeam
-    CM,COMPA_HDW_BackBeam,AREA
-    ALLSEL
+    CMSEL,S,COMPA_HDW_Stiffener
+    LSLA,S
+    KSLL,S
+    CSSLICEXY,zFlatTop
+    CM,COMPA_HDW_Stiffener,AREA
+
+    ! Draw second top beam
+    !KSEL,S,LOC,Z,zFlatTop
+    !KSEL,R,LOC,Y,YTop,yBeam
+    !CM,COMPK_temp,KP
+    !*get,xMin
+  *endif
+
+  ksel,s,loc,z,zEnd,zEnd+GEO_HDW_length
+  nummrg,kp
+
+  CMSEL,S,COMPA_HDW_Walls
+  LSLA,S
+  KSLL,S
+  ASEL,U,AREA,,ALL
+  KBL = KP(0,Eff_GalleryHeight,zEnd)
+  KTL = KP(0,GEO_HDW_Height,zEnd)
+  KBR = KP(Eff_GalleryWidth*GEO_TUN_modules,Eff_GalleryHeight,zEnd)
+  KTR = KP(Eff_GalleryWidth*GEO_TUN_modules,GEO_HDW_Height,zEnd)
+  cmsel,s,COMPK_IKP_BLtoBR
+  ksel , a , kp ,  , KBL
+  ksel , a , kp ,  , KTL
+  ksel , a , kp ,  , KBR
+  ksel , a , kp ,  , KTR
+  lslk,s,1
+  l,KTL,KTR
+  !A,KBL,KBR,KTR,KTL
+  al,all
+  CMSEL,A,COMPA_HDW_TopBeam
+  CM,COMPA_HDW_TopBeam,AREA
+
+  ALLSEL
+  ASEL,U,AREA,,ALL
+  A,KP14,KP15,KP8,KP7,KP6,KP5
+  CMSEL,A,COMPA_HDW_BotBeam
+  CM,COMPA_HDW_BotBeam,AREA
+
+  ALLSEL
+  ASEL,U,AREA,,ALL
+  cmsel,s,COMPK_IKP_2to3
+  ksel , a , kp ,  , KP10
+  ksel , a , kp ,  , KP11
+  ksel , a , kp ,  , KP4
+  ksel , a , kp ,  , KP3
+  ksel , a , kp ,  , KP2
+  ksel , a , kp ,  , KP1
+  lslk,s,1
+  l,KP10,KP11
+  !A,KP10,KP11,KP4,KP3,KP2,KP1
+  al,all
+  CMSEL,A,COMPA_HDW_BackBeam
+  CM,COMPA_HDW_BackBeam,AREA
+  ALLSEL
 
 
 *elseif,GEO_HDW_type,EQ,1,THEN
 
-    !!
-    !! WINGS
-    !!
-    KSEL,S,LOC,X,0
-    KSEL,R,LOC,Y,0
-    *get,ZMax,KP,,MXLOC,Z
-    zEndLeft=ZMax
+  !!                                                                                            !!
+  !! C.  Wings                                                                                  !!
+  !!                                                                                            !!
+  KSEL,S,LOC,X,0
+  KSEL,R,LOC,Y,0
+  *get,ZMax,KP,,MXLOC,Z
+  zEndLeft=ZMax
 
-    KSEL,S,LOC,X,Eff_GalleryWidth
-    KSEL,R,LOC,Y,0
-    *get,ZMax,KP,,MXLOC,Z
-    zEndRight=ZMax
+  KSEL,S,LOC,X,Eff_GalleryWidth
+  KSEL,R,LOC,Y,0
+  *get,ZMax,KP,,MXLOC,Z
+  zEndRight=ZMax
 
-    zWingLeft=zEndLeft-GEO_HDW_length*SIN(GEO_InletRadians)
-    zWingRight=zEndRight+GEO_HDW_length*SIN(GEO_InletRadians)
+  zWingLeft  = zEndLeft-GEO_HDW_length*SIN(GEO_InletRadians)
+  zWingRight = zEndRight+GEO_HDW_length*SIN(GEO_InletRadians)
 
-    xWingLeft=x1-GEO_HDW_length*COS(GEO_InletRadians)
-    xWingRight=x4+GEO_HDW_length*COS(GEO_InletRadians)
+  xWingLeft  = x1-GEO_HDW_length*COS(GEO_InletRadians)
+  xWingRight = x4+GEO_HDW_length*COS(GEO_InletRadians)
 
-    ALLSEL
-    KP1=KP(x1,0,zEndLeft)
-    KP4=KP(x4,0,zEndRight)
-    KP27=KP(x1,yTop,zEndLeft)
-    KP29=KP(x4,yTop,zEndRight)
-    KP101=KP(x1,GEO_HDW_wingBottomOffset,zEndLeft)
-    KP102=KP(x4,GEO_HDW_wingBottomOffset,zEndRight)
-    KSEL,S,LOC,X,x2
-    KP2=KP(x2,0,zEndLeft)
-    KSEL,S,LOC,X,x3
-    KP3=KP(x3,0,zEndRight)
-    ALLSEL
+  ALLSEL
+  KP1   = KP(x1,0,zEndLeft)
+  KP4   = KP(x4,0,zEndRight)
+  KP27  = KP(x1,yTop,zEndLeft)
+  KP29  = KP(x4,yTop,zEndRight)
+  KP101 = KP(x1,GEO_HDW_wingBottomOffset,zEndLeft)
+  KP102 = KP(x4,GEO_HDW_wingBottomOffset,zEndRight)
+  KSEL,S,LOC,X,x2
+  KP2 = KP(x2,0,zEndLeft)
+  KSEL,S,LOC,X,x3
+  KP3 = KP(x3,0,zEndRight)
+  ALLSEL
 
-    !! KEYPOINTS
-    !!
-    K,KP10,x10,yFoot,zEndLeft
-    K,KP11,x11,yFoot,zEndRight
+  !! Keypoints                                                                                  !!
+  K , KP10 , x10 , yFoot , zEndLeft
+  K , KP11 , x11 , yFoot , zEndRight
 
-    K,KP17,x17,yBeam,zEndLeft
-    K,KP18,x18,yBeam,zEndRight
+  K , KP17 , x17 , yBeam , zEndLeft
+  K , KP18 , x18 , yBeam , zEndRight
 
-    K,KP21,xWingLeft,yBeam,zWingLeft
-    K,KP25,xWingRight,yBeam,zWingRight
+  K , KP21 , xWingLeft  , yBeam , zWingLeft
+  K , KP25 , xWingRight , yBeam , zWingRight
 
-    K,KP28,xWingLeft,yTop,zWingLeft
-    K,KP30,xWingRight,yTop,zWingRight
+  K , KP28 , xWingLeft  , yTop , zWingLeft
+  K , KP30 , xWingRight , yTop , zWingRight
 
-    *if,GEO_HDW_wingShape,eq,1,then
-        ! Rectangular shape
-        k,KP22,xWingLeft,GEO_HDW_wingBottomOffset,zWingLeft ! kp28
-        k,KP23,xWingRight,GEO_HDW_wingBottomOffset,zWingRight ! kp30
-    *endif
+  *if,GEO_HDW_wingShape,eq,1,then
+    ! Rectangular shape
+    k , KP22 , xWingLeft  , GEO_HDW_wingBottomOffset , zWingLeft ! kp28
+    k , KP23 , xWingRight , GEO_HDW_wingBottomOffset , zWingRight ! kp30
+  *endif
 
-    !! AREAS
-    !!
-    ASEL,U,AREA,,ALL
-    A,KP17,KP18,KP29,KP27
-    A,KP17,KP21,KP28,KP27
-    A,KP18,KP25,KP30,KP29
-    CMSEL,A,COMPA_HDW_TopBeam
-    CM,COMPA_HDW_TopBeam,AREA
+  !! Areas                                                                                      !!
+  ASEL,U,AREA,,ALL
+  A , KP17 , KP18 , KP29 , KP27
+  A , KP17 , KP21 , KP28 , KP27
+  A , KP18 , KP25 , KP30 , KP29
+  CMSEL,A,COMPA_HDW_TopBeam
+  CM,COMPA_HDW_TopBeam,AREA
 
-    ASEL,U,AREA,,ALL
-    *if,GEO_HDW_wingShape,eq,0,then
-        ! Triangular
-        A,KP27,KP28,KP101
-    *elseif,GEO_HDW_wingShape,eq,1,then
-        ! Rectangular
-        A,KP27,KP28,KP22,KP101
-    *endif
-    CMSEL,A,COMPA_HDW_LeftWall
-    CM,COMPA_HDW_LeftWall,AREA
+  ASEL,U,AREA,,ALL
+  *if,GEO_HDW_wingShape,eq,0,then
+    ! Triangular
+    A,KP27,KP28,KP101
+  *elseif,GEO_HDW_wingShape,eq,1,then
+    ! Rectangular
+    A,KP27,KP28,KP22,KP101
+  *endif
+  CMSEL,A,COMPA_HDW_LeftWall
+  CM,COMPA_HDW_LeftWall,AREA
 
-    ASEL,U,AREA,,ALL
-    *if,GEO_HDW_wingShape,eq,0,then
-        ! Triangular
-        A,KP29,KP30,KP102
-    *elseif,GEO_HDW_wingShape,eq,1,then
-        ! Rectangular
-        A,KP29,KP30,KP23,KP102
-    *endif
-    CMSEL,A,COMPA_HDW_RightWall
-    CM,COMPA_HDW_RightWall,AREA
+  ASEL,U,AREA,,ALL
+  *if,GEO_HDW_wingShape,eq,0,then
+    ! Triangular
+    A,KP29,KP30,KP102
+  *elseif,GEO_HDW_wingShape,eq,1,then
+    ! Rectangular
+    A,KP29,KP30,KP23,KP102
+  *endif
+  CMSEL,A,COMPA_HDW_RightWall
+  CM,COMPA_HDW_RightWall,AREA
 
-    CMSEL,S,COMPA_HDW_RightWall
-    CMSEL,A,COMPA_HDW_LeftWall
-    CMSEL,A,COMPA_HDW_TopBeam
-    CM,COMPA_HDW_Walls,AREA
+  CMSEL,S,COMPA_HDW_RightWall
+  CMSEL,A,COMPA_HDW_LeftWall
+  CMSEL,A,COMPA_HDW_TopBeam
+  CM,COMPA_HDW_Walls,AREA
 
-    ALLSEL
-    ASEL,U,AREA,,ALL
-    A,KP10,KP11,KP4,KP3,KP2,KP1
-    CMSEL,A,COMPA_HDW_BackBeam
-    CM,COMPA_HDW_BackBeam,AREA
-    ALLSEL
+  ALLSEL
+  ASEL,U,AREA,,ALL
+  A,KP10,KP11,KP4,KP3,KP2,KP1
+  CMSEL,A,COMPA_HDW_BackBeam
+  CM,COMPA_HDW_BackBeam,AREA
+  ALLSEL
 
 *endif
 
-cmsel,s,COMPA_HDW_TopBeam
-cmsel,a,COMPA_HDW_LeftWall
-cmsel,a,COMPA_HDW_RightWall
-cmsel,a,COMPA_HDW_Walls
-cmsel,a,COMPA_HDW_BackBeam
-cmsel,a,COMPA_HDW_BotBeam
-cmsel,a,COMPA_HDW_Stiffener
-cmsel,a,COMPA_HDW_Slab
-cmsel,a,COMPA_HDW_Footing
-cmsel,a,COMPA_HDW_Columns
+cmsel , s , COMPA_HDW_TopBeam
+cmsel , a , COMPA_HDW_LeftWall
+cmsel , a , COMPA_HDW_RightWall
+cmsel , a , COMPA_HDW_Walls
+cmsel , a , COMPA_HDW_BackBeam
+cmsel , a , COMPA_HDW_BotBeam
+cmsel , a , COMPA_HDW_Stiffener
+cmsel , a , COMPA_HDW_Slab
+cmsel , a , COMPA_HDW_Footing
+cmsel , a , COMPA_HDW_Columns
 cm,COMPA_Headwalls,area
-ALLSEL
-!!NUMMRG,KP
-
-
-
-
-
-
-
-
-
+allsel

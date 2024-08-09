@@ -1,5 +1,6 @@
 ! TUNNEL_V2_VERBOUSSINESQ
 
+
 /nopr
 /prep7
 
@@ -7,8 +8,8 @@
 lsel,u,line,,all
 
 ! X-Z coordinates at the center of the tunnel
-QX_0=GEO_TUN_totEffW/2
-QZ_0=LOAD_z0
+QX_0 = GEO_TUN_totEffW/2
+QZ_0 = LOAD_z0
 
 ! Fill array with node selection status
 *del, NLIST_nsel
@@ -16,120 +17,118 @@ QZ_0=LOAD_z0
 
 *do,nthLine,1,LOAD_LTA_count,1
 
-    *do,nthPointLoad,1,LOAD_LTPtCount,1
+  *do,nthPointLoad,1,LOAD_LTPtCount,1
 
-        ForceValue=LOADTRAIN_ARR_loads(nthPointLoad)
-        LoadPosition=LOADTRAIN_ARR_positions(nthPointLoad)
+    ForceValue   = LOADTRAIN_ARR_loads(nthPointLoad)
+    LoadPosition = LOADTRAIN_ARR_positions(nthPointLoad)
 
-        QX_i=LoadPosition+xOffset
-        QY=GEO_TUN_effH+GEO_EMB_height
-        QZ_i=zOffsets(nthLine)
-        TUNNEL_V2_LTPOS, QX_i, QZ_i, QX_0, QZ_0, -LOAD_LTA_skewRad, 1
+    QX_i = LoadPosition+xOffset
+    QY   = GEO_TUN_effH+GEO_EMB_height
+    QZ_i = zOffsets(nthLine)
+    TUNNEL_V2_LTPOS, QX_i, QZ_i, QX_0, QZ_0, -LOAD_LTA_skewRad, 1
 
-        *if,GEO_EMB_height,LT,MinimumSoilCover,THEN
+    *if,GEO_EMB_height,LT,MinimumSoilCover,THEN
 
-            APPLY_LOAD = 0
+      APPLY_LOAD = 0
 
-            *if,QX,GE,0,AND,QX,LE,GEO_TUN_modules*Eff_GalleryWidth,THEN
-                ! CASE: load over tunnel
-                *if,QZ,GE,0,AND,QZ,LE,GEO_TUN_length,THEN
-                    APPLY_LOAD = 1
-                *endif
-
-            *else
-                ! CASE: load over approach slab
-                *if,GEO_APR_status,eq,1,then
-                    *if,QX,ge,0-GEO_APR_length,and,QX,lt,0,then
-                        APPLY_LOAD = 1
-                    *elseif,QX,gt,GEO_TUN_totEffW,and,QX,le,GEO_TUN_totEffW+GEO_APR_length,then
-                        APPLY_LOAD = 1
-                    *endif
-                *endif
-            *endif
-
-            *if,APPLY_LOAD,eq,1,then
-                !ClosestNode=NODE(QX,QY,QZ)
-                !F,ClosestNode,FY,-ABS(LoadValue)
-                LeftTrackNode=NODE(QX,QY,QZ-(LOAD_LTA_gauge/2))
-                RightTrackNode=NODE(QX,QY,QZ+(LOAD_LTA_gauge/2))
-                F,LeftTrackNode,FY,-ABS(ForceValue/2)
-                F,RightTrackNode,FY,-ABS(ForceValue/2)
-            *endif
-
-        *else
-
-            ! Initialize arrays
-            *del, deltaX
-            *del, deltaY
-            *del, deltaZ
-            *del, deltaXSquared
-            *del, deltaYSquared
-            *del, deltaZSquared
-            *del, Rsquared
-            *del, Rdist
-            *del, tmp
-            *del, pressures
-            *del, forces
-            *del, appliedForces
-            *del, selNodes
-            *del, dynImpact
-
-            ! Calculate distances
-            *voper,deltaX,QX,sub,NLIST_x
-            *voper,deltaY,QY,sub,NLIST_y
-            *voper,deltaZ,QZ,sub,NLIST_z
-
-            ! Calculate impact coefficients (according to AREMA Chapter 8)
-            *voper, dynImpact , deltaY    , mult ,-0.2353
-            *voper, dynImpact , dynImpact , add  , 1.7060
-            *voper, dynImpact , dynImpact , max  , 1
-            *voper, dynImpact , dynImpact , min  , 1.6
-
-            *vfun, deltaXSquared , pwr , deltaX , 2
-            *vfun, deltaYSquared , pwr , deltaY , 2
-            *vfun, deltaZSquared , pwr , deltaZ , 2
-
-            *voper, Rsquared , deltaXSquared,      add , deltaZSquared
-            *vfun ,    Rdist ,          sqrt, Rsquared
-
-            ! Boussinesq formula: q=-3*F/(2*PI*z²*(1+(R/z)²)^(5/2))
-            *voper, tmp , Rdist ,  div , deltaY
-            *vfun , tmp ,   pwr ,  tmp , 2
-            *voper, tmp ,   tmp ,  add , 1
-            *vfun , tmp ,   pwr ,  tmp , 5/2
-            *voper, tmp ,   tmp , mult , deltaYSquared
-            *voper, tmp ,   tmp , mult , 2*PI
-            *vfun , tmp ,   pwr ,  tmp , -1
-
-            ! Calculate nodal forces and apply dynamic impact coefficient
-            *voper, pressures ,       tmp , mult , -3*ForceValue
-            *voper,    forces , pressures , mult , NLIST_apportioned
-            *voper,    forces ,    forces , mult , dynImpact
-
-            *vmask,    NLIST_nsel
-            *vfun , appliedForces ,      comp , forces
-            *vmask,    NLIST_nsel
-            *vfun ,      selNodes ,      comp , NLIST_num
-
-            *get,selCount,parm,selNodes,dim,x
-
-            ! Apply forces
-            f,selNodes(1:selCount),fy,appliedForces(1:selCount)
-
+      *if,QX,GE,0,AND,QX,LE,GEO_TUN_modules*Eff_GalleryWidth,THEN
+        ! CASE: load over tunnel
+        *if,QZ,GE,0,AND,QZ,LE,GEO_TUN_length,THEN
+          APPLY_LOAD = 1
         *endif
 
-    *enddo
+      *else
+        ! CASE: load over approach slab
+        *if,GEO_APR_status,eq,1,then
+          *if,QX,ge,0-GEO_APR_length,and,QX,lt,0,then
+            APPLY_LOAD = 1
+          *elseif,QX,gt,GEO_TUN_totEffW,and,QX,le,GEO_TUN_totEffW+GEO_APR_length,then
+            APPLY_LOAD = 1
+          *endif
+        *endif
+      *endif
 
+      *if,APPLY_LOAD,eq,1,then
+        !ClosestNode=NODE(QX,QY,QZ)
+        !F,ClosestNode,FY,-ABS(LoadValue)
+        LeftTrackNode  = NODE(QX,QY,QZ-(LOAD_LTA_gauge/2))
+        RightTrackNode = NODE(QX,QY,QZ+(LOAD_LTA_gauge/2))
+        F , LeftTrackNode  , FY , -ABS(ForceValue/2)
+        F , RightTrackNode , FY , -ABS(ForceValue/2)
+      *endif
+
+    *else
+
+      ! Initialize arrays
+      *del , deltaX
+      *del , deltaY
+      *del , deltaZ
+      *del , deltaXSquared
+      *del , deltaYSquared
+      *del , deltaZSquared
+      *del , Rsquared
+      *del , Rdist
+      *del , tmp
+      *del , pressures
+      *del , forces
+      *del , appliedForces
+      *del , selNodes
+      *del , dynImpact
+
+      ! Calculate distances
+      *voper , deltaX , QX , sub , NLIST_x
+      *voper , deltaY , QY , sub , NLIST_y
+      *voper , deltaZ , QZ , sub , NLIST_z
+
+      ! Calculate impact coefficients (according to AREMA Chapter 8)
+      *voper , dynImpact , deltaY    , mult , -0.2353
+      *voper , dynImpact , dynImpact , add  , 1.7060
+      *voper , dynImpact , dynImpact , max  , 1
+      *voper , dynImpact , dynImpact , min  , 1.6
+
+      *vfun , deltaXSquared , pwr , deltaX , 2
+      *vfun , deltaYSquared , pwr , deltaY , 2
+      *vfun , deltaZSquared , pwr , deltaZ , 2
+
+      *voper , Rsquared , deltaXSquared , add      , deltaZSquared
+      *vfun  , Rdist    , sqrt          , Rsquared
+
+      ! Boussinesq formula: q=-3*F/(2*PI*z²*(1+(R/z)²)^(5/2))
+      *voper , tmp , Rdist , div  , deltaY
+      *vfun  , tmp , pwr   , tmp  , 2
+      *voper , tmp , tmp   , add  , 1
+      *vfun  , tmp , pwr   , tmp  , 5/2
+      *voper , tmp , tmp   , mult , deltaYSquared
+      *voper , tmp , tmp   , mult , 2*PI
+      *vfun  , tmp , pwr   , tmp  , -1
+
+      ! Calculate nodal forces and apply dynamic impact coefficient
+      *voper , pressures , tmp       , mult , -3*ForceValue
+      *voper , forces    , pressures , mult , NLIST_apportioned
+      *voper , forces    , forces    , mult , dynImpact
+
+      *vmask , NLIST_nsel
+      *vfun  , appliedForces , comp , forces
+      *vmask , NLIST_nsel
+      *vfun  , selNodes      , comp , NLIST_num
+
+      *get , selCount , parm , selNodes , dim , x
+
+      ! Apply forces
+      f , selNodes(1:selCount) , fy , appliedForces(1:selCount)
+
+    *endif
+  *enddo
 *enddo
 
-compName=strcat('LTx_',chrval(xOffIndex))
+compName = strcat('LTx_',chrval(xOffIndex))
 cm,%compName%,line
 
 *del,vcolors
 *dim,vcolors,array,4
-vcolors(1)=12, 1, 2, 3
+vcolors(1) = 12, 1, 2, 3
 
-cnum=mod(xOffIndex,4)+1
+cnum = mod(xOffIndex,4)+1
 /color,cm,cnum,%compName%
 
 cmsel,a,COMPL_ltpos
@@ -137,8 +136,3 @@ cm,COMPL_ltpos,line
 
 /solu
 /gopr
-
-
-
-
-

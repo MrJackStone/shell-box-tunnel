@@ -3,23 +3,19 @@
 
 
 *if,arg2,le,0,then
-    ! First inlet (beginning)
-    localZ=abs(arg2)
-
+  ! First inlet (beginning)
+  localZ = abs(arg2)
 *elseif,arg2,ge,GEO_TUN_length,then
-    ! Second inled (end)
-    localZ=abs(GEO_TUN_length-arg2)
-
+  ! Second inled (end)
+  localZ = abs(GEO_TUN_length-arg2)
 *else
-    ! Tunnel
-
+  ! Tunnel
 *endif
 
-zFlat=GEO_HDW_topLength*cos(GEO_InletRadians)
-zLenSloping=GEO_HDW_length-zFlat
+zFlat       = GEO_HDW_topLength*cos(GEO_InletRadians)
+zLenSloping = GEO_HDW_length-zFlat
 *if,localZ,le,zFlat,then
-    %arg1%=GEO_HDW_Height
+  %arg1% = GEO_HDW_Height
 *else
-    %arg1%=GEO_HDW_Height-(GEO_HDW_Height-GEO_HDW_endH)*((localZ-zFlat)/zLenSloping)
+  %arg1% = GEO_HDW_Height-(GEO_HDW_Height-GEO_HDW_endH)*((localZ-zFlat)/zLenSloping)
 *endif
-

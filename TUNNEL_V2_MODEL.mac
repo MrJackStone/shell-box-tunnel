@@ -1,108 +1,70 @@
-!!
-!!
-!! 1. INPUT DATA
-!!
-!!
+! Prepare environment
+init, 'TUNNEL_V2_DEFAULT'
+
 /prep7
 
-! Registrar o tempo de início da solução
-*get,T0,ACTIVE,0,TIME,WALL
-
-!*cfopen,suspicious,txt
-!    *vwrite,
-!    ('record of suspicious things.')
-!*cfclos
-
-! Desativar exibição automática
 /nopr
-IMMED,0
-/uis,REPLOT,0
-/uis,MSGPOP,3
-!
-!
-!
-!
-!
-!!
-!!
-!! 2. DEFINIÇÕES PRELIMINARES
-!!
-!!
+/uis,replot,0
+/uis,msgpop,3
+immed,0
+
+! Registrar o tempo de início da solução TODO: improve param name
+*get,t0,active,0,time,wall
+
+
+!!                                                                                                !!
+!! 2.  Attributes                                                                                 !!
+!!                                                                                                !!
 TUNNEL_V2_ATTR
-!
-!
-!
-!
-!
-!!
-!!
-!! 3. SOLID MODEL
-!!
-!!
+
+
+!!                                                                                                !!
+!! 3.  Solid model                                                                                !!
+!!                                                                                                !!
 TUNNEL_V2_SM
-!
-!
-!
-!
-!
-!!
-!!
-!! 4. FINITE ELEMENT MODEL
-!!
-!!
+
+
+!!                                                                                                !!
+!! 4.  Finite element model                                                                       !!
+!!                                                                                                !!
 TUNNEL_V2_FEM
-!
-!
-!
-!
-!
-!!
-!!
-!! 5. LOAD STEPS
-!!
-!!
+
+
+!!                                                                                                !!
+!! 5.  Load steps                                                                                 !!
+!!                                                                                                !!
 TUNNEL_V2_LSTEP
-!
-!
-!
-!
-!
-!!
-!!
-!! 6. SOLVE
-!!
-!!
+
+
+!!                                                                                                !!
+!! 6.  Solution                                                                                   !!
+!!                                                                                                !!
 *msg,UI,FILE_name
 TUNNEL # %s %/&
 SOLVING THE MODEL...
 
 /solu
 
-ALLSEL
-NLDIAG,NRRE,ON
-CNVTOL,F,,0.01,2,0.01
-SAVE
+allsel
+nldiag,nrre,on
+cnvtol,f,,0.01,2,0.01
+save
 /uis,abort,off
-KEYW,pr_sgui,1
-LSSOLVE,1,LoadStepCount,1
-KEYW,pr_sgui,0
+keyw,pr_sgui,1
+lssolve,1,loadstepcount,1
+keyw,pr_sgui,0
 
 
-!/eof
-
-
-!!
-!!
-!! 7. POST-PROCESS
-!!
-!!
+!!                                                                                                !!
+!! 7.  Post-processing                                                                            !!
+!!                                                                                                !!
 *msg,UI,FILE_name
 TUNNEL # %s %/&
 WRITING RESULTS...
 
 /post1
 
-SET,LAST
+set,last
 
 ! Element tables
 TUNNEL_V2_ETAB
@@ -115,26 +77,19 @@ TUNNEL_V2_WRRES
 
 ! Escrever resultados
 TUNNEL_V2_MEMO
-!
-!
-!
-!
-!
-!!
-!!
-!! 8. REPORT
-!!
-!!
+
+
+!!                                                                                                !!
+!! 8.  Write report                                                                               !!
+!!                                                                                                !!
 TUNNEL_V2_REPORT
 
-
 *if,GEO_HDW_status,eq,1,and,GEO_HDW_type,eq,0,then
-    TUNNEL_V2_HDWRES
+  TUNNEL_V2_HDWRES
 *endif
 
-
 *if,GEO_APR_status,eq,1,then
-    TUNNEL_V2_APPSLBRES
+  TUNNEL_V2_APPSLBRES
 *endif
 
 *msg,UI,FILE_name
@@ -143,7 +98,7 @@ FINISHED ANALYSIS!
 
 ! Reativar exibição automática
 /gopr
-/uis,REPLOT,1
+/uis,replot,1
 
 allsel
 view1w
@@ -151,13 +106,6 @@ windefa
 /annot,dele
 eplot
 
-
 TUNNEL_V2_SUMMARY
 
-FINISH
-
-
-
-
-
-
+finish

@@ -3,40 +3,34 @@
 
 xWall=0
 *do,nthWall,1,GEO_TUN_modules+1,1
-    nthCS=arg8+nthWall
-    nthSEC=arg7+nthWall
+  nthCS   = arg8+nthWall
+  nthSEC  = arg7+nthWall
+  fcnName = STRCAT(arg1,CHRVAL(nthWall))
 
-    fcnName=STRCAT(arg1,CHRVAL(nthWall))
+  *if,arg3,gt,0,then
 
-    *if,arg3,gt,0,then
+    corbelfcn , fcnName , arg2 , arg3 , arg4 , arg5 , arg6 , arg9 , nthCS
 
-        ! CORBELFCN, parName, corbelParallel, corbelOrtho, baseThk, orthoThk, corbelLen, direction,  csys
-        CORBELFCN, fcnName,           arg2,        arg3,    arg4,     arg5,      arg6,      arg9, nthCS
+    sectype,nthSEC,SHELL,,%fcnName%
+    secdata,arg4,MAT_CONC
+    !secoffset,BOT
 
-        SECTYPE,nthSEC,SHELL,,%fcnName%
-        SECDATA,arg4,MAT_CONC
-        !SECOFFSET,BOT
+    *cfopen,'tmp_secfun',tmp
+      *vwrite,fcnName
+      ('SECFUNCTION,%',A8,'%,nthCS')
+    *cfclos
+    /nopr
+    /input,'tmp_secfun',tmp
+    /delete,'tmp_secfun',tmp
+    /gopr
 
-        *cfopen,'tmp_secfun',tmp
-            *vwrite,fcnName
-            ('SECFUNCTION,%',A8,'%,nthCS')
-        *cfclos
-        /nopr
-        /input,'tmp_secfun',tmp
-        /delete,'tmp_secfun',tmp
-        /gopr
+  *elseif,arg3,lt,0,then
 
-    *elseif,arg3,lt,0,then
+    sectype,nthSec,shell,,%fcnName%
+    secdata,abs(arg3),MAT_CONC
 
-        sectype,nthSec,shell,,%fcnName%
-        secdata,abs(arg3),MAT_CONC
+  *endif
 
-    *endif
-
-    xWall=xWall+GEO_TUN_effW
+  xWall=xWall+GEO_TUN_effW
 
 *enddo
-
-
-
-

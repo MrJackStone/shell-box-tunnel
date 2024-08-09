@@ -1,36 +1,37 @@
 ! TUNNEL_V2_SECRES, LSType, slabPlane
 ! TUNNEL_V2_SECRES,   arg1,      arg2
 
+
 ! arg2: [0] XZ ; [1] YZ
 
 *del,vmin
 *del,vmax
 
 *if,arg1,EQ,'DW',THEN
-    MYmax='DW_MY'
-    QXmax='DW_QX'
-    NXmax='DW_NX'
-    UXmax='DW_UX'
-    UYmax='DW_UY'
+  MYmax = 'DW_MY'
+  QXmax = 'DW_QX'
+  NXmax = 'DW_NX'
+  UXmax = 'DW_UX'
+  UYmax = 'DW_UY'
 
-    MYmin='DW_MY'
-    QXmin='DW_QX'
-    NXmin='DW_NX'
-    UXmin='DW_UX'
-    UYmin='DW_UY'
+  MYmin = 'DW_MY'
+  QXmin = 'DW_QX'
+  NXmin = 'DW_NX'
+  UXmin = 'DW_UX'
+  UYmin = 'DW_UY'
 
 *elseif,arg1,EQ,'ENV',THEN
-    MYmax='EMX_MY'
-    QXmax='EMX_QX'
-    NXmax='EMX_NX'
-    UXmax='EMX_UX'
-    UYmax='EMX_UY'
+  MYmax = 'EMX_MY'
+  QXmax = 'EMX_QX'
+  NXmax = 'EMX_NX'
+  UXmax = 'EMX_UX'
+  UYmax = 'EMX_UY'
 
-    MYmin='EMN_MY'
-    QXmin='EMN_QX'
-    NXmin='EMN_NX'
-    UXmin='EMN_UX'
-    UYmin='EMN_UY'
+  MYmin = 'EMN_MY'
+  QXmin = 'EMN_QX'
+  NXmin = 'EMN_NX'
+  UXmin = 'EMN_UX'
+  UYmin = 'EMN_UY'
 *endif
 
 PLETAB,%MYmax%,1
@@ -59,7 +60,7 @@ PLETAB,%UXmin%,1
 *get,UXMin,PLNSOL,,MIN
 UX=ABS(ABS(UXMax)-ABS(UXMin))
 
-!!
+!!                                                                                                !!
 !CM,COMPE_prev,ELEM
 !
 !*if,arg2,EQ,0,THEN
@@ -163,101 +164,99 @@ UX=ABS(ABS(UXMax)-ABS(UXMin))
 !*endif
 !CMSEL,S,COMPN_temp
 !CMSEL,S,COMPE_prev
-!!
+!!                                                                                                !!
 csys,CS_Tunnel
 
 cm,COMPN_span,node
 cm,COMPE_span,elem
 
-DFL=0
+DFL = 0
 
 *if,arg2,eq,0,then
-    ! UY deflection (slab in XZ plane)
-    xLeft=0
-    *do,nthSpan,1,GEO_TUN_modules,1
-        xRight=xLeft+GEO_TUN_effW
+  ! UY deflection (slab in XZ plane)
+  xLeft = 0
+  *do,nthSpan,1,GEO_TUN_modules,1
+    xRight = xLeft+GEO_TUN_effW
 
-        cmsel,s,COMPN_references
-        nsel,r,loc,x,xLeft
-        cmsel,r,COMPN_span
-        cm,COMPN_lRef,node
+    cmsel,s,COMPN_references
+    nsel,r,loc,x,xLeft
+    cmsel,r,COMPN_span
+    cm,COMPN_lRef,node
 
-        cmsel,s,COMPN_references
-        nsel,r,loc,x,xRight
-        cmsel,r,COMPN_span
-        cm,COMPN_rRef,node
+    cmsel,s,COMPN_references
+    nsel,r,loc,x,xRight
+    cmsel,r,COMPN_span
+    cm,COMPN_rRef,node
 
-        cmsel,s,COMPN_lRef
-        *get,lnc,node,,count
+    cmsel,s,COMPN_lRef
+    *get,lnc,node,,count
 
-        leftNN=0
-        *do,nthNode,1,lnc,1
+    leftNN = 0
+    *do,nthNode,1,lnc,1
 
-            cmsel,s,COMPN_lRef
-            leftNN=ndnext(leftNN)
-            leftZ=nz(leftNN)
+      cmsel,s,COMPN_lRef
+      leftNN = ndnext(leftNN)
+      leftZ  = nz(leftNN)
 
-            rightZ=leftZ+GEO_ExtraLength*(GEO_TUN_effW/GEO_TUN_totEffW)
-            cmsel,s,COMPN_rRef
-            rightNN=ndnext(0)
-            rightNN=node(nx(rightNN),ny(rightNN),rightZ)
+      rightZ = leftZ+GEO_ExtraLength*(GEO_TUN_effW/GEO_TUN_totEffW)
+      cmsel,s,COMPN_rRef
+      rightNN = ndnext(0)
+      rightNN = node(nx(rightNN),ny(rightNN),rightZ)
 
-            csys,0
-            cmsel,s,COMPN_span
-            cmsel,s,COMPE_span
-            pthName=strcat('C',strcat(chrval(nthNode),strcat('S',chrval(nthSpan))))
-            ! PTH2DFL, begNode, endNode,    -,    -, pathName, direction, pathDiv,    -, defType, avgKey, dirMult
-            pth2dfl,    leftNN, rightNN,     ,     ,  pthName,       'Y',     100,     ,       0,      1,       1
-            *vabs,1,1
-            *vscfun,maxDisp,max,PTH2DFL_ARR_defl
-            DFL=(DFL>maxDisp)
-            csys,CS_Tunnel
+      csys,0
+      cmsel,s,COMPN_span
+      cmsel,s,COMPE_span
+      pthName = strcat('C',strcat(chrval(nthNode),strcat('S',chrval(nthSpan))))
+      ! PTH2DFL, begNode, endNode,    -,    -, pathName, direction, pathDiv,    -, defType, avgKey, dirMult
+      pth2dfl,    leftNN, rightNN,     ,     ,  pthName,       'Y',     100,     ,       0,      1,       1
+      *vabs,1,1
+      *vscfun,maxDisp,max,PTH2DFL_ARR_defl
+      DFL = (DFL>maxDisp)
+      csys,CS_Tunnel
 
-        *enddo
-
-        xLeft=xRight
     *enddo
+
+    xLeft = xRight
+  *enddo
 
 *elseif,arg2,eq,1,then
-    ! UX deflection (slab in YZ plane)
-    cmsel,s,COMPN_references
-    cmsel,r,COMPN_span
-    nsel,r,loc,y,0
-    cm,COMPN_bRef,node
+  ! UX deflection (slab in YZ plane)
+  cmsel,s,COMPN_references
+  cmsel,r,COMPN_span
+  nsel,r,loc,y,0
+  cm,COMPN_bRef,node
 
-    cmsel,s,COMPN_references
-    cmsel,r,COMPN_span
-    nsel,r,loc,y,GEO_TUN_effH
-    cm,COMPN_tRef,node
+  cmsel,s,COMPN_references
+  cmsel,r,COMPN_span
+  nsel,r,loc,y,GEO_TUN_effH
+  cm,COMPN_tRef,node
 
+  cmsel,s,COMPN_bRef
+  *get,bnc,node,,count
+
+  botNN = 0
+  *do,nthNode,1,bnc,1
     cmsel,s,COMPN_bRef
-    *get,bnc,node,,count
+    botNN = ndnext(botNN)
+    botZ  = nz(botNN)
 
-    botNN=0
-    *do,nthNode,1,bnc,1
-        cmsel,s,COMPN_bRef
-        botNN=ndnext(botNN)
-        botZ=nz(botNN)
+    cmsel,s,COMPN_tRef
+    topNN = ndnext(0)
+    topNN = node(nx(topNN),ny(topNN),botZ)
 
-        cmsel,s,COMPN_tRef
-        topNN=ndnext(0)
-        topNN=node(nx(topNN),ny(topNN),botZ)
+    csys,0
+    cmsel,s,COMPN_span
+    cmsel,s,COMPE_span
+    pthName = strcat('C',chrval(nthNode))
+    pth2dfl , botNN , topNN ,  ,  , pthName , 'X' ,  , 100 ,  , 0 , 1 , 1
+    *vabs,1,1
+    *vscfun,maxDisp,max,PTH2DFL_ARR_defl
+    DFL = (DFL>maxDisp)
+    csys,CS_Tunnel
 
-        csys,0
-        cmsel,s,COMPN_span
-        cmsel,s,COMPE_span
-        pthName=strcat('C',chrval(nthNode))
-        pth2dfl,    botNN, topNN,     ,     ,  pthName,       'X',,    100,     ,       0,      1,       1
-        *vabs,1,1
-        *vscfun,maxDisp,max,PTH2DFL_ARR_defl
-        DFL=(DFL>maxDisp)
-        csys,CS_Tunnel
-
-    *enddo
-
+  *enddo
 *endif
-!!
+
 csys,0
 cmsel,s,COMPN_span
 cmsel,s,COMPE_span
-

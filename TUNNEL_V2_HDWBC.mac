@@ -1,14 +1,15 @@
 ! TUNNEL_V2_HDWBC
 
+
 ! Apoios
 ALLSEL
 ASUM,DEFAULT
 
 CSYS,CS_Tunnel
 
-TYPE,TYPE_LINK180
-MAT,MAT_SOIL
-REAL,REAL_hdwSprings
+TYPE , TYPE_LINK180
+MAT  , MAT_SOIL
+REAL , REAL_hdwSprings
 
 ! Floor slab and footing vertical supports
 NSEL,S,LOC,Y,0
@@ -25,41 +26,41 @@ CM,InfSupportElements,ELEM
 
 *do,NodeIndex,1,NodeCount,1
 
-   CMSEL,S,InfSupportElements
+  CMSEL,S,InfSupportElements
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
-   CM,PreviousNodes,NODE
-   NSEL,S,NODE,,nthNode
-   ESLN,R,0
-   *get,ElementCount,ELEM,0,COUNT
-   CMSEL,S,PreviousNodes
+  CM,PreviousNodes,NODE
+  NSEL,S,NODE,,nthNode
+  ESLN,R,0
+  *get,ElementCount,ELEM,0,COUNT
+  CMSEL,S,PreviousNodes
 
-   *del,ElemAreas
-   *dim,ElemAreas,ARRAY,ElementCount
+  *del,ElemAreas
+  *dim,ElemAreas,ARRAY,ElementCount
 
-   *do,ElementIndex,1,ElementCount,1
-      *get,nthElement,ELEM,0,NUM,MIN
-      *get,ElemArea,ELEM,nthElement,AREA
-      ElemAreas(ElementIndex)=ElemArea
-      ESEL,U,ELEM,,nthElement
-   *enddo
-   *vscfun,TotalArea,SUM,ElemAreas
+  *do,ElementIndex,1,ElementCount,1
+    *get,nthElement,ELEM,0,NUM,MIN
+    *get,ElemArea,ELEM,nthElement,AREA
+    ElemAreas(ElementIndex)=ElemArea
+    ESEL,U,ELEM,,nthElement
+  *enddo
+  *vscfun,TotalArea,SUM,ElemAreas
 
-   EffectiveArea=TotalArea/4
-   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+  EffectiveArea=TotalArea/4
+  EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal,yVal-EffSpringLength,zVal
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode=MaxNode+1
+  N,NewNode,xVal,yVal-EffSpringLength,zVal
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
@@ -75,66 +76,66 @@ CM,WallSupportElements,ELEM
 
 *do,NodeIndex,1,NodeCount,1
 
-   CMSEL,S,WallSupportElements
+  CMSEL,S,WallSupportElements
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
-   CM,PreviousNodes,NODE
-   NSEL,S,NODE,,nthNode
-   ESLN,R,0
-   *get,ElementCount,ELEM,0,COUNT
-   CMSEL,S,PreviousNodes
+  CM,PreviousNodes,NODE
+  NSEL,S,NODE,,nthNode
+  ESLN,R,0
+  *get,ElementCount,ELEM,0,COUNT
+  CMSEL,S,PreviousNodes
 
-   *del,ElemAreas
-   *dim,ElemAreas,ARRAY,ElementCount
+  *del,ElemAreas
+  *dim,ElemAreas,ARRAY,ElementCount
 
-   *do,ElementIndex,1,ElementCount,1
-      *get,nthElement,ELEM,0,NUM,MIN
-      *get,ElemArea,ELEM,nthElement,AREA
-      ElemAreas(ElementIndex)=ElemArea
-      ESEL,U,ELEM,,nthElement
-   *enddo
-   *vscfun,TotalArea,SUM,ElemAreas
+  *do,ElementIndex,1,ElementCount,1
+    *get,nthElement,ELEM,0,NUM,MIN
+    *get,ElemArea,ELEM,nthElement,AREA
+    ElemAreas(ElementIndex)=ElemArea
+    ESEL,U,ELEM,,nthElement
+  *enddo
+  *vscfun,TotalArea,SUM,ElemAreas
 
-   EffectiveArea=TotalArea/4
-   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+  EffectiveArea   = TotalArea/4
+  EffSpringLength = SpringLength*(FEM_HDW_EArea/EffectiveArea)
 
-   *if,GEO_HDW_type,EQ,1,THEN
-       *if,zVal,LT,GEO_TUN_length/2,THEN
-           XdirMult=-1
-           ZdirMult=1
-        *else
-            XdirMult=1
-            ZdirMult=-1
-        *endif
-        xSpringEndOffset=XdirMult*EffSpringLength*SIN(GEO_InletRadians)
-        zSpringEndOffset=ZdirMult*EffSpringLength*COS(GEO_InletRadians)
-   *else
-        *if,xVal,LT,Eff_GalleryWidth/2,THEN
-           XdirMult=-1
-        *else
-            XdirMult=1
-        *endif
-        *if,zVal,LT,GEO_TUN_length/2,THEN
-            ZdirMult=1
-        *else
-            ZdirMult=-1
-        *endif
-        xSpringEndOffset=XdirMult*EffSpringLength*COS(GEO_InletRadians)
-        zSpringEndOffset=ZdirMult*EffSpringLength*SIN(GEO_InletRadians)
-   *endif
+  *if,GEO_HDW_type,EQ,1,THEN
+    *if,zVal,LT,GEO_TUN_length/2,THEN
+      XdirMult = -1
+      ZdirMult = 1
+    *else
+      XdirMult = 1
+      ZdirMult = -1
+    *endif
+    xSpringEndOffset = XdirMult*EffSpringLength*SIN(GEO_InletRadians)
+    zSpringEndOffset = ZdirMult*EffSpringLength*COS(GEO_InletRadians)
+  *else
+    *if,xVal,LT,Eff_GalleryWidth/2,THEN
+      XdirMult = -1
+    *else
+      XdirMult = 1
+    *endif
+    *if,zVal,LT,GEO_TUN_length/2,THEN
+      ZdirMult = 1
+    *else
+      ZdirMult = -1
+    *endif
+    xSpringEndOffset = XdirMult*EffSpringLength*COS(GEO_InletRadians)
+    zSpringEndOffset = ZdirMult*EffSpringLength*SIN(GEO_InletRadians)
+  *endif
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal+xSpringEndOffset,yVal,zVal+zSpringEndOffset
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode = MaxNode+1
+  N,NewNode,xVal+xSpringEndOffset,yVal,zVal+zSpringEndOffset
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
@@ -151,52 +152,52 @@ CM,LowerWallSupportElements,ELEM
 
 *do,NodeIndex,1,NodeCount,1
 
-   CMSEL,S,LowerWallSupportElements
+  CMSEL,S,LowerWallSupportElements
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
-   *if,xVal,LT,Eff_GalleryWidth/2,THEN
-       XdirMult=1
-   *else
-       XdirMult=-1
-   *endif
-   *if,zVal,LT,GEO_TUN_length/2,THEN
-       ZdirMult=-1
-   *else
-       ZdirMult=1
-   *endif
+  *if,xVal,LT,Eff_GalleryWidth/2,THEN
+    XdirMult = 1
+  *else
+    XdirMult = -1
+  *endif
+  *if,zVal,LT,GEO_TUN_length/2,THEN
+    ZdirMult = -1
+  *else
+    ZdirMult = 1
+  *endif
 
-   CM,PreviousNodes,NODE
-   NSEL,S,NODE,,nthNode
-   ESLN,R,0
-   *get,ElementCount,ELEM,0,COUNT
-   CMSEL,S,PreviousNodes
+  CM,PreviousNodes,NODE
+  NSEL,S,NODE,,nthNode
+  ESLN,R,0
+  *get,ElementCount,ELEM,0,COUNT
+  CMSEL,S,PreviousNodes
 
-   *del,ElemAreas
-   *dim,ElemAreas,ARRAY,ElementCount
+  *del,ElemAreas
+  *dim,ElemAreas,ARRAY,ElementCount
 
-   *do,ElementIndex,1,ElementCount,1
-      *get,nthElement,ELEM,0,NUM,MIN
-      *get,ElemArea,ELEM,nthElement,AREA
-      ElemAreas(ElementIndex)=ElemArea
-      ESEL,U,ELEM,,nthElement
-   *enddo
-   *vscfun,TotalArea,SUM,ElemAreas
+  *do,ElementIndex,1,ElementCount,1
+    *get,nthElement,ELEM,0,NUM,MIN
+    *get,ElemArea,ELEM,nthElement,AREA
+    ElemAreas(ElementIndex)=ElemArea
+    ESEL,U,ELEM,,nthElement
+  *enddo
+  *vscfun,TotalArea,SUM,ElemAreas
 
-   EffectiveArea=TotalArea/4
-   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+  EffectiveArea   = TotalArea/4
+  EffSpringLength = SpringLength*(FEM_HDW_EArea/EffectiveArea)
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal+XdirMult*EffSpringLength*COS(GEO_InletRadians),yVal,zVal+ZdirMult*EffSpringLength*SIN(GEO_InletRadians)
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode = MaxNode+1
+  N,NewNode,xVal+XdirMult*EffSpringLength*COS(GEO_InletRadians),yVal,zVal+ZdirMult*EffSpringLength*SIN(GEO_InletRadians)
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
@@ -211,47 +212,47 @@ CM,BotBeamSupportElements,ELEM
 
 *do,NodeIndex,1,NodeCount,1
 
-   CMSEL,S,BotBeamSupportElements
+  CMSEL,S,BotBeamSupportElements
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
-   *if,zVal,LT,GEO_TUN_length/2,THEN
-       dirMult=-1
-   *else
-       dirMult=1
-   *endif
+  *if,zVal,LT,GEO_TUN_length/2,THEN
+    dirMult = -1
+  *else
+    dirMult = 1
+  *endif
 
-   CM,PreviousNodes,NODE
-   NSEL,S,NODE,,nthNode
-   ESLN,R,0
-   *get,ElementCount,ELEM,0,COUNT
-   CMSEL,S,PreviousNodes
+  CM,PreviousNodes,NODE
+  NSEL,S,NODE,,nthNode
+  ESLN,R,0
+  *get,ElementCount,ELEM,0,COUNT
+  CMSEL,S,PreviousNodes
 
-   *del,ElemAreas
-   *dim,ElemAreas,ARRAY,ElementCount
+  *del,ElemAreas
+  *dim,ElemAreas,ARRAY,ElementCount
 
-   *do,ElementIndex,1,ElementCount,1
-      *get,nthElement,ELEM,0,NUM,MIN
-      *get,ElemArea,ELEM,nthElement,AREA
-      ElemAreas(ElementIndex)=ElemArea
-      ESEL,U,ELEM,,nthElement
-   *enddo
-   *vscfun,TotalArea,SUM,ElemAreas
+  *do,ElementIndex,1,ElementCount,1
+    *get,nthElement,ELEM,0,NUM,MIN
+    *get,ElemArea,ELEM,nthElement,AREA
+    ElemAreas(ElementIndex)=ElemArea
+    ESEL,U,ELEM,,nthElement
+  *enddo
+  *vscfun,TotalArea,SUM,ElemAreas
 
-   EffectiveArea=TotalArea/4
-   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+  EffectiveArea   = TotalArea/4
+  EffSpringLength = SpringLength*(FEM_HDW_EArea/EffectiveArea)
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal,yVal,zVal+dirMult*EffSpringLength
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode = MaxNode+1
+  N,NewNode,xVal,yVal,zVal+dirMult*EffSpringLength
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
@@ -267,51 +268,49 @@ CM,TopBeamSupportElements,ELEM
 
 *do,NodeIndex,1,NodeCount,1
 
-   CMSEL,S,TopBeamSupportElements
+  CMSEL,S,TopBeamSupportElements
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
-   *if,zVal,LT,GEO_TUN_length/2,THEN
-       dirMult=1
-   *else
-       dirMult=-1
-   *endif
+  *if,zVal,LT,GEO_TUN_length/2,THEN
+    dirMult = 1
+  *else
+    dirMult = -1
+  *endif
 
-   CM,PreviousNodes,NODE
-   NSEL,S,NODE,,nthNode
-   ESLN,R,0
-   *get,ElementCount,ELEM,0,COUNT
-   CMSEL,S,PreviousNodes
+  CM,PreviousNodes,NODE
+  NSEL,S,NODE,,nthNode
+  ESLN,R,0
+  *get,ElementCount,ELEM,0,COUNT
+  CMSEL,S,PreviousNodes
 
-   *del,ElemAreas
-   *dim,ElemAreas,ARRAY,ElementCount
+  *del,ElemAreas
+  *dim,ElemAreas,ARRAY,ElementCount
 
-   *do,ElementIndex,1,ElementCount,1
-      *get,nthElement,ELEM,0,NUM,MIN
-      *get,ElemArea,ELEM,nthElement,AREA
-      ElemAreas(ElementIndex)=ElemArea
-      ESEL,U,ELEM,,nthElement
-   *enddo
-   *vscfun,TotalArea,SUM,ElemAreas
+  *do,ElementIndex,1,ElementCount,1
+    *get,nthElement,ELEM,0,NUM,MIN
+    *get,ElemArea,ELEM,nthElement,AREA
+    ElemAreas(ElementIndex)=ElemArea
+    esel,u,elem,,nthElement
+  *enddo
+  *vscfun,TotalArea,SUM,ElemAreas
 
-   EffectiveArea=TotalArea/4
-   EffSpringLength=SpringLength*(FEM_HDW_EArea/EffectiveArea)
+  EffectiveArea   = TotalArea/4
+  EffSpringLength = SpringLength*(FEM_HDW_EArea/EffectiveArea)
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal,yVal,zVal+dirMult*EffSpringLength
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode = MaxNode+1
+  N,NewNode,xVal,yVal,zVal+dirMult*EffSpringLength
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
-ALLSEL
-CSYS,0
-
-
+allsel
+csys,0

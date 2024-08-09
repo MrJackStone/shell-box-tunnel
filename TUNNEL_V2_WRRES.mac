@@ -1,5 +1,6 @@
 ! TUNNEL_V2_WRRES
 
+
 /post1
 
 ALLSEL
@@ -13,8 +14,8 @@ CSYS,CS_Tunnel
 NSEL,S,LOC,X,0
 x=0
 *do,nthModule,1,GEO_TUN_modules,1
-    x=x+GEO_TUN_effW
-    nsel,a,loc,x,x
+  x=x+GEO_TUN_effW
+  nsel,a,loc,x,x
 *enddo
 cm,COMPN_references,node
 CM,COMPN_temp,NODE
@@ -43,88 +44,88 @@ CM,COMPN_DEFLECT_botRef,NODE
 CSYS,0
 
 ! Base element tables
-ETABLE,'MX',SMISC,5
-ETABLE,'QX',SMISC,7
-ETABLE,'NX',SMISC,1
-ETABLE,'MY',SMISC,4
-ETABLE,'QY',SMISC,8
-ETABLE,'NY',SMISC,2
-ETABLE,'UX',U,X
-ETABLE,'UY',U,Y
+ETABLE , 'MX' , SMISC , 5
+ETABLE , 'QX' , SMISC , 7
+ETABLE , 'NX' , SMISC , 1
+ETABLE , 'MY' , SMISC , 4
+ETABLE , 'QY' , SMISC , 8
+ETABLE , 'NY' , SMISC , 2
+ETABLE , 'UX' , U     , X
+ETABLE , 'UY' , U     , Y
 
 ! Element tables: dead weight load step
-SMAX,'DW_MX','MX'
-SMAX,'DW_QX','QX'
-SMAX,'DW_NX','NX'
-SMAX,'DW_MY','MY'
-SMAX,'DW_QY','QY'
-SMAX,'DW_NY','NY'
-SMAX,'DW_UX','UX'
-SMAX,'DW_UY','UY'
+SMAX , 'DW_MX' , 'MX'
+SMAX , 'DW_QX' , 'QX'
+SMAX , 'DW_NX' , 'NX'
+SMAX , 'DW_MY' , 'MY'
+SMAX , 'DW_QY' , 'QY'
+SMAX , 'DW_NY' , 'NY'
+SMAX , 'DW_UX' , 'UX'
+SMAX , 'DW_UY' , 'UY'
 
 ! Element tables: dead weight + load train load steps
 *del,ETNames
 *dim,ETNames,CHAR,8
-ETNames(1)='MX', 'MY', 'NX', 'NY', 'QX', 'QY', 'UX', 'UY'
+ETNames(1) = 'MX', 'MY', 'NX', 'NY', 'QX', 'QY', 'UX', 'UY'
 ETENV,2,LoadStepCount,'ETNames'
 
 ! Element tables: soil pressures on floor slabs
-sadd,'DW_SIGY','DW_UY',,-MAT_SOIL_stiffness*1E-3
-sadd,'EMN_SIGY','EMN_UY',,-MAT_SOIL_stiffness*1E-3
+sadd , 'DW_SIGY'  , 'DW_UY'  ,  , -MAT_SOIL_stiffness*1E-3
+sadd , 'EMN_SIGY' , 'EMN_UY' ,  , -MAT_SOIL_stiffness*1E-3
 
 *del,LSOptions
 *dim,LSOptions,CHAR,2
-LSOptions(1)='DW', 'ENV'
+LSOptions(1) = 'DW', 'ENV'
 
-sectCount=8
-deltaZSect=(GEO_TUN_length-GEO_ExtraLength)/(sectCount-1)
+sectCount  = 8
+deltaZSect = (GEO_TUN_length-GEO_ExtraLength)/(sectCount-1)
 
 
 *cfopen,'RES_SECT',txt
-    *vwrite,
-    ('--------',\b)
-    *vwrite,
-    ('    --------------------------------------------ROOF',\b)
-    *vwrite,
-    ('    -------------------------------------------FLOOR',\b)
-    *vwrite,
-    ('    -------------------------------------------WALLS',\b)
-    *vwrite,
-    ('    ----------------------------------SOIL')
+  *vwrite,
+  ('--------',\b)
+  *vwrite,
+  ('    --------------------------------------------ROOF',\b)
+  *vwrite,
+  ('    -------------------------------------------FLOOR',\b)
+  *vwrite,
+  ('    -------------------------------------------WALLS',\b)
+  *vwrite,
+  ('    ----------------------------------SOIL')
 
 
-    *vwrite,
-    ('--------',\b)
-    *vwrite,
-    ('    --------------ENDS  ----SPAN  ------------------',\b)
-    *vwrite,
-    ('    --------------ENDS  ----SPAN  ------------------',\b)
-    *vwrite,
-    ('    --------------ENDS  ----SPAN  ------------------',\b)
-    *vwrite,
-    ('    --------------PRES  --------SETTLEMENT')
+  *vwrite,
+  ('--------',\b)
+  *vwrite,
+  ('    --------------ENDS  ----SPAN  ------------------',\b)
+  *vwrite,
+  ('    --------------ENDS  ----SPAN  ------------------',\b)
+  *vwrite,
+  ('    --------------ENDS  ----SPAN  ------------------',\b)
+  *vwrite,
+  ('    --------------PRES  --------SETTLEMENT')
 
 
-    *vwrite,
-    ('       Z',\b)
-    *vwrite,
-    ('           M         V         M         N         d',\b)
-    *vwrite,
-    ('           M         V         M         N         d',\b)
-    *vwrite,
-    ('           M         V         M         N         d',\b)
-    *vwrite,
-    ('         AVG       MAX       TOP       BOT')
+  *vwrite,
+  ('       Z',\b)
+  *vwrite,
+  ('           M         V         M         N         d',\b)
+  *vwrite,
+  ('           M         V         M         N         d',\b)
+  *vwrite,
+  ('           M         V         M         N         d',\b)
+  *vwrite,
+  ('         AVG       MAX       TOP       BOT')
 
 *cfclos
 
 *cfopen,'RES_LONG',txt
-    *vwrite,
-    ('--------    ---------------------------------------COBERTURA    -------------------------------------------FUNDO    -----------------------------------------PAREDES')
-    *vwrite,
-    ('--------    ------------MÍNIMO  ----------------------MÁXIMO    ------------MÍNIMO  ----------------------MÁXIMO    ------------MÍNIMO  ----------------------MÁXIMO')
-    *vwrite,
-    ('       Z           M         N         M         V         N           M         N         M         V         N           M         N         M         V         N')
+  *vwrite,
+  ('--------    ---------------------------------------COBERTURA    -------------------------------------------FUNDO    -----------------------------------------PAREDES')
+  *vwrite,
+  ('--------    ------------MÍNIMO  ----------------------MÁXIMO    ------------MÍNIMO  ----------------------MÁXIMO    ------------MÍNIMO  ----------------------MÁXIMO')
+  *vwrite,
+  ('       Z           M         N         M         V         N           M         N         M         V         N           M         N         M         V         N')
 *cfclos
 
 !/window,1,OFF
@@ -132,167 +133,150 @@ deltaZSect=(GEO_TUN_length-GEO_ExtraLength)/(sectCount-1)
 
 CMSEL,S,COMPA_Roof
 NSLA,S,1
-NDLeftBeginning=NODE(0,Eff_GalleryHeight,0)
-NDRightEnd=NODE(Eff_GalleryWidth,Eff_GalleryHeight,GEO_TUN_length)
+NDLeftBeginning = NODE(0,Eff_GalleryHeight,0)
+NDRightEnd      = NODE(Eff_GalleryWidth,Eff_GalleryHeight,GEO_TUN_length)
 
 *do,nthSect,1,sectCount-1,1
 
-    *msg,UI,nthSect,sectCount-1
+  *msg,UI,nthSect,sectCount-1
 SECTION: %I / %I
 
-    zSect_b=(nthSect-1)*deltaZSect
-    zSect_e=zSect_b+deltaZSect
+  zSect_b = (nthSect-1)*deltaZSect
+  zSect_e = zSect_b+deltaZSect
 
-    zMid=(GEO_ExtraLength/2)+(zSect_b+zSect_e)/2
+  zMid = (GEO_ExtraLength/2)+(zSect_b+zSect_e)/2
 
-    zSect_bR=zSect_b+GEO_ExtraLength
-    zSect_eR=zSect_e+GEO_ExtraLength
+  zSect_bR = zSect_b+GEO_ExtraLength
+  zSect_eR = zSect_e+GEO_ExtraLength
 
-    CSYS,CS_Tunnel
-    *if,GEO_HDW_type,EQ,1,THEN
-        TUNNEL_V2_OBLQSECT
-        /view,1,0,1,0
-        /auto
-        /dist,1,1.1
-    *else
-        NSEL,S,LOC,Z,zSect_b,zSect_e
-    *endif
-    CMSEL,S,COMPA_Tunnel
-    NSLA,R,1
+  CSYS,CS_Tunnel
+  *if,GEO_HDW_type,EQ,1,THEN
+    TUNNEL_V2_OBLQSECT
+    /view,1,0,1,0
+    /auto
+    /dist,1,1.1
+  *else
+    NSEL,S,LOC,Z,zSect_b,zSect_e
+  *endif
+  CMSEL,S,COMPA_Tunnel
+  NSLA,R,1
 
-    ESLN,S,0
-    ESLA,R
-    CM,COMPE_Section,ELEM
-    CSYS,0
+  ESLN,S,0
+  ESLA,R
+  CM,COMPE_Section,ELEM
+  CSYS,0
 
-    *do,nthLSType,1,2,1
-        LSKey=LSOptions(nthLSType)
+  *do,nthLSType,1,2,1
+    LSKey=LSOptions(nthLSType)
 
-        !!
-        !! CROSS-SECTIONAL RESULTS
-        !!
-        *cfopen,'RES_SECT',TXT,,APPEND
+    !! Cross-sectional results                                                                !!
+    *cfopen,'RES_SECT',TXT,,APPEND
 
-            *vwrite,zMid
-            (F8.2,'    ',\b)
+      *vwrite,zMid
+      (F8.2,'    ',\b)
 
-            !! ROOF SLAB
-            !!
-            CMSEL,S,COMPA_Roof
-            ESLA,S
-            CMSEL,R,COMPE_Section
-            NSLE,S
-            TUNNEL_V2_SECRES,LSKey,0
-            *vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
-            (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
+      !! Roof slab                                                                          !!
+      CMSEL,S,COMPA_Roof
+      ESLA,S
+      CMSEL,R,COMPE_Section
+      NSLE,S
+      TUNNEL_V2_SECRES,LSKey,0
+      *vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
+      (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
 
-            !! FLOOR SLAB
-            !!
-            CMSEL,S,COMPA_Floor
-            ESLA,S
-            CMSEL,R,COMPE_Section
-            NSLE,S
-            TUNNEL_V2_SECRES,LSKey,0
-            *vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
-            (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
+      !! Floor slab                                                                         !!
+      CMSEL,S,COMPA_Floor
+      ESLA,S
+      CMSEL,R,COMPE_Section
+      NSLE,S
+      TUNNEL_V2_SECRES,LSKey,0
+      *vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
+      (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
 
-            !! WALLS
-            !!
+      !! Walls                                                                              !!
 
-            !! LEFT WALL
-            CMSEL,S,COMPA_LeftWall
-            ESLA,S
-            CMSEL,R,COMPE_Section
-            NSLE,S
-            TUNNEL_V2_SECRES,LSKey,1
-            LW_MSup=MSup
-            LW_VSup=VSup
-            LW_MSpan=MSpan
-            LW_NSpan=NSpan
-            LW_DFL=DFL
+      !! Left wall                                                                          !!
+      CMSEL,S,COMPA_LeftWall
+      ESLA,S
+      CMSEL,R,COMPE_Section
+      NSLE,S
+      TUNNEL_V2_SECRES,LSKey,1
+      LW_MSup  = MSup
+      LW_VSup  = VSup
+      LW_MSpan = MSpan
+      LW_NSpan = NSpan
+      LW_DFL   = DFL
 
-            !! RIGHT WALL
-            CMSEL,S,COMPA_RightWall
-            ESLA,S
-            CMSEL,R,COMPE_Section
-            NSLE,S
-            TUNNEL_V2_SECRES,LSKey,1
-            RW_MSup=MSup
-            RW_VSup=VSup
-            RW_MSpan=MSpan
-            RW_NSpan=NSpan
-            RW_DFL=DFL
+      !! Right wall                                                                         !!
+      CMSEL,S,COMPA_RightWall
+      ESLA,S
+      CMSEL,R,COMPE_Section
+      NSLE,S
+      TUNNEL_V2_SECRES,LSKey,1
+      RW_MSup  = MSup
+      RW_VSup  = VSup
+      RW_MSpan = MSpan
+      RW_NSpan = NSpan
+      RW_DFL   = DFL
 
-            !! MAXIMUM VALUES
-            COMPARE,'MSup','MAX',2,LW_MSup,RW_MSup
-            COMPARE,'MSpan','MIN',2,LW_MSpan,RW_MSpan
-            COMPARE,'VSup','MAX',2,LW_VSup,RW_VSup
-            COMPARE,'NSpan','MIN',2,LW_NSpan,RW_NSpan
-            COMPARE,'DFL','MAX',2,LW_DFL,RW_DFL
-            *vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
-            (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2)
+      !! Maximum values  TODO: remove macro                                                 !!
+      COMPARE , 'MSup'  , 'MAX' , 2 , LW_MSup  , RW_MSup
+      COMPARE , 'MSpan' , 'MIN' , 2 , LW_MSpan , RW_MSpan
+      COMPARE , 'VSup'  , 'MAX' , 2 , LW_VSup  , RW_VSup
+      COMPARE , 'NSpan' , 'MIN' , 2 , LW_NSpan , RW_NSpan
+      COMPARE , 'DFL'   , 'MAX' , 2 , LW_DFL   , RW_DFL
+      *vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
+      (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2)
 
-            !! SOIL
-            !!
-            CMSEL,S,COMPA_Floor
-            !CMSEL,S,COMPA_Roof
-            ESLA,S
-            CMSEL,R,COMPE_Section
-            NSLE,S
-            TUNNEL_V2_SURFRES,LSKey,0
-            !*vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
-            !(F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
+      !! Soil                                                                               !!
+      CMSEL,S,COMPA_Floor
+      !CMSEL,S,COMPA_Roof
+      ESLA,S
+      CMSEL,R,COMPE_Section
+      NSLE,S
+      TUNNEL_V2_SURFRES,LSKey,0
+      !*vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
+      !(F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
 
-        *cfclos
+    *cfclos
 
+    !! Longitudinal results                                                                   !!
+    *cfopen,'RES_LONG',txt,,APPEND
 
-        !!
-        !! LONGITUDINAL RESULTS
-        !!
-        *cfopen,'RES_LONG',txt,,APPEND
+      *vwrite,zMid
+      (F8.2,'    ',\b)
 
-            *vwrite,zMid
-            (F8.2,'    ',\b)
+      !! Roof slab                                                                          !!
+      CMSEL,S,COMPA_Roof
+      ESLA,S
+      CMSEL,R,COMPE_Section
+      NSLE,S
+      TUNNEL_V2_LONGRES,LSKey
+      *vwrite, Mmin/1000, Nmin/1000, Mmax/1000, VMax/1000, NMax/1000
+      (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
 
-            !! ROOF SLAB
-            !!
-            CMSEL,S,COMPA_Roof
-            ESLA,S
-            CMSEL,R,COMPE_Section
-            NSLE,S
-            TUNNEL_V2_LONGRES,LSKey
-            *vwrite, Mmin/1000, Nmin/1000, Mmax/1000, VMax/1000, NMax/1000
-            (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
+      !! Floor slab                                                                         !!
+      CMSEL,S,COMPA_Floor
+      ESLA,S
+      CMSEL,R,COMPE_Section
+      NSLE,S
+      TUNNEL_V2_LONGRES,LSKey
+      *vwrite, Mmin/1000, Nmin/1000, Mmax/1000, VMax/1000, NMax/1000
+      (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
 
-            !! FLOOR SLAB
-            !!
-            CMSEL,S,COMPA_Floor
-            ESLA,S
-            CMSEL,R,COMPE_Section
-            NSLE,S
-            TUNNEL_V2_LONGRES,LSKey
-            *vwrite, Mmin/1000, Nmin/1000, Mmax/1000, VMax/1000, NMax/1000
-            (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'    ',\b)
+      !! Walls                                                                              !!
+      CMSEL,S,COMPA_LeftWall
+      CMSEL,A,COMPA_RightWall
+      ESLA,S
+      CMSEL,R,COMPE_Section
+      NSLE,S
+      TUNNEL_V2_LONGRES,LSKey
+      *vwrite, Mmin/1000, Nmin/1000, Mmax/1000, VMax/1000, NMax/1000
+      (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2)
 
-            !! WALLS
-            !!
-            CMSEL,S,COMPA_LeftWall
-            CMSEL,A,COMPA_RightWall
-            ESLA,S
-            CMSEL,R,COMPE_Section
-            NSLE,S
-            TUNNEL_V2_LONGRES,LSKey
-            *vwrite, Mmin/1000, Nmin/1000, Mmax/1000, VMax/1000, NMax/1000
-            (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2)
+    *cfclos
 
-        *cfclos
-
-
-    *enddo
-
+  *enddo
 *enddo
 
 /replot
-
-
-

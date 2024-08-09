@@ -1,8 +1,6 @@
-!!
-!!
-!! 4. FINITE ELEMENT MODEL
-!!
-!!
+! TUNNEL_V2_FEM
+
+
 *msg,UI,FILE_name,'CREATING FINITE ELEMENT MODEL...'
 TUNNEL # %s %/&
 %35C
@@ -11,9 +9,9 @@ TUNNEL # %s %/&
 
 CSYS,0
 
-!!
-!! 4.1 TUNNEL
-!!
+!!                                                                                                !!
+!! 4.1  Tunnel                                                                                    !!
+!!                                                                                                !!
 ! Left wall attributes
 CMSEL,S,COMPA_LeftWall
 AATT,1,,1,CS_left,SEC_LWALL
@@ -24,28 +22,28 @@ AATT,1,,1,CS_right,SEC_RWALL
 
 ! Inner walls attributes
 *if,GEO_IWALL_type,eq,0,then
-    CMSEL,S,COMPA_InnerWalls
-    AATT,1,,1,CS_right,SEC_IWALL
+  CMSEL,S,COMPA_InnerWalls
+  AATT,1,,1,CS_right,SEC_IWALL
 *elseif,GEO_IWALL_type,eq,1,then
-    wallX=0
-    *do,nthWall,1,GEO_TUN_modules-1,1
-        wallX=wallX+GEO_TUN_effW
+  wallX=0
+  *do,nthWall,1,GEO_TUN_modules-1,1
+    wallX=wallX+GEO_TUN_effW
 
-        beamCS=CS_IWALL_beams(nthWall)
-        colCS=CS_IWALL_columns(nthWall)
+    beamCS=CS_IWALL_beams(nthWall)
+    colCS=CS_IWALL_columns(nthWall)
 
-        cmsel,s,COMPA_tBeam
-        asel,r,loc,x,wallX
-        aatt,MAT_CONC,,TYPE_SHELL181,beamCS,SEC_tBeam
+    cmsel,s,COMPA_tBeam
+    asel,r,loc,x,wallX
+    aatt,MAT_CONC,,TYPE_SHELL181,beamCS,SEC_tBeam
 
-        cmsel,s,COMPA_bBeam
-        asel,r,loc,x,wallX
-        aatt,MAT_CONC,,TYPE_SHELL181,beamCS,SEC_bBeam
+    cmsel,s,COMPA_bBeam
+    asel,r,loc,x,wallX
+    aatt,MAT_CONC,,TYPE_SHELL181,beamCS,SEC_bBeam
 
-        cmsel,s,COMPA_Columns
-        asel,r,loc,x,wallX
-        aatt,MAT_CONC,,TYPE_SHELL181,colCS,SEC_Columns
-    *enddo
+    cmsel,s,COMPA_Columns
+    asel,r,loc,x,wallX
+    aatt,MAT_CONC,,TYPE_SHELL181,colCS,SEC_Columns
+  *enddo
 *endif
 
 ! Floor slab attributes
@@ -57,195 +55,192 @@ CMSEL,S,COMPA_Roof
 AATT,3,,1,CS_top,SEC_ROOF
 
 *if,GEO_CORB_status,GE,1,THEN
-    ! Corbels
-    xWall=0
-    *do,nthWall,1,GEO_TUN_modules+1,1
+  ! Corbels
+  xWall=0
+  *do,nthWall,1,GEO_TUN_modules+1,1
 
-        ! Geometric limits
-        xLeft=xWall-GEO_corbelXOff_BOT
-        xRight=xWall+GEO_corbelXOff_BOT
-        ASEL,S,LOC,X,xLeft,xRight
-        CM,COMPA_insideDX,AREA
+    ! Geometric limits
+    xLeft=xWall-GEO_corbelXOff_BOT
+    xRight=xWall+GEO_corbelXOff_BOT
+    ASEL,S,LOC,X,xLeft,xRight
+    CM,COMPA_insideDX,AREA
 
-        ! Coordinate system numbers
-        nthCS_ROOF_left   = SEC_ROOF_LCORBEL  + nthWall
-        nthCS_ROOF_right  = SEC_ROOF_RCORBEL  + nthWall
-        nthCS_FLOOR_left  = SEC_FLOOR_LCORBEL + nthWall
-        nthCS_FLOOR_right = SEC_FLOOR_RCORBEL + nthWall
-        nthCS_WALL_bot    = SEC_WALL_BCORBEL  + nthWall
-        nthCS_WALL_top    = SEC_WALL_TCORBEL  + nthWall
+    ! Coordinate system numbers
+    nthCS_ROOF_left   = SEC_ROOF_LCORBEL  + nthWall
+    nthCS_ROOF_right  = SEC_ROOF_RCORBEL  + nthWall
+    nthCS_FLOOR_left  = SEC_FLOOR_LCORBEL + nthWall
+    nthCS_FLOOR_right = SEC_FLOOR_RCORBEL + nthWall
+    nthCS_WALL_bot    = SEC_WALL_BCORBEL  + nthWall
+    nthCS_WALL_top    = SEC_WALL_TCORBEL  + nthWall
 
-        ! Walls
-        *if,xWall,EQ,0,THEN
-            nthWallCS=CS_left
-        *else
-            nthWallCS=CS_right
-        *endif
+    ! Walls
+    *if,xWall,EQ,0,THEN
+      nthWallCS=CS_left
+    *else
+      nthWallCS=CS_right
+    *endif
 
-        *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,2,THEN
-            ! Top slab, left side
-            CMSEL,S,COMPA_ROOF_leftCorbel
-            CMSEL,R,COMPA_insideDX
-            AATT,1,,1,CS_top,nthCS_ROOF_left
-            ! Top slab, right side
-            CMSEL,S,COMPA_ROOF_rightCorbel
-            CMSEL,R,COMPA_insideDX
-            AATT,1,,1,CS_top,nthCS_ROOF_right
-            ! Top, walls
-            CMSEL,S,COMPA_WALL_topCorbel
-            CMSEL,R,COMPA_insideDX
-            AATT,1,,1,nthWallCS,nthCS_WALL_top
-        *endif
+    *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,2,THEN
+      ! Top slab, left side
+      CMSEL,S,COMPA_ROOF_leftCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,1,,1,CS_top,nthCS_ROOF_left
+      ! Top slab, right side
+      CMSEL,S,COMPA_ROOF_rightCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,1,,1,CS_top,nthCS_ROOF_right
+      ! Top, walls
+      CMSEL,S,COMPA_WALL_topCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,1,,1,nthWallCS,nthCS_WALL_top
+    *endif
 
-        *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,3,THEN
-            ! Bottom slab, left side
-            CMSEL,S,COMPA_FLOOR_leftCorbel
-            CMSEL,R,COMPA_insideDX
-            AATT,1,,1,CS_bot,nthCS_FLOOR_left
-            ! Bottom slab, right side
-            CMSEL,S,COMPA_FLOOR_rightCorbel
-            CMSEL,R,COMPA_insideDX
-            AATT,1,,1,CS_bot,nthCS_FLOOR_right
-            ! Bottom, walls
-            CMSEL,S,COMPA_WALL_botCorbel
-            CMSEL,R,COMPA_insideDX
-            AATT,1,,1,nthWallCS,nthCS_WALL_bot
-        *endif
+    *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,3,THEN
+      ! Bottom slab, left side
+      CMSEL,S,COMPA_FLOOR_leftCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,1,,1,CS_bot,nthCS_FLOOR_left
+      ! Bottom slab, right side
+      CMSEL,S,COMPA_FLOOR_rightCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,1,,1,CS_bot,nthCS_FLOOR_right
+      ! Bottom, walls
+      CMSEL,S,COMPA_WALL_botCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,1,,1,nthWallCS,nthCS_WALL_bot
+    *endif
 
-        xWall=xWall+Eff_GalleryWidth
-    *enddo
+    xWall=xWall+Eff_GalleryWidth
+  *enddo
 *endif
 
 ! Mesh
 *if,GEO_ROOF_wallConnection,eq,0,then
-    ! Rigid roof-wall connection
-    CMSEL,S,COMPA_Tunnel
-    AESIZE,ALL,FEM_TUN_esize
-    AMESH,ALL
+  ! Rigid roof-wall connection
+  CMSEL,S,COMPA_Tunnel
+  AESIZE,ALL,FEM_TUN_esize
+  AMESH,ALL
 
 *elseif,GEO_ROOF_wallConnection,eq,1,then
-    ! Pinned roof-wall connection
-    cmsel,s,COMPA_Tunnel
-    cmsel,u,COMPA_Roof
-    aesize,all,FEM_TUN_esize
+  ! Pinned roof-wall connection
+  cmsel,s,COMPA_Tunnel
+  cmsel,u,COMPA_Roof
+  aesize,all,FEM_TUN_esize
+  amesh,all
+
+  csys,CS_Tunnel
+
+  lsla,s
+  lsel,r,loc,y,GEO_TUN_effH
+  cm,COMPL_ref,line
+
+  cmsel,s,COMPA_Roof
+  lsla,s
+  cm,COMPL_targ,line
+
+  xWall=0
+  *do,nthModule,1,GEO_TUN_modules+1,1
+    cmsel,s,COMPL_ref
+    lsel,r,loc,x,xWall
+    cm,COMPL_copy,line
+
+    cmsel,s,COMPL_targ
+    lsel,r,loc,x,xWall
+    cm,COMPL_paste,line
+
+    cmsel,a,COMPL_copy
+    mshcopy,line,COMPL_copy,COMPL_paste
+
+    xWall=xWall+GEO_TUN_effW
+  *enddo
+
+  ! Mesh roof
+  cmsel,s,COMPA_Roof
+  aesize,all,FEM_TUN_esize
+  *if,GEO_ROOF_type,eq,0,then
+    ! Without girders
     amesh,all
-
-    csys,CS_Tunnel
-
-    lsla,s
-    lsel,r,loc,y,GEO_TUN_effH
-    cm,COMPL_ref,line
-
-    cmsel,s,COMPA_Roof
-    lsla,s
-    cm,COMPL_targ,line
-
-    xWall=0
-    *do,nthModule,1,GEO_TUN_modules+1,1
-        cmsel,s,COMPL_ref
-        lsel,r,loc,x,xWall
-        cm,COMPL_copy,line
-
-        cmsel,s,COMPL_targ
-        lsel,r,loc,x,xWall
-        cm,COMPL_paste,line
-
-        cmsel,a,COMPL_copy
-        mshcopy,line,COMPL_copy,COMPL_paste
-
-        xWall=xWall+GEO_TUN_effW
-    *enddo
-
-    ! Mesh roof
-    cmsel,s,COMPA_Roof
-    aesize,all,FEM_TUN_esize
-    *if,GEO_ROOF_type,eq,0,then
-        ! Without girders
+  *elseif,GEO_ROOF_type,eq,1,then
+    ! With girders
+    *do,nthGirder,1,GEO_girderCount,1
+      ! Select girder areas
+      compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
+      cmsel,s,%compName%
+      *if,nthGirder,eq,1,then
+        ! First gider: mesh freely
         amesh,all
-    *elseif,GEO_ROOF_type,eq,1,then
-        ! With girders
-        *do,nthGirder,1,GEO_girderCount,1
-            ! Select girder areas
-            compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
-            cmsel,s,%compName%
-            *if,nthGirder,eq,1,then
-                ! First gider: mesh freely
-                amesh,all
-            *else
-                ! Subsequent girders: paste previously copied line mesh
-                z=GEO_girderZ(nthGirder-1)
-                lsla,s
-                lsel,r,loc,z,z
-                cm,COMPL_pasteG,line
-                cmsel,a,COMPL_copyG
-                mshcopy,line,COMPL_copyG,COMPL_pasteG
-                amesh,all
-            *endif
-            ! Girders before last: copy line mesh
-            *if,nthGirder,lt,GEO_girderCount,then
-                z=GEO_girderZ(nthGirder)
-                lsla,s
-                lsel,r,loc,z,z
-                cm,COMPL_copyG,line
-            *endif
-        *enddo
-    *endif
+      *else
+        ! Subsequent girders: paste previously copied line mesh
+        z=GEO_girderZ(nthGirder-1)
+        lsla,s
+        lsel,r,loc,z,z
+        cm,COMPL_pasteG,line
+        cmsel,a,COMPL_copyG
+        mshcopy,line,COMPL_copyG,COMPL_pasteG
+        amesh,all
+      *endif
+      ! Girders before last: copy line mesh
+      *if,nthGirder,lt,GEO_girderCount,then
+        z=GEO_girderZ(nthGirder)
+        lsla,s
+        lsel,r,loc,z,z
+        cm,COMPL_copyG,line
+      *endif
+    *enddo
+  *endif
 
-    csys,0
+  csys,0
 *endif
-!
-!
-!
-!!
-!! 4.2 HEADWALL
-!!
+
+
+!!                                                                                                !!
+!! 4.2  Headwall                                                                                  !!
+!!                                                                                                !!
 *get,parType,PARM,GEO_HDW_status,TYPE
 *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-    CMSEL,S,COMPA_HDW_LeftWall
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_left,SEC_HDW_Wall
+  CMSEL,S,COMPA_HDW_LeftWall
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_left,SEC_HDW_Wall
 
-    CMSEL,S,COMPA_HDW_RightWall
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_right,SEC_HDW_Wall
+  CMSEL,S,COMPA_HDW_RightWall
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_right,SEC_HDW_Wall
 
-    CMSEL,S,COMPA_HDW_Footing
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Footing
+  CMSEL,S,COMPA_HDW_Footing
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Footing
 
-    CMSEL,S,COMPA_HDW_Slab
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Slab
+  CMSEL,S,COMPA_HDW_Slab
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Slab
 
-    CMSEL,S,COMPA_HDW_Stiffener
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Stiffener
+  CMSEL,S,COMPA_HDW_Stiffener
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Stiffener
 
-    CMSEL,S,COMPA_HDW_TopBeam
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_headBeam
+  CMSEL,S,COMPA_HDW_TopBeam
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_headBeam
 
-    CMSEL,s,COMPA_HDW_BotBeam
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_frontBeam
+  CMSEL,s,COMPA_HDW_BotBeam
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_frontBeam
 
-    CMSEL,s,COMPA_HDW_BackBeam
-    AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_backBeam
+  CMSEL,s,COMPA_HDW_BackBeam
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_backBeam
 
-    cmsel,s,COMPA_HDW_Columns
-    aatt,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_Column
+  cmsel,s,COMPA_HDW_Columns
+  aatt,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_Column
 
-    cmsel,s,COMPA_Headwalls
-    AESIZE,ALL,FEM_HDW_esize
-    AMESH,ALL
+  cmsel,s,COMPA_Headwalls
+  AESIZE,ALL,FEM_HDW_esize
+  AMESH,ALL
 *endif
 
 
-
-!!
-!! 4.3 SOIL
-!!
+!!                                                                                                !!
+!! 4.3  Soil                                                                                      !!
+!!                                                                                                !!
 ! Attributes for soil springs
 TYPE,2
 REAL,1
 CSYS,CoordSys
 MAT,2
 
-!! 4.3.1 FLOOR SLAB
-!!
+!! 4.3.1  Floor slab                                                                              !!
 ! Bottom supports
 CMSEL,S,COMPA_Floor
 NSLA,S,1
@@ -253,24 +248,23 @@ NSLA,S,1
 
 *do,NodeIndex,1,NodeCount,1
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal=NX(nthNode)
+  yVal=NY(nthNode)
+  zVal=NZ(nthNode)
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal,yVal-SpringLength,zVal
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode=MaxNode+1
+  N,NewNode,xVal,yVal-SpringLength,zVal
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
-!! 4.3.2 LEFT WALL
-!!
+!! 4.3.2  Left wall                                                                               !!
 ! Left wall supports
 CMSEL,S,COMPA_LeftWall
 NSLA,S,1
@@ -278,24 +272,23 @@ NSLA,S,1
 
 *do,NodeIndex,1,NodeCount,1
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal=NX(nthNode)
+  yVal=NY(nthNode)
+  zVal=NZ(nthNode)
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal-SpringLength,yVal,zVal
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode=MaxNode+1
+  N,NewNode,xVal-SpringLength,yVal,zVal
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
-!! 4.3.3 RIGHT WALL
-!!
+!! 4.3.3  Right wall                                                                              !!
 ! Right wall supports
 CMSEL,S,COMPA_RightWall
 NSLA,S,1
@@ -303,24 +296,23 @@ NSLA,S,1
 
 *do,NodeIndex,1,NodeCount,1
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal=NX(nthNode)
+  yVal=NY(nthNode)
+  zVal=NZ(nthNode)
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal+SpringLength,yVal,zVal
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode=MaxNode+1
+  N,NewNode,xVal+SpringLength,yVal,zVal
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
-!! 4.3.4 TOP SLAB
-!!
+!! 4.3.4  Top slab                                                                                !!
 ! Top supports
 CMSEL,S,COMPA_Roof
 NSLA,S,1
@@ -328,345 +320,338 @@ NSLA,S,1
 
 *do,NodeIndex,1,NodeCount,1
 
-   *get,nthNode,NODE,0,NUM,MIN
-   xVal=NX(nthNode)
-   yVal=NY(nthNode)
-   zVal=NZ(nthNode)
+  *get,nthNode,NODE,0,NUM,MIN
+  xVal=NX(nthNode)
+  yVal=NY(nthNode)
+  zVal=NZ(nthNode)
 
-   *get,MaxNode,NODE,0,NUM,MAXD
-   NewNode=MaxNode+1
-   N,NewNode,xVal,yVal+SpringLength,zVal
-   E,NewNode,nthNode
+  *get,MaxNode,NODE,0,NUM,MAXD
+  NewNode=MaxNode+1
+  N,NewNode,xVal,yVal+SpringLength,zVal
+  E,NewNode,nthNode
 
-   D,NewNode,UX,0,,,,UY,UZ
+  D,NewNode,UX,0,,,,UY,UZ
 
-   NSEL,U,NODE,,nthNode
+  NSEL,U,NODE,,nthNode
 
 *enddo
 
-
-!! 4.3.7 HEADWALLS
-!!
+!! 4.3.7  Headwalls                                                                               !!
 *get,parType,PARM,GEO_HDW_status,TYPE
 *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-    TUNNEL_V2_HDWBC
+  TUNNEL_V2_HDWBC
 *endif
-!
-!
-!
-!!
-!! 4.4 APPROACH SLAB
-!!
+
+
+!!                                                                                                !!
+!! 4.4  Approach slab                                                                             !!
+!!                                                                                                !!
 *if,GEO_APR_status,eq,1,then
-    csys,CS_Tunnel
+  csys,CS_Tunnel
 
-    ! Match roof mesh
-    cmsel,s,COMPA_Roof
-    lsla,s
-    cm,COMPL_ref,line
-    lsel,r,loc,x,0
-    lsel,r,loc,z,GEO_APR_z3,GEO_APR_z4
-    cm,COMPL_copyL,line
-    cmsel,s,COMPL_ref
-    lsel,r,loc,x,GEO_TUN_totEffW
-    lsel,r,loc,z,GEO_APR_z1,GEO_APR_z2
-    cm,COMPL_copyR,line
-    cmsel,s,COMPA_approach
-    lsla,s
-    cm,COMPL_targ,line
-    lsel,r,loc,x,0
-    cm,COMPL_pasteL,line
-    cmsel,s,COMPL_targ
-    lsel,r,loc,x,GEO_TUN_totEffW
-    cm,COMPL_pasteR,line
-    allsel
-    mshcopy,line,COMPL_copyL,COMPL_pasteL
-    mshcopy,line,COMPL_copyR,COMPL_pasteR
+  ! Match roof mesh
+  cmsel,s,COMPA_Roof
+  lsla,s
+  cm,COMPL_ref,line
+  lsel,r,loc,x,0
+  lsel,r,loc,z,GEO_APR_z3,GEO_APR_z4
+  cm,COMPL_copyL,line
+  cmsel,s,COMPL_ref
+  lsel,r,loc,x,GEO_TUN_totEffW
+  lsel,r,loc,z,GEO_APR_z1,GEO_APR_z2
+  cm,COMPL_copyR,line
+  cmsel,s,COMPA_approach
+  lsla,s
+  cm,COMPL_targ,line
+  lsel,r,loc,x,0
+  cm,COMPL_pasteL,line
+  cmsel,s,COMPL_targ
+  lsel,r,loc,x,GEO_TUN_totEffW
+  cm,COMPL_pasteR,line
+  allsel
+  mshcopy,line,COMPL_copyL,COMPL_pasteL
+  mshcopy,line,COMPL_copyR,COMPL_pasteR
 
-    ! Mesh approach slab
-    cmsel,s,COMPA_approach
-    aatt,MAT_CONC,,TYPE_SHELL181,,SEC_APR
-    aesize,all,FEM_TUN_esize
-    amesh,all
-    esla,s
-    nsle,s
-    cm,COMPN_approach,node
+  ! Mesh approach slab
+  cmsel,s,COMPA_approach
+  aatt,MAT_CONC,,TYPE_SHELL181,,SEC_APR
+  aesize,all,FEM_TUN_esize
+  amesh,all
+  esla,s
+  nsle,s
+  cm,COMPN_approach,node
 
-    ! Node selection components: approach slab interfaces
-    lsel,s,loc,x,0
-    lsel,a,loc,x,GEO_TUN_totEffW
-    lsla,r
-    nsll,s,1
-    cm,COMPN_aprInterf,node
-    nsel,r,loc,x,0
-    cm,COMPN_aprInterfL,node
-    cmsel,s,COMPN_aprInterf
-    cmsel,u,COMPN_aprInterfL
-    cm,COMPN_aprInterfR,node
+  ! Node selection components: approach slab interfaces
+  lsel,s,loc,x,0
+  lsel,a,loc,x,GEO_TUN_totEffW
+  lsla,r
+  nsll,s,1
+  cm,COMPN_aprInterf,node
+  nsel,r,loc,x,0
+  cm,COMPN_aprInterfL,node
+  cmsel,s,COMPN_aprInterf
+  cmsel,u,COMPN_aprInterfL
+  cm,COMPN_aprInterfR,node
 
-    csys,0
+  csys,0
 
-    ! Elastic soil supports (far from tunnel only)
-    xMin=0-(GEO_APR_length/3)
-    xMax=GEO_TUN_totEffW+(GEO_APR_length/3)
-    type,TYPE_LINK180
-    real,REAL_normSprings
-    mat,MAT_SOIL
-    cmsel,s,COMPN_approach
-    cmsel,u,COMPN_aprInterf
-    !nsel,u,loc,x,xMin,xMax
-    cm,COMPN_temp,node
-    *get,NC,node,,count
-    nnum=0
-    *do,nthNode,1,NC,1
-        cmsel,s,COMPN_temp
-        nnum=ndnext(nnum)
-        nx=nx(nnum)
-        ny=ny(nnum)
-        nz=nz(nnum)
-        *get,NDMX,node,,num,maxd
-        newnode=NDMX+1
-        n,newnode,nx,ny-FEM_SPR_normLength,nz
-        e,nnum,newnode
-        d,newnode,all,0
-    *enddo
+  ! Elastic soil supports (far from tunnel only)
+  xMin=0-(GEO_APR_length/3)
+  xMax=GEO_TUN_totEffW+(GEO_APR_length/3)
+  type,TYPE_LINK180
+  real,REAL_normSprings
+  mat,MAT_SOIL
+  cmsel,s,COMPN_approach
+  cmsel,u,COMPN_aprInterf
+  !nsel,u,loc,x,xMin,xMax
+  cm,COMPN_temp,node
+  *get,NC,node,,count
+  nnum=0
+  *do,nthNode,1,NC,1
+    cmsel,s,COMPN_temp
+    nnum=ndnext(nnum)
+    nx=nx(nnum)
+    ny=ny(nnum)
+    nz=nz(nnum)
+    *get,NDMX,node,,num,maxd
+    newnode=NDMX+1
+    n,newnode,nx,ny-FEM_SPR_normLength,nz
+    e,nnum,newnode
+    d,newnode,all,0
+  *enddo
 
 *endif
-!
-!
-!
-!!
-!! 4.5 PINNED CONNECTIONS
-!!
+
+
+!!                                                                                                !!
+!! 4.5  Pinned connections                                                                        !!
+!!                                                                                                !!
 ! Between roof, walls, and approach slabs
 *if,GEO_APR_status,eq,1,or,GEO_ROOF_wallConnection,eq,1,then
-    csys,CS_Tunnel
+  csys,CS_Tunnel
 
-    cmsel,s,COMPA_Tunnel
-    cmsel,a,COMPA_Approach
-    cmsel,a,COMPA_HDW_TopBeam
-    lsla,s
-    nsll,s,1
-    nsel,r,loc,y,GEO_TUN_effH
-    cm,COMPN_temp,node
+  cmsel,s,COMPA_Tunnel
+  cmsel,a,COMPA_Approach
+  cmsel,a,COMPA_HDW_TopBeam
+  lsla,s
+  nsll,s,1
+  nsel,r,loc,y,GEO_TUN_effH
+  cm,COMPN_temp,node
 
-    nsel,r,loc,x,0,GEO_TUN_totEffW,GEO_TUN_effW
+  nsel,r,loc,x,0,GEO_TUN_totEffW,GEO_TUN_effW
 
-    *if,GEO_APR_oneWay,eq,0,then
-        cpintf,UX,1e-6
-        cpintf,UY,1e-6
-        cpintf,UZ,1e-6
-    *elseif,GEO_APR_oneWay,eq,1,then
-        ! Nodal couplings
-        cpintf,UX,1e-6
-        cpintf,UZ,1e-6
-        cmsel,s,COMPA_Approach
-        nsla,u,1
-        cpintf,UY,1e-6
-        ! One way connection
-        cmsel,s,COMPN_temp
-        cmsel,s,COMPA_Walls
-        esla,s
-        nsla,r,1
-        esln,r,0
-        cm,COMPN_temp2,node
-        nsle,s
-        cmsel,u,COMPN_temp2
-        cm,COMPN_row2,node
-        !n2=ndnext(0)
-        cmsel,s,COMPN_temp
-        cmsel,s,COMPA_Approach
-        nsla,r,1
-        cm,COMPN_row1,node
-        !n1=ndnext(0)
-        yDist=FEM_TUN_esize !abs(ny(n1)=ny(n2))
-        cmsel,s,COMPN_row1
-        cmsel,a,COMPN_row2
-        type,TYPE_LINK180
-        real,REAL_rigidStrut
-        mat,MAT_RIGID
-        eintf,5e-2,,low,CS_Tunnel,0,yDist,0
+  *if,GEO_APR_oneWay,eq,0,then
+    cpintf,UX,1e-6
+    cpintf,UY,1e-6
+    cpintf,UZ,1e-6
+  *elseif,GEO_APR_oneWay,eq,1,then
+    ! Nodal couplings
+    cpintf,UX,1e-6
+    cpintf,UZ,1e-6
+    cmsel,s,COMPA_Approach
+    nsla,u,1
+    cpintf,UY,1e-6
+    ! One way connection
+    cmsel,s,COMPN_temp
+    cmsel,s,COMPA_Walls
+    esla,s
+    nsla,r,1
+    esln,r,0
+    cm,COMPN_temp2,node
+    nsle,s
+    cmsel,u,COMPN_temp2
+    cm,COMPN_row2,node
+    !n2=ndnext(0)
+    cmsel,s,COMPN_temp
+    cmsel,s,COMPA_Approach
+    nsla,r,1
+    cm,COMPN_row1,node
+    !n1=ndnext(0)
+    yDist=FEM_TUN_esize !abs(ny(n1)=ny(n2))
+    cmsel,s,COMPN_row1
+    cmsel,a,COMPN_row2
+    type,TYPE_LINK180
+    real,REAL_rigidStrut
+    mat,MAT_RIGID
+    eintf,5e-2,,low,CS_Tunnel,0,yDist,0
 
-    *endif
+  *endif
 
-    csys,0
+  csys,0
 *endif
 
 ! Between roof precast girders
 *if,GEO_ROOF_type,eq,1,and,GEO_ROOF_continuity,eq,0,then
-    cmsel,s,COMPA_Roof
-    lsla,s
-    ! Remove longitudinal lines from selection
-    x=0
-    *do,nthModule,1,GEO_TUN_Modules+1,1
-        lsel,u,loc,x,x
-        x=x+GEO_TUN_effW
-    *enddo
-    nsll,s,1
-    ! Create semi-rigid connection
-    type,TYPE_COMBIN39
-    mat,MAT_CONC
-    real,REAL_roofSprings
-    eintf,1e-3
+  cmsel,s,COMPA_Roof
+  lsla,s
+  ! Remove longitudinal lines from selection
+  x=0
+  *do,nthModule,1,GEO_TUN_Modules+1,1
+    lsel,u,loc,x,x
+    x=x+GEO_TUN_effW
+  *enddo
+  nsll,s,1
+  ! Create semi-rigid connection
+  type,TYPE_COMBIN39
+  mat,MAT_CONC
+  real,REAL_roofSprings
+  eintf,1e-3
 *endif
 
 ! Between headwall top beam and first/last roof slab girder
 *if,GEO_HDW_status,eq,1,and,GEO_FRAME_beamRoofConnection,eq,0,then
-    cmsel,s,COMPA_HDW_TopBeam
-    lsla,s
-    nsll,s,1
-    cm,COMPN_temp,node
-    cmsel,s,COMPA_Roof
-    lsla,s
-    nsll,s,1
-    cmsel,a,COMPN_temp
+  cmsel,s,COMPA_HDW_TopBeam
+  lsla,s
+  nsll,s,1
+  cm,COMPN_temp,node
+  cmsel,s,COMPA_Roof
+  lsla,s
+  nsll,s,1
+  cmsel,a,COMPN_temp
 
-    cpintf,rotx,1e-6
-    cpintf,roty,1e-6
-    cpintf,rotz,1e-6
+  cpintf,rotx,1e-6
+  cpintf,roty,1e-6
+  cpintf,rotz,1e-6
 *endif
-!
-!
-!
-!!
-!! 4.6 PILES
-!!
+
+
+!!                                                                                                !!
+!! 4.6  Piles                                                                                     !!
+!!                                                                                                !!
 *if,GEO_PILE_status,eq,1,then
-    cmsel,s,COMPL_pileExt
-    latt,MAT_CONC,,TYPE_BEAM188,,,,SEC_pileExt
-    lesize,all,1
-    lmesh,all
+  cmsel,s,COMPL_pileExt
+  latt,MAT_CONC,,TYPE_BEAM188,,,,SEC_pileExt
+  lesize,all,1
+  lmesh,all
 
-    cmsel,s,COMPL_pileInt
-    latt,MAT_CONC,,TYPE_BEAM188,,,,SEC_pileInt
-    lesize,all,1
-    lmesh,all
+  cmsel,s,COMPL_pileInt
+  latt,MAT_CONC,,TYPE_BEAM188,,,,SEC_pileInt
+  lesize,all,1
+  lmesh,all
 
-    type,TYPE_LINK180
-    mat,MAT_SOIL
-    r,REAL_normSprings
+  type,TYPE_LINK180
+  mat,MAT_SOIL
+  r,REAL_normSprings
 
-    nsel,u,node,,all
+  nsel,u,node,,all
+  cm,COMPN_pileSoilSup,node
+
+  csbackup
+
+  cmsel,s,COMPL_piles
+  nsll,s,0
+  cm,COMPN_temp,node
+  *get,nc,node,,count
+  nodenum=0
+  *do,nthNode,1,nc,1
+    cmsel,s,COMPN_temp
+    nodenum=ndnext(nodenum)
+    csys,0
+    ndx=nx(nodenum)
+    ndy=ny(nodenum)
+    ndz=nz(nodenum)
+    *get,nmxd,node,,num,maxd
+    x_node=nmxd+1
+    z_node=nmxd+2
+    n,x_node,ndx+1,ndy,ndz
+    n,z_node,ndx,ndy,ndz+1
+    e,nodenum,x_node
+    e,nodenum,z_node
+    cmsel,s,COMPN_pileSoilSup
+    nsel,a,node,,x_node
+    nsel,a,node,,z_node
     cm,COMPN_pileSoilSup,node
+    d,x_node,all,0
+    d,z_node,all,0
+  *enddo
 
-    csbackup
+  csrestore
 
-    cmsel,s,COMPL_piles
-    nsll,s,0
-    cm,COMPN_temp,node
-    *get,nc,node,,count
-    nodenum=0
-    *do,nthNode,1,nc,1
-        cmsel,s,COMPN_temp
-        nodenum=ndnext(nodenum)
-        csys,0
-        ndx=nx(nodenum)
-        ndy=ny(nodenum)
-        ndz=nz(nodenum)
-        *get,nmxd,node,,num,maxd
-        x_node=nmxd+1
-        z_node=nmxd+2
-        n,x_node,ndx+1,ndy,ndz
-        n,z_node,ndx,ndy,ndz+1
-        e,nodenum,x_node
-        e,nodenum,z_node
-        cmsel,s,COMPN_pileSoilSup
-        nsel,a,node,,x_node
-        nsel,a,node,,z_node
-        cm,COMPN_pileSoilSup,node
-        d,x_node,all,0
-        d,z_node,all,0
-    *enddo
-
-    csrestore
-
-    !! *** todo: cp nearest node
-    cmsel,s,COMPK_pileTop
-    nslk,s
-    cm,COMPN_pileTop,node
-    *get,nc,node,,count
-    cmsel,s,COMPA_Floor
-    nsla,s,1
-    cm,COMPN_Floor,node
-    pileNN=0
-    *do,nthNode,1,nc,1
-        cmsel,s,COMPN_pileTop
-        pileNN=ndnext(pileNN)
-        cmsel,s,COMPN_Floor
-        nsel,a,node,,pileNN
-        floorNN=nnear(pileNN)
-        cp,next,all,pileNN,floorNN
-    *enddo
-    !! \\\ todo
+  !! *** todo: cp nearest node
+  cmsel,s,COMPK_pileTop
+  nslk,s
+  cm,COMPN_pileTop,node
+  *get,nc,node,,count
+  cmsel,s,COMPA_Floor
+  nsla,s,1
+  cm,COMPN_Floor,node
+  pileNN=0
+  *do,nthNode,1,nc,1
+    cmsel,s,COMPN_pileTop
+    pileNN=ndnext(pileNN)
+    cmsel,s,COMPN_Floor
+    nsel,a,node,,pileNN
+    floorNN=nnear(pileNN)
+    cp,next,all,pileNN,floorNN
+  *enddo
+  !! \\\ todo
 *endif
-!
-!
-!
-!!
-!! 4.8 SOIL FRICTION
-!!
+
+
+!!                                                                                                !!
+!! 4.8  Soil friction                                                                             !!
+!!                                                                                                !!
 *get,parmType,PARM,LOAD_thermal,TYPE
 *if,parmType,EQ,0,AND,LOAD_thermal,NE,0,THEN
-    ! Attributes for frictional soil springs
-    TYPE,TYPE_LINK180
-    REAL,REAL_longSprings
-    MAT,MAT_SOIL
+  ! Attributes for frictional soil springs
+  TYPE,TYPE_LINK180
+  REAL,REAL_longSprings
+  MAT,MAT_SOIL
 
-    CSYS,CS_tunnel
-    CMSEL,S,COMPA_Tunnel
-    cmsel,u,COMPA_innerWalls
-    ESLA,S
-    NSLE,S
+  CSYS,CS_tunnel
+  CMSEL,S,COMPA_Tunnel
+  cmsel,u,COMPA_innerWalls
+  ESLA,S
+  NSLE,S
+  CM,COMPN_temp,NODE
+  *get,nc1,node,,count
+  nummrg,node,,,sele
+  *get,nc2,node,,count
+  *if,nc2,ne,nc1,then
+    cm,COMPN_unsel,node
+    cmsel,s,COMPN_temp
+    cmsel,u,COMPN_unsel
     CM,COMPN_temp,NODE
-    *get,nc1,node,,count
-    nummrg,node,,,sele
-    *get,nc2,node,,count
-    *if,nc2,ne,nc1,then
-        cm,COMPN_unsel,node
-        cmsel,s,COMPN_temp
-        cmsel,u,COMPN_unsel
-        CM,COMPN_temp,NODE
+  *endif
+  *get,NC,NODE,,COUNT
+  NodeNum=0
+
+  *do,nthNode,1,NC,1
+    CMSEL,S,COMPN_temp
+    NodeNum=NDNEXT(NodeNum)
+    x=NX(NodeNum)
+    y=NY(NodeNum)
+    z=NZ(NodeNum)
+    *get,maxND,NODE,,NUM,MAXD
+    NewNode=maxND+1
+    N,NewNode,x,y,z+SpringLength
+    E,NodeNum,NewNode
+    D,NewNode,UZ,0
+
+    cpNum_UX=0
+    cpNum_UY=0
+    *get,cpNum_UX,node,NodeNum,cps,ux
+    *get,cpNum_UY,node,NodeNum,cps,uy
+
+    *if,cpNum_UX,gt,0,then
+      cp,cpNum_UX,ux,NewNode
+    *else
+      CP,NEXT,UX,NewNode,NodeNum
     *endif
-    *get,NC,NODE,,COUNT
-    NodeNum=0
 
-    *do,nthNode,1,NC,1
-        CMSEL,S,COMPN_temp
-        NodeNum=NDNEXT(NodeNum)
-        x=NX(NodeNum)
-        y=NY(NodeNum)
-        z=NZ(NodeNum)
-        *get,maxND,NODE,,NUM,MAXD
-        NewNode=maxND+1
-        N,NewNode,x,y,z+SpringLength
-        E,NodeNum,NewNode
-        D,NewNode,UZ,0
-
-        cpNum_UX=0
-        cpNum_UY=0
-        *get,cpNum_UX,node,NodeNum,cps,ux
-        *get,cpNum_UY,node,NodeNum,cps,uy
-
-        *if,cpNum_UX,gt,0,then
-            cp,cpNum_UX,ux,NewNode
-        *else
-            CP,NEXT,UX,NewNode,NodeNum
-        *endif
-
-        *if,cpNum_UY,gt,0,then
-            cp,cpNum_UY,uy,NewNode
-        *else
-            CP,NEXT,UY,NewNode,NodeNum
-        *endif
-    *enddo
-    CSYS,0
+    *if,cpNum_UY,gt,0,then
+      cp,cpNum_UY,uy,NewNode
+    *else
+      CP,NEXT,UY,NewNode,NodeNum
+    *endif
+  *enddo
+  CSYS,0
 *endif
-!
-!
-!
-!!
-!! 4.7 CAPTURE IMAGES
-!!
+
+
+!!                                                                                                !!
+!! 4.7  Capture images                                                                            !!
+!!                                                                                                !!
 ALLSEL
 /eshape,1
 VIEW4W
@@ -693,10 +678,3 @@ VIEW1W
 /type,,3
 /view,1,1,1,1
 EPLOT
-
-
-
-
-
-
-

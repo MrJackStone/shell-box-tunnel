@@ -1,18 +1,18 @@
 ! TUNNEL_V2_ETAB
 
 
-SET,FIRST
+set,first
 
 ! Criar tabelas
-ETABLE,FX,SMISC,1
-ETABLE,FY,SMISC,2
-ETABLE,MX,SMISC,4
-ETABLE,MY,SMISC,5
-ETABLE,MT,SMISC,6
-ETABLE,QX,SMISC,7
-ETABLE,QY,SMISC,8
-ETABLE,DESLOCY,U,Y
-ETABLE,DESLOCX,U,X
+etable , fx      , smisc , 1
+etable , fy      , smisc , 2
+etable , mx      , smisc , 4
+etable , my      , smisc , 5
+etable , mt      , smisc , 6
+etable , qx      , smisc , 7
+etable , qy      , smisc , 8
+etable , deslocy , u     , y
+etable , deslocx , u     , x
 
 ESEL,S,MAT,,1
 /view,,1,1,1
@@ -20,9 +20,7 @@ ESEL,S,MAT,,1
 /eshape,1
 
 
-!!
-!! COMBINAR LOAD STEPS: OBTER VALORES MÁXIMOS E MÍNIMOS DAS ELEMENT TABLES
-!!
+!! Combinar load steps: obter valores máximos e mínimos das element tables                      !!
 ! MX
 SMAX,MX_MAX,MX
 SMIN,MX_MIN,MX
@@ -66,43 +64,43 @@ CSYS,0
 
 *do,nthLoadStep,1,LoadStepCount,1
 
-   ESEL,S,MAT,,1
-   SET,nthLoadStep
-   ETABLE,REFL
+  ESEL,S,MAT,,1
+  SET,nthLoadStep
+  ETABLE,REFL
 
-   ! MX
-   SMAX,MX_MAX,MX_MAX,MX,1,1
-   SMIN,MX_MIN,MX_MIN,MX,1,1
-   ! MY
-   SMAX,MY_MAX,MY_MAX,MY,1,1
-   SMIN,MY_MIN,MY_MIN,MY,1,1
-   ! MT
-   SABS,1
-   SMAX,MT_MAX,MT_MAX,MT,1,1
-   SABS,0
-   ! FX
-   SMAX,FX_MAX,FX_MAX,FX,1,1
-   SMIN,FX_MIN,FX_MIN,FX,1,1
-   ! FY
-   SMAX,FY_MAX,FY_MAX,FY,1,1
-   SMIN,FY_MIN,FY_MIN,FY,1,1
-   ! QX
-   SABS,1
-   SMAX,QX_MAX,QX_MAX,QX,1,1
-   SABS,0
-   ! QY
-   SABS,1
-   SMAX,QY_MAX,QY_MAX,QY,1,1
-   SABS,0
-   ! DESLOCX
-   SMAX,DESLOCX_MAX,DESLOCX_MAX,DESLOCX,1,1
-   SMIN,DESLOCX_MIN,DESLOCX_MIN,DESLOCX,1,1
-   ! DESLOCY
-   SMAX,DESLOCY_MAX,DESLOCY_MAX,DESLOCY,1,1
-   SMIN,DESLOCY_MIN,DESLOCY_MIN,DESLOCY,1,1
+  ! MX
+  SMAX,MX_MAX,MX_MAX,MX,1,1
+  SMIN,MX_MIN,MX_MIN,MX,1,1
+  ! MY
+  SMAX,MY_MAX,MY_MAX,MY,1,1
+  SMIN,MY_MIN,MY_MIN,MY,1,1
+  ! MT
+  SABS,1
+  SMAX,MT_MAX,MT_MAX,MT,1,1
+  SABS,0
+  ! FX
+  SMAX,FX_MAX,FX_MAX,FX,1,1
+  SMIN,FX_MIN,FX_MIN,FX,1,1
+  ! FY
+  SMAX,FY_MAX,FY_MAX,FY,1,1
+  SMIN,FY_MIN,FY_MIN,FY,1,1
+  ! QX
+  SABS,1
+  SMAX,QX_MAX,QX_MAX,QX,1,1
+  SABS,0
+  ! QY
+  SABS,1
+  SMAX,QY_MAX,QY_MAX,QY,1,1
+  SABS,0
+  ! DESLOCX
+  SMAX,DESLOCX_MAX,DESLOCX_MAX,DESLOCX,1,1
+  SMIN,DESLOCX_MIN,DESLOCX_MIN,DESLOCX,1,1
+  ! DESLOCY
+  SMAX,DESLOCY_MAX,DESLOCY_MAX,DESLOCY,1,1
+  SMIN,DESLOCY_MIN,DESLOCY_MIN,DESLOCY,1,1
 
-   !TUNNEL_V2_DEFLECT
-   ! output: maxDeflection
+  !TUNNEL_V2_DEFLECT
+  ! output: maxDeflection
 
 *enddo
 RoofSlab_maxDeflection=maxDeflection
@@ -189,9 +187,7 @@ QYIndex=_OUTPUT
 ALLSEL
 
 
-!!
-!! LAJE DE PISO
-!!
+!! Laje de piso                                                                                   !!
 ASEL,S,LOC,Y,0
 ASEL,R,LOC,Z,0,GEO_TUN_length
 ESLA,S
@@ -244,9 +240,7 @@ ESLA,S
 *vscfun,FloorQYMax,MAX,QYValues
 
 
-!!
-!! LAJE DE TETO
-!!
+!! Laje de teto                                                                                   !!
 ASEL,S,LOC,Y,Eff_GalleryHeight
 ASEL,R,LOC,Z,0,GEO_TUN_length
 ESLA,S
@@ -299,9 +293,7 @@ ESLA,S
 *vscfun,RoofQYMax,MAX,QYValues
 
 
-!!
-!! PAREDES EXTERNAS
-!!
+!! Paredes externas                                                                               !!
 ASEL,S,LOC,X,0
 ASEL,A,LOC,X,GEO_TUN_modules*Eff_GalleryWidth
 ESLA,S
@@ -354,9 +346,7 @@ ESLA,S
 *vscfun,WallQYMax,MAX,QYValues
 
 
-!!
-!! PAREDES INTERNAS
-!!
+!! Paredes internas                                                                               !!
 ASEL,S,LOC,Z,0,GEO_TUN_length
 ASEL,U,LOC,Y,0
 ASEL,U,LOC,Y,Eff_GalleryHeight
@@ -369,67 +359,67 @@ ESLA,S
 
 *if,ECount,NE,0,THEN
 
-   InternalWalls=1
+  InternalWalls=1
 
-   ! Inicializar vetores
-   *del,MXPosValues
-   *del,MXNegValues
-   *del,MYPosValues
-   *del,MYNegValues
-   *del,FXPosValues
-   *del,FXNegValues
-   *del,FYPosValues
-   *del,FYNegValues
-   *del,QXValues
-   *del,QYValues
-   *dim,MXPosValues,ARRAY,ECount
-   *dim,MXNegValues,ARRAY,ECount
-   *dim,MYPosValues,ARRAY,ECount
-   *dim,MYNegValues,ARRAY,ECount
-   *dim,FXPosValues,ARRAY,ECount
-   *dim,FXNegValues,ARRAY,ECount
-   *dim,FYPosValues,ARRAY,ECount
-   *dim,FYNegValues,ARRAY,ECount
-   *dim,QXValues,ARRAY,ECount
-   *dim,QYValues,ARRAY,ECount
-   ! Coletar dados das element tables
-   *vget,MXPosValues(1),ELEM,EMin,ETAB,'MX_MAX',,,0
-   *vget,MXNegValues(1),ELEM,EMin,ETAB,'MX_MIN',,,0
-   *vget,MYPosValues(1),ELEM,EMin,ETAB,'MY_MAX',,,0
-   *vget,MYNegValues(1),ELEM,EMin,ETAB,'MY_MIN',,,0
-   *vget,FXPosValues(1),ELEM,EMin,ETAB,'FX_MAX',,,0
-   *vget,FXNegValues(1),ELEM,EMin,ETAB,'FX_MIN',,,0
-   *vget,FYPosValues(1),ELEM,EMin,ETAB,'FY_MAX',,,0
-   *vget,FYNegValues(1),ELEM,EMin,ETAB,'FY_MIN',,,0
-   *vget,QXValues(1),ELEM,EMin,ETAB,'QX_MAX',,,0
-   *vget,QYValues(1),ELEM,EMin,ETAB,'QY_MAX',,,0
-   ! Obter máximos e mínimos
-   *vscfun,IntMXMax,MAX,MXPosValues
-   *vscfun,IntMXMin,MIN,MXNegValues
-   *vscfun,IntMYMax,MAX,MYPosValues
-   *vscfun,IntMYMin,MIN,MYNegValues
-   *vscfun,IntFXMax,MAX,FXPosValues
-   *vscfun,IntFXMin,MIN,FXNegValues
-   *vscfun,IntFYMax,MAX,FYPosValues
-   *vscfun,IntFYMin,MIN,FYNegValues
-   *vscfun,IntQXMax,MAX,QXValues
-   *vscfun,IntQYMax,MAX,QYValues
+  ! Inicializar vetores
+  *del,MXPosValues
+  *del,MXNegValues
+  *del,MYPosValues
+  *del,MYNegValues
+  *del,FXPosValues
+  *del,FXNegValues
+  *del,FYPosValues
+  *del,FYNegValues
+  *del,QXValues
+  *del,QYValues
+  *dim,MXPosValues,ARRAY,ECount
+  *dim,MXNegValues,ARRAY,ECount
+  *dim,MYPosValues,ARRAY,ECount
+  *dim,MYNegValues,ARRAY,ECount
+  *dim,FXPosValues,ARRAY,ECount
+  *dim,FXNegValues,ARRAY,ECount
+  *dim,FYPosValues,ARRAY,ECount
+  *dim,FYNegValues,ARRAY,ECount
+  *dim,QXValues,ARRAY,ECount
+  *dim,QYValues,ARRAY,ECount
+  ! Coletar dados das element tables
+  *vget,MXPosValues(1),ELEM,EMin,ETAB,'MX_MAX',,,0
+  *vget,MXNegValues(1),ELEM,EMin,ETAB,'MX_MIN',,,0
+  *vget,MYPosValues(1),ELEM,EMin,ETAB,'MY_MAX',,,0
+  *vget,MYNegValues(1),ELEM,EMin,ETAB,'MY_MIN',,,0
+  *vget,FXPosValues(1),ELEM,EMin,ETAB,'FX_MAX',,,0
+  *vget,FXNegValues(1),ELEM,EMin,ETAB,'FX_MIN',,,0
+  *vget,FYPosValues(1),ELEM,EMin,ETAB,'FY_MAX',,,0
+  *vget,FYNegValues(1),ELEM,EMin,ETAB,'FY_MIN',,,0
+  *vget,QXValues(1),ELEM,EMin,ETAB,'QX_MAX',,,0
+  *vget,QYValues(1),ELEM,EMin,ETAB,'QY_MAX',,,0
+  ! Obter máximos e mínimos
+  *vscfun,IntMXMax,MAX,MXPosValues
+  *vscfun,IntMXMin,MIN,MXNegValues
+  *vscfun,IntMYMax,MAX,MYPosValues
+  *vscfun,IntMYMin,MIN,MYNegValues
+  *vscfun,IntFXMax,MAX,FXPosValues
+  *vscfun,IntFXMin,MIN,FXNegValues
+  *vscfun,IntFYMax,MAX,FYPosValues
+  *vscfun,IntFYMin,MIN,FYNegValues
+  *vscfun,IntQXMax,MAX,QXValues
+  *vscfun,IntQYMax,MAX,QYValues
 
 *else
 
-   InternalWalls=0
+  InternalWalls = 0
 
-   IntMXMax=0
-   IntMXMin=0
-   IntMYMax=0
-   IntMYMin=0
+  IntMXMax = 0
+  IntMXMin = 0
+  IntMYMax = 0
+  IntMYMin = 0
 
-   IntFXMax=0
-   IntFXMin=0
-   IntFYMax=0
-   IntFYMin=0
+  IntFXMax = 0
+  IntFXMin = 0
+  IntFYMax = 0
+  IntFYMin = 0
 
-   IntQXMax=0
-   IntQYMax=0
+  IntQXMax = 0
+  IntQYMax = 0
 
 *endif

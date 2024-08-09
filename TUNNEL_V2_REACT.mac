@@ -5,61 +5,61 @@ NSEL,S,LOC,Y,-SpringLength
 *get,NodeCount,NODE,0,COUNT
 CM,COMPN_SpringSupports,NODE
 
-MAX_FloorPeakSoilStress=0
-MAX_FloorAvgSoilStress=0
-MAX_FloorMaxUY=0
-MAX_FloorMinUY=0
+MAX_FloorPeakSoilStress = 0
+MAX_FloorAvgSoilStress  = 0
+MAX_FloorMaxUY          = 0
+MAX_FloorMinUY          = 0
 
 *do,nthLoadStep,1,LoadStepCount,1
 
-   SET,nthLoadStep
+  SET,nthLoadStep
 
-   CMSEL,S,COMPN_SpringSupports
-   *del,YReactions
-   *dim,YReactions,ARRAY,NodeCount
+  CMSEL,S,COMPN_SpringSupports
+  *del,YReactions
+  *dim,YReactions,ARRAY,NodeCount
 
-   nodeNum=0
-   *do,NodeIndex,1,NodeCount,1
-      nodeNum=NDNEXT(nodeNum)
-      *get,RY,NODE,nodeNum,RF,FY
-      YReactions(NodeIndex)=RY
-   *enddo
+  nodeNum=0
+  *do,NodeIndex,1,NodeCount,1
+    nodeNum=NDNEXT(nodeNum)
+    *get,RY,NODE,nodeNum,RF,FY
+    YReactions(NodeIndex)=RY
+  *enddo
 
-   *vscfun,MaxRY,MAX,YReactions
-   *vscfun,SumRY,SUM,YReactions
-   AvgRY=SumRY/NodeCount
-   FloorPeakSoilStress=ABS(MaxRY/ElementArea)
-   FloorAvgSoilStress=ABS(AvgRY/ElementArea)
+  *vscfun,MaxRY,MAX,YReactions
+  *vscfun,SumRY,SUM,YReactions
+  AvgRY               = SumRY/NodeCount
+  FloorPeakSoilStress = ABS(MaxRY/ElementArea)
+  FloorAvgSoilStress  = ABS(AvgRY/ElementArea)
 
-   NSEL,S,LOC,Y,0
-   NSEL,R,LOC,X,0,Eff_GalleryWidth*GEO_TUN_modules
-   NSEL,R,LOC,Z,0,GEO_TUN_length
+  NSEL,S,LOC,Y,0
+  NSEL,R,LOC,X,0,Eff_GalleryWidth*GEO_TUN_modules
+  NSEL,R,LOC,Z,0,GEO_TUN_length
 
-   *del,YDisplacements
-   *dim,YDisplacements,ARRAY,NodeCount
+  *del,YDisplacements
+  *dim,YDisplacements,ARRAY,NodeCount
 
-   nodeNum=0
-   *do,NodeIndex,1,NodeCount,1
-      nodeNum=NDNEXT(nodeNum)
-      *get,UY,NODE,nodeNum,U,Y
-      YDisplacements(NodeIndex)=ABS(UY)
-   *enddo
+  nodeNum=0
+  *do,NodeIndex,1,NodeCount,1
+    nodeNum=NDNEXT(nodeNum)
+    *get,UY,NODE,nodeNum,U,Y
+    YDisplacements(NodeIndex)=ABS(UY)
+  *enddo
 
-   *vscfun,FloorMaxUY,MAX,YDisplacements
-   *vscfun,FloorMinUY,MAX,YDisplacements
+  *vscfun,FloorMaxUY,MAX,YDisplacements
+  *vscfun,FloorMinUY,MAX,YDisplacements
 
-   *if,FloorPeakSoilStress,GT,MAX_FloorPeakSoilStress,THEN
-      MAX_FloorPeakSoilStress=FloorPeakSoilStress
-   *endif
-   *if,FloorAvgSoilStress,GT,MAX_FloorAvgSoilStress,THEN
-      MAX_FloorAvgSoilStress=FloorAvgSoilStress
-   *endif
-   *if,FloorMaxUY,GT,MAX_FloorMaxUY,THEN
-      MAX_FloorMaxUY=FloorMaxUY
-   *endif
-   *if,FloorMinUY,GT,MAX_FloorMinUY,THEN
-      MAX_FloorMinUY=FloorMinUY
-   *endif
+  *if,FloorPeakSoilStress,GT,MAX_FloorPeakSoilStress,THEN
+    MAX_FloorPeakSoilStress=FloorPeakSoilStress
+  *endif
+  *if,FloorAvgSoilStress,GT,MAX_FloorAvgSoilStress,THEN
+    MAX_FloorAvgSoilStress=FloorAvgSoilStress
+  *endif
+  *if,FloorMaxUY,GT,MAX_FloorMaxUY,THEN
+    MAX_FloorMaxUY=FloorMaxUY
+  *endif
+  *if,FloorMinUY,GT,MAX_FloorMinUY,THEN
+    MAX_FloorMinUY=FloorMinUY
+  *endif
 
 *enddo
 
@@ -67,10 +67,10 @@ MAX_FloorMinUY=0
 CSYS,CS_Tunnel
 
 *afun,DEG
-zi=-GEO_HDW_length*COS(TunnelSlope)
-ze=(GEO_TUN_length+GEO_HDW_length)*COS(TunnelSlope)
-yi=-GEO_HDW_length*SIN(TunnelSlope)
-ye=(GEO_TUN_length+GEO_HDW_length)*SIN(TunnelSlope)
+zi = -GEO_HDW_length*COS(TunnelSlope)
+ze = (GEO_TUN_length+GEO_HDW_length)*COS(TunnelSlope)
+yi = -GEO_HDW_length*SIN(TunnelSlope)
+ye = (GEO_TUN_length+GEO_HDW_length)*SIN(TunnelSlope)
 *afun,RAD
 VIEW1W
 
@@ -103,20 +103,16 @@ LPLOT
 /dist,1,0.95,1
 /focus,1,,0.05,,2
 GO2PNG,1500
-LPLOT
-/noerase
-APLOT
-PLPAGM,'SIGMAY',50,NODE
-/erase
+  LPLOT
+  /noerase
+  APLOT
+  PLPAGM,'SIGMAY',50,NODE
+  /erase
 ENDPNG,'BS_SOIL_SY'
 CLIMS
 CMDELE,COMPL_temp
 
 
-
-
-
-!!
 SET,FIRST,LAST
 ALLSEL
 PATH,'BS_AXIS',2,,200
@@ -139,19 +135,11 @@ LPLOT
 /dist,1,0.95,1
 /focus,1,,0.05,,2
 GO2PNG,1500
-LPLOT
-/noerase
-APLOT
-PLPAGM,'SIGMAY',50,NODE
-/erase
+  LPLOT
+  /noerase
+  APLOT
+  PLPAGM,'SIGMAY',50,NODE
+  /erase
 ENDPNG,'BS_SOIL_SY_pp'
 CLIMS
 CMDELE,COMPL_temp
-!!
-
-
-
-
-
-
-

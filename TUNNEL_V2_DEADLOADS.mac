@@ -1,5 +1,6 @@
 ! TUNNEL_V2_DEADLOADS
 
+
 ! Dead loads (soil weight) on roof and approach slabs
 CMSEL,S,COMPA_Roof
 CMSEL,A,COMPA_approach
@@ -9,34 +10,33 @@ cm,COMPN_temp,node
 cm,COMPE_temp,elem
 *get,NodeCount,NODE,0,COUNT
 
-*del,ARRN_Roof
-*dim,ARRN_Roof,ARRAY,NodeCount
-*del,ARRFY_Roof
-*dim,ARRFY_Roof,ARRAY,NodeCount
+*del , ARRN_Roof
+*del , ARRFY_Roof
+*dim , ARRN_Roof  ,  , NodeCount
+*dim , ARRFY_Roof ,  , NodeCount
 
 NodeNum=0
 *do,nthNode,1,NodeCount,1
 
-    NodeNum=NDNEXT(NodeNum)
+  NodeNum = NDNEXT(NodeNum)
+  NX      = NX(NodeNum)
+  NY      = NY(NodeNum)
+  NZ      = NZ(NodeNum)
 
-    NX=NX(NodeNum)
-    NY=NY(NodeNum)
-    NZ=NZ(NodeNum)
+  apportionedArea = arnode(NodeNum)
 
-    apportionedArea=arnode(NodeNum)
+  ! Calculate embankment height above node
+  tunnel_v2_yabove, 'yAbove', NZ
 
-    ! Calculate embankment height above node
-    tunnel_v2_yabove, 'yAbove', NZ
+  !COMPARE,'nthWaterY','MIN',2,WaterY,yAbove
+  !COMPARE,'nthWaterY','MAX',2,nthWaterY,NY
 
-    !COMPARE,'nthWaterY','MIN',2,WaterY,yAbove
-    !COMPARE,'nthWaterY','MAX',2,nthWaterY,NY
+  SoilPressure  = Gammat*(yAbove-NY)
+  DeadNodalLoad = -apportionedArea*SoilPressure
 
-    SoilPressure=Gammat*(yAbove-NY)
-    DeadNodalLoad=-apportionedArea*SoilPressure
-
-    !F,NodeNum,FY,DeadNodalLoad
-    ARRN_Roof(nthNode)=NodeNum
-    ARRFY_Roof(nthNode)=DeadNodalLoad
+  !F,NodeNum,FY,DeadNodalLoad
+  ARRN_Roof(nthNode)  = NodeNum
+  ARRFY_Roof(nthNode) = DeadNodalLoad
 
 *enddo
 
@@ -59,38 +59,36 @@ cm,COMPE_temp,elem
 NodeNum=0
 *do,nthNode,1,NodeCount,1
 
-    NodeNum=NDNEXT(NodeNum)
+  NodeNum = NDNEXT(NodeNum)
+  NX      = NX(NodeNum)
+  NY      = NY(NodeNum)
+  NZ      = NZ(NodeNum)
 
-    NX=NX(NodeNum)
-    NY=NY(NodeNum)
-    NZ=NZ(NodeNum)
+  apportionedArea = arnode(NodeNum)
 
-    apportionedArea=arnode(NodeNum)
+  ! Calculate embankment height above node
+  tunnel_v2_yabove, 'yAbove', NZ
 
-    ! Calculate embankment height above node
-    tunnel_v2_yabove, 'yAbove', NZ
+  COMPARE , 'nthWaterY' , 'MIN' , 2 , WaterY    , yAbove !! TODO: remove macro
+  COMPARE , 'nthWaterY' , 'MAX' , 2 , nthWaterY , NY
 
-    COMPARE,'nthWaterY','MIN',2,WaterY,yAbove
-    COMPARE,'nthWaterY','MAX',2,nthWaterY,NY
+  EffectiveSoilPressure = Gammat*(yAbove-nthWaterY)+GammaSUB*(nthWaterY-NY)
+  HorEffectivePressure  = EffectiveSoilPressure*RestEPCoefficient-2*MAT_SOIL_cohesion*SQRT(RestEPCoefficient)
+  HorEffectivePressure  = (HorEffectivePressure>0)
 
-    EffectiveSoilPressure=Gammat*(yAbove-nthWaterY)+GammaSUB*(nthWaterY-NY)
-    HorEffectivePressure=EffectiveSoilPressure*RestEPCoefficient-2*MAT_SOIL_cohesion*SQRT(RestEPCoefficient)
-    HorEffectivePressure=(HorEffectivePressure>0)
+  WaterPressure = (nthWaterY-NY)*Gammaw
 
-    WaterPressure=(nthWaterY-NY)*Gammaw
+  *if,NX,GT,Eff_GalleryWidth/2,THEN
+    direction = -1
+  *else
+    direction = 1
+  *endif
+  DeadNodalLoad = direction*apportionedArea*(HorEffectivePressure+WaterPressure)
 
-    *if,NX,GT,Eff_GalleryWidth/2,THEN
-        direction=-1
-    *else
-        direction=1
-    *endif
-    DeadNodalLoad=direction*apportionedArea*(HorEffectivePressure+WaterPressure)
-
-    ARRN_Walls(nthNode)=NodeNum
-    ARRFX_Walls(nthNode)=DeadNodalLoad
+  ARRN_Walls(nthNode)  = NodeNum
+  ARRFX_Walls(nthNode) = DeadNodalLoad
 
 *enddo
 
 ! Apply loads
-F,ARRN_Walls(1:NodeCount),FX,ARRFX_Walls(1:NodeCount)
-
+F , ARRN_Walls(1:NodeCount) , FX , ARRFX_Walls(1:NodeCount)

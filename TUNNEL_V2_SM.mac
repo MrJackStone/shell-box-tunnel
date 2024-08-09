@@ -1,8 +1,8 @@
-!!
-!!
-!! 3. SOLID MODEL
-!!
-!!
+!!                                                                                                !!
+!! 3.  Solid model                                                                                !!
+!!                                                                                                !!
+
+! Exported selection components:
 ! Area components:
 !    COMPA_Tunnel
 !    COMPA_Floor
@@ -36,17 +36,16 @@
 /angle,1
 /auto,1
 
-SELTOL,1E-8
+seltol,1e-8
 
 ! Activate cartesian coordinate to account for tunnel slope
-CSYS,CS_Tunnel
+csys,CS_Tunnel
 
-!!
-!! 3.1 TUNNEL
-!!
+!!                                                                                                !!
+!! 3.1  Tunnel                                                                                    !!
+!!                                                                                                !!
 
-!! 3.1.1 DRAW AREAS
-!!
+!! 3.1.1  Draw areas                                                                              !!
 ! First wall
 xVal=0
 
@@ -75,247 +74,241 @@ L,KP4,KP1
 
 AL,L1,L2,L3,L4
 
-ALLSEL
+allsel
 
 ! Inner walls, floors, and ceilings
 *do,GalleryModuleIndex,1,GEO_TUN_modules,1
 
-   KPA=KP(xVal,0,0)
-   KPB=KP(xVal,0,GEO_TUN_length)
-   KPC=KP(xVal,Eff_GalleryHeight,GEO_TUN_length)
-   KPD=KP(xVal,Eff_GalleryHeight,0)
+  KPA=KP(xVal,0,0)
+  KPB=KP(xVal,0,GEO_TUN_length)
+  KPC=KP(xVal,Eff_GalleryHeight,GEO_TUN_length)
+  KPD=KP(xVal,Eff_GalleryHeight,0)
 
-   KSEL,S,KP,,KPA
-   KSEL,A,KP,,KPB
-   KSEL,A,KP,,KPC
-   KSEL,A,KP,,KPD
-   CM,LastKeypoints,KP
+  KSEL,S,KP,,KPA
+  KSEL,A,KP,,KPB
+  KSEL,A,KP,,KPC
+  KSEL,A,KP,,KPD
+  CM,LastKeypoints,KP
 
-   xVal=xVal+Eff_GalleryWidth
+  xVal=xVal+Eff_GalleryWidth
 
-   KP1=KCounter
-   KP2=KCounter+1
-   KP3=KCounter+2
-   KP4=KCounter+3
-   KCounter=KP4+1
+  KP1=KCounter
+  KP2=KCounter+1
+  KP3=KCounter+2
+  KP4=KCounter+3
+  KCounter=KP4+1
 
-   KSEL,U,KP,,ALL
-   K,KP1,xVal,0,0
-   K,KP2,xVal,0,GEO_TUN_length
-   K,KP3,xVal,Eff_GalleryHeight,GEO_TUN_length
-   K,KP4,xVal,Eff_GalleryHeight,0
-   CM,NewKeypoints,KP
+  KSEL,U,KP,,ALL
+  K,KP1,xVal,0,0
+  K,KP2,xVal,0,GEO_TUN_length
+  K,KP3,xVal,Eff_GalleryHeight,GEO_TUN_length
+  K,KP4,xVal,Eff_GalleryHeight,0
+  CM,NewKeypoints,KP
 
-   LSEL,U,LINE,,ALL
-   L,KP1,KP2
-   *get,L1,LINE,0,NUM,MAX
-   L,KP2,KP3
-   *get,L2,LINE,0,NUM,MAX
-   L,KP3,KP4
-   *get,L3,LINE,0,NUM,MAX
-   L,KP4,KP1
-   *get,L4,LINE,0,NUM,MAX
-   CM,NewLines,LINE
+  LSEL,U,LINE,,ALL
+  L,KP1,KP2
+  *get,L1,LINE,0,NUM,MAX
+  L,KP2,KP3
+  *get,L2,LINE,0,NUM,MAX
+  L,KP3,KP4
+  *get,L3,LINE,0,NUM,MAX
+  L,KP4,KP1
+  *get,L4,LINE,0,NUM,MAX
+  CM,NewLines,LINE
 
-   AL,L1,L2,L3,L4
+  AL,L1,L2,L3,L4
 
-   CMSEL,S,LastKeypoints
-   LSLK,S,1
-   CM,LastLines,LINE
+  CMSEL,S,LastKeypoints
+  LSLK,S,1
+  CM,LastLines,LINE
 
-   LSEL,R,LOC,Y,0
-   *get,LA,LINE,0,NUM,MIN
-   CMSEL,S,LastLines
-   LSEL,R,LOC,Z,GEO_TUN_length
-   *get,LB,LINE,0,NUM,MIN
-   CMSEL,S,LastLines
-   LSEL,R,LOC,Y,Eff_GalleryHeight
-   *get,LC,LINE,0,NUM,MIN
-   CMSEL,S,LastLines
-   LSEL,R,LOC,Z,0
-   *get,LD,LINE,0,NUM,MIN
+  LSEL,R,LOC,Y,0
+  *get,LA,LINE,0,NUM,MIN
+  CMSEL,S,LastLines
+  LSEL,R,LOC,Z,GEO_TUN_length
+  *get,LB,LINE,0,NUM,MIN
+  CMSEL,S,LastLines
+  LSEL,R,LOC,Y,Eff_GalleryHeight
+  *get,LC,LINE,0,NUM,MIN
+  CMSEL,S,LastLines
+  LSEL,R,LOC,Z,0
+  *get,LD,LINE,0,NUM,MIN
 
-   CMSEL,S,NewKeypoints
-   CMSEL,A,LastKeypoints
+  CMSEL,S,NewKeypoints
+  CMSEL,A,LastKeypoints
 
-   LSEL,U,LINE,,ALL
-   L,KP1,KPA
-   *get,L5,LINE,0,NUM,MAX
-   L,KP2,KPB
-   *get,L6,LINE,0,NUM,MAX
-   L,KP3,KPC
-   *get,L7,LINE,0,NUM,MAX
-   L,KP4,KPD
-   *get,L8,LINE,0,NUM,MAX
-   CM,TransLines,LINE
+  LSEL,U,LINE,,ALL
+  L,KP1,KPA
+  *get,L5,LINE,0,NUM,MAX
+  L,KP2,KPB
+  *get,L6,LINE,0,NUM,MAX
+  L,KP3,KPC
+  *get,L7,LINE,0,NUM,MAX
+  L,KP4,KPD
+  *get,L8,LINE,0,NUM,MAX
+  CM,TransLines,LINE
 
-   CMSEL,S,NewLines
-   CMSEL,A,LastLines
-   CMSEL,A,TransLines
+  CMSEL,S,NewLines
+  CMSEL,A,LastLines
+  CMSEL,A,TransLines
 
-   AL,LA,L6,L1,L5
-   AL,L3,L7,LC,L8
+  AL,LA,L6,L1,L5
+  AL,L3,L7,LC,L8
 
 *enddo
-!
-!
-!! 3.1.2 OBLIQUE CUT AT TUNNEL ENDS
-!!
+
+
+!! 3.1.2  Oblique cut at tunnel ends                                                              !!
 *if,GEO_HDW_type,EQ,1,AND,GEO_HDW_angle,NE,0,THEN
 
-    *get,CSMax,CDSY,,NUM,MAX
-    tmpCS=CSMax+1000
+  *get,CSMax,CDSY,,NUM,MAX
+  tmpCS=CSMax+1000
 
-    ALLSEL
-    wpcsys,1,CS_Tunnel
-    WPROTA,,,-GEO_HDW_angle
-    ASBW,ALL,,DELETE
+  ALLSEL
+  wpcsys,1,CS_Tunnel
+  WPROTA,,,-GEO_HDW_angle
+  ASBW,ALL,,DELETE
 
-    CSWPLA,tmpCS,CART
-    ASEL,U,LOC,Z,0,1E3*GEO_TUN_length
-    ADELE,ALL,,,1
+  CSWPLA,tmpCS,CART
+  ASEL,U,LOC,Z,0,1E3*GEO_TUN_length
+  ADELE,ALL,,,1
 
-    ALLSEL
-    WPCSYS,1,CS_Tunnel
-    WPOFFS,Eff_GalleryWidth,,GEO_TUN_length
-    WPROTA,,,-GEO_HDW_angle
-    ASBW,ALL,,DELETE
+  ALLSEL
+  WPCSYS,1,CS_Tunnel
+  WPOFFS,Eff_GalleryWidth,,GEO_TUN_length
+  WPROTA,,,-GEO_HDW_angle
+  ASBW,ALL,,DELETE
 
-    CSWPLA,tmpCS,CART
-    ASEL,S,LOC,Z,0,1E3*GEO_TUN_length
-    ADELE,ALL,,,1
+  CSWPLA,tmpCS,CART
+  ASEL,S,LOC,Z,0,1E3*GEO_TUN_length
+  ADELE,ALL,,,1
 
-    allsel
-    WPCSYS,1,CS_Tunnel
-    CSYS,CS_Tunnel
+  allsel
+  WPCSYS,1,CS_Tunnel
+  CSYS,CS_Tunnel
 
 *endif
-!
-!
-!! 3.1.3 SLICE AT APPROACH SLABS
-!!
+
+
+!! 3.1.3  Slice at approach slabs                                                                  !!
 *if,GEO_APR_status,eq,1,then
-    csslicexy,GEO_APR_z1
-    csslicexy,GEO_APR_z2
-    csslicexy,GEO_APR_z3
-    csslicexy,GEO_APR_z4
+  csslicexy,GEO_APR_z1
+  csslicexy,GEO_APR_z2
+  csslicexy,GEO_APR_z3
+  csslicexy,GEO_APR_z4
 *endif
-!
-!
-!! 3.1.4 CREATE COMPONENTS
-!!
+
+
+!! 3.1.4  Create components                                                                        !!
 TUNNEL_V2_BUILDCM
-!
-!
-!! 3.1.5 SLICE AT PRECAST GIRDERS
-!!
+
+
+!! 3.1.5  Slice at precast girders                                                                !!
 *if,GEO_ROOF_type,eq,1,then
-    cmsel,s,COMPA_Tunnel
-    cmsel,u,COMPA_Roof
-    *do,nthSlice,1,GEO_girderCount-1,1
-        z=GEO_girderZ(nthSlice)
-        csslicexy,z
-    *enddo
+  cmsel,s,COMPA_Tunnel
+  cmsel,u,COMPA_Roof
+  *do,nthSlice,1,GEO_girderCount-1,1
+    z=GEO_girderZ(nthSlice)
+    csslicexy,z
+  *enddo
 
-    cmsel,s,COMPA_Roof
-    lsla,s
-    ksll,s
-    wpcsys,,CS_Tunnel
-    *do,nthSlice,1,GEO_girderCount-1,1
-        z=GEO_girderZ(nthSlice)
-        wpoffs,,,z
-        asbw,all,sepo,delete
-        wpoffs,,,-z
-    *enddo
+  cmsel,s,COMPA_Roof
+  lsla,s
+  ksll,s
+  wpcsys,,CS_Tunnel
+  *do,nthSlice,1,GEO_girderCount-1,1
+    z=GEO_girderZ(nthSlice)
+    wpoffs,,,z
+    asbw,all,sepo,delete
+    wpoffs,,,-z
+  *enddo
 
-    ! Rebuild named selection components
-    TUNNEL_V2_BUILDCM
+  ! Rebuild named selection components
+  TUNNEL_V2_BUILDCM
 
 *endif
-!
-!
-!
-!!
-!! 3.2 SPLIT WINGS
-!!
+
+
+!!                                                                                                !!
+!! 3.2  Split wings                                                                               !!
+!!                                                                                                !!
 *if,GEO_HDW_type,EQ,1,AND,GEO_HDW_wingBottomOffset,GT,0,THEN
 
-    ! Walls
-    CMSEL,S,COMPA_Walls
-    CSSLICEXZ,GEO_HDW_wingBottomOffset
-    CM,COMPA_temp,AREA
+  ! Walls
+  CMSEL,S,COMPA_Walls
+  CSSLICEXZ,GEO_HDW_wingBottomOffset
+  CM,COMPA_temp,AREA
 
-    CMSEL,S,COMPA_temp
-    ASEL,R,LOC,X,0
-    CM,COMPA_LeftWall,AREA
+  CMSEL,S,COMPA_temp
+  ASEL,R,LOC,X,0
+  CM,COMPA_LeftWall,AREA
 
-    CMSEL,S,COMPA_temp
-    ASEL,R,LOC,X,Eff_GalleryWidth
-    CM,COMPA_RightWall,AREA
+  CMSEL,S,COMPA_temp
+  ASEL,R,LOC,X,Eff_GalleryWidth
+  CM,COMPA_RightWall,AREA
 
-    CMSEL,S,COMPA_temp
-    CMSEL,U,COMPA_LeftWall
-    CMSEL,U,COMPA_RightWall
-    CM,COMPA_InnerWalls,AREA
+  CMSEL,S,COMPA_temp
+  CMSEL,U,COMPA_LeftWall
+  CMSEL,U,COMPA_RightWall
+  CM,COMPA_InnerWalls,AREA
 
-    CMSEL,S,COMPA_LeftWall
-    CMSEL,A,COMPA_RightWall
-    CMSEL,A,COMPA_InnerWalls
-    CM,COMPA_Walls,AREA
+  CMSEL,S,COMPA_LeftWall
+  CMSEL,A,COMPA_RightWall
+  CMSEL,A,COMPA_InnerWalls
+  CM,COMPA_Walls,AREA
 
-    CMSEL,S,COMPA_Floor
-    CMSEL,A,COMPA_Roof
-    CMSEL,A,COMPA_Walls
-    CM,COMPA_Tunnel,AREA
+  CMSEL,S,COMPA_Floor
+  CMSEL,A,COMPA_Roof
+  CMSEL,A,COMPA_Walls
+  CM,COMPA_Tunnel,AREA
 
 *endif
 ALLSEL
-!
-!
-!
-!!
-!! 3.3 HEADWALLS
-!!
-ASEL,U,AREA,,ALL
-CM,COMPA_HDW_BackBeam,AREA
-CM,COMPA_HDW_BotBeam,AREA
-CM,COMPA_HDW_TopBeam,AREA
-CM,COMPA_HDW_Walls,AREA
-CM,COMPA_HDW_RightWall,AREA
-CM,COMPA_HDW_LeftWall,AREA
-CM,COMPA_HDW_Footing,AREA
-CM,COMPA_HDW_Stiffener,AREA
-CM,COMPA_HDW_Slab,AREA
-cm,COMPA_HDW_ColLeft,area
-cm,COMPA_HDW_ColRight,area
-cm,COMPA_HDW_Columns,area
+
+
+!!                                                                                                !!
+!! 3.3  Headwalls                                                                                 !!
+!!                                                                                                !!
+asel,u,area,,all
+cm , COMPA_HDW_BackBeam  , AREA
+cm , COMPA_HDW_BotBeam   , AREA
+cm , COMPA_HDW_TopBeam   , AREA
+cm , COMPA_HDW_Walls     , AREA
+cm , COMPA_HDW_RightWall , AREA
+cm , COMPA_HDW_LeftWall  , AREA
+cm , COMPA_HDW_Footing   , AREA
+cm , COMPA_HDW_Stiffener , AREA
+cm , COMPA_HDW_Slab      , AREA
+cm , COMPA_HDW_ColLeft   , area
+cm , COMPA_HDW_ColRight  , area
+cm , COMPA_HDW_Columns   , area
+
 *get,parType,PARM,GEO_HDW_status,TYPE
 *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-    GEO_HDW_stiffXOff=GEO_HDW_slabStfWidth/COS(GEO_InletRadians)
-    CMSEL,S,COMPA_Floor
-    CSSLICEYZ,GEO_HDW_stiffXOff
-    CSSLICEYZ,GEO_TUN_totEffW-GEO_HDW_stiffXOff
-    CM,COMPA_Floor,AREA
-    /color,CM,LGRA,COMPA_Floor
-    CMSEL,A,COMPA_Walls
-    CMSEL,A,COMPA_Roof
-    CM,COMPA_Tunnel,AREA
-    ALLSEL
-    TUNNEL_V2_HDWSM,CS_Tunnel,CS_HDW_LeftWallEnd,CS_HDW_RightWallEnd
-    TUNNEL_V2_HDWSM,CS_RevTunnel,CS_HDW_LeftWallBeg,CS_HDW_RightWallBeg
-    cmsel,s,COMPA_Headwalls
-    lsla,s
-    ksll,s
-    nummrg,kp
-    csys,CS_Tunnel
+  GEO_HDW_stiffXOff=GEO_HDW_slabStfWidth/COS(GEO_InletRadians)
+  CMSEL,S,COMPA_Floor
+  CSSLICEYZ,GEO_HDW_stiffXOff
+  CSSLICEYZ,GEO_TUN_totEffW-GEO_HDW_stiffXOff
+  CM,COMPA_Floor,AREA
+  /color,CM,LGRA,COMPA_Floor
+  CMSEL,A,COMPA_Walls
+  CMSEL,A,COMPA_Roof
+  CM,COMPA_Tunnel,AREA
+  ALLSEL
+  TUNNEL_V2_HDWSM , CS_Tunnel    , CS_HDW_LeftWallEnd , CS_HDW_RightWallEnd
+  TUNNEL_V2_HDWSM , CS_RevTunnel , CS_HDW_LeftWallBeg , CS_HDW_RightWallBeg
+  cmsel,s,COMPA_Headwalls
+  lsla,s
+  ksll,s
+  nummrg,kp
+  csys,CS_Tunnel
 *endif
-ALLSEL
-!
-!
-!
-!!
-!! 3.4 SPLIT CORBELS
-!!
+allsel
+
+
+!!                                                                                                !!
+!! 3.4  Split corbels                                                                             !!
+!!                                                                                                !!
 ASEL,U,AREA,,ALL
 CM,COMPA_ROOF_leftCorbel,AREA
 CM,COMPA_ROOF_rightCorbel,AREA
@@ -328,549 +321,543 @@ CM,COMPA_WALL_botCorbel,AREA
 CM,COMPA_WALL_flat,AREA
 
 *if,GEO_CORB_status,GE,1,THEN
-    ! Roof slab
-    CMSEL,S,COMPA_Roof
-    *do,nthModule,0,GEO_TUN_modules,1
-        xWall=nthModule*Eff_GalleryWidth
-        CSSLICEYZ,xWall+GEO_corbelXOff_TOP
-        CSSLICEYZ,xWall-GEO_corbelXOff_TOP
-        CM,COMPA_temp,AREA
-
-        ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_TOP
-        CMSEL,A,COMPA_ROOF_rightCorbel
-        CM,COMPA_ROOF_rightCorbel,AREA
-
-        CMSEL,S,COMPA_temp
-        ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_TOP
-        CMSEL,A,COMPA_ROOF_leftCorbel
-        CM,COMPA_ROOF_leftCorbel,AREA
-
-        CMSEL,S,COMPA_temp
-        ASEL,R,LOC,X,xWall-GEO_corbelXOff_TOP,xWall+GEO_corbelXOff_TOP
-        CMSEL,U,COMPA_ROOF_leftCorbel
-        CMSEL,U,COMPA_ROOF_rightCorbel
-        CM,COMPA_ROOF_flat,AREA
-
-        *get,compType,COMP,COMPA_Roof,TYPE
-        *if,compType,EQ,0,THEN
-            ASEL,U,AREA,,ALL
-            CM,COMPA_Roof,AREA
-        *else
-            CMSEL,S,COMPA_Roof
-        *endif
-        CMSEL,A,COMPA_temp
-        CM,COMPA_Roof,AREA
-    *enddo
-
-    ! Floor slab
-    CMSEL,S,COMPA_Floor
-    *do,nthModule,0,GEO_TUN_modules,1
-        xWall=nthModule*Eff_GalleryWidth
-        CSSLICEYZ,xWall+GEO_corbelXOff_BOT
-        CSSLICEYZ,xWall-GEO_corbelXOff_BOT
-        CM,COMPA_temp,AREA
-
-        ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_BOT
-        CMSEL,A,COMPA_FLOOR_rightCorbel
-        CM,COMPA_FLOOR_rightCorbel,AREA
-
-        CMSEL,S,COMPA_temp
-        ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_BOT
-        CMSEL,A,COMPA_FLOOR_leftCorbel
-        CM,COMPA_FLOOR_leftCorbel,AREA
-
-        CMSEL,S,COMPA_temp
-        ASEL,R,LOC,X,xWall-GEO_corbelXOff_BOT,xWall+GEO_corbelXOff_BOT
-        CMSEL,U,COMPA_FLOOR_leftCorbel
-        CMSEL,U,COMPA_FLOOR_rightCorbel
-        CM,COMPA_FLOOR_flat,AREA
-
-        *get,compType,COMP,COMPA_Floor,TYPE
-        *if,compType,EQ,0,THEN
-            ASEL,U,AREA,,ALL
-            CM,COMPA_Floor,AREA
-        *else
-            CMSEL,S,COMPA_Floor
-        *endif
-        CMSEL,A,COMPA_temp
-        CM,COMPA_Floor,AREA
-    *enddo
-
-    ! Walls
-    CMSEL,S,COMPA_Walls
-    CSSLICEXZ,GEO_corbelYOff_BOT
-    CSSLICEXZ,Eff_GalleryHeight-GEO_corbelYOff_TOP
+  ! Roof slab
+  CMSEL,S,COMPA_Roof
+  *do,nthModule,0,GEO_TUN_modules,1
+    xWall=nthModule*Eff_GalleryWidth
+    CSSLICEYZ,xWall+GEO_corbelXOff_TOP
+    CSSLICEYZ,xWall-GEO_corbelXOff_TOP
     CM,COMPA_temp,AREA
 
-    ASEL,R,LOC,Y,GEO_corbelYOff_BOT,Eff_GalleryHeight-GEO_corbelYOff_TOP
-    CM,COMPA_WALL_flat,AREA
+    ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_TOP
+    CMSEL,A,COMPA_ROOF_rightCorbel
+    CM,COMPA_ROOF_rightCorbel,AREA
 
     CMSEL,S,COMPA_temp
-    ASEL,R,LOC,Y,0,GEO_corbelYOff_BOT
-    CM,COMPA_WALL_botCorbel,AREA
+    ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_TOP
+    CMSEL,A,COMPA_ROOF_leftCorbel
+    CM,COMPA_ROOF_leftCorbel,AREA
 
     CMSEL,S,COMPA_temp
-    ASEL,R,LOC,Y,Eff_GalleryHeight-GEO_corbelYOff_TOP,Eff_GalleryHeight
-    CM,COMPA_WALL_topCorbel,AREA
+    ASEL,R,LOC,X,xWall-GEO_corbelXOff_TOP,xWall+GEO_corbelXOff_TOP
+    CMSEL,U,COMPA_ROOF_leftCorbel
+    CMSEL,U,COMPA_ROOF_rightCorbel
+    CM,COMPA_ROOF_flat,AREA
 
-    CMSEL,S,COMPA_temp
-    ASEL,R,LOC,X,0
-    CM,COMPA_LeftWall,AREA
-
-    CMSEL,S,COMPA_temp
-    ASEL,R,LOC,X,GEO_TUN_totEffW
-    CM,COMPA_RightWall,AREA
-
-    CMSEL,S,COMPA_temp
-    CMSEL,U,COMPA_LeftWall
-    CMSEL,U,COMPA_RightWall
-    CM,COMPA_InnerWalls,AREA
-
-    CMSEL,S,COMPA_LeftWall
-    CMSEL,A,COMPA_RightWall
-    CMSEL,A,COMPA_InnerWalls
-    CM,COMPA_Walls,AREA
-
-    CMSEL,S,COMPA_Floor
-    CMSEL,A,COMPA_Roof
-    CMSEL,A,COMPA_Walls
-    CM,COMPA_Tunnel,AREA
-
-    ! Headwalls
-    *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-        x_LEFT_Top=GEO_corbelXOff_TOP
-        x_LEFT_Bot=GEO_corbelXOff_BOT
-        x_RIGHT_Top=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_TOP
-        x_RIGHT_Bot=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_BOT
-
-        y_BOT=GEO_corbelYOff_BOT
-        y_TOP=Eff_GalleryHeight-GEO_corbelYOff_TOP
-
-        CMSEL,S,COMPA_HDW_Slab
-        CSSLICEYZ,x_LEFT_Bot
-        CSSLICEYZ,x_RIGHT_Bot
-        CM,COMPA_HDW_Slab,AREA
-
-        CMSEL,S,COMPA_HDW_Stiffener
-        CSSLICEYZ,x_LEFT_Bot
-        CSSLICEYZ,x_RIGHT_Bot
-        CM,COMPA_HDW_Stiffener,AREA
-
-        CMSEL,S,COMPA_HDW_BackBeam
-        CSSLICEYZ,x_LEFT_Bot
-        CSSLICEYZ,x_RIGHT_Bot
-        CM,COMPA_HDW_BackBeam,AREA
-
-        CMSEL,S,COMPA_HDW_BotBeam
-        CSSLICEYZ,x_LEFT_Bot
-        CSSLICEYZ,x_RIGHT_Bot
-        CM,COMPA_HDW_BotBeam,AREA
-
-        CMSEL,S,COMPA_HDW_TopBeam
-        CSSLICEYZ,x_LEFT_Top
-        CSSLICEYZ,x_RIGHT_Top
-        CM,COMPA_HDW_TopBeam,AREA
-
-        CMSEL,S,COMPA_HDW_LeftWall
-        CSSLICEXZ,y_BOT
-        CSSLICEXZ,y_TOP
-        CM,COMPA_HDW_LeftWall,AREA
-
-        CMSEL,S,COMPA_HDW_RightWall
-        CSSLICEXZ,y_BOT
-        CSSLICEXZ,y_TOP
-        CM,COMPA_HDW_RightWall,AREA
-
-        CMSEL,S,COMPA_HDW_RightWall
-        CMSEL,A,COMPA_HDW_LeftWall
-        CM,COMPA_HDW_Walls,AREA
-
-        ALLSEL
-        CMSEL,U,COMPA_Tunnel
-        CM,COMPA_Headwalls,AREA
+    *get,compType,COMP,COMPA_Roof,TYPE
+    *if,compType,EQ,0,THEN
+      ASEL,U,AREA,,ALL
+      CM,COMPA_Roof,AREA
+    *else
+      CMSEL,S,COMPA_Roof
     *endif
+    CMSEL,A,COMPA_temp
+    CM,COMPA_Roof,AREA
+  *enddo
+
+  ! Floor slab
+  CMSEL,S,COMPA_Floor
+  *do,nthModule,0,GEO_TUN_modules,1
+    xWall=nthModule*Eff_GalleryWidth
+    CSSLICEYZ,xWall+GEO_corbelXOff_BOT
+    CSSLICEYZ,xWall-GEO_corbelXOff_BOT
+    CM,COMPA_temp,AREA
+
+    ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_BOT
+    CMSEL,A,COMPA_FLOOR_rightCorbel
+    CM,COMPA_FLOOR_rightCorbel,AREA
+
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_BOT
+    CMSEL,A,COMPA_FLOOR_leftCorbel
+    CM,COMPA_FLOOR_leftCorbel,AREA
+
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,xWall-GEO_corbelXOff_BOT,xWall+GEO_corbelXOff_BOT
+    CMSEL,U,COMPA_FLOOR_leftCorbel
+    CMSEL,U,COMPA_FLOOR_rightCorbel
+    CM,COMPA_FLOOR_flat,AREA
+
+    *get,compType,COMP,COMPA_Floor,TYPE
+    *if,compType,EQ,0,THEN
+      ASEL,U,AREA,,ALL
+      CM,COMPA_Floor,AREA
+    *else
+      CMSEL,S,COMPA_Floor
+    *endif
+    CMSEL,A,COMPA_temp
+    CM,COMPA_Floor,AREA
+  *enddo
+
+  ! Walls
+  CMSEL,S,COMPA_Walls
+  CSSLICEXZ,GEO_corbelYOff_BOT
+  CSSLICEXZ,Eff_GalleryHeight-GEO_corbelYOff_TOP
+  CM,COMPA_temp,AREA
+
+  ASEL,R,LOC,Y,GEO_corbelYOff_BOT,Eff_GalleryHeight-GEO_corbelYOff_TOP
+  CM,COMPA_WALL_flat,AREA
+
+  CMSEL,S,COMPA_temp
+  ASEL,R,LOC,Y,0,GEO_corbelYOff_BOT
+  CM,COMPA_WALL_botCorbel,AREA
+
+  CMSEL,S,COMPA_temp
+  ASEL,R,LOC,Y,Eff_GalleryHeight-GEO_corbelYOff_TOP,Eff_GalleryHeight
+  CM,COMPA_WALL_topCorbel,AREA
+
+  CMSEL,S,COMPA_temp
+  ASEL,R,LOC,X,0
+  CM,COMPA_LeftWall,AREA
+
+  CMSEL,S,COMPA_temp
+  ASEL,R,LOC,X,GEO_TUN_totEffW
+  CM,COMPA_RightWall,AREA
+
+  CMSEL,S,COMPA_temp
+  CMSEL,U,COMPA_LeftWall
+  CMSEL,U,COMPA_RightWall
+  CM,COMPA_InnerWalls,AREA
+
+  CMSEL,S,COMPA_LeftWall
+  CMSEL,A,COMPA_RightWall
+  CMSEL,A,COMPA_InnerWalls
+  CM,COMPA_Walls,AREA
+
+  CMSEL,S,COMPA_Floor
+  CMSEL,A,COMPA_Roof
+  CMSEL,A,COMPA_Walls
+  CM,COMPA_Tunnel,AREA
+
+  ! Headwalls
+  *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
+    x_LEFT_Top=GEO_corbelXOff_TOP
+    x_LEFT_Bot=GEO_corbelXOff_BOT
+    x_RIGHT_Top=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_TOP
+    x_RIGHT_Bot=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_BOT
+
+    y_BOT=GEO_corbelYOff_BOT
+    y_TOP=Eff_GalleryHeight-GEO_corbelYOff_TOP
+
+    CMSEL,S,COMPA_HDW_Slab
+    CSSLICEYZ,x_LEFT_Bot
+    CSSLICEYZ,x_RIGHT_Bot
+    CM,COMPA_HDW_Slab,AREA
+
+    CMSEL,S,COMPA_HDW_Stiffener
+    CSSLICEYZ,x_LEFT_Bot
+    CSSLICEYZ,x_RIGHT_Bot
+    CM,COMPA_HDW_Stiffener,AREA
+
+    CMSEL,S,COMPA_HDW_BackBeam
+    CSSLICEYZ,x_LEFT_Bot
+    CSSLICEYZ,x_RIGHT_Bot
+    CM,COMPA_HDW_BackBeam,AREA
+
+    CMSEL,S,COMPA_HDW_BotBeam
+    CSSLICEYZ,x_LEFT_Bot
+    CSSLICEYZ,x_RIGHT_Bot
+    CM,COMPA_HDW_BotBeam,AREA
+
+    CMSEL,S,COMPA_HDW_TopBeam
+    CSSLICEYZ,x_LEFT_Top
+    CSSLICEYZ,x_RIGHT_Top
+    CM,COMPA_HDW_TopBeam,AREA
+
+    CMSEL,S,COMPA_HDW_LeftWall
+    CSSLICEXZ,y_BOT
+    CSSLICEXZ,y_TOP
+    CM,COMPA_HDW_LeftWall,AREA
+
+    CMSEL,S,COMPA_HDW_RightWall
+    CSSLICEXZ,y_BOT
+    CSSLICEXZ,y_TOP
+    CM,COMPA_HDW_RightWall,AREA
+
+    CMSEL,S,COMPA_HDW_RightWall
+    CMSEL,A,COMPA_HDW_LeftWall
+    CM,COMPA_HDW_Walls,AREA
+
+    ALLSEL
+    CMSEL,U,COMPA_Tunnel
+    CM,COMPA_Headwalls,AREA
+  *endif
 *endif
 ALLSEL
-!
-!
-!
-!!
-!! 3.5 APPROACH SLABS
-!!
+
+
+!!                                                                                                !!
+!! 3.5  Approach slabs                                                                            !!
+!!                                                                                                !!
 *if,GEO_APR_status,eq,1,then
-    CSYS,CS_Tunnel
-    *get,KMXD,KP,,NUM,MAXD
-    K1A=KMXD+1
-    K1B=KMXD+2
-    K2A=KMXD+3
-    K2B=KMXD+4
-    K3A=KMXD+5
-    K3B=KMXD+6
-    K4A=KMXD+7
-    K4B=KMXD+8
+  CSYS,CS_Tunnel
+  *get,KMXD,KP,,NUM,MAXD
+  K1A=KMXD+1
+  K1B=KMXD+2
+  K2A=KMXD+3
+  K2B=KMXD+4
+  K3A=KMXD+5
+  K3B=KMXD+6
+  K4A=KMXD+7
+  K4B=KMXD+8
 
-    cmsel,s,COMPA_Roof
-    lsla,s
-    ksll,s
-    cm,COMPK_temp,kp
-    ksel,s,loc,x,0
-    ksel,a,loc,x,GEO_TUN_totEffW
-    cmsel,r,COMPK_temp
-    kp_L1=kp(              0 , GEO_TUN_effH , GEO_APR_z1)
-    kp_L2=kp(              0 , GEO_TUN_effH , GEO_APR_z2)
-    kp_R3=kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z3)
-    kp_R4=kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z4)
+  cmsel,s,COMPA_Roof
+  lsla,s
+  ksll,s
+  cm,COMPK_temp,kp
+  ksel,s,loc,x,0
+  ksel,a,loc,x,GEO_TUN_totEffW
+  cmsel,r,COMPK_temp
+  kp_L1=kp(              0 , GEO_TUN_effH , GEO_APR_z1)
+  kp_L2=kp(              0 , GEO_TUN_effH , GEO_APR_z2)
+  kp_R3=kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z3)
+  kp_R4=kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z4)
 
-    xLeft=0
-    xRight=GEO_TUN_totEffW
-    K , K1A , xRight , GEO_TUN_effH , GEO_APR_z1
-    K , K2A , xRight , GEO_TUN_effH , GEO_APR_z2
-    K , K3A , xLeft  , GEO_TUN_effH , GEO_APR_z3
-    K , K4A , xLeft  , GEO_TUN_effH , GEO_APR_z4
+  xLeft=0
+  xRight=GEO_TUN_totEffW
+  K , K1A , xRight , GEO_TUN_effH , GEO_APR_z1
+  K , K2A , xRight , GEO_TUN_effH , GEO_APR_z2
+  K , K3A , xLeft  , GEO_TUN_effH , GEO_APR_z3
+  K , K4A , xLeft  , GEO_TUN_effH , GEO_APR_z4
 
-    xREnd=xRight+GEO_APR_length
-    xLEnd=xLeft-GEO_APR_length
-    K , K1B , xREnd , GEO_TUN_effH , GEO_APR_z1L
-    K , K2B , xREnd , GEO_TUN_effH , GEO_APR_z2L
-    K , K3B , xLEnd , GEO_TUN_effH , GEO_APR_z3L
-    K , K4B , xLEnd , GEO_TUN_effH , GEO_APR_z4L
+  xREnd=xRight+GEO_APR_length
+  xLEnd=xLeft-GEO_APR_length
+  K , K1B , xREnd , GEO_TUN_effH , GEO_APR_z1L
+  K , K2B , xREnd , GEO_TUN_effH , GEO_APR_z2L
+  K , K3B , xLEnd , GEO_TUN_effH , GEO_APR_z3L
+  K , K4B , xLEnd , GEO_TUN_effH , GEO_APR_z4L
 
-    asel,u,area,,all
-    A , K1A , K1B , K2B , K2A
-    *if     , GEO_APR_z3 , gt , GEO_APR_z1 , and , GEO_APR_z3 , lt , GEO_APR_z2 , then
-        wpcsys,1,CS_Tunnel
-        kwpave,kp_R3
+  asel,u,area,,all
+  A , K1A , K1B , K2B , K2A
+  *if     , GEO_APR_z3 , gt , GEO_APR_z1 , and , GEO_APR_z3 , lt , GEO_APR_z2 , then
+    wpcsys,1,CS_Tunnel
+    kwpave,kp_R3
+    wprota,,,LOAD_LTA_skew
+    asbw,all,,delete
+    wpcsys,1,0
+  *elseif , GEO_APR_z4 , gt , GEO_APR_z1 , and , GEO_APR_z4 , lt , GEO_APR_z2 , then
+    wpcsys,1,CS_Tunnel
+    kwpave,kp_R4
+    wprota,,,LOAD_LTA_skew
+    asbw,all,,delete
+    wpcsys,1,0
+  *endif
+  cm,COMPA_approachR,area
+
+  asel,u,area,,all
+  A , K3A , K3B , K4B , K4A
+  *if     , GEO_APR_z1 , gt , GEO_APR_z3 , and , GEO_APR_z1 , lt , GEO_APR_z4 , then
+    wpcsys,1,CS_Tunnel
+    kwpave,kp_L1
+    wprota,,,LOAD_LTA_skew
+    asbw,all,,delete
+    wpcsys,1,0
+  *elseif , GEO_APR_z2 , gt , GEO_APR_z3 , and , GEO_APR_z2 , lt , GEO_APR_z4 , then
+    wpcsys,1,CS_Tunnel
+    kwpave,kp_L2
+    wprota,,,LOAD_LTA_skew
+    asbw,all,,delete
+    wpcsys,1,0
+  *endif
+  cm,COMPA_approachL,area
+
+  ! Slice approach slabs at intersections with roof girders
+  *if,GEO_ROOF_type,eq,1,then
+    wpcsys,,CS_Tunnel
+    *do,nthSlice,1,GEO_girderCount-1,1
+      z=GEO_girderZ(nthSlice)
+      *if,z,gt,GEO_APR_z3,and,z,lt,GEO_APR_z4,then
+        cmsel,s,COMPA_approachL
+        wpoffs,,,z
         wprota,,,LOAD_LTA_skew
         asbw,all,,delete
-        wpcsys,1,0
-    *elseif , GEO_APR_z4 , gt , GEO_APR_z1 , and , GEO_APR_z4 , lt , GEO_APR_z2 , then
-        wpcsys,1,CS_Tunnel
-        kwpave,kp_R4
+        wprota,,,-LOAD_LTA_skew
+        wpoffs,,,-z
+        cm,COMPA_approachL,area
+      *endif
+      *if,z,gt,GEO_APR_z1,and,z,lt,GEO_APR_z2,then
+        cmsel,s,COMPA_approachR
+        wpoffs,GEO_TUN_totEffW
+        wpoffs,,,z
         wprota,,,LOAD_LTA_skew
         asbw,all,,delete
-        wpcsys,1,0
-    *endif
-    cm,COMPA_approachR,area
+        wprota,,,-LOAD_LTA_skew
+        wpoffs,,,-z
+        wpoffs,-GEO_TUN_totEffW
+        cm,COMPA_approachR,area
+      *endif
+    *enddo
+  *endif
 
-    asel,u,area,,all
-    A , K3A , K3B , K4B , K4A
-    *if     , GEO_APR_z1 , gt , GEO_APR_z3 , and , GEO_APR_z1 , lt , GEO_APR_z4 , then
-        wpcsys,1,CS_Tunnel
-        kwpave,kp_L1
-        wprota,,,LOAD_LTA_skew
-        asbw,all,,delete
-        wpcsys,1,0
-    *elseif , GEO_APR_z2 , gt , GEO_APR_z3 , and , GEO_APR_z2 , lt , GEO_APR_z4 , then
-        wpcsys,1,CS_Tunnel
-        kwpave,kp_L2
-        wprota,,,LOAD_LTA_skew
-        asbw,all,,delete
-        wpcsys,1,0
-    *endif
-    cm,COMPA_approachL,area
-
-    ! Slice approach slabs at intersections with roof girders
-    *if,GEO_ROOF_type,eq,1,then
-        wpcsys,,CS_Tunnel
-        *do,nthSlice,1,GEO_girderCount-1,1
-            z=GEO_girderZ(nthSlice)
-            *if,z,gt,GEO_APR_z3,and,z,lt,GEO_APR_z4,then
-                cmsel,s,COMPA_approachL
-                wpoffs,,,z
-                wprota,,,LOAD_LTA_skew
-                asbw,all,,delete
-                wprota,,,-LOAD_LTA_skew
-                wpoffs,,,-z
-                cm,COMPA_approachL,area
-            *endif
-            *if,z,gt,GEO_APR_z1,and,z,lt,GEO_APR_z2,then
-                cmsel,s,COMPA_approachR
-                wpoffs,GEO_TUN_totEffW
-                wpoffs,,,z
-                wprota,,,LOAD_LTA_skew
-                asbw,all,,delete
-                wprota,,,-LOAD_LTA_skew
-                wpoffs,,,-z
-                wpoffs,-GEO_TUN_totEffW
-                cm,COMPA_approachR,area
-            *endif
-        *enddo
-    *endif
-
-    cmsel,s,COMPA_approachL
-    cmsel,a,COMPA_approachR
-    cm,COMPA_approach,area
+  cmsel,s,COMPA_approachL
+  cmsel,a,COMPA_approachR
+  cm,COMPA_approach,area
 *else
-    asel,u,area,,all
-    cm,COMPA_approach,area
+  asel,u,area,,all
+  cm,COMPA_approach,area
 *endif
-!
-!
-!
-!!
-!! 3.6 BUILD ROOF GIRDER COMPONENTS
-!!
+
+
+!!                                                                                                !!
+!! 3.6  Build roof girder components                                                              !!
+!!                                                                                                !!
 *if,GEO_ROOF_type,eq,1,then
-    zi=0
-    *do,nthGirder,1,GEO_girderCount-1,1
-        zf=GEO_girderZ(nthGirder)
-        cmsel,s,COMPA_Roof
-        asel,r,loc,z,zi,zf
-        compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
-        cm,%compName%,area
-        zi=zf
-    *enddo
+  zi=0
+  *do,nthGirder,1,GEO_girderCount-1,1
+    zf=GEO_girderZ(nthGirder)
     cmsel,s,COMPA_Roof
-    asel,r,loc,z,zi,GEO_TUN_Length
-    compName=STRCAT('COMPA_RG',CHRVAL(GEO_girderCount))
+    asel,r,loc,z,zi,zf
+    compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
     cm,%compName%,area
-    allsel
+    zi=zf
+  *enddo
+  cmsel,s,COMPA_Roof
+  asel,r,loc,z,zi,GEO_TUN_Length
+  compName=STRCAT('COMPA_RG',CHRVAL(GEO_girderCount))
+  cm,%compName%,area
+  allsel
 *endif
-!
-!
-!
-!!
-!! 3.7 PIN ROOF TO WALLS
-!!
+
+
+!!                                                                                                !!
+!! 3.7  Pin roof to walls                                                                         !!
+!!                                                                                                !!
 *if,GEO_ROOF_wallConnection,eq,1,then
-    *if,GEO_ROOF_type,eq,0,then
-        cmsel,s,COMPA_roof
-        cm,COMPA_temp,area
-        lsla,s
-        ksll,s
-        agen,2,COMPA_temp
-        cmsel,u,COMPA_temp
-        cm,COMPA_roof,area
-        cmsel,s,COMPA_temp
-        adele,all,,,1
-    *elseif,GEO_ROOF_type,eq,1,then
-        *do,nthGirder,1,GEO_girderCount,1
-            compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
-            cmsel,s,%compName%
-            cm,COMPA_temp,area
-            agen,2,COMPA_temp
-            cmsel,u,COMPA_temp
-            cm,%compName%,area
-            cmsel,s,COMPA_temp
-            adele,all,,,1
-            cmsel,s,COMPA_Roof
-            cmsel,a,%compName%
-            cm,COMPA_Roof,area
-        *enddo
-    *endif
-    cmsel,s,COMPA_Tunnel
-    cmsel,a,COMPA_roof
-    cm,COMPA_Tunnel,area
-*endif
-!
-!
-!
-!!
-!! 3.8 OPEN INNNER WALLS
-!!
-*if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
-    csys,CS_Tunnel
-
-    wallX=0
-    *do,nthWall,1,GEO_TUN_modules-1,1
-        wallX=wallX+GEO_TUN_effW
-        cmsel,s,COMPA_InnerWalls
-        asel,r,loc,x,wallX
-        lsla,s
-        ksll,s
-        cm,COMPA_temp,area
-
-        k_1=kp(wallX,0,0)
-        k_2=kp(wallX,0,GEO_TUN_length)
-        k_3=kp(wallX,GEO_TUN_effH,0)
-        kwplan,1,k_1,k_2,k_3
-
-        *do,nthOp,1,GEO_IWALL_columnCount-1,1
-            xOp=GEO_TUN_ozCenter(nthOp)
-            asel,u,area,,all
-            blc5,xOp,GEO_TUN_oyCenter,GEO_TUN_opW,GEO_TUN_opH
-            *get,aOP,area,,num,min
-            cmsel,s,COMPA_temp
-            asel,a,area,,aOP
-            asba,COMPA_temp,aOP,,delete,delete
-            cm,COMPA_temp,area
-        *enddo
-
-        cmsel,s,COMPA_temp
-        safe_cmsel,'a','COMPA_InnerWalls'
-        cm,COMPA_InnerWalls,area
-    *enddo
-
-    cmsel,s,COMPA_InnerWalls
+  *if,GEO_ROOF_type,eq,0,then
+    cmsel,s,COMPA_roof
+    cm,COMPA_temp,area
     lsla,s
     ksll,s
-    csslicexz,GEO_IWALL_botBeamHeight
-    csslicexz,GEO_TUN_effH-GEO_IWALL_topBeamHeight
-    nummrg,kp
-    cm,COMPA_InnerWalls,area
-    cmsel,a,COMPA_Walls,area
-    cm,COMPA_Walls,area
-
-    cmsel,s,COMPA_InnerWalls
-    asel,r,loc,y,0,GEO_IWALL_botBeamHeight
-    cm,COMPA_bBeam,area
-    cmsel,s,COMPA_InnerWalls
-    asel,r,loc,y,GEO_TUN_effH-GEO_IWALL_topBeamHeight,GEO_TUN_effH
-    cm,COMPA_tBeam,area
-    cmsel,s,COMPA_InnerWalls
-    cmsel,u,COMPA_bBeam
-    cmsel,u,COMPA_tBeam
-    cm,COMPA_Columns,area
-    TUNNEL_V2_BUILDCM
+    agen,2,COMPA_temp
+    cmsel,u,COMPA_temp
+    cm,COMPA_roof,area
+    cmsel,s,COMPA_temp
+    adele,all,,,1
+  *elseif,GEO_ROOF_type,eq,1,then
+    *do,nthGirder,1,GEO_girderCount,1
+      compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
+      cmsel,s,%compName%
+      cm,COMPA_temp,area
+      agen,2,COMPA_temp
+      cmsel,u,COMPA_temp
+      cm,%compName%,area
+      cmsel,s,COMPA_temp
+      adele,all,,,1
+      cmsel,s,COMPA_Roof
+      cmsel,a,%compName%
+      cm,COMPA_Roof,area
+    *enddo
+  *endif
+  cmsel,s,COMPA_Tunnel
+  cmsel,a,COMPA_roof
+  cm,COMPA_Tunnel,area
 *endif
-!
-!
-!
-!!
-!! 3.9 PILES
-!!
+
+
+!!                                                                                                !!
+!! 3.8  Open innner walls                                                                         !!
+!!                                                                                                !!
+*if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
+  csys,CS_Tunnel
+
+  wallX=0
+  *do,nthWall,1,GEO_TUN_modules-1,1
+    wallX=wallX+GEO_TUN_effW
+    cmsel,s,COMPA_InnerWalls
+    asel,r,loc,x,wallX
+    lsla,s
+    ksll,s
+    cm,COMPA_temp,area
+
+    k_1=kp(wallX,0,0)
+    k_2=kp(wallX,0,GEO_TUN_length)
+    k_3=kp(wallX,GEO_TUN_effH,0)
+    kwplan,1,k_1,k_2,k_3
+
+    *do,nthOp,1,GEO_IWALL_columnCount-1,1
+      xOp=GEO_TUN_ozCenter(nthOp)
+      asel,u,area,,all
+      blc5,xOp,GEO_TUN_oyCenter,GEO_TUN_opW,GEO_TUN_opH
+      *get,aOP,area,,num,min
+      cmsel,s,COMPA_temp
+      asel,a,area,,aOP
+      asba,COMPA_temp,aOP,,delete,delete
+      cm,COMPA_temp,area
+    *enddo
+
+    cmsel,s,COMPA_temp
+    safe_cmsel,'a','COMPA_InnerWalls'
+    cm,COMPA_InnerWalls,area
+  *enddo
+
+  cmsel,s,COMPA_InnerWalls
+  lsla,s
+  ksll,s
+  csslicexz,GEO_IWALL_botBeamHeight
+  csslicexz,GEO_TUN_effH-GEO_IWALL_topBeamHeight
+  nummrg,kp
+  cm,COMPA_InnerWalls,area
+  cmsel,a,COMPA_Walls,area
+  cm,COMPA_Walls,area
+
+  cmsel,s,COMPA_InnerWalls
+  asel,r,loc,y,0,GEO_IWALL_botBeamHeight
+  cm,COMPA_bBeam,area
+  cmsel,s,COMPA_InnerWalls
+  asel,r,loc,y,GEO_TUN_effH-GEO_IWALL_topBeamHeight,GEO_TUN_effH
+  cm,COMPA_tBeam,area
+  cmsel,s,COMPA_InnerWalls
+  cmsel,u,COMPA_bBeam
+  cmsel,u,COMPA_tBeam
+  cm,COMPA_Columns,area
+  TUNNEL_V2_BUILDCM
+*endif
+
+
+!!                                                                                                !!
+!! 3.9  Piles                                                                                     !!
+!!                                                                                                !!
 *if,GEO_PILE_status,eq,1,then
 
-    lsel,u,line,,all
-    ksel,u,kp,,all
-    cm,COMPK_pileTop,kp
-    cm,COMPK_pileBot,kp
-    cm,COMPL_pileExt,line
-    cm,COMPL_pileInt,line
+  lsel,u,line,,all
+  ksel,u,kp,,all
+  cm,COMPK_pileTop,kp
+  cm,COMPK_pileBot,kp
+  cm,COMPL_pileExt,line
+  cm,COMPL_pileInt,line
 
-    deltaZ=GEO_TUN_length/(GEO_PILE_EXT_count-1)
-    lsel,u,line,,all
-    *do,extWall,1,2,1
+  deltaZ=GEO_TUN_length/(GEO_PILE_EXT_count-1)
+  lsel,u,line,,all
+  *do,extWall,1,2,1
 
-        xWall=(extWall-1)*GEO_TUN_totEffW
-        z=0
+    xWall=(extWall-1)*GEO_TUN_totEffW
+    z=0
 
-        *do,nthPile,1,GEO_PILE_EXT_count,1
-            *get,KMX,kp,,num,maxd
-            K_top=KMX+1
-            K_bot=KMX+2
-            k,K_top,xWall,0,z
-            csys,0
-            x=kx(K_top)
-            y=ky(K_top)
-            z=kz(K_top)
-            k,K_bot,x,y-GEO_PILE_length,z
-            csys,CS_Tunnel
-            l,K_top,K_bot
+    *do,nthPile,1,GEO_PILE_EXT_count,1
+      *get,KMX,kp,,num,maxd
+      K_top=KMX+1
+      K_bot=KMX+2
+      k,K_top,xWall,0,z
+      csys,0
+      x=kx(K_top)
+      y=ky(K_top)
+      z=kz(K_top)
+      k,K_bot,x,y-GEO_PILE_length,z
+      csys,CS_Tunnel
+      l,K_top,K_bot
 
-            ksel,s,kp,,K_top
-            cmsel,a,COMPK_pileTop
-            cm,COMPK_pileTop,kp
+      ksel,s,kp,,K_top
+      cmsel,a,COMPK_pileTop
+      cm,COMPK_pileTop,kp
 
-            ksel,s,kp,,K_bot
-            cmsel,a,COMPK_pileBot
-            cm,COMPK_pileBot,kp
+      ksel,s,kp,,K_bot
+      cmsel,a,COMPK_pileBot
+      cm,COMPK_pileBot,kp
 
-            z=z+deltaZ
-        *enddo
+      z=z+deltaZ
     *enddo
-    cm,COMPL_pileExt,line
+  *enddo
+  cm,COMPL_pileExt,line
 
-    *if,GEO_TUN_modules,gt,1,then
-        lsel,u,line,,all
-        deltaZ=GEO_TUN_length/(GEO_PILE_INT_count-1)
-        *do,innWall,1,GEO_TUN_modules-1,1
-            xWall=innWall*GEO_TUN_effW
-            z=0
+  *if,GEO_TUN_modules,gt,1,then
+    lsel,u,line,,all
+    deltaZ=GEO_TUN_length/(GEO_PILE_INT_count-1)
+    *do,innWall,1,GEO_TUN_modules-1,1
+      xWall=innWall*GEO_TUN_effW
+      z=0
 
-            *do,nthPile,1,GEO_PILE_EXT_count,1
-                *get,KMX,kp,,num,maxd
-                K_top=KMX+1
-                K_bot=KMX+2
-                k,K_top,xWall,0,z
-                csys,0
-                x=kx(K_top)
-                y=ky(K_top)
-                z=kz(K_top)
-                k,K_bot,x,y-GEO_PILE_length,z
-                csys,CS_Tunnel
-                l,K_top,K_bot
+      *do,nthPile,1,GEO_PILE_EXT_count,1
+        *get,KMX,kp,,num,maxd
+        K_top=KMX+1
+        K_bot=KMX+2
+        k,K_top,xWall,0,z
+        csys,0
+        x=kx(K_top)
+        y=ky(K_top)
+        z=kz(K_top)
+        k,K_bot,x,y-GEO_PILE_length,z
+        csys,CS_Tunnel
+        l,K_top,K_bot
 
-                ksel,s,kp,,K_top
-                cmsel,a,COMPK_pileTop
-                cm,COMPK_pileTop,kp
+        ksel,s,kp,,K_top
+        cmsel,a,COMPK_pileTop
+        cm,COMPK_pileTop,kp
 
-                ksel,s,kp,,K_bot
-                cmsel,a,COMPK_pileBot
-                cm,COMPK_pileBot,kp
+        ksel,s,kp,,K_bot
+        cmsel,a,COMPK_pileBot
+        cm,COMPK_pileBot,kp
 
-                z=z+deltaZ
-            *enddo
-        *enddo
-        cm,COMPL_pileInt,line
-    *endif
+        z=z+deltaZ
+      *enddo
+    *enddo
+    cm,COMPL_pileInt,line
+  *endif
 
-    *if,GEO_HDW_status,eq,1,then
-        cmsel,s,COMPA_HDW_Footing
-        lsla,s
-        cmsel,s,COMPA_HDW_walls
-        lsla,r
-        ksll,s
-        cm,COMPL_ref,line
-        cm,COMPK_ref,kp
-        lnum=0
-        *get,lc,line,,count
-        *do,nthLine,1,lc,1
-            cmsel,s,COMPL_ref
-            lnum=lsnext(lnum)
-            *get,llen,line,lnum,leng
-            pileCount=nint(0.5+(llen/(GEO_TUN_length/GEO_PILE_EXT_count)))
-            ldiv,lnum,,,pileCount+1,1
-            cmsel,u,COMPK_ref
-            cmsel,u,COMPL_ref
-            ldele,all,,,0
-            cm,COMPK_temp,kp
-            *get,kc,kp,,count
-            kpnum=0
-            *do,nthKP,1,kc,1
-                cmsel,s,COMPK_temp
-                kpnum=kpnext(kpnum)
-                csys,0
-                *get,kmxd,kp,,num,maxd
-                K_bot=kmxd+1
-                k,K_bot,kx(kpnum),ky(kpnum)-GEO_PILE_length,kz(kpnum)
-                lsel,u,line,,all
-                l,kpnum,K_bot
-                cmsel,a,COMPL_pileExt
-                cm,COMPL_pileExt,line
-                csys,CS_Tunnel
-                cmsel,s,COMPK_pileBot
-                ksel,a,kp,,K_bot
-                cm,COMPK_pileBot
-                cmsel,s,COMPK_pileTop
-                ksel,a,kp,,kpnum
-                cm,COMPK_pileTop
-            *enddo
-        *enddo
-    *endif
-
-    cmsel,s,COMPL_pileExt
-    cmsel,a,COMPL_pileInt
-    cm,COMPL_piles,line
+  *if,GEO_HDW_status,eq,1,then
+    cmsel,s,COMPA_HDW_Footing
+    lsla,s
+    cmsel,s,COMPA_HDW_walls
+    lsla,r
     ksll,s
-    cm,COMPK_piles,kp
+    cm,COMPL_ref,line
+    cm,COMPK_ref,kp
+    lnum=0
+    *get,lc,line,,count
+    *do,nthLine,1,lc,1
+      cmsel,s,COMPL_ref
+      lnum=lsnext(lnum)
+      *get,llen,line,lnum,leng
+      pileCount=nint(0.5+(llen/(GEO_TUN_length/GEO_PILE_EXT_count)))
+      ldiv,lnum,,,pileCount+1,1
+      cmsel,u,COMPK_ref
+      cmsel,u,COMPL_ref
+      ldele,all,,,0
+      cm,COMPK_temp,kp
+      *get,kc,kp,,count
+      kpnum=0
+      *do,nthKP,1,kc,1
+        cmsel,s,COMPK_temp
+        kpnum=kpnext(kpnum)
+        csys,0
+        *get,kmxd,kp,,num,maxd
+        K_bot=kmxd+1
+        k,K_bot,kx(kpnum),ky(kpnum)-GEO_PILE_length,kz(kpnum)
+        lsel,u,line,,all
+        l,kpnum,K_bot
+        cmsel,a,COMPL_pileExt
+        cm,COMPL_pileExt,line
+        csys,CS_Tunnel
+        cmsel,s,COMPK_pileBot
+        ksel,a,kp,,K_bot
+        cm,COMPK_pileBot
+        cmsel,s,COMPK_pileTop
+        ksel,a,kp,,kpnum
+        cm,COMPK_pileTop
+      *enddo
+    *enddo
+  *endif
+
+  cmsel,s,COMPL_pileExt
+  cmsel,a,COMPL_pileInt
+  cm,COMPL_piles,line
+  ksll,s
+  cm,COMPK_piles,kp
 *endif
-!
-!
-!
-!!
-!! 3.10 AREA DIRECTION
-!!
+
+
+!!                                                                                                !!
+!! 3.10  Area direction                                                                           !!
+!!                                                                                                !!
 CMSEL,S,COMPA_Floor
 ARYORI,-1
 CMSEL,S,COMPA_Roof
 cmsel,a,COMPA_approach
 ARYORI,1
 CMSEL,S,COMPA_LeftWall
-ARXORI,-1                 !!
+ARXORI,-1
 CMSEL,S,COMPA_RightWall
 CMSEL,A,COMPA_InnerWalls
-ARXORI,1                  !!
+ARXORI,1
 
 CMSEL,S,COMPA_HDW_Stiffener
 CMSEL,A,COMPA_HDW_Slab
@@ -885,12 +872,11 @@ ARXORI,1
 !COMPA_HDW_BackBeam
 
 ALLSEL
-!
-!
-!
-!!
-!! 3.11 EMBANKMENT
-!!
+
+
+!!                                                                                                !!
+!! 3.11  Embankment                                                                               !!
+!!                                                                                                !!
 ! NOTE: embankment is drawn for display purposes only.
 CSYS,CS_Tunnel
 
@@ -906,41 +892,41 @@ zREF=KZ(KRef)
 
 ! Calculate vertex location for embankment keypoints
 *afun,DEG
-xPT=GEO_TUN_totEffW/2
-yPT1=COS(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
-yPT2=yPT1+GEO_EMB_height
-zPT1=-SIN(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
-zPT2=zPT1+(GEO_EMB_height/TAN(GEO_EMB_slopeBeg))
-yPT3=yPT2
-yPT4=yREF+COS(TunnelSlope)*(GEO_ROOF_thk/2)
-depthFromEnd=yPT2-yPT4
-zPT4=zREF-SIN(TunnelSlope)*(GEO_ROOF_thk/2)
-zPT3=zPT4-(depthFromEnd/TAN(GEO_EMB_slopeEnd))
+xPT          = GEO_TUN_totEffW/2
+yPT1         = COS(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
+yPT2         = yPT1+GEO_EMB_height
+zPT1         = -SIN(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
+zPT2         = zPT1+(GEO_EMB_height/TAN(GEO_EMB_slopeBeg))
+yPT3         = yPT2
+yPT4         = yREF+COS(TunnelSlope)*(GEO_ROOF_thk/2)
+depthFromEnd = yPT2-yPT4
+zPT4         = zREF-SIN(TunnelSlope)*(GEO_ROOF_thk/2)
+zPT3         = zPT4-(depthFromEnd/TAN(GEO_EMB_slopeEnd))
 *afun,RAD
 
 ! Draw embankment contour
 LSEL,U,LINE,,ALL
 *get,KPMax,KP,,NUM,MAXD
-KPT1=KPMax+1
-KPT2=KPMax+2
-KPT3=KPMax+3
-KPT4=KPMax+4
-K,KPT1,xPT,yPT1,zPT1
-K,KPT2,xPT,yPT2,zPT2
-K,KPT3,xPT,yPT3,zPT3
-K,KPT4,xPT,yPT4,zPT4
-L,KPT1,KPT2
-L,KPT2,KPT3
-L,KPT3,KPT4
+KPT1 = KPMax+1
+KPT2 = KPMax+2
+KPT3 = KPMax+3
+KPT4 = KPMax+4
+K , KPT1 , xPT  , yPT1 , zPT1
+K , KPT2 , xPT  , yPT2 , zPT2
+K , KPT3 , xPT  , yPT3 , zPT3
+K , KPT4 , xPT  , yPT4 , zPT4
+L , KPT1 , KPT2
+L , KPT2 , KPT3
+L , KPT3 , KPT4
 
 ! Create component
 CM,COMPL_Embankment,LINE
 /color,CM,WHIT,COMPL_Embankment
 
 
-!!
-!! 3.12 RAILWAY LINES
-!!
+!!                                                                                                !!
+!! 3.12  Railway lines                                                                            !!
+!!                                                                                                !!
 ! NOTE: railwaylines (indicated as arrows) are drawn for display purposes only.
 
 ! Draw arrows marking each railway position
@@ -948,28 +934,28 @@ LSEL,U,LINE,,ALL
 zRailway=LOAD_LTA_transversalOffset
 *do,nthRailway,1,LOAD_LTA_count,1
 
-    gaugeOff=LOAD_LTA_gauge/2
+  gaugeOff = LOAD_LTA_gauge/2
 
-    *do,nthLoad,1,2,1
+  *do,nthLoad,1,2,1
 
-        gaugeOff=-gaugeOff
+    gaugeOff=-gaugeOff
 
-        *get,KPMax,KP,,NUM,MAXD
-        KPRi=KPMax+1
-        KPRj=KPMax+2
-        KPRk=KPMax+3
-        KPRl=KPMax+4
-        K,KPRi,xPT,yPT2,zRailway+gaugeOff
-        K,KPRj,xPT,yPT2+2,zRailway+gaugeOff
-        K,KPRk,xPT,yPT2+0.5,zRailway-0.3+gaugeOff
-        K,KPRl,xPT,yPT2+0.5,zRailway+0.3+gaugeOff
-        L,KPRi,KPRj
-        L,KPRi,KPRk
-        L,KPRi,KPRl
+    *get,KPMax,KP,,NUM,MAXD
+    KPRi = KPMax+1
+    KPRj = KPMax+2
+    KPRk = KPMax+3
+    KPRl = KPMax+4
+    K , KPRi , xPT  , yPT2     , zRailway+gaugeOff
+    K , KPRj , xPT  , yPT2+2   , zRailway+gaugeOff
+    K , KPRk , xPT  , yPT2+0.5 , zRailway-0.3+gaugeOff
+    K , KPRl , xPT  , yPT2+0.5 , zRailway+0.3+gaugeOff
+    L , KPRi , KPRj
+    L , KPRi , KPRk
+    L , KPRi , KPRl
 
-    *enddo
+  *enddo
 
-    zRailway=zRailway+LOAD_LTA_spacing
+  zRailway=zRailway+LOAD_LTA_spacing
 
 *enddo
 
@@ -978,15 +964,15 @@ CM,COMPL_Railway,LINE
 /color,CM,RED,COMPL_Railway
 
 
-!!
-!! 3.13 CAPTURE IMAGES
-!!
-/color,CM,DGRA,COMPA_Walls
-/color,CM,LGRA,COMPA_Floor
-/color,CM,LGRA,COMPA_Roof
-/color,CM,14,COMPA_Headwalls
-/color,cm,oran,COMPA_approach
-/color,cm,gree,COMPA_Headwalls
+!!                                                                                                !!
+!! 3.13  Capture images                                                                           !!
+!!                                                                                                !!
+/color , CM , DGRA , COMPA_Walls
+/color , CM , LGRA , COMPA_Floor
+/color , CM , LGRA , COMPA_Roof
+/color , CM , 14   , COMPA_Headwalls
+/color , cm , oran , COMPA_approach
+/color , cm , gree , COMPA_Headwalls
 
 ! Tunnel
 ALLSEL
@@ -1016,6 +1002,3 @@ allsel
 /auto,1
 aplot
 takepic,'SM_top',800
-
-
-

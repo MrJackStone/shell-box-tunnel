@@ -1,173 +1,161 @@
 *cfopen,MemorialDATA,'DAT',
-   *vwrite,
-   ('GERAL:')
-   *vwrite,Version
-   (';  Code Version = ',F3.0,TL1,' ')
-   *vwrite,FILE_name
-   (';  Tunnel Id.   = ',A8)
-   *vwrite,
-   ('GOMETRIA:')
-   *vwrite,GEO_TUN_modules
-   (';  GalleryModules    = ',F3.0,TL1,' ')
-   *vwrite,GEO_TUN_length
-   (';  GalleryLength     = ',F10.4)
-   *vwrite,GEO_TUN_height
-   (';  GalleryHeight     = ',F10.4)
-   *vwrite,GEO_TUN_moduleWidth
-   (';  GalleryWidth      = ',F10.4)
-   *vwrite,Eff_GalleryHeight
-   (';  Eff_GalleryHeight = ',F10.4)
-   *vwrite,Eff_GalleryWidth
-   (';  Eff_GalleryWidth  = ',F10.4)
-   *vwrite,GEO_EMB_height
-   (';  GalleryDepth      = ',F10.4)
-   *vwrite,
-   ('CONCRETO:')
-   *vwrite,MAT_TUN_fck
-   (';  fck            = ',E12.4)
-   *vwrite,Poisson
-   (';  Poisson        = ',F10.4)
-   *vwrite,MassDensity
-   (';  MassDensity    = ',E12.4)
-   *vwrite,ElasticModulus
-   (';  ElasticModulus = ',E12.4)
-   *vwrite,
-   ('SEÇÕES:')
-   *vwrite,Thk
-   (';  Thk      = ',F10.4)
-   *vwrite,GEO_OWALL_thk
-   (';  WallThk  = ',F10.4)
-   *vwrite,GEO_FLOOR_thk
-   (';  FloorThk = ',F10.4)
-   *vwrite,GEO_ROOF_thk
-   (';  RoofThk  = ',F10.4)
-   *vwrite,
-   ('SOLO:')
-   *vwrite,MinimumSoilCover
-   (';  MinimumSoilCover     = ',F10.4)
-   *vwrite,MAT_SOIL_frictionAngle
-   (';  FrictionAngle        = ',F10.4)
-   *vwrite,MAT_SOIL_cohesion
-   (';  SoilCohesion         = ',E12.4)
-   *vwrite,MAT_SOIL_density
-   (';  SoilDensity          = ',F10.4)
-   *vwrite,MAT_SOIL_stiffness
-   (';  SoilStiffness        = ',E12.4)
-   *vwrite,SpringLength
-   (';  SpringLength         = ',F10.4)
-   *vwrite,SpringElasticModulus
-   (';  SpringElasticModulus = ',E12.4)
-   *vwrite,SpringConstant
-   (';  SpringConstant       = ',E12.4)
-   *vwrite,SpringArea
-   (';  SpringArea           = ',E12.4)
-   *vwrite,ActiveEPCoefficient
-   (';  ActiveEPCoefficient  = ',F10.4)
-   *vwrite,RestEPCoefficient
-   (';  RestEPCoefficient    = ',F10.4)
-   *vwrite,Gammat
-   (';  Gammat               = ',F10.4)
-   *vwrite,GammaSAT
-   (';  GammaSAT             = ',F10.4)
-   *vwrite,GammaSUB
-   (';  GammaSUB             = ',F10.4)
-   *vwrite,
-   ('ÁGUA:')
-   *vwrite,WaterDensity
-   (';  WaterDensity        = ',F10.4)
-   *vwrite,SaturationIncrement
-   (';  SaturationIncrement = ',F10.4)
-   *vwrite,GEO_EMB_waterDepth
-   (';  WaterDepth          = ',F10.4)
-   *vwrite,WaterY
-   (';  WaterY              = ',F10.4)
-   *vwrite,WaterHeight
-   (';  WaterHeight         = ',F10.4)
-   *vwrite,Gammaw
-   (';  Gammaw              = ',F10.4)
-   *vwrite,
-   ('CARREGAMENTO:')
-   *vwrite,Gravity
-   (';  Gravity       = ',F10.4)
-   *vwrite,LOAD_LTA_skew
-   (';  LineDirection = ',F10.4)
-   *vwrite,RowCount
-   (';  RowCount      = ',F3.0,TL1,' ')
-   *vwrite,LoadCount
-   (';  LoadCount     = ',F3.0,TL1,' ')
-   *vwrite,LOAD_LTA_name
-   (';  TREM TIPO: ',A8)
-   *vwrite,
-   (';  Positions      | Loads')
-   *vwrite,LOADTRAIN_ARR_positions(1),LOADTRAIN_ARR_loads(1)
-   (';  ',F14.4,' | ',E12.4)
-   *vwrite,LOAD_LTA_positionCount
-   (';  xOffsetCount = ',F3.0,TL1,' ')
-   *vwrite,LOAD_LTA_positions(1)
-   (';  xOffsets     = ',F10.4)
-   *vwrite,LOAD_LTA_transversalOffset
-   (';  zOffset      = ',F10.4)
-   *vwrite,LOAD_LTA_spacing
-   (';  DeltaZOffset = ',F10.4)
-   *vwrite,
-   ('ANSYS:')
-   *vwrite,CoordSys
-   (';  CoordSys     = ',F3.0,TL1,' ')
-   *vwrite,FEM_TUN_esize
-   (';  ElementSize  = ',F10.4)
-   *vwrite,ElementArea
-   (';  ElementArea  = ',E12.4)
-   *vwrite,SubstepCount
-   (';  SubstepCount = ',F3.0,TL1,' ')
-   *vwrite,pi
-   (';  pi           = ',F10.4)
+  *vwrite,
+  ('GERAL:')
+  *vwrite,Version
+  (';  Code Version = ',F3.0,TL1,' ')
+  *vwrite,FILE_name
+  (';  Tunnel Id.   = ',A8)
+  *vwrite,
+  ('GOMETRIA:')
+  *vwrite,GEO_TUN_modules
+  (';  GalleryModules    = ',F3.0,TL1,' ')
+  *vwrite,GEO_TUN_length
+  (';  GalleryLength     = ',F10.4)
+  *vwrite,GEO_TUN_height
+  (';  GalleryHeight     = ',F10.4)
+  *vwrite,GEO_TUN_moduleWidth
+  (';  GalleryWidth      = ',F10.4)
+  *vwrite,Eff_GalleryHeight
+  (';  Eff_GalleryHeight = ',F10.4)
+  *vwrite,Eff_GalleryWidth
+  (';  Eff_GalleryWidth  = ',F10.4)
+  *vwrite,GEO_EMB_height
+  (';  GalleryDepth      = ',F10.4)
+  *vwrite,
+  ('CONCRETO:')
+  *vwrite,MAT_TUN_fck
+  (';  fck            = ',E12.4)
+  *vwrite,Poisson
+  (';  Poisson        = ',F10.4)
+  *vwrite,MassDensity
+  (';  MassDensity    = ',E12.4)
+  *vwrite,ElasticModulus
+  (';  ElasticModulus = ',E12.4)
+  *vwrite,
+  ('SEÇÕES:')
+  *vwrite,Thk
+  (';  Thk      = ',F10.4)
+  *vwrite,GEO_OWALL_thk
+  (';  WallThk  = ',F10.4)
+  *vwrite,GEO_FLOOR_thk
+  (';  FloorThk = ',F10.4)
+  *vwrite,GEO_ROOF_thk
+  (';  RoofThk  = ',F10.4)
+  *vwrite,
+  ('SOLO:')
+  *vwrite,MinimumSoilCover
+  (';  MinimumSoilCover     = ',F10.4)
+  *vwrite,MAT_SOIL_frictionAngle
+  (';  FrictionAngle        = ',F10.4)
+  *vwrite,MAT_SOIL_cohesion
+  (';  SoilCohesion         = ',E12.4)
+  *vwrite,MAT_SOIL_density
+  (';  SoilDensity          = ',F10.4)
+  *vwrite,MAT_SOIL_stiffness
+  (';  SoilStiffness        = ',E12.4)
+  *vwrite,SpringLength
+  (';  SpringLength         = ',F10.4)
+  *vwrite,SpringElasticModulus
+  (';  SpringElasticModulus = ',E12.4)
+  *vwrite,SpringConstant
+  (';  SpringConstant       = ',E12.4)
+  *vwrite,SpringArea
+  (';  SpringArea           = ',E12.4)
+  *vwrite,ActiveEPCoefficient
+  (';  ActiveEPCoefficient  = ',F10.4)
+  *vwrite,RestEPCoefficient
+  (';  RestEPCoefficient    = ',F10.4)
+  *vwrite,Gammat
+  (';  Gammat               = ',F10.4)
+  *vwrite,GammaSAT
+  (';  GammaSAT             = ',F10.4)
+  *vwrite,GammaSUB
+  (';  GammaSUB             = ',F10.4)
+  *vwrite,
+  ('ÁGUA:')
+  *vwrite,WaterDensity
+  (';  WaterDensity        = ',F10.4)
+  *vwrite,SaturationIncrement
+  (';  SaturationIncrement = ',F10.4)
+  *vwrite,GEO_EMB_waterDepth
+  (';  WaterDepth          = ',F10.4)
+  *vwrite,WaterY
+  (';  WaterY              = ',F10.4)
+  *vwrite,WaterHeight
+  (';  WaterHeight         = ',F10.4)
+  *vwrite,Gammaw
+  (';  Gammaw              = ',F10.4)
+  *vwrite,
+  ('CARREGAMENTO:')
+  *vwrite,Gravity
+  (';  Gravity       = ',F10.4)
+  *vwrite,LOAD_LTA_skew
+  (';  LineDirection = ',F10.4)
+  *vwrite,RowCount
+  (';  RowCount      = ',F3.0,TL1,' ')
+  *vwrite,LoadCount
+  (';  LoadCount     = ',F3.0,TL1,' ')
+  *vwrite,LOAD_LTA_name
+  (';  TREM TIPO: ',A8)
+  *vwrite,
+  (';  Positions      | Loads')
+  *vwrite,LOADTRAIN_ARR_positions(1),LOADTRAIN_ARR_loads(1)
+  (';  ',F14.4,' | ',E12.4)
+  *vwrite,LOAD_LTA_positionCount
+  (';  xOffsetCount = ',F3.0,TL1,' ')
+  *vwrite,LOAD_LTA_positions(1)
+  (';  xOffsets     = ',F10.4)
+  *vwrite,LOAD_LTA_transversalOffset
+  (';  zOffset      = ',F10.4)
+  *vwrite,LOAD_LTA_spacing
+  (';  DeltaZOffset = ',F10.4)
+  *vwrite,
+  ('ANSYS:')
+  *vwrite,CoordSys
+  (';  CoordSys     = ',F3.0,TL1,' ')
+  *vwrite,FEM_TUN_esize
+  (';  ElementSize  = ',F10.4)
+  *vwrite,ElementArea
+  (';  ElementArea  = ',E12.4)
+  *vwrite,SubstepCount
+  (';  SubstepCount = ',F3.0,TL1,' ')
+  *vwrite,pi
+  (';  pi           = ',F10.4)
 *cfclos
-
 
 *cfopen,SingleRES,'SRES',
-   *vwrite,
-   ('ELEMENTO ;      LAJE DE PISO ; LAJE DE COBERTURA ;  PAREDES EXTERNAS ;  PAREDES INTERNAS ;')
-   ! Thk
-   *vwrite,GEO_FLOOR_thk,GEO_ROOF_thk,GEO_OWALL_thk,GEO_OWALL_thk
-   ('THK      ; ',F17.7,' ; ',F17.7,' ; ',F17.7,' ; ',F17.7,' ;')
-   ! MX
-   *vwrite,FloorMXMAX*1e-3,RoofMXMAX*1e-3,WallMXMAX*1e-3,IntMXMAX*1e-3
-   ('MX MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   *vwrite,FloorMXMIN*1e-3,RoofMXMIN*1e-3,WallMXMIN*1e-3,IntMXMIN*1e-3
-   ('MX MIN   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   ! MY
-   *vwrite,FloorMYMAX*1e-3,RoofMYMAX*1e-3,WallMYMAX*1e-3,IntMYMAX*1e-3
-   ('MY MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   *vwrite,FloorMYMIN*1e-3,RoofMYMIN*1e-3,WallMYMIN*1e-3,IntMYMIN*1e-3
-   ('MY MIN   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   ! FX
-   *vwrite,FloorFXMAX*1e-3,RoofFXMAX*1e-3,WallFXMAX*1e-3,IntFXMAX*1e-3
-   ('FX MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   *vwrite,FloorFXMIN*1e-3,RoofFXMIN*1e-3,WallFXMIN*1e-3,IntFXMIN*1e-3
-   ('FX MIN   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   ! FY
-   *vwrite,FloorFYMAX*1e-3,RoofFYMAX*1e-3,WallFYMAX*1e-3,IntFYMAX*1e-3
-   ('FY MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   *vwrite,FloorFYMIN*1e-3,RoofFYMIN*1e-3,WallFYMIN*1e-3,IntFYMIN*1e-3
-   ('FY MIN   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   ! QX
-   *vwrite,FloorQXMAX*1e-3,RoofQXMAX*1e-3,WallQXMAX*1e-3,IntQXMAX*1e-3
-   ('QX MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   ! QY
-   *vwrite,FloorQYMAX*1e-3,RoofQYMAX*1e-3,WallQYMAX*1e-3,IntQYMAX*1e-3
-   ('QY MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
-   ! Flecha
-   *vwrite,RoofSlab_maxDeflection*1e3
-   ('FLECHA   ;                   ; ',F17.7,' ;                   ;                   ;')
+  *vwrite,
+  ('ELEMENTO ;      LAJE DE PISO ; LAJE DE COBERTURA ;  PAREDES EXTERNAS ;  PAREDES INTERNAS ;')
+  ! Thk
+  *vwrite,GEO_FLOOR_thk,GEO_ROOF_thk,GEO_OWALL_thk,GEO_OWALL_thk
+  ('THK      ; ',F17.7,' ; ',F17.7,' ; ',F17.7,' ; ',F17.7,' ;')
+  ! MX
+  *vwrite,FloorMXMAX*1e-3,RoofMXMAX*1e-3,WallMXMAX*1e-3,IntMXMAX*1e-3
+  ('MX MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  *vwrite,FloorMXMIN*1e-3,RoofMXMIN*1e-3,WallMXMIN*1e-3,IntMXMIN*1e-3
+  ('MX MIN   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  ! MY
+  *vwrite,FloorMYMAX*1e-3,RoofMYMAX*1e-3,WallMYMAX*1e-3,IntMYMAX*1e-3
+  ('MY MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  *vwrite,FloorMYMIN*1e-3,RoofMYMIN*1e-3,WallMYMIN*1e-3,IntMYMIN*1e-3
+  ('MY MIN   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  ! FX
+  *vwrite,FloorFXMAX*1e-3,RoofFXMAX*1e-3,WallFXMAX*1e-3,IntFXMAX*1e-3
+  ('FX MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  *vwrite,FloorFXMIN*1e-3,RoofFXMIN*1e-3,WallFXMIN*1e-3,IntFXMIN*1e-3
+  ('FX MIN   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  ! FY
+  *vwrite,FloorFYMAX*1e-3,RoofFYMAX*1e-3,WallFYMAX*1e-3,IntFYMAX*1e-3
+  ('FY MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  *vwrite,FloorFYMIN*1e-3,RoofFYMIN*1e-3,WallFYMIN*1e-3,IntFYMIN*1e-3
+  ('FY MIN   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  ! QX
+  *vwrite,FloorQXMAX*1e-3,RoofQXMAX*1e-3,WallQXMAX*1e-3,IntQXMAX*1e-3
+  ('QX MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  ! QY
+  *vwrite,FloorQYMAX*1e-3,RoofQYMAX*1e-3,WallQYMAX*1e-3,IntQYMAX*1e-3
+  ('QY MAX   ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ; ',F17.2,' ;')
+  ! Flecha
+  *vwrite,RoofSlab_maxDeflection*1e3
+  ('FLECHA   ;                   ; ',F17.7,' ;                   ;                   ;')
 *cfclos
-
-
-
-
-
-
-
-
-
-
-

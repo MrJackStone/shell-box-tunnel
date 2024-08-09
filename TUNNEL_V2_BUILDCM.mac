@@ -1,52 +1,46 @@
 ! TUNNEL_V2_BUILDCM
 
+
 ! Tunnel walls
-!ALLSEL
 asel,s,loc,z,0,GEO_TUN_length
 asel,u,loc,z,0
 asel,u,loc,z,GEO_TUN_length
-ASEL,U,LOC,Y,0
-ASEL,U,LOC,Y,GEO_TUN_effH
-CM,COMPA_Walls,AREA
+asel,U,LOC,Y,0
+asel,U,LOC,Y,GEO_TUN_effH
+cm,COMPA_Walls,AREA
 
 ! Left tunnel wall
-ASEL,R,LOC,X,0
-CM,COMPA_LeftWall,AREA
+asel,R,LOC,X,0
+cm,COMPA_LeftWall,AREA
 
 ! Right tunnel wall
-CMSEL,S,COMPA_Walls
-ASEL,R,LOC,X,GEO_TUN_totEffW
-CM,COMPA_RightWall,AREA
+cmsel,S,COMPA_Walls
+asel,R,LOC,X,GEO_TUN_totEffW
+cm,COMPA_RightWall,AREA
 
 ! Inner tunnel walls
-CMSEL,S,COMPA_Walls
-CMSEL,U,COMPA_LeftWall
-CMSEL,U,COMPA_RightWall
-CM,COMPA_InnerWalls,AREA
+cmsel,S,COMPA_Walls
+cmsel,U,COMPA_LeftWall
+cmsel,U,COMPA_RightWall
+cm,COMPA_InnerWalls,AREA
 
 ! Floor slab
-ASEL,S,LOC,Y,0
-ASEL,R,LOC,Z,0,GEO_TUN_length
-CM,COMPA_Floor,AREA
+asel,S,LOC,Y,0
+asel,R,LOC,Z,0,GEO_TUN_length
+cm,COMPA_Floor,AREA
 
 ! Roof slab
-ASEL,S,LOC,Y,GEO_TUN_effH
-ASEL,R,LOC,Z,0,GEO_TUN_length
+asel,S,LOC,Y,GEO_TUN_effH
+asel,R,LOC,Z,0,GEO_TUN_length
 asel,r,loc,x,0,GEO_TUN_totEffW
-CM,COMPA_Roof,AREA
+cm,COMPA_Roof,AREA
 
 ! Tunnel
-CMSEL,S,COMPA_Walls
-CMSEL,A,COMPA_Floor
-CMSEL,A,COMPA_Roof
-CM,COMPA_Tunnel,AREA
-LSLA,S
-KSLL,S
-CM,COMPL_Tunnel,LINE
-CM,COMPK_Tunnel,KP
-
-
-
-
-
-
+cmsel,S,COMPA_Walls
+cmsel,A,COMPA_Floor
+cmsel,A,COMPA_Roof
+cm,COMPA_Tunnel,AREA
+lsla,S
+ksll,S
+cm,COMPL_Tunnel,LINE
+cm,COMPK_Tunnel,KP
