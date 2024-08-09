@@ -1,6 +1,7 @@
+! TUNNEL_V2_temporary
 
-!! ROOF
-!!
+
+!! ROOF                                                                                           !!
 esel,s,type,,TYPE_SHELL181
 nsle,s
 ! Title
@@ -26,31 +27,29 @@ wpcsys,3,CS_Tunnel
 
 go2png,1500
 
-    pldisp,2
-    /noerase
+  pldisp,2
+  /noerase
 
-    /window,1,off
-    /window,2,off
-    /window,3,off
-    !
-    !
-    !! 8.10.2 CONTOUR PLOTS
-    !!
-    cmsel,s,COMPA_roof
-    esla,s
-    nsle,s,active
+  /window,1,off
+  /window,2,off
+  /window,3,off
 
-    !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)
-    TUNNEL_V2_CNTR, 1, '(a) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
-    !
-    !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)
-    TUNNEL_V2_CNTR, 2, '(b) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
-    !
-    !! 8.10.2.3 AXIAL FORCE
-    TUNNEL_V2_CNTR, 3, '(c) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
-    !
-    !! 8.10.2.4 SHEAR FORCE
-    TUNNEL_V2_CNTR, 4, '(d) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
+  !! 8.10.2 CONTOUR PLOTS                                                                       !!
+  cmsel,s,COMPA_roof
+  esla,s
+  nsle,s,active
+
+  !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)                                                      !!
+  TUNNEL_V2_CNTR, 1, '(a) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
+  !
+  !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)                                                     !!
+  TUNNEL_V2_CNTR, 2, '(b) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
+  !
+  !! 8.10.2.3 AXIAL FORCE                                                                       !!
+  TUNNEL_V2_CNTR, 3, '(c) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
+  !
+  !! 8.10.2.4 SHEAR FORCE                                                                       !!
+  TUNNEL_V2_CNTR, 4, '(d) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
 
 endpng,'REPORT_contours_roof'
 
@@ -59,12 +58,9 @@ endpng,'REPORT_contours_roof'
 /erase
 view1w
 /udoc,all,cntr,bottom
-!
-!
-!
 
-!! FLOOR
-!!
+
+!! FLOOR                                                                                          !!
 esel,s,type,,TYPE_SHELL181
 nsle,s
 ! Title
@@ -90,31 +86,29 @@ wpcsys,3,CS_Tunnel
 
 go2png,1500
 
-    pldisp,2
-    /noerase
+  pldisp,2
+  /noerase
 
-    /window,1,off
-    /window,2,off
-    /window,3,off
-    !
-    !
-    !! 8.10.2 CONTOUR PLOTS
-    !!
-    cmsel,s,COMPA_floor
-    esla,s
-    nsle,s,active
+  /window,1,off
+  /window,2,off
+  /window,3,off
 
-    !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)
-    TUNNEL_V2_CNTR, 1, '(a) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
-    !
-    !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)
-    TUNNEL_V2_CNTR, 2, '(b) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
-    !
-    !! 8.10.2.3 AXIAL FORCE
-    TUNNEL_V2_CNTR, 3, '(c) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
-    !
-    !! 8.10.2.4 SHEAR FORCE
-    TUNNEL_V2_CNTR, 4, '(d) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
+  !! 8.10.2 CONTOUR PLOTS                                                                       !!
+  cmsel,s,COMPA_floor
+  esla,s
+  nsle,s,active
+
+  !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)                                                      !!
+  TUNNEL_V2_CNTR, 1, '(a) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
+
+  !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)                                                     !!
+  TUNNEL_V2_CNTR, 2, '(b) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
+
+  !! 8.10.2.3 AXIAL FORCE                                                                       !!
+  TUNNEL_V2_CNTR, 3, '(c) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
+
+  !! 8.10.2.4 SHEAR FORCE                                                                       !!
+  TUNNEL_V2_CNTR, 4, '(d) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
 
 endpng,'REPORT_contours_floor'
 
@@ -124,8 +118,7 @@ endpng,'REPORT_contours_floor'
 view1w
 /udoc,all,cntr,bottom
 
-!! LEFT WALL
-!!
+!! LEFT WALL                                                                                      !!
 esel,s,type,,TYPE_SHELL181
 nsle,s
 ! Title
@@ -151,31 +144,29 @@ wpcsys,3,CS_Tunnel
 
 go2png,1500
 
-    pldisp,2
-    /noerase
+  pldisp,2
+  /noerase
 
-    /window,1,off
-    /window,2,off
-    /window,3,off
-    !
-    !
-    !! 8.10.2 CONTOUR PLOTS
-    !!
-    cmsel,s,COMPA_leftwall
-    esla,s
-    nsle,s,active
+  /window,1,off
+  /window,2,off
+  /window,3,off
 
-    !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)
-    TUNNEL_V2_CNTR, 1, '(a) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
-    !
-    !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)
-    TUNNEL_V2_CNTR, 2, '(b) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
-    !
-    !! 8.10.2.3 AXIAL FORCE
-    TUNNEL_V2_CNTR, 3, '(c) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
-    !
-    !! 8.10.2.4 SHEAR FORCE
-    TUNNEL_V2_CNTR, 4, '(d) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
+  !! 8.10.2 CONTOUR PLOTS                                                                       !!
+  cmsel,s,COMPA_leftwall
+  esla,s
+  nsle,s,active
+
+  !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)                                                      !!
+  TUNNEL_V2_CNTR, 1, '(a) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
+
+  !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)                                                     !!
+  TUNNEL_V2_CNTR, 2, '(b) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
+
+  !! 8.10.2.3 AXIAL FORCE                                                                       !!
+  TUNNEL_V2_CNTR, 3, '(c) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
+
+  !! 8.10.2.4 SHEAR FORCE                                                                       !!
+  TUNNEL_V2_CNTR, 4, '(d) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
 
 endpng,'REPORT_contours_leftwall'
 
@@ -185,8 +176,7 @@ endpng,'REPORT_contours_leftwall'
 view1w
 /udoc,all,cntr,bottom
 
-!! RIGHT WALL
-!!
+!! RIGHT WALL                                                                                     !!
 esel,s,type,,TYPE_SHELL181
 nsle,s
 ! Title
@@ -212,31 +202,29 @@ wpcsys,3,CS_Tunnel
 
 go2png,1500
 
-    pldisp,2
-    /noerase
+  pldisp,2
+  /noerase
 
-    /window,1,off
-    /window,2,off
-    /window,3,off
-    !
-    !
-    !! 8.10.2 CONTOUR PLOTS
-    !!
-    cmsel,s,COMPA_rightwall
-    esla,s
-    nsle,s,active
+  /window,1,off
+  /window,2,off
+  /window,3,off
 
-    !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)
-    TUNNEL_V2_CNTR, 1, '(a) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
-    !
-    !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)
-    TUNNEL_V2_CNTR, 2, '(b) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
-    !
-    !! 8.10.2.3 AXIAL FORCE
-    TUNNEL_V2_CNTR, 3, '(c) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
-    !
-    !! 8.10.2.4 SHEAR FORCE
-    TUNNEL_V2_CNTR, 4, '(d) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
+  !! 8.10.2 CONTOUR PLOTS                                                                       !!
+  cmsel,s,COMPA_rightwall
+  esla,s
+  nsle,s,active
+
+  !! 8.10.2.1 BENDING MOMENT (TRANSVERSAL)                                                      !!
+  TUNNEL_V2_CNTR, 1, '(a) M. FLETOR (TRANSV.) [kNm/m]', 'emn_my' , POST_dscale
+
+  !! 8.10.2.2 BENDING MOMENT (LONGITUDINAL)                                                     !!
+  TUNNEL_V2_CNTR, 2, '(b) M. FLETOR (LONGIT.) [kNm/m]', 'emn_mx' , POST_dscale
+
+  !! 8.10.2.3 AXIAL FORCE                                                                       !!
+  TUNNEL_V2_CNTR, 3, '(c) F. NORMAL [kN/m]', 'emn_nx' , POST_dscale
+
+  !! 8.10.2.4 SHEAR FORCE                                                                       !!
+  TUNNEL_V2_CNTR, 4, '(d) F. CORTANTE [kN/m]', 'emx_qx' , POST_dscale
 
 endpng,'REPORT_contours_rightwall'
 

@@ -1,8 +1,6 @@
 ! TUNNEL_V2_APPSLBRES
 
-!!
-!! aprox
-!!
+
 cmsel,s,compa_approach
 esla,s
 nsle,s
@@ -12,26 +10,21 @@ cntrlims,,,'APPSLB_M'
 plnsol,u,y
 cntrlims,,,'APPSLB_U'
 
-
-
 *cfopen,'RES_APPSLB',txt
-    *vwrite,FILE_name
+  *vwrite,FILE_name
 Identification: %c
 
-    *vwrite
-    (' ')
+  *vwrite
+  (' ')
 
-    *vwrite
-    ('Units: kN, kNm, mm')
+  *vwrite
+  ('Units: kN, kNm, mm')
 
-    *vwrite
-    (' ')
+  *vwrite
+  (' ')
 
-    *vwrite,APPSLB_M/1000
-    ('ASlb M:', F12.2)
-    *vwrite,APPSLB_U*1e3
-    ('ASlb U:', F12.5)
+  *vwrite,APPSLB_M/1000
+  ('ASlb M:', F12.2)
+  *vwrite,APPSLB_U*1e3
+  ('ASlb U:', F12.5)
 *cfclos
-
-
-

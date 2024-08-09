@@ -82,7 +82,7 @@ TUNNEL_V2_MEMO
 !!                                                                                                !!
 !! 8.  Write report                                                                               !!
 !!                                                                                                !!
-TUNNEL_V2_REPORT
+TUNNEL_V2_REPORT !! TODO: format this
 
 *if,GEO_HDW_status,eq,1,and,GEO_HDW_type,eq,0,then
   TUNNEL_V2_HDWRES

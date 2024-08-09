@@ -1,392 +1,388 @@
 ! TUNNEL_V2_TUNRES
 
-nDiv=50
-SOLU_secCount=1+nint(GEO_TUN_length/0.5)
 
-*del,RES_ROOF_MY_max
-*del,RES_ROOF_MY_min
-*del,RES_ROOF_MX_max
-*del,RES_ROOF_MX_min
-*del,RES_ROOF_NX_max
-*del,RES_ROOF_NX_min
-*del,RES_ROOF_NY_max
-*del,RES_ROOF_NY_min
-*del,RES_ROOF_QX_max
-*del,RES_ROOF_QX_min
-*del,RES_ROOF_QY_max
-*del,RES_ROOF_QY_min
-*del,RES_ROOF_D_max
-*del,RES_ROOF_D_min
+nDiv          = 50
+SOLU_secCount = 1+nint(GEO_TUN_length/0.5)
 
-*del,RES_FLOOR_MY_max
-*del,RES_FLOOR_MY_min
-*del,RES_FLOOR_MX_max
-*del,RES_FLOOR_MX_min
-*del,RES_FLOOR_NX_max
-*del,RES_FLOOR_NX_min
-*del,RES_FLOOR_NY_max
-*del,RES_FLOOR_NY_min
-*del,RES_FLOOR_QX_max
-*del,RES_FLOOR_QX_min
-*del,RES_FLOOR_QY_max
-*del,RES_FLOOR_QY_min
-*del,RES_FLOOR_D_max
-*del,RES_FLOOR_D_min
+*del , RES_ROOF_MY_max
+*del , RES_ROOF_MY_min
+*del , RES_ROOF_MX_max
+*del , RES_ROOF_MX_min
+*del , RES_ROOF_NX_max
+*del , RES_ROOF_NX_min
+*del , RES_ROOF_NY_max
+*del , RES_ROOF_NY_min
+*del , RES_ROOF_QX_max
+*del , RES_ROOF_QX_min
+*del , RES_ROOF_QY_max
+*del , RES_ROOF_QY_min
+*del , RES_ROOF_D_max
+*del , RES_ROOF_D_min
 
-*del,RES_LWALL_MY_max
-*del,RES_LWALL_MY_min
-*del,RES_LWALL_MX_max
-*del,RES_LWALL_MX_min
-*del,RES_LWALL_NX_max
-*del,RES_LWALL_NX_min
-*del,RES_LWALL_NY_max
-*del,RES_LWALL_NY_min
-*del,RES_LWALL_QX_max
-*del,RES_LWALL_QX_min
-*del,RES_LWALL_QY_max
-*del,RES_LWALL_QY_min
-*del,RES_LWALL_D_max
-*del,RES_LWALL_D_min
+*del , RES_FLOOR_MY_max
+*del , RES_FLOOR_MY_min
+*del , RES_FLOOR_MX_max
+*del , RES_FLOOR_MX_min
+*del , RES_FLOOR_NX_max
+*del , RES_FLOOR_NX_min
+*del , RES_FLOOR_NY_max
+*del , RES_FLOOR_NY_min
+*del , RES_FLOOR_QX_max
+*del , RES_FLOOR_QX_min
+*del , RES_FLOOR_QY_max
+*del , RES_FLOOR_QY_min
+*del , RES_FLOOR_D_max
+*del , RES_FLOOR_D_min
 
-*del,RES_RWALL_MY_max
-*del,RES_RWALL_MY_min
-*del,RES_RWALL_MX_max
-*del,RES_RWALL_MX_min
-*del,RES_RWALL_NX_max
-*del,RES_RWALL_NX_min
-*del,RES_RWALL_NY_max
-*del,RES_RWALL_NY_min
-*del,RES_RWALL_QX_max
-*del,RES_RWALL_QX_min
-*del,RES_RWALL_QY_max
-*del,RES_RWALL_QY_min
-*del,RES_RWALL_D_max
-*del,RES_RWALL_D_min
+*del , RES_LWALL_MY_max
+*del , RES_LWALL_MY_min
+*del , RES_LWALL_MX_max
+*del , RES_LWALL_MX_min
+*del , RES_LWALL_NX_max
+*del , RES_LWALL_NX_min
+*del , RES_LWALL_NY_max
+*del , RES_LWALL_NY_min
+*del , RES_LWALL_QX_max
+*del , RES_LWALL_QX_min
+*del , RES_LWALL_QY_max
+*del , RES_LWALL_QY_min
+*del , RES_LWALL_D_max
+*del , RES_LWALL_D_min
 
-*dim,RES_ROOF_MY_max,,nDiv+1
-*dim,RES_ROOF_MY_min,,nDiv+1
-*dim,RES_ROOF_MX_max,,nDiv+1
-*dim,RES_ROOF_MX_min,,nDiv+1
-*dim,RES_ROOF_NX_max,,nDiv+1
-*dim,RES_ROOF_NX_min,,nDiv+1
-*dim,RES_ROOF_NY_max,,nDiv+1
-*dim,RES_ROOF_NY_min,,nDiv+1
-*dim,RES_ROOF_QX_max,,nDiv+1
-*dim,RES_ROOF_QX_min,,nDiv+1
-*dim,RES_ROOF_QY_max,,nDiv+1
-*dim,RES_ROOF_QY_min,,nDiv+1
-*dim,RES_ROOF_D_max,,nDiv+1
-*dim,RES_ROOF_D_min,,nDiv+1
+*del , RES_RWALL_MY_max
+*del , RES_RWALL_MY_min
+*del , RES_RWALL_MX_max
+*del , RES_RWALL_MX_min
+*del , RES_RWALL_NX_max
+*del , RES_RWALL_NX_min
+*del , RES_RWALL_NY_max
+*del , RES_RWALL_NY_min
+*del , RES_RWALL_QX_max
+*del , RES_RWALL_QX_min
+*del , RES_RWALL_QY_max
+*del , RES_RWALL_QY_min
+*del , RES_RWALL_D_max
+*del , RES_RWALL_D_min
 
-*dim,RES_FLOOR_MY_max,,nDiv+1
-*dim,RES_FLOOR_MY_min,,nDiv+1
-*dim,RES_FLOOR_MX_max,,nDiv+1
-*dim,RES_FLOOR_MX_min,,nDiv+1
-*dim,RES_FLOOR_NX_max,,nDiv+1
-*dim,RES_FLOOR_NX_min,,nDiv+1
-*dim,RES_FLOOR_NY_max,,nDiv+1
-*dim,RES_FLOOR_NY_min,,nDiv+1
-*dim,RES_FLOOR_QX_max,,nDiv+1
-*dim,RES_FLOOR_QX_min,,nDiv+1
-*dim,RES_FLOOR_QY_max,,nDiv+1
-*dim,RES_FLOOR_QY_min,,nDiv+1
-*dim,RES_FLOOR_D_max,,nDiv+1
-*dim,RES_FLOOR_D_min,,nDiv+1
+*dim , RES_ROOF_MY_max ,  , nDiv+1
+*dim , RES_ROOF_MY_min ,  , nDiv+1
+*dim , RES_ROOF_MX_max ,  , nDiv+1
+*dim , RES_ROOF_MX_min ,  , nDiv+1
+*dim , RES_ROOF_NX_max ,  , nDiv+1
+*dim , RES_ROOF_NX_min ,  , nDiv+1
+*dim , RES_ROOF_NY_max ,  , nDiv+1
+*dim , RES_ROOF_NY_min ,  , nDiv+1
+*dim , RES_ROOF_QX_max ,  , nDiv+1
+*dim , RES_ROOF_QX_min ,  , nDiv+1
+*dim , RES_ROOF_QY_max ,  , nDiv+1
+*dim , RES_ROOF_QY_min ,  , nDiv+1
+*dim , RES_ROOF_D_max  ,  , nDiv+1
+*dim , RES_ROOF_D_min  ,  , nDiv+1
 
-*dim,RES_LWALL_MY_max,,nDiv+1
-*dim,RES_LWALL_MY_min,,nDiv+1
-*dim,RES_LWALL_MX_max,,nDiv+1
-*dim,RES_LWALL_MX_min,,nDiv+1
-*dim,RES_LWALL_NX_max,,nDiv+1
-*dim,RES_LWALL_NX_min,,nDiv+1
-*dim,RES_LWALL_NY_max,,nDiv+1
-*dim,RES_LWALL_NY_min,,nDiv+1
-*dim,RES_LWALL_QX_max,,nDiv+1
-*dim,RES_LWALL_QX_min,,nDiv+1
-*dim,RES_LWALL_QY_max,,nDiv+1
-*dim,RES_LWALL_QY_min,,nDiv+1
-*dim,RES_LWALL_D_max,,nDiv+1
-*dim,RES_LWALL_D_min,,nDiv+1
+*dim , RES_FLOOR_MY_max ,  , nDiv+1
+*dim , RES_FLOOR_MY_min ,  , nDiv+1
+*dim , RES_FLOOR_MX_max ,  , nDiv+1
+*dim , RES_FLOOR_MX_min ,  , nDiv+1
+*dim , RES_FLOOR_NX_max ,  , nDiv+1
+*dim , RES_FLOOR_NX_min ,  , nDiv+1
+*dim , RES_FLOOR_NY_max ,  , nDiv+1
+*dim , RES_FLOOR_NY_min ,  , nDiv+1
+*dim , RES_FLOOR_QX_max ,  , nDiv+1
+*dim , RES_FLOOR_QX_min ,  , nDiv+1
+*dim , RES_FLOOR_QY_max ,  , nDiv+1
+*dim , RES_FLOOR_QY_min ,  , nDiv+1
+*dim , RES_FLOOR_D_max  ,  , nDiv+1
+*dim , RES_FLOOR_D_min  ,  , nDiv+1
 
-*dim,RES_RWALL_MY_max,,nDiv+1
-*dim,RES_RWALL_MY_min,,nDiv+1
-*dim,RES_RWALL_MX_max,,nDiv+1
-*dim,RES_RWALL_MX_min,,nDiv+1
-*dim,RES_RWALL_NX_max,,nDiv+1
-*dim,RES_RWALL_NX_min,,nDiv+1
-*dim,RES_RWALL_NY_max,,nDiv+1
-*dim,RES_RWALL_NY_min,,nDiv+1
-*dim,RES_RWALL_QX_max,,nDiv+1
-*dim,RES_RWALL_QX_min,,nDiv+1
-*dim,RES_RWALL_QY_max,,nDiv+1
-*dim,RES_RWALL_QY_min,,nDiv+1
-*dim,RES_RWALL_D_max,,nDiv+1
-*dim,RES_RWALL_D_min,,nDiv+1
+*dim , RES_LWALL_MY_max ,  , nDiv+1
+*dim , RES_LWALL_MY_min ,  , nDiv+1
+*dim , RES_LWALL_MX_max ,  , nDiv+1
+*dim , RES_LWALL_MX_min ,  , nDiv+1
+*dim , RES_LWALL_NX_max ,  , nDiv+1
+*dim , RES_LWALL_NX_min ,  , nDiv+1
+*dim , RES_LWALL_NY_max ,  , nDiv+1
+*dim , RES_LWALL_NY_min ,  , nDiv+1
+*dim , RES_LWALL_QX_max ,  , nDiv+1
+*dim , RES_LWALL_QX_min ,  , nDiv+1
+*dim , RES_LWALL_QY_max ,  , nDiv+1
+*dim , RES_LWALL_QY_min ,  , nDiv+1
+*dim , RES_LWALL_D_max  ,  , nDiv+1
+*dim , RES_LWALL_D_min  ,  , nDiv+1
 
+*dim , RES_RWALL_MY_max ,  , nDiv+1
+*dim , RES_RWALL_MY_min ,  , nDiv+1
+*dim , RES_RWALL_MX_max ,  , nDiv+1
+*dim , RES_RWALL_MX_min ,  , nDiv+1
+*dim , RES_RWALL_NX_max ,  , nDiv+1
+*dim , RES_RWALL_NX_min ,  , nDiv+1
+*dim , RES_RWALL_NY_max ,  , nDiv+1
+*dim , RES_RWALL_NY_min ,  , nDiv+1
+*dim , RES_RWALL_QX_max ,  , nDiv+1
+*dim , RES_RWALL_QX_min ,  , nDiv+1
+*dim , RES_RWALL_QY_max ,  , nDiv+1
+*dim , RES_RWALL_QY_min ,  , nDiv+1
+*dim , RES_RWALL_D_max  ,  , nDiv+1
+*dim , RES_RWALL_D_min  ,  , nDiv+1
 
-*vfill,RES_ROOF_MY_max,ramp,0,0
-*vfill,RES_ROOF_MY_min,ramp,0,0
-*vfill,RES_ROOF_MX_max,ramp,0,0
-*vfill,RES_ROOF_MX_min,ramp,0,0
-*vfill,RES_ROOF_NX_max,ramp,0,0
-*vfill,RES_ROOF_NX_min,ramp,0,0
-*vfill,RES_ROOF_NY_max,ramp,0,0
-*vfill,RES_ROOF_NY_min,ramp,0,0
-*vfill,RES_ROOF_QX_max,ramp,0,0
-*vfill,RES_ROOF_QX_min,ramp,0,0
-*vfill,RES_ROOF_QY_max,ramp,0,0
-*vfill,RES_ROOF_QY_min,ramp,0,0
-*vfill,RES_ROOF_D_max,ramp,0,0
-*vfill,RES_ROOF_D_min,ramp,0,0
+*vfill , RES_ROOF_MY_max , ramp , 0 , 0
+*vfill , RES_ROOF_MY_min , ramp , 0 , 0
+*vfill , RES_ROOF_MX_max , ramp , 0 , 0
+*vfill , RES_ROOF_MX_min , ramp , 0 , 0
+*vfill , RES_ROOF_NX_max , ramp , 0 , 0
+*vfill , RES_ROOF_NX_min , ramp , 0 , 0
+*vfill , RES_ROOF_NY_max , ramp , 0 , 0
+*vfill , RES_ROOF_NY_min , ramp , 0 , 0
+*vfill , RES_ROOF_QX_max , ramp , 0 , 0
+*vfill , RES_ROOF_QX_min , ramp , 0 , 0
+*vfill , RES_ROOF_QY_max , ramp , 0 , 0
+*vfill , RES_ROOF_QY_min , ramp , 0 , 0
+*vfill , RES_ROOF_D_max  , ramp , 0 , 0
+*vfill , RES_ROOF_D_min  , ramp , 0 , 0
 
-*vfill,RES_FLOOR_MY_max,ramp,0,0
-*vfill,RES_FLOOR_MY_min,ramp,0,0
-*vfill,RES_FLOOR_MX_max,ramp,0,0
-*vfill,RES_FLOOR_MX_min,ramp,0,0
-*vfill,RES_FLOOR_NX_max,ramp,0,0
-*vfill,RES_FLOOR_NX_min,ramp,0,0
-*vfill,RES_FLOOR_NY_max,ramp,0,0
-*vfill,RES_FLOOR_NY_min,ramp,0,0
-*vfill,RES_FLOOR_QX_max,ramp,0,0
-*vfill,RES_FLOOR_QX_min,ramp,0,0
-*vfill,RES_FLOOR_QY_max,ramp,0,0
-*vfill,RES_FLOOR_QY_min,ramp,0,0
-*vfill,RES_FLOOR_D_max,ramp,0,0
-*vfill,RES_FLOOR_D_min,ramp,0,0
+*vfill , RES_FLOOR_MY_max , ramp , 0 , 0
+*vfill , RES_FLOOR_MY_min , ramp , 0 , 0
+*vfill , RES_FLOOR_MX_max , ramp , 0 , 0
+*vfill , RES_FLOOR_MX_min , ramp , 0 , 0
+*vfill , RES_FLOOR_NX_max , ramp , 0 , 0
+*vfill , RES_FLOOR_NX_min , ramp , 0 , 0
+*vfill , RES_FLOOR_NY_max , ramp , 0 , 0
+*vfill , RES_FLOOR_NY_min , ramp , 0 , 0
+*vfill , RES_FLOOR_QX_max , ramp , 0 , 0
+*vfill , RES_FLOOR_QX_min , ramp , 0 , 0
+*vfill , RES_FLOOR_QY_max , ramp , 0 , 0
+*vfill , RES_FLOOR_QY_min , ramp , 0 , 0
+*vfill , RES_FLOOR_D_max  , ramp , 0 , 0
+*vfill , RES_FLOOR_D_min  , ramp , 0 , 0
 
-*vfill,RES_LWALL_MY_max,ramp,0,0
-*vfill,RES_LWALL_MY_min,ramp,0,0
-*vfill,RES_LWALL_MX_max,ramp,0,0
-*vfill,RES_LWALL_MX_min,ramp,0,0
-*vfill,RES_LWALL_NX_max,ramp,0,0
-*vfill,RES_LWALL_NX_min,ramp,0,0
-*vfill,RES_LWALL_NY_max,ramp,0,0
-*vfill,RES_LWALL_NY_min,ramp,0,0
-*vfill,RES_LWALL_QX_max,ramp,0,0
-*vfill,RES_LWALL_QX_min,ramp,0,0
-*vfill,RES_LWALL_QY_max,ramp,0,0
-*vfill,RES_LWALL_QY_min,ramp,0,0
-*vfill,RES_LWALL_D_max,ramp,0,0
-*vfill,RES_LWALL_D_min,ramp,0,0
+*vfill , RES_LWALL_MY_max , ramp , 0 , 0
+*vfill , RES_LWALL_MY_min , ramp , 0 , 0
+*vfill , RES_LWALL_MX_max , ramp , 0 , 0
+*vfill , RES_LWALL_MX_min , ramp , 0 , 0
+*vfill , RES_LWALL_NX_max , ramp , 0 , 0
+*vfill , RES_LWALL_NX_min , ramp , 0 , 0
+*vfill , RES_LWALL_NY_max , ramp , 0 , 0
+*vfill , RES_LWALL_NY_min , ramp , 0 , 0
+*vfill , RES_LWALL_QX_max , ramp , 0 , 0
+*vfill , RES_LWALL_QX_min , ramp , 0 , 0
+*vfill , RES_LWALL_QY_max , ramp , 0 , 0
+*vfill , RES_LWALL_QY_min , ramp , 0 , 0
+*vfill , RES_LWALL_D_max  , ramp , 0 , 0
+*vfill , RES_LWALL_D_min  , ramp , 0 , 0
 
-*vfill,RES_RWALL_MY_max,ramp,0,0
-*vfill,RES_RWALL_MY_min,ramp,0,0
-*vfill,RES_RWALL_MX_max,ramp,0,0
-*vfill,RES_RWALL_MX_min,ramp,0,0
-*vfill,RES_RWALL_NX_max,ramp,0,0
-*vfill,RES_RWALL_NX_min,ramp,0,0
-*vfill,RES_RWALL_NY_max,ramp,0,0
-*vfill,RES_RWALL_NY_min,ramp,0,0
-*vfill,RES_RWALL_QX_max,ramp,0,0
-*vfill,RES_RWALL_QX_min,ramp,0,0
-*vfill,RES_RWALL_QY_max,ramp,0,0
-*vfill,RES_RWALL_QY_min,ramp,0,0
-*vfill,RES_RWALL_D_max,ramp,0,0
-*vfill,RES_RWALL_D_min,ramp,0,0
-
+*vfill , RES_RWALL_MY_max , ramp , 0 , 0
+*vfill , RES_RWALL_MY_min , ramp , 0 , 0
+*vfill , RES_RWALL_MX_max , ramp , 0 , 0
+*vfill , RES_RWALL_MX_min , ramp , 0 , 0
+*vfill , RES_RWALL_NX_max , ramp , 0 , 0
+*vfill , RES_RWALL_NX_min , ramp , 0 , 0
+*vfill , RES_RWALL_NY_max , ramp , 0 , 0
+*vfill , RES_RWALL_NY_min , ramp , 0 , 0
+*vfill , RES_RWALL_QX_max , ramp , 0 , 0
+*vfill , RES_RWALL_QX_min , ramp , 0 , 0
+*vfill , RES_RWALL_QY_max , ramp , 0 , 0
+*vfill , RES_RWALL_QY_min , ramp , 0 , 0
+*vfill , RES_RWALL_D_max  , ramp , 0 , 0
+*vfill , RES_RWALL_D_min  , ramp , 0 , 0
 
 *del,ETAB_keys
 *dim,ETAB_keys,char,12
-ETAB_keys( 1)='EMX_MX','EMN_MX','EMX_MY','EMN_MY','EMX_QX','EMN_QX','EMX_QY','EMN_QY','EMX_NX','EMN_NX'
-ETAB_keys(11)='EMX_NY','EMN_NY'
+ETAB_keys( 1) = 'EMX_MX' , 'EMN_MX' , 'EMX_MY' , 'EMN_MY' , 'EMX_QX' , 'EMN_QX' , 'EMX_QY' , 'EMN_QY' , 'EMX_NX' , 'EMN_NX'
+ETAB_keys(11) = 'EMX_NY' , 'EMN_NY'
 
 *del,deltaZ
-deltaZ=(GEO_TUN_length-GEO_ExtraLength)/(SOLU_secCount-1)
+deltaZ = (GEO_TUN_length-GEO_ExtraLength)/(SOLU_secCount-1)
 
-z=0
+z = 0
 *do,nthSec,1,SOLU_secCount,1
 
-    *msg,UI,nthSec,SOLU_secCount
+  *msg,UI,nthSec,SOLU_secCount
 Generating results for section %i / %i...
 
-    ! Roof slab
-    cmsel,s,COMPA_Roof
-    esla,s
-    nsle,s
+  ! Roof slab
+  cmsel,s,COMPA_Roof
+  esla,s
+  nsle,s
 
-    loc2glo, 0, GEO_TUN_effH, z, CS_Tunnel
-    x1=LOC2GLO_VAR_x
-    y1=LOC2GLO_VAR_y
-    z1=LOC2GLO_VAR_z
-    loc2glo, GEO_TUN_totEffW, GEO_TUN_effH, z+GEO_ExtraLength, CS_Tunnel
-    x2=LOC2GLO_VAR_x
-    y2=LOC2GLO_VAR_y
-    z2=LOC2GLO_VAR_z
+  loc2glo, 0, GEO_TUN_effH, z, CS_Tunnel
+  x1 = LOC2GLO_VAR_x
+  y1 = LOC2GLO_VAR_y
+  z1 = LOC2GLO_VAR_z
+  loc2glo, GEO_TUN_totEffW, GEO_TUN_effH, z+GEO_ExtraLength, CS_Tunnel
+  x2 = LOC2GLO_VAR_x
+  y2 = LOC2GLO_VAR_y
+  z2 = LOC2GLO_VAR_z
 
-    *if,nthSec,eq,1,then
-        path,'RF_ENV',2,,nDiv
-        ppath,1,,x1,y1,z1
-        ppath,2,,x2,y2,z2
-        pdef,'DUMMY',u,sum,0
-    *endif
-
-    pthName=strcat('RF_S',chrval(nthSec))
-    path,pthName,2,,nDiv
+  *if,nthSec,eq,1,then
+    path,'RF_ENV',2,,nDiv
     ppath,1,,x1,y1,z1
     ppath,2,,x2,y2,z2
     pdef,'DUMMY',u,sum,0
-    *do,i,1,12,1
-        key=ETAB_keys(i)
-        pdef,key,etab,key,1
-        arrName=strcat('nthSec_',key)
-        pth2arr, key, arrName
-    *enddo
-    *voper, RES_ROOF_MX_max(1) , RES_ROOF_MX_max(1) , max , nthSec_EMX_MX(1)
-    *voper, RES_ROOF_MX_min(1) , RES_ROOF_MX_min(1) , min , nthSec_EMN_MX(1)
-    *voper, RES_ROOF_MY_max(1) , RES_ROOF_MY_max(1) , max , nthSec_EMX_MY(1)
-    *voper, RES_ROOF_MY_min(1) , RES_ROOF_MY_min(1) , min , nthSec_EMN_MY(1)
-    *voper, RES_ROOF_QX_max(1) , RES_ROOF_QX_max(1) , max , nthSec_EMX_QX(1)
-    *voper, RES_ROOF_QX_min(1) , RES_ROOF_QX_min(1) , min , nthSec_EMN_QX(1)
-    *voper, RES_ROOF_QY_max(1) , RES_ROOF_QY_max(1) , max , nthSec_EMX_QY(1)
-    *voper, RES_ROOF_QY_min(1) , RES_ROOF_QY_min(1) , min , nthSec_EMN_QY(1)
-    *voper, RES_ROOF_NX_max(1) , RES_ROOF_NX_max(1) , max , nthSec_EMX_NX(1)
-    *voper, RES_ROOF_NX_min(1) , RES_ROOF_NX_min(1) , min , nthSec_EMN_NX(1)
-    *voper, RES_ROOF_NY_max(1) , RES_ROOF_NY_max(1) , max , nthSec_EMX_NY(1)
-    *voper, RES_ROOF_NY_min(1) , RES_ROOF_NY_min(1) , min , nthSec_EMN_NY(1)
-    padele,pthName
+  *endif
 
+  pthName = strcat('RF_S',chrval(nthSec))
+  path,pthName,2,,nDiv
+  ppath,1,,x1,y1,z1
+  ppath,2,,x2,y2,z2
+  pdef,'DUMMY',u,sum,0
+  *do,i,1,12,1
+    key = ETAB_keys(i)
+    pdef,key,etab,key,1
+    arrName = strcat('nthSec_',key)
+    pth2arr, key, arrName
+  *enddo
+  *voper , RES_ROOF_MX_max(1) , RES_ROOF_MX_max(1) , max , nthSec_EMX_MX(1)
+  *voper , RES_ROOF_MX_min(1) , RES_ROOF_MX_min(1) , min , nthSec_EMN_MX(1)
+  *voper , RES_ROOF_MY_max(1) , RES_ROOF_MY_max(1) , max , nthSec_EMX_MY(1)
+  *voper , RES_ROOF_MY_min(1) , RES_ROOF_MY_min(1) , min , nthSec_EMN_MY(1)
+  *voper , RES_ROOF_QX_max(1) , RES_ROOF_QX_max(1) , max , nthSec_EMX_QX(1)
+  *voper , RES_ROOF_QX_min(1) , RES_ROOF_QX_min(1) , min , nthSec_EMN_QX(1)
+  *voper , RES_ROOF_QY_max(1) , RES_ROOF_QY_max(1) , max , nthSec_EMX_QY(1)
+  *voper , RES_ROOF_QY_min(1) , RES_ROOF_QY_min(1) , min , nthSec_EMN_QY(1)
+  *voper , RES_ROOF_NX_max(1) , RES_ROOF_NX_max(1) , max , nthSec_EMX_NX(1)
+  *voper , RES_ROOF_NX_min(1) , RES_ROOF_NX_min(1) , min , nthSec_EMN_NX(1)
+  *voper , RES_ROOF_NY_max(1) , RES_ROOF_NY_max(1) , max , nthSec_EMX_NY(1)
+  *voper , RES_ROOF_NY_min(1) , RES_ROOF_NY_min(1) , min , nthSec_EMN_NY(1)
+  padele , pthName
 
-    ! Floor slab
-    cmsel,s,COMPA_Floor
-    esla,s
-    nsle,s
+  ! Floor slab
+  cmsel,s,COMPA_Floor
+  esla,s
+  nsle,s
 
-    loc2glo, 0, 0, z, CS_Tunnel
-    x1=LOC2GLO_VAR_x
-    y1=LOC2GLO_VAR_y
-    z1=LOC2GLO_VAR_z
-    loc2glo, GEO_TUN_totEffW, 0, z+GEO_ExtraLength, CS_Tunnel
-    x2=LOC2GLO_VAR_x
-    y2=LOC2GLO_VAR_y
-    z2=LOC2GLO_VAR_z
+  loc2glo, 0, 0, z, CS_Tunnel
+  x1 = LOC2GLO_VAR_x
+  y1 = LOC2GLO_VAR_y
+  z1 = LOC2GLO_VAR_z
+  loc2glo, GEO_TUN_totEffW, 0, z+GEO_ExtraLength, CS_Tunnel
+  x2 = LOC2GLO_VAR_x
+  y2 = LOC2GLO_VAR_y
+  z2 = LOC2GLO_VAR_z
 
-    *if,nthSec,eq,1,then
-        path,'FL_ENV',2,,nDiv
-        ppath,1,,x1,y1,z1
-        ppath,2,,x2,y2,z2
-        pdef,'DUMMY',u,sum,0
-    *endif
-
-    pthName=strcat('FL_S',chrval(nthSec))
-    path,pthName,2,,nDiv
+  *if,nthSec,eq,1,then
+    path,'FL_ENV',2,,nDiv
     ppath,1,,x1,y1,z1
     ppath,2,,x2,y2,z2
     pdef,'DUMMY',u,sum,0
-    *do,i,1,12,1
-        key=ETAB_keys(i)
-        pdef,key,etab,key,1
-        arrName=strcat('nthSec_',key)
-        pth2arr, key, arrName
-    *enddo
-    *voper, RES_FLOOR_MX_max(1) , RES_FLOOR_MX_max(1) , max , nthSec_EMX_MX(1)
-    *voper, RES_FLOOR_MX_min(1) , RES_FLOOR_MX_min(1) , min , nthSec_EMN_MX(1)
-    *voper, RES_FLOOR_MY_max(1) , RES_FLOOR_MY_max(1) , max , nthSec_EMX_MY(1)
-    *voper, RES_FLOOR_MY_min(1) , RES_FLOOR_MY_min(1) , min , nthSec_EMN_MY(1)
-    *voper, RES_FLOOR_QX_max(1) , RES_FLOOR_QX_max(1) , max , nthSec_EMX_QX(1)
-    *voper, RES_FLOOR_QX_min(1) , RES_FLOOR_QX_min(1) , min , nthSec_EMN_QX(1)
-    *voper, RES_FLOOR_QY_max(1) , RES_FLOOR_QY_max(1) , max , nthSec_EMX_QY(1)
-    *voper, RES_FLOOR_QY_min(1) , RES_FLOOR_QY_min(1) , min , nthSec_EMN_QY(1)
-    *voper, RES_FLOOR_NX_max(1) , RES_FLOOR_NX_max(1) , max , nthSec_EMX_NX(1)
-    *voper, RES_FLOOR_NX_min(1) , RES_FLOOR_NX_min(1) , min , nthSec_EMN_NX(1)
-    *voper, RES_FLOOR_NY_max(1) , RES_FLOOR_NY_max(1) , max , nthSec_EMX_NY(1)
-    *voper, RES_FLOOR_NY_min(1) , RES_FLOOR_NY_min(1) , min , nthSec_EMN_NY(1)
-    padele,pthName
+  *endif
 
+  pthName = strcat('FL_S',chrval(nthSec))
+  path,pthName,2,,nDiv
+  ppath,1,,x1,y1,z1
+  ppath,2,,x2,y2,z2
+  pdef,'DUMMY',u,sum,0
+  *do,i,1,12,1
+    key = ETAB_keys(i)
+    pdef,key,etab,key,1
+    arrName = strcat('nthSec_',key)
+    pth2arr, key, arrName
+  *enddo
+  *voper , RES_FLOOR_MX_max(1) , RES_FLOOR_MX_max(1) , max , nthSec_EMX_MX(1)
+  *voper , RES_FLOOR_MX_min(1) , RES_FLOOR_MX_min(1) , min , nthSec_EMN_MX(1)
+  *voper , RES_FLOOR_MY_max(1) , RES_FLOOR_MY_max(1) , max , nthSec_EMX_MY(1)
+  *voper , RES_FLOOR_MY_min(1) , RES_FLOOR_MY_min(1) , min , nthSec_EMN_MY(1)
+  *voper , RES_FLOOR_QX_max(1) , RES_FLOOR_QX_max(1) , max , nthSec_EMX_QX(1)
+  *voper , RES_FLOOR_QX_min(1) , RES_FLOOR_QX_min(1) , min , nthSec_EMN_QX(1)
+  *voper , RES_FLOOR_QY_max(1) , RES_FLOOR_QY_max(1) , max , nthSec_EMX_QY(1)
+  *voper , RES_FLOOR_QY_min(1) , RES_FLOOR_QY_min(1) , min , nthSec_EMN_QY(1)
+  *voper , RES_FLOOR_NX_max(1) , RES_FLOOR_NX_max(1) , max , nthSec_EMX_NX(1)
+  *voper , RES_FLOOR_NX_min(1) , RES_FLOOR_NX_min(1) , min , nthSec_EMN_NX(1)
+  *voper , RES_FLOOR_NY_max(1) , RES_FLOOR_NY_max(1) , max , nthSec_EMX_NY(1)
+  *voper , RES_FLOOR_NY_min(1) , RES_FLOOR_NY_min(1) , min , nthSec_EMN_NY(1)
+  padele , pthName
 
-    ! Left wall
-    cmsel,s,COMPA_LeftWall
-    esla,s
-    nsle,s
+  ! Left wall
+  cmsel,s,COMPA_LeftWall
+  esla,s
+  nsle,s
 
-    loc2glo, 0, 0, z, CS_Tunnel
-    x1=LOC2GLO_VAR_x
-    y1=LOC2GLO_VAR_y
-    z1=LOC2GLO_VAR_z
-    loc2glo, 0, GEO_TUN_effH, z, CS_Tunnel
-    x2=LOC2GLO_VAR_x
-    y2=LOC2GLO_VAR_y
-    z2=LOC2GLO_VAR_z
+  loc2glo, 0, 0, z, CS_Tunnel
+  x1 = LOC2GLO_VAR_x
+  y1 = LOC2GLO_VAR_y
+  z1 = LOC2GLO_VAR_z
+  loc2glo, 0, GEO_TUN_effH, z, CS_Tunnel
+  x2 = LOC2GLO_VAR_x
+  y2 = LOC2GLO_VAR_y
+  z2 = LOC2GLO_VAR_z
 
-    *if,nthSec,eq,1,then
-        path,'LW_ENV',2,,nDiv
-        ppath,1,,x1,y1,z1
-        ppath,2,,x2,y2,z2
-        pdef,'DUMMY',u,sum,0
-    *endif
-
-    pthName=strcat('LW_S',chrval(nthSec))
-    path,pthName,2,,nDiv
+  *if,nthSec,eq,1,then
+    path,'LW_ENV',2,,nDiv
     ppath,1,,x1,y1,z1
     ppath,2,,x2,y2,z2
     pdef,'DUMMY',u,sum,0
-    *do,i,1,12,1
-        key=ETAB_keys(i)
-        pdef,key,etab,key,1
-        arrName=strcat('nthSec_',key)
-        pth2arr, key, arrName
-    *enddo
-    *voper, RES_LWALL_MX_max(1) , RES_LWALL_MX_max(1) , max , nthSec_EMX_MX(1)
-    *voper, RES_LWALL_MX_min(1) , RES_LWALL_MX_min(1) , min , nthSec_EMN_MX(1)
-    *voper, RES_LWALL_MY_max(1) , RES_LWALL_MY_max(1) , max , nthSec_EMX_MY(1)
-    *voper, RES_LWALL_MY_min(1) , RES_LWALL_MY_min(1) , min , nthSec_EMN_MY(1)
-    *voper, RES_LWALL_QX_max(1) , RES_LWALL_QX_max(1) , max , nthSec_EMX_QX(1)
-    *voper, RES_LWALL_QX_min(1) , RES_LWALL_QX_min(1) , min , nthSec_EMN_QX(1)
-    *voper, RES_LWALL_QY_max(1) , RES_LWALL_QY_max(1) , max , nthSec_EMX_QY(1)
-    *voper, RES_LWALL_QY_min(1) , RES_LWALL_QY_min(1) , min , nthSec_EMN_QY(1)
-    *voper, RES_LWALL_NX_max(1) , RES_LWALL_NX_max(1) , max , nthSec_EMX_NX(1)
-    *voper, RES_LWALL_NX_min(1) , RES_LWALL_NX_min(1) , min , nthSec_EMN_NX(1)
-    *voper, RES_LWALL_NY_max(1) , RES_LWALL_NY_max(1) , max , nthSec_EMX_NY(1)
-    *voper, RES_LWALL_NY_min(1) , RES_LWALL_NY_min(1) , min , nthSec_EMN_NY(1)
-    padele,pthName
+  *endif
 
+  pthName = strcat('LW_S',chrval(nthSec))
+  path,pthName,2,,nDiv
+  ppath,1,,x1,y1,z1
+  ppath,2,,x2,y2,z2
+  pdef,'DUMMY',u,sum,0
+  *do,i,1,12,1
+    key = ETAB_keys(i)
+    pdef,key,etab,key,1
+    arrName = strcat('nthSec_',key)
+    pth2arr, key, arrName
+  *enddo
+  *voper , RES_LWALL_MX_max(1) , RES_LWALL_MX_max(1) , max , nthSec_EMX_MX(1)
+  *voper , RES_LWALL_MX_min(1) , RES_LWALL_MX_min(1) , min , nthSec_EMN_MX(1)
+  *voper , RES_LWALL_MY_max(1) , RES_LWALL_MY_max(1) , max , nthSec_EMX_MY(1)
+  *voper , RES_LWALL_MY_min(1) , RES_LWALL_MY_min(1) , min , nthSec_EMN_MY(1)
+  *voper , RES_LWALL_QX_max(1) , RES_LWALL_QX_max(1) , max , nthSec_EMX_QX(1)
+  *voper , RES_LWALL_QX_min(1) , RES_LWALL_QX_min(1) , min , nthSec_EMN_QX(1)
+  *voper , RES_LWALL_QY_max(1) , RES_LWALL_QY_max(1) , max , nthSec_EMX_QY(1)
+  *voper , RES_LWALL_QY_min(1) , RES_LWALL_QY_min(1) , min , nthSec_EMN_QY(1)
+  *voper , RES_LWALL_NX_max(1) , RES_LWALL_NX_max(1) , max , nthSec_EMX_NX(1)
+  *voper , RES_LWALL_NX_min(1) , RES_LWALL_NX_min(1) , min , nthSec_EMN_NX(1)
+  *voper , RES_LWALL_NY_max(1) , RES_LWALL_NY_max(1) , max , nthSec_EMX_NY(1)
+  *voper , RES_LWALL_NY_min(1) , RES_LWALL_NY_min(1) , min , nthSec_EMN_NY(1)
+  padele , pthName
 
-    ! Right wall
-    cmsel,s,COMPA_RightWall
-    esla,s
-    nsle,s
+  ! Right wall
+  cmsel,s,COMPA_RightWall
+  esla,s
+  nsle,s
 
-    loc2glo, GEO_TUN_totEffW, 0, z+GEO_ExtraLength, CS_Tunnel
-    x1=LOC2GLO_VAR_x
-    y1=LOC2GLO_VAR_y
-    z1=LOC2GLO_VAR_z
-    loc2glo, GEO_TUN_totEffW, GEO_TUN_effH, z+GEO_ExtraLength, CS_Tunnel
-    x2=LOC2GLO_VAR_x
-    y2=LOC2GLO_VAR_y
-    z2=LOC2GLO_VAR_z
+  loc2glo, GEO_TUN_totEffW, 0, z+GEO_ExtraLength, CS_Tunnel
+  x1 = LOC2GLO_VAR_x
+  y1 = LOC2GLO_VAR_y
+  z1 = LOC2GLO_VAR_z
+  loc2glo, GEO_TUN_totEffW, GEO_TUN_effH, z+GEO_ExtraLength, CS_Tunnel
+  x2 = LOC2GLO_VAR_x
+  y2 = LOC2GLO_VAR_y
+  z2 = LOC2GLO_VAR_z
 
-    *if,nthSec,eq,1,then
-        path,'RW_ENV',2,,nDiv
-        ppath,1,,x2,y2,z2
-        ppath,2,,x1,y1,z1
-        pdef,'DUMMY',u,sum,0
-    *endif
-
-    pthName=strcat('RW_S',chrval(nthSec))
-    path,pthName,2,,nDiv
+  *if,nthSec,eq,1,then
+    path,'RW_ENV',2,,nDiv
     ppath,1,,x2,y2,z2
     ppath,2,,x1,y1,z1
     pdef,'DUMMY',u,sum,0
-    *do,i,1,12,1
-        key=ETAB_keys(i)
-        pdef,key,etab,key,1
-        arrName=strcat('nthSec_',key)
-        pth2arr, key, arrName
-    *enddo
-    *voper, RES_RWALL_MX_max(1) , RES_RWALL_MX_max(1) , max , nthSec_EMX_MX(1)
-    *voper, RES_RWALL_MX_min(1) , RES_RWALL_MX_min(1) , min , nthSec_EMN_MX(1)
-    *voper, RES_RWALL_MY_max(1) , RES_RWALL_MY_max(1) , max , nthSec_EMX_MY(1)
-    *voper, RES_RWALL_MY_min(1) , RES_RWALL_MY_min(1) , min , nthSec_EMN_MY(1)
-    *voper, RES_RWALL_QX_max(1) , RES_RWALL_QX_max(1) , max , nthSec_EMX_QX(1)
-    *voper, RES_RWALL_QX_min(1) , RES_RWALL_QX_min(1) , min , nthSec_EMN_QX(1)
-    *voper, RES_RWALL_QY_max(1) , RES_RWALL_QY_max(1) , max , nthSec_EMX_QY(1)
-    *voper, RES_RWALL_QY_min(1) , RES_RWALL_QY_min(1) , min , nthSec_EMN_QY(1)
-    *voper, RES_RWALL_NX_max(1) , RES_RWALL_NX_max(1) , max , nthSec_EMX_NX(1)
-    *voper, RES_RWALL_NX_min(1) , RES_RWALL_NX_min(1) , min , nthSec_EMN_NX(1)
-    *voper, RES_RWALL_NY_max(1) , RES_RWALL_NY_max(1) , max , nthSec_EMX_NY(1)
-    *voper, RES_RWALL_NY_min(1) , RES_RWALL_NY_min(1) , min , nthSec_EMN_NY(1)
-    padele,pthName
+  *endif
 
-    z=z+deltaZ
+  pthName = strcat('RW_S',chrval(nthSec))
+  path,pthName,2,,nDiv
+  ppath,1,,x2,y2,z2
+  ppath,2,,x1,y1,z1
+  pdef,'DUMMY',u,sum,0
+  *do,i,1,12,1
+    key = ETAB_keys(i)
+    pdef,key,etab,key,1
+    arrName = strcat('nthSec_',key)
+    pth2arr, key, arrName
+  *enddo
+  *voper , RES_RWALL_MX_max(1) , RES_RWALL_MX_max(1) , max , nthSec_EMX_MX(1)
+  *voper , RES_RWALL_MX_min(1) , RES_RWALL_MX_min(1) , min , nthSec_EMN_MX(1)
+  *voper , RES_RWALL_MY_max(1) , RES_RWALL_MY_max(1) , max , nthSec_EMX_MY(1)
+  *voper , RES_RWALL_MY_min(1) , RES_RWALL_MY_min(1) , min , nthSec_EMN_MY(1)
+  *voper , RES_RWALL_QX_max(1) , RES_RWALL_QX_max(1) , max , nthSec_EMX_QX(1)
+  *voper , RES_RWALL_QX_min(1) , RES_RWALL_QX_min(1) , min , nthSec_EMN_QX(1)
+  *voper , RES_RWALL_QY_max(1) , RES_RWALL_QY_max(1) , max , nthSec_EMX_QY(1)
+  *voper , RES_RWALL_QY_min(1) , RES_RWALL_QY_min(1) , min , nthSec_EMN_QY(1)
+  *voper , RES_RWALL_NX_max(1) , RES_RWALL_NX_max(1) , max , nthSec_EMX_NX(1)
+  *voper , RES_RWALL_NX_min(1) , RES_RWALL_NX_min(1) , min , nthSec_EMN_NX(1)
+  *voper , RES_RWALL_NY_max(1) , RES_RWALL_NY_max(1) , max , nthSec_EMX_NY(1)
+  *voper , RES_RWALL_NY_min(1) , RES_RWALL_NY_min(1) , min , nthSec_EMN_NY(1)
+  padele , pthName
+
+  z = z+deltaZ
 
 *enddo
 
@@ -448,7 +444,7 @@ arr2pth, 'RES_RWALL_QY_min' , 'QY_MIN' , 16
 
 *del,MPATHPLOT_ARR_pathNames
 *dim,MPATHPLOT_ARR_pathNames,char,8
-MPATHPLOT_ARR_pathNames(1)='RF_ENV','RF_ENV','FL_ENV','FL_ENV','LW_ENV','LW_ENV','RW_ENV','RW_ENV'
+MPATHPLOT_ARR_pathNames(1) = 'RF_ENV','RF_ENV','FL_ENV','FL_ENV','LW_ENV','LW_ENV','RW_ENV','RW_ENV'
 
 *del,MPATHPLOT_ARR_labels
 *dim,MPATHPLOT_ARR_labels,char,8
@@ -464,55 +460,50 @@ aplot
 /triad,off
 /udoc,1,cntr,right
 
-
-MPATHPLOT_ARR_labels(1)= 'MX_MAX', 'MX_MIN', 'MX_MAX', 'MX_MIN', 'MX_MAX', 'MX_MIN', 'MX_MAX', 'MX_MIN'
+MPATHPLOT_ARR_labels(1) = 'MX_MAX', 'MX_MIN', 'MX_MAX', 'MX_MIN', 'MX_MAX', 'MX_MIN', 'MX_MAX', 'MX_MIN'
 go2png,1000
-    lplot
-    /noerase
-    mpathplot,10,0
+  lplot
+  /noerase
+  mpathplot,10,0
 endpng,'TUN_ENV_M_long'
 /erase
 
-MPATHPLOT_ARR_labels(1)= 'MY_MAX', 'MY_MIN','MY_MAX', 'MY_MIN','MY_MAX', 'MY_MIN','MY_MAX', 'MY_MIN'
+MPATHPLOT_ARR_labels(1) = 'MY_MAX', 'MY_MIN','MY_MAX', 'MY_MIN','MY_MAX', 'MY_MIN','MY_MAX', 'MY_MIN'
 go2png,1000
-    lplot
-    /noerase
-    mpathplot,10,0
+  lplot
+  /noerase
+  mpathplot,10,0
 endpng,'TUN_ENV_M_trans'
 /erase
 
-MPATHPLOT_ARR_labels(1)= 'NX_MAX', 'NX_MIN','NX_MAX', 'NX_MIN','NX_MAX', 'NX_MIN','NX_MAX', 'NX_MIN'
+MPATHPLOT_ARR_labels(1) = 'NX_MAX', 'NX_MIN','NX_MAX', 'NX_MIN','NX_MAX', 'NX_MIN','NX_MAX', 'NX_MIN'
 go2png,1000
-    lplot
-    /noerase
-    mpathplot,10,0
+  lplot
+  /noerase
+  mpathplot,10,0
 endpng,'TUN_ENV_N_trans'
 /erase
 
-MPATHPLOT_ARR_labels(1)= 'NY_MAX', 'NY_MIN','NY_MAX', 'NY_MIN','NY_MAX', 'NY_MIN','NY_MAX', 'NY_MIN'
+MPATHPLOT_ARR_labels(1) = 'NY_MAX', 'NY_MIN','NY_MAX', 'NY_MIN','NY_MAX', 'NY_MIN','NY_MAX', 'NY_MIN'
 go2png,1000
-    lplot
-    /noerase
-    mpathplot,10,0
+  lplot
+  /noerase
+  mpathplot,10,0
 endpng,'TUN_ENV_N_long'
 /erase
 
-MPATHPLOT_ARR_labels(1)=  'QX_MAX',  'QX_MIN','QX_MAX',  'QX_MIN','QX_MAX',  'QX_MIN','QX_MAX',  'QX_MIN'
+MPATHPLOT_ARR_labels(1) = 'QX_MAX',  'QX_MIN','QX_MAX',  'QX_MIN','QX_MAX',  'QX_MIN','QX_MAX',  'QX_MIN'
 go2png,1000
-    lplot
-    /noerase
-    mpathplot,10,0
+  lplot
+  /noerase
+  mpathplot,10,0
 endpng,'TUN_ENV_Q_trans'
 /erase
 
-MPATHPLOT_ARR_labels(1)=  'QY_MAX',  'QY_MIN','QY_MAX',  'QY_MIN','QY_MAX',  'QY_MIN','QY_MAX',  'QY_MIN'
+MPATHPLOT_ARR_labels(1) = 'QY_MAX',  'QY_MIN','QY_MAX',  'QY_MIN','QY_MAX',  'QY_MIN','QY_MAX',  'QY_MIN'
 go2png,1000
-    lplot
-    /noerase
-    mpathplot,10,0
+  lplot
+  /noerase
+  mpathplot,10,0
 endpng,'TUN_ENV_Q_long'
 /erase
-
-
-
-
