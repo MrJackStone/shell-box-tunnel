@@ -101,6 +101,7 @@ GEO_CORB_status = 0
 ! Corbel width (measured along slab span)
 GEO_CORB_width = 1.5
 ! Corbel height (measured perpendicular to slab span)
+!   Note: set value to negative for constant-thickness corbel
 GEO_CORB_height = 0.9
 
 

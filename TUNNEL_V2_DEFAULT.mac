@@ -10,6 +10,9 @@ GEO_CORB_height = 1
 ! Frame
 GEO_FRAME_beamRoofConnection = 1
 
+! Headwalls
+GEO_HDW_wingBottomOffset = 0
+
 ! Approach slabs
 GEO_APR_status = 0
 GEO_APR_oneWay = 0
