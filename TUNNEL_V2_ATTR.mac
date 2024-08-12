@@ -21,7 +21,7 @@ MassDensity=2500
 *if,parType,NE,0,THEN
   EPSThk=0
 *endif
-TopSlab_EqvMassDensity=2500*(GEO_ROOF_thk-EPSThk)/RoofThk
+TopSlab_EqvMassDensity=2500*(GEO_ROOF_thk-EPSThk)/GEO_ROOF_thk
 
 ! Water mass density
 WaterDensity=1000
