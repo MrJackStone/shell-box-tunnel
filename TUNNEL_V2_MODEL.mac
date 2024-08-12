@@ -1,4 +1,6 @@
 ! Prepare environment
+/output,outfile,out
+/uis,msgpop,3
 init, 'TUNNEL_V2_DEFAULT'
 
 /prep7
