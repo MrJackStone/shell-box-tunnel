@@ -32,8 +32,7 @@ SaturationIncrement=100
 SpringElasticModulus=1e9
 ! Soil springs: length
 SpringLength=1
-LongitSpringLength=SpringLength*(MAT_SOIL_stiffness/100e6)
-COMPARE,'LongitSpringLength','MIN',2,LongitSpringLength,SpringLength
+LongitSpringLength=(SpringLength*(MAT_SOIL_stiffness/100e6)<SpringLength)
 
 ! Gravitational acceleration
 Gravity=9.81

@@ -43,7 +43,7 @@ PLETAB,%QXmin%,1
 *get,VMin,PLNSOL,,MIN
 PLETAB,%QXmax%,1
 *get,VMax,PLNSOL,,MAX
-COMPARE,'VSup','ABSMAX',2,VMin,VMax
+VSup=(abs(VMin)>abs(VMax))
 
 PLETAB,%NXmin%,1
 *get,NSpan,PLNSOL,,MIN

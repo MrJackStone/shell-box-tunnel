@@ -220,11 +220,11 @@ SECTION: %I / %I
       RW_DFL   = DFL
 
       !! Maximum values  TODO: remove macro                                                 !!
-      COMPARE , 'MSup'  , 'MAX' , 2 , LW_MSup  , RW_MSup
-      COMPARE , 'MSpan' , 'MIN' , 2 , LW_MSpan , RW_MSpan
-      COMPARE , 'VSup'  , 'MAX' , 2 , LW_VSup  , RW_VSup
-      COMPARE , 'NSpan' , 'MIN' , 2 , LW_NSpan , RW_NSpan
-      COMPARE , 'DFL'   , 'MAX' , 2 , LW_DFL   , RW_DFL
+      MSup  = (LW_MSup>RW_MSup)
+      MSpan = (LW_MSpan<RW_MSpan)
+      VSup  = (LW_VSup>RW_VSup)
+      NSpan = (LW_NSpan<RW_NSpan)
+      DFL   = (LW_DFL>RW_DFL)
       *vwrite, MSup/1000, VSup/1000, MSpan/1000, NSpan/1000, DFL*1000
       (F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2,'  ',F8.2)
 

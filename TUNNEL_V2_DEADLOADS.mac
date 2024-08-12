@@ -28,9 +28,6 @@ NodeNum=0
   ! Calculate embankment height above node
   tunnel_v2_yabove, 'yAbove', NZ
 
-  !COMPARE,'nthWaterY','MIN',2,WaterY,yAbove
-  !COMPARE,'nthWaterY','MAX',2,nthWaterY,NY
-
   SoilPressure  = Gammat*(yAbove-NY)
   DeadNodalLoad = -apportionedArea*SoilPressure
 
@@ -69,9 +66,7 @@ NodeNum=0
   ! Calculate embankment height above node
   tunnel_v2_yabove, 'yAbove', NZ
 
-  COMPARE , 'nthWaterY' , 'MIN' , 2 , WaterY    , yAbove !! TODO: remove macro
-  COMPARE , 'nthWaterY' , 'MAX' , 2 , nthWaterY , NY
-
+  nthWaterY             = ((WaterY<yAbove)>NY)
   EffectiveSoilPressure = Gammat*(yAbove-nthWaterY)+GammaSUB*(nthWaterY-NY)
   HorEffectivePressure  = EffectiveSoilPressure*RestEPCoefficient-2*MAT_SOIL_cohesion*SQRT(RestEPCoefficient)
   HorEffectivePressure  = (HorEffectivePressure>0)
