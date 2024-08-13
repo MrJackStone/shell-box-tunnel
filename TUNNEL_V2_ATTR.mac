@@ -51,7 +51,7 @@ REAL_rigidStrut_A=1
 !! 2.2  Indices                                                                                   !!
 !!                                                                                                !!
 ! Coordinate systems
-CoordSys          = 11
+CoordSys          = 11 ! TODO: rename to CS_global
 CS_top            = 12
 CS_bot            = 13
 CS_left           = 14

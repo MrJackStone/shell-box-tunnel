@@ -32,25 +32,23 @@ cm,COMPA_Floor,AREA
 ! Roof struts
 asel,none
 *if,GEO_ROOF_gapStatus,eq,1,and,GEO_ROOF_gapStrutCount,gt,0,then
-  *do,nthStrut,1,GEO_ROOF_gapStrutCount,1
-    zBeg = GEO_ROOF_gap_z_ends(nthStrut)
-    zEnd = zBeg+GEO_ROOF_gapStrutWidth
-    asel,a,loc,z,zBeg,zEnd
-  *enddo
+  asel , a , loc , z , GEO_ROOF_gap_z_ends(1:GEO_ROOF_gapStrutCount) , GEO_ROOF_gap_z_begs(2:GEO_ROOF_gapCount)
+  asel , r , loc , y , GEO_TUN_effH
 *endif
-asel,r,loc,y,GEO_TUN_effH
 cm,COMPA_Struts,area
 
 ! Roof slab
 asel,S,LOC,Y,GEO_TUN_effH
 asel,R,LOC,Z,0,GEO_TUN_length
 asel,r,loc,x,0,GEO_TUN_totEffW
+cmsel,u,COMPA_Struts
 cm,COMPA_Roof,AREA
 
 ! Tunnel
 cmsel,S,COMPA_Walls
 cmsel,A,COMPA_Floor
 cmsel,A,COMPA_Roof
+cmsel,a,COMPA_Struts
 cm,COMPA_Tunnel,AREA
 lsla,S
 ksll,S
