@@ -14,7 +14,7 @@
 
     QX_i = LoadPosition+xOffset
     QY   = GEO_TUN_effH+GEO_EMB_height
-    QZ_i = zOffsets(nthLine)
+    QZ_i = LOAD_LTA_offsets(nthLine)
     TUNNEL_V2_LTPOS, QX_i, QZ_i, QX_0, QZ_0, -LOAD_LTA_skewRad, 1
 
     ! Initialize arrays

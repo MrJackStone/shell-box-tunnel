@@ -195,8 +195,6 @@ LOAD_LTA_name = 'COOPER E-80'
 ! Load train dynamic impact coefficient
 LOAD_LTA_impactCoefficient = 1.00
 
-! Position of the first load train axis (measured from the beginning of the tunnel, transversal to its axial direction)
-LOAD_LTA_transversalOffset = 7.4
 ! Load train path skewness angle (degrees)
 LOAD_LTA_skew = 12
 
@@ -205,8 +203,10 @@ LOAD_LTA_gauge = 1.0
 
 ! Number of load train lanes (side by side)
 LOAD_LTA_count = 3
-! Distance between adjacent load train lanes
-LOAD_LTA_spacing = 6.7
+! Transversal position of each load train lane
+*del,LOAD_LTA_offsets,,nopr
+*dim,LOAD_LTA_offsets,,LOAD_LTA_count
+LOAD_LTA_offsets(1) = 6.7, 12.7, 18.7
 
 ! Number of load train positions
 LOAD_LTA_positionCount = 8

@@ -931,14 +931,13 @@ CM,COMPL_Embankment,LINE
 
 ! Draw arrows marking each railway position
 LSEL,U,LINE,,ALL
-zRailway=LOAD_LTA_transversalOffset
 *do,nthRailway,1,LOAD_LTA_count,1
 
-  gaugeOff = LOAD_LTA_gauge/2
+  zRailway = LOAD_LTA_offsets(nthRailway)
 
   *do,nthLoad,1,2,1
 
-    gaugeOff=-gaugeOff
+    gaugeOff = (-1**nthLoad)*LOAD_LTA_gauge
 
     *get,KPMax,KP,,NUM,MAXD
     KPRi = KPMax+1
@@ -954,9 +953,6 @@ zRailway=LOAD_LTA_transversalOffset
     L , KPRi , KPRl
 
   *enddo
-
-  zRailway=zRailway+LOAD_LTA_spacing
-
 *enddo
 
 ! Create component

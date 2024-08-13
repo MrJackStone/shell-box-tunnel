@@ -33,7 +33,7 @@ Identification: %c
   *vwrite
   (' ')
 
-  *vwrite,LOAD_LTA_transversalOffset
+  *vwrite,LOAD_LTA_offsets(1)
   ('Load Z:      ',F8.3)
   *vwrite,LOAD_LTA_skew
   ('Load skew:   ',F8.3)

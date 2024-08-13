@@ -105,10 +105,8 @@
   (';  xOffsetCount = ',F3.0,TL1,' ')
   *vwrite,LOAD_LTA_positions(1)
   (';  xOffsets     = ',F10.4)
-  *vwrite,LOAD_LTA_transversalOffset
+  *vwrite,LOAD_LTA_offsets(1)
   (';  zOffset      = ',F10.4)
-  *vwrite,LOAD_LTA_spacing
-  (';  DeltaZOffset = ',F10.4)
   *vwrite,
   ('ANSYS:')
   *vwrite,CoordSys
