@@ -123,6 +123,7 @@ cm,COMPN_CSEC_ALL,node
   nodeNum=node(0,0,z)
   nodalZ=nz(nodeNum)
   cmsel,s,COMPA_Tunnel
+  lsla,s
   nsla,s,1
   nsel,r,loc,z,nodalZ
   compName=strcat('COMPN_CSEC_',chrval(nthPos))
@@ -265,6 +266,7 @@ endpng,'REPORT_SecForces'
 !! 8.4  Loads on roof                                                                             !!
 !!                                                                                                !!
 cmsel,s,COMPA_Roof
+lsla,s
 nsla,s,1
 asel,s,area,,all
 cmsel,u,COMPA_RightWall
@@ -342,6 +344,7 @@ endpng,'REPORT_RoofLoad'
 ! Node selection
 cmsel,s,COMPA_Walls
 cmsel,a,COMPA_HDW_Walls
+lsla,s
 nsla,s,1
 nsel,u,loc,y,-GEO_HDW_footDepth
 cm,COMPN_temp,node
@@ -454,6 +457,7 @@ endpng,'REPORT_WallLoad'
 *if,GEO_HDW_type,eq,0,then
   ! Node selection
   cmsel,s,COMPA_HDW_Footing
+  lsla,s
   nsla,s,1
   cm,COMPN_temp,node
   ! Line selection
@@ -634,6 +638,7 @@ eplot
 /user,4
 allsel
 cmsel,s,COMPA_Roof
+lsla,s
 nsla,s,1
 esln,u
 esla,a
