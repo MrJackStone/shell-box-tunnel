@@ -242,7 +242,7 @@ GEO_corbelYOff_BOT = GEO_CORB_height+(GEO_FLOOR_thk/2)+floor_yProjection
   remLength=GEO_TUN_length-(GEO_girderCount*GEO_ROOF_precastWidth)
   extrmbc=GEO_ROOF_precastWidth+(remLength/2)
 
-  *del,GEO_girderZ
+  *del,GEO_girderZ,,nopr
   *dim,GEO_girderZ,array,GEO_girderCount-1
   *vfill,GEO_girderZ,ramp,extrmbc,GEO_ROOF_precastWidth
 *endif

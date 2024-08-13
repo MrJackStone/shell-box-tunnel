@@ -48,11 +48,11 @@ AATT,1,,1,CS_right,SEC_RWALL
 
 ! Floor slab attributes
 CMSEL,S,COMPA_Floor
-AATT,1,,1,CS_bot,SEC_FLOOR
+aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_FLOOR
 
 ! Roof slab attributes
 CMSEL,S,COMPA_Roof
-AATT,3,,1,CS_top,SEC_ROOF
+aatt,MAT_concTs,,TYPE_shell181,CS_top,SEC_ROOF
 
 *if,GEO_CORB_status,GE,1,THEN
   ! Corbels
@@ -123,6 +123,8 @@ AATT,3,,1,CS_top,SEC_ROOF
 
 *elseif,GEO_ROOF_wallConnection,eq,1,then
   ! Pinned roof-wall connection
+  csys,CS_Tunnel
+
   cmsel,s,COMPA_Tunnel
   cmsel,u,COMPA_Roof
   aesize,all,FEM_TUN_esize
@@ -235,10 +237,10 @@ AATT,3,,1,CS_top,SEC_ROOF
 !! 4.3  Soil                                                                                      !!
 !!                                                                                                !!
 ! Attributes for soil springs
-TYPE,2
-REAL,1
-CSYS,CoordSys
-MAT,2
+type , TYPE_link180
+real , REAL_normSprings
+csys , CoordSys
+mat  , MAT_soil
 
 !! 4.3.1  Floor slab                                                                              !!
 ! Bottom supports
