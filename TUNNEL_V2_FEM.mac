@@ -54,6 +54,13 @@ aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_FLOOR
 CMSEL,S,COMPA_Roof
 aatt,MAT_concTs,,TYPE_shell181,CS_top,SEC_ROOF
 
+! Roof strut attributes
+cmsel,s,COMPA_struts
+*get,ac,area,,count
+*if,ac,gt,0,then
+  aatt,MAT_conc,,TYPE_shell181,CS_top,SEC_strut
+*endif
+
 *if,GEO_CORB_status,GE,1,THEN
   ! Corbels
   xWall=0
