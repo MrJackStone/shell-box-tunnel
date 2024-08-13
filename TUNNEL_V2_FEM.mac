@@ -283,9 +283,9 @@ NSLA,S,1
 *do,NodeIndex,1,NodeCount,1
 
   *get,nthNode,NODE,0,NUM,MIN
-  xVal=NX(nthNode)
-  yVal=NY(nthNode)
-  zVal=NZ(nthNode)
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
   *get,MaxNode,NODE,0,NUM,MAXD
   NewNode=MaxNode+1
@@ -307,12 +307,12 @@ NSLA,S,1
 *do,NodeIndex,1,NodeCount,1
 
   *get,nthNode,NODE,0,NUM,MIN
-  xVal=NX(nthNode)
-  yVal=NY(nthNode)
-  zVal=NZ(nthNode)
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
   *get,MaxNode,NODE,0,NUM,MAXD
-  NewNode=MaxNode+1
+  NewNode = MaxNode+1
   N,NewNode,xVal-SpringLength,yVal,zVal
   E,NewNode,nthNode
 
@@ -331,12 +331,12 @@ NSLA,S,1
 *do,NodeIndex,1,NodeCount,1
 
   *get,nthNode,NODE,0,NUM,MIN
-  xVal=NX(nthNode)
-  yVal=NY(nthNode)
-  zVal=NZ(nthNode)
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
   *get,MaxNode,NODE,0,NUM,MAXD
-  NewNode=MaxNode+1
+  NewNode = MaxNode+1
   N,NewNode,xVal+SpringLength,yVal,zVal
   E,NewNode,nthNode
 
@@ -355,12 +355,12 @@ NSLA,S,1
 *do,NodeIndex,1,NodeCount,1
 
   *get,nthNode,NODE,0,NUM,MIN
-  xVal=NX(nthNode)
-  yVal=NY(nthNode)
-  zVal=NZ(nthNode)
+  xVal = NX(nthNode)
+  yVal = NY(nthNode)
+  zVal = NZ(nthNode)
 
   *get,MaxNode,NODE,0,NUM,MAXD
-  NewNode=MaxNode+1
+  NewNode = MaxNode+1
   N,NewNode,xVal,yVal+SpringLength,zVal
   E,NewNode,nthNode
 
@@ -430,8 +430,8 @@ NSLA,S,1
   csys,0
 
   ! Elastic soil supports (far from tunnel only)
-  xMin=0-(GEO_APR_length/3)
-  xMax=GEO_TUN_totEffW+(GEO_APR_length/3)
+  xMin = 0-(GEO_APR_length/3)
+  xMax = GEO_TUN_totEffW+(GEO_APR_length/3)
   type,TYPE_LINK180
   real,REAL_normSprings
   mat,MAT_SOIL
@@ -440,15 +440,15 @@ NSLA,S,1
   !nsel,u,loc,x,xMin,xMax
   cm,COMPN_temp,node
   *get,NC,node,,count
-  nnum=0
+  nnum = 0
   *do,nthNode,1,NC,1
     cmsel,s,COMPN_temp
-    nnum=ndnext(nnum)
-    nx=nx(nnum)
-    ny=ny(nnum)
-    nz=nz(nnum)
+    nnum = ndnext(nnum)
+    nx   = nx(nnum)
+    ny   = ny(nnum)
+    nz   = nz(nnum)
     *get,NDMX,node,,num,maxd
-    newnode=NDMX+1
+    newnode = NDMX+1
     n,newnode,nx,ny-FEM_SPR_normLength,nz
     e,nnum,newnode
     d,newnode,all,0
@@ -579,14 +579,14 @@ NSLA,S,1
   nodenum=0
   *do,nthNode,1,nc,1
     cmsel,s,COMPN_temp
-    nodenum=ndnext(nodenum)
+    nodenum = ndnext(nodenum)
     csys,0
-    ndx=nx(nodenum)
-    ndy=ny(nodenum)
-    ndz=nz(nodenum)
+    ndx = nx(nodenum)
+    ndy = ny(nodenum)
+    ndz = nz(nodenum)
     *get,nmxd,node,,num,maxd
-    x_node=nmxd+1
-    z_node=nmxd+2
+    x_node = nmxd+1
+    z_node = nmxd+2
     n,x_node,ndx+1,ndy,ndz
     n,z_node,ndx,ndy,ndz+1
     e,nodenum,x_node
@@ -609,13 +609,13 @@ NSLA,S,1
   cmsel,s,COMPA_Floor
   nsla,s,1
   cm,COMPN_Floor,node
-  pileNN=0
+  pileNN = 0
   *do,nthNode,1,nc,1
     cmsel,s,COMPN_pileTop
-    pileNN=ndnext(pileNN)
+    pileNN = ndnext(pileNN)
     cmsel,s,COMPN_Floor
     nsel,a,node,,pileNN
-    floorNN=nnear(pileNN)
+    floorNN = nnear(pileNN)
     cp,next,all,pileNN,floorNN
   *enddo
   !! \\\ todo
@@ -652,20 +652,20 @@ NSLA,S,1
 
   *do,nthNode,1,NC,1
     CMSEL,S,COMPN_temp
-    NodeNum=NDNEXT(NodeNum)
-    x=NX(NodeNum)
-    y=NY(NodeNum)
-    z=NZ(NodeNum)
+    NodeNum = NDNEXT(NodeNum)
+    x       = NX(NodeNum)
+    y       = NY(NodeNum)
+    z       = NZ(NodeNum)
     *get,maxND,NODE,,NUM,MAXD
-    NewNode=maxND+1
+    NewNode = maxND+1
     N,NewNode,x,y,z+SpringLength
     E,NodeNum,NewNode
     D,NewNode,UZ,0
 
-    cpNum_UX=0
-    cpNum_UY=0
-    *get,cpNum_UX,node,NodeNum,cps,ux
-    *get,cpNum_UY,node,NodeNum,cps,uy
+    cpNum_UX = 0
+    cpNum_UY = 0
+    *get , cpNum_UX , node , NodeNum , cps , ux
+    *get , cpNum_UY , node , NodeNum , cps , uy
 
     *if,cpNum_UX,gt,0,then
       cp,cpNum_UX,ux,NewNode
