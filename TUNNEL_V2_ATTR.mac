@@ -218,6 +218,22 @@ GEO_corbelYOff_BOT = GEO_CORB_height+(GEO_FLOOR_thk/2)+floor_yProjection
   *afun,rad
 *endif
 
+! Calculate roof gap positions
+*if,GEO_ROOF_gapStatus,eq,1,then
+  GEO_ROOF_gapCount        = GEO_ROOF_gapStrutCount+1
+  GEO_ROOF_gapWidth        = GEO_ROOF_gapEnd-GEO_ROOF_gapBeg
+  GEO_ROOF_gapStrutSpacing = (GEO_ROOF_gapWidth-(GEO_ROOF_gapStrutCount*GEO_ROOF_gapStrutWidth))/GEO_ROOF_gapCount
+  GEO_ROOF_gapStrutPitch   = GEO_ROOF_gapStrutSpacing+GEO_ROOF_gapStrutWidth
+
+  *del , GEO_ROOF_gap_z_begs ,  , nopr
+  *del , GEO_ROOF_gap_z_ends ,  , nopr
+  *dim , GEO_ROOF_gap_z_begs ,  , GEO_ROOF_gapCount
+  *dim , GEO_ROOF_gap_z_ends ,  , GEO_ROOF_gapCount
+
+  *vfill , GEO_ROOF_gap_z_begs , ramp                , GEO_ROOF_gapBeg , GEO_ROOF_gapStrutPitch
+  *voper , GEO_ROOF_gap_z_ends , GEO_ROOF_gap_z_begs , add             , GEO_ROOF_gapStrutSpacing
+*endif
+
 ! Calculate precast girder positions
 *if,GEO_ROOF_type,eq,1,then
   GEO_ROOF_wallConnection=1
