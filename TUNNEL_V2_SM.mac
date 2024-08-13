@@ -279,7 +279,7 @@ ALLSEL
 !!                                                                                                !!
 !! 3.3  Headwalls                                                                                 !!
 !!                                                                                                !!
-asel,u,area,,all
+asel,none
 cm , COMPA_HDW_BackBeam  , AREA
 cm , COMPA_HDW_BotBeam   , AREA
 cm , COMPA_HDW_TopBeam   , AREA
@@ -442,13 +442,13 @@ CM,COMPA_WALL_flat,AREA
 
   ! Headwalls
   *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-    x_LEFT_Top=GEO_corbelXOff_TOP
-    x_LEFT_Bot=GEO_corbelXOff_BOT
-    x_RIGHT_Top=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_TOP
-    x_RIGHT_Bot=GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_BOT
+    x_LEFT_Top  = GEO_corbelXOff_TOP
+    x_LEFT_Bot  = GEO_corbelXOff_BOT
+    x_RIGHT_Top = GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_TOP
+    x_RIGHT_Bot = GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_BOT
 
-    y_BOT=GEO_corbelYOff_BOT
-    y_TOP=Eff_GalleryHeight-GEO_corbelYOff_TOP
+    y_BOT = GEO_corbelYOff_BOT
+    y_TOP = Eff_GalleryHeight-GEO_corbelYOff_TOP
 
     CMSEL,S,COMPA_HDW_Slab
     CSSLICEYZ,x_LEFT_Bot
@@ -503,14 +503,14 @@ ALLSEL
 *if,GEO_APR_status,eq,1,then
   CSYS,CS_Tunnel
   *get,KMXD,KP,,NUM,MAXD
-  K1A=KMXD+1
-  K1B=KMXD+2
-  K2A=KMXD+3
-  K2B=KMXD+4
-  K3A=KMXD+5
-  K3B=KMXD+6
-  K4A=KMXD+7
-  K4B=KMXD+8
+  K1A = KMXD+1
+  K1B = KMXD+2
+  K2A = KMXD+3
+  K2B = KMXD+4
+  K3A = KMXD+5
+  K3B = KMXD+6
+  K4A = KMXD+7
+  K4B = KMXD+8
 
   cmsel,s,COMPA_Roof
   lsla,s
@@ -519,28 +519,28 @@ ALLSEL
   ksel,s,loc,x,0
   ksel,a,loc,x,GEO_TUN_totEffW
   cmsel,r,COMPK_temp
-  kp_L1=kp(              0 , GEO_TUN_effH , GEO_APR_z1)
-  kp_L2=kp(              0 , GEO_TUN_effH , GEO_APR_z2)
-  kp_R3=kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z3)
-  kp_R4=kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z4)
+  kp_L1 = kp(              0 , GEO_TUN_effH , GEO_APR_z1)
+  kp_L2 = kp(              0 , GEO_TUN_effH , GEO_APR_z2)
+  kp_R3 = kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z3)
+  kp_R4 = kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z4)
 
-  xLeft=0
-  xRight=GEO_TUN_totEffW
+  xLeft  = 0
+  xRight = GEO_TUN_totEffW
   K , K1A , xRight , GEO_TUN_effH , GEO_APR_z1
   K , K2A , xRight , GEO_TUN_effH , GEO_APR_z2
   K , K3A , xLeft  , GEO_TUN_effH , GEO_APR_z3
   K , K4A , xLeft  , GEO_TUN_effH , GEO_APR_z4
 
-  xREnd=xRight+GEO_APR_length
-  xLEnd=xLeft-GEO_APR_length
+  xREnd = xRight+GEO_APR_length
+  xLEnd = xLeft-GEO_APR_length
   K , K1B , xREnd , GEO_TUN_effH , GEO_APR_z1L
   K , K2B , xREnd , GEO_TUN_effH , GEO_APR_z2L
   K , K3B , xLEnd , GEO_TUN_effH , GEO_APR_z3L
   K , K4B , xLEnd , GEO_TUN_effH , GEO_APR_z4L
 
-  asel,u,area,,all
+  asel,none
   A , K1A , K1B , K2B , K2A
-  *if     , GEO_APR_z3 , gt , GEO_APR_z1 , and , GEO_APR_z3 , lt , GEO_APR_z2 , then
+  *if , GEO_APR_z3 , gt , GEO_APR_z1 , and , GEO_APR_z3 , lt , GEO_APR_z2 , then
     wpcsys,1,CS_Tunnel
     kwpave,kp_R3
     wprota,,,LOAD_LTA_skew
@@ -555,9 +555,9 @@ ALLSEL
   *endif
   cm,COMPA_approachR,area
 
-  asel,u,area,,all
+  asel,none
   A , K3A , K3B , K4B , K4A
-  *if     , GEO_APR_z1 , gt , GEO_APR_z3 , and , GEO_APR_z1 , lt , GEO_APR_z4 , then
+  *if , GEO_APR_z1 , gt , GEO_APR_z3 , and , GEO_APR_z1 , lt , GEO_APR_z4 , then
     wpcsys,1,CS_Tunnel
     kwpave,kp_L1
     wprota,,,LOAD_LTA_skew
@@ -634,6 +634,7 @@ ALLSEL
 !! 3.7  Pin roof to walls                                                                         !!
 !!                                                                                                !!
 *if,GEO_ROOF_wallConnection,eq,1,then
+
   *if,GEO_ROOF_type,eq,0,then
     cmsel,s,COMPA_roof
     cm,COMPA_temp,area
@@ -671,22 +672,22 @@ ALLSEL
 *if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
   csys,CS_Tunnel
 
-  wallX=0
+  wallX = 0
   *do,nthWall,1,GEO_TUN_modules-1,1
-    wallX=wallX+GEO_TUN_effW
+    wallX = wallX+GEO_TUN_effW
     cmsel,s,COMPA_InnerWalls
     asel,r,loc,x,wallX
     lsla,s
     ksll,s
     cm,COMPA_temp,area
 
-    k_1=kp(wallX,0,0)
-    k_2=kp(wallX,0,GEO_TUN_length)
-    k_3=kp(wallX,GEO_TUN_effH,0)
+    k_1 = kp(wallX , 0            , 0)
+    k_2 = kp(wallX , 0            , GEO_TUN_length)
+    k_3 = kp(wallX , GEO_TUN_effH , 0)
     kwplan,1,k_1,k_2,k_3
 
     *do,nthOp,1,GEO_IWALL_columnCount-1,1
-      xOp=GEO_TUN_ozCenter(nthOp)
+      xOp = GEO_TUN_ozCenter(nthOp)
       asel,u,area,,all
       blc5,xOp,GEO_TUN_oyCenter,GEO_TUN_opW,GEO_TUN_opH
       *get,aOP,area,,num,min
@@ -741,18 +742,18 @@ ALLSEL
   lsel,u,line,,all
   *do,extWall,1,2,1
 
-    xWall=(extWall-1)*GEO_TUN_totEffW
-    z=0
+    xWall = (extWall-1)*GEO_TUN_totEffW
+    z     = 0
 
     *do,nthPile,1,GEO_PILE_EXT_count,1
       *get,KMX,kp,,num,maxd
-      K_top=KMX+1
-      K_bot=KMX+2
+      K_top = KMX+1
+      K_bot = KMX+2
       k,K_top,xWall,0,z
       csys,0
-      x=kx(K_top)
-      y=ky(K_top)
-      z=kz(K_top)
+      x = kx(K_top)
+      y = ky(K_top)
+      z = kz(K_top)
       k,K_bot,x,y-GEO_PILE_length,z
       csys,CS_Tunnel
       l,K_top,K_bot
@@ -765,27 +766,27 @@ ALLSEL
       cmsel,a,COMPK_pileBot
       cm,COMPK_pileBot,kp
 
-      z=z+deltaZ
+      z = z+deltaZ
     *enddo
   *enddo
   cm,COMPL_pileExt,line
 
   *if,GEO_TUN_modules,gt,1,then
     lsel,u,line,,all
-    deltaZ=GEO_TUN_length/(GEO_PILE_INT_count-1)
+    deltaZ = GEO_TUN_length/(GEO_PILE_INT_count-1)
     *do,innWall,1,GEO_TUN_modules-1,1
-      xWall=innWall*GEO_TUN_effW
-      z=0
+      xWall = innWall*GEO_TUN_effW
+      z     = 0
 
       *do,nthPile,1,GEO_PILE_EXT_count,1
         *get,KMX,kp,,num,maxd
-        K_top=KMX+1
-        K_bot=KMX+2
+        K_top = KMX+1
+        K_bot = KMX+2
         k,K_top,xWall,0,z
         csys,0
-        x=kx(K_top)
-        y=ky(K_top)
-        z=kz(K_top)
+        x = kx(K_top)
+        y = ky(K_top)
+        z = kz(K_top)
         k,K_bot,x,y-GEO_PILE_length,z
         csys,CS_Tunnel
         l,K_top,K_bot
@@ -798,7 +799,7 @@ ALLSEL
         cmsel,a,COMPK_pileBot
         cm,COMPK_pileBot,kp
 
-        z=z+deltaZ
+        z = z+deltaZ
       *enddo
     *enddo
     cm,COMPL_pileInt,line
@@ -816,22 +817,22 @@ ALLSEL
     *get,lc,line,,count
     *do,nthLine,1,lc,1
       cmsel,s,COMPL_ref
-      lnum=lsnext(lnum)
+      lnum = lsnext(lnum)
       *get,llen,line,lnum,leng
-      pileCount=nint(0.5+(llen/(GEO_TUN_length/GEO_PILE_EXT_count)))
+      pileCount = nint(0.5+(llen/(GEO_TUN_length/GEO_PILE_EXT_count)))
       ldiv,lnum,,,pileCount+1,1
       cmsel,u,COMPK_ref
       cmsel,u,COMPL_ref
       ldele,all,,,0
       cm,COMPK_temp,kp
       *get,kc,kp,,count
-      kpnum=0
+      kpnum = 0
       *do,nthKP,1,kc,1
         cmsel,s,COMPK_temp
-        kpnum=kpnext(kpnum)
+        kpnum = kpnext(kpnum)
         csys,0
         *get,kmxd,kp,,num,maxd
-        K_bot=kmxd+1
+        K_bot = kmxd+1
         k,K_bot,kx(kpnum),ky(kpnum)-GEO_PILE_length,kz(kpnum)
         lsel,u,line,,all
         l,kpnum,K_bot
@@ -898,8 +899,8 @@ KSEL,R,LOC,Y,Eff_GalleryHeight
 
 ! Draw embankment contour in global cartesian CS
 CSYS,0
-yREF=KY(KRef)
-zREF=KZ(KRef)
+yREF = KY(KRef)
+zREF = KZ(KRef)
 
 ! Calculate vertex location for embankment keypoints
 *afun,DEG
@@ -941,7 +942,7 @@ CM,COMPL_Embankment,LINE
 ! NOTE: railwaylines (indicated as arrows) are drawn for display purposes only.
 
 ! Draw arrows marking each railway position
-LSEL,U,LINE,,ALL
+lsel,none
 *do,nthRailway,1,LOAD_LTA_count,1
 
   zRailway = LOAD_LTA_offsets(nthRailway)
