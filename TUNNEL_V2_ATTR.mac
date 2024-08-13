@@ -85,6 +85,8 @@ SEC_FRAME_backBeam = 17
 SEC_pileInt = 20
 SEC_pileExt = 21
 
+SEC_strut = 22
+
 SEC_ROOF_LCORBEL  = 400
 SEC_ROOF_RCORBEL  = 500
 SEC_FLOOR_LCORBEL = 600
@@ -503,6 +505,11 @@ secdata,GEO_IWALL_columnThk,MAT_CONC
   ! Piles (external walls)
   sectype,SEC_pileInt,beam,csolid,'PILEINT'
   secdata,GEO_PILE_INT_diameter/2
+*endif
+
+*if,GEO_ROOF_gapStatus,eq,1,and,GEO_ROOF_gapStrutCount,gt,0,then
+  sectype,SEC_strut,shell,,'STRUT'
+  secdata,GEO_ROOF_gapStrutHeight,MAT_CONC
 *endif
 
 *if,GEO_CORB_status,GE,1,THEN
