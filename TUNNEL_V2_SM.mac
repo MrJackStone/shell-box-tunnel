@@ -199,11 +199,27 @@ allsel
 *endif
 
 
-!! 3.1.4  Create components                                                                        !!
+!! 3.1.4  Slice roof gap                                                                          !!
+*if,GEO_ROOF_gapStatus,eq,1,then
+  *do,nthGap,1,GEO_ROOF_gapCount,1
+    zBeg = GEO_ROOF_gap_z_begs(nthGap)
+    zEnd = GEO_ROOF_gap_z_ends(nthGap)
+
+    allsel
+    csslicexy,zBeg
+    csslicexy,zEnd
+    asel,s,loc,z,zBeg,zEnd
+    asel,r,loc,y,GEO_TUN_effH
+    adele,all,,,1
+  *enddo
+*endif
+
+
+!! 3.1.5  Create components                                                                        !!
 TUNNEL_V2_BUILDCM
 
 
-!! 3.1.5  Slice at precast girders                                                                !!
+!! 3.1.6  Slice at precast girders                                                                !!
 *if,GEO_ROOF_type,eq,1,then
   cmsel,s,COMPA_Tunnel
   cmsel,u,COMPA_Roof
