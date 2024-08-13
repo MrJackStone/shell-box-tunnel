@@ -16,20 +16,20 @@ OUTRES,ALL,LAST
 FCUM,ADD
 
 ! Get nodal number, location, and quantity in array form for all nodes
-*del,NLIST_x
-*del,NLIST_y
-*del,NLIST_z
-*vget,NLIST_num,node,,nlist
-*vget,NLIST_x,node,,loc,x
-*vget,NLIST_y,node,,loc,y
-*vget,NLIST_z,node,,loc,z
-*get,NLIST_count,parm,NLIST_num,dim,x
-*del,NLIST_apportioned
-*dim,NLIST_apportioned,,NLIST_count
+*del , NLIST_x           ,  , nopr
+*del , NLIST_y           ,  , nopr
+*del , NLIST_z           ,  , nopr
+*del , NLIST_apportioned ,  , nopr
+*vget , NLIST_num , node ,  , nlist
+*vget , NLIST_x   , node ,  , loc   , x
+*vget , NLIST_y   , node ,  , loc   , y
+*vget , NLIST_z   , node ,  , loc   , z
+*get , NLIST_count , parm , NLIST_num , dim , x
+*dim , NLIST_apportioned ,  , NLIST_count
 *do,nthNode,1,NLIST_count,1
-  nodenum                    = NLIST_num(nthNode)
-  NLIST_apportioned(nthNode) = arnode(nodenum)
+  NLIST_apportioned(nthNode) = arnode(NLIST_num(nthNode))
 *enddo
+
 
 !!                                                                                                !!
 !! 5.1  First load step: dead loads                                                               !!
