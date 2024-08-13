@@ -134,20 +134,25 @@ cmsel,s,COMPA_struts
 
   cmsel,s,COMPA_Tunnel
   cmsel,u,COMPA_Roof
+  cmsel,u,COMPA_struts
+  cm,COMPA_ref,area
   aesize,all,FEM_TUN_esize
   amesh,all
 
-  csys,CS_Tunnel
-
+  cmsel,s,COMPA_ref
   lsla,s
   lsel,r,loc,y,GEO_TUN_effH
+  *if,GEO_ROOF_gapStrutCount,gt,0,then
+    lsel,u,loc,z,GEO_ROOF_gap_z_begs(1:GEO_ROOF_gapCount),GEO_ROOF_gap_z_ends(1:GEO_ROOF_gapCount)
+  *endif
   cm,COMPL_ref,line
 
   cmsel,s,COMPA_Roof
+  cmsel,a,COMPA_struts
   lsla,s
   cm,COMPL_targ,line
 
-  xWall=0
+  xWall = 0
   *do,nthModule,1,GEO_TUN_modules+1,1
     cmsel,s,COMPL_ref
     lsel,r,loc,x,xWall
@@ -157,10 +162,13 @@ cmsel,s,COMPA_struts
     lsel,r,loc,x,xWall
     cm,COMPL_paste,line
 
+    xWall = xWall+GEO_TUN_effW
+    cmsel,s,COMPL_paste
+    *get,ac,area,,count
+    *if,ac,eq,0,cycle
+
     cmsel,a,COMPL_copy
     mshcopy,line,COMPL_copy,COMPL_paste
-
-    xWall=xWall+GEO_TUN_effW
   *enddo
 
   ! Mesh roof
@@ -171,12 +179,21 @@ cmsel,s,COMPA_struts
     amesh,all
   *elseif,GEO_ROOF_type,eq,1,then
     ! With girders
+    startPoint = 1
     *do,nthGirder,1,GEO_girderCount,1
       ! Select girder areas
-      compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
+      compName = STRCAT('COMPA_RG',CHRVAL(nthGirder))
       cmsel,s,%compName%
-      *if,nthGirder,eq,1,then
+
+      *get,ac,area,,count
+      *if,ac,eq,0,then
+        startPoint = 1
+        *cycle
+      *endif
+
+      *if,startPoint,eq,1,then
         ! First gider: mesh freely
+        startPoint = 0
         amesh,all
       *else
         ! Subsequent girders: paste previously copied line mesh
@@ -196,6 +213,14 @@ cmsel,s,COMPA_struts
         cm,COMPL_copyG,line
       *endif
     *enddo
+  *endif
+
+  ! Mesh struts
+  cmsel,a,COMPA_struts
+  *get,ac,area,,count
+  *if,ac,gt,0,then
+    aesize,all,FEM_TUN_esize
+    amesh,all
   *endif
 
   csys,0
