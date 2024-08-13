@@ -253,30 +253,24 @@ TUNNEL_V2_BUILDCM
   ! Walls
   CMSEL,S,COMPA_Walls
   CSSLICEXZ,GEO_HDW_wingBottomOffset
-  CM,COMPA_temp,AREA
+  CM,COMPA_walls,AREA
 
-  CMSEL,S,COMPA_temp
+  CMSEL,S,COMPA_walls
   ASEL,R,LOC,X,0
   CM,COMPA_LeftWall,AREA
 
-  CMSEL,S,COMPA_temp
+  CMSEL,S,COMPA_walls
   ASEL,R,LOC,X,Eff_GalleryWidth
   CM,COMPA_RightWall,AREA
 
-  CMSEL,S,COMPA_temp
+  CMSEL,S,COMPA_walls
   CMSEL,U,COMPA_LeftWall
   CMSEL,U,COMPA_RightWall
   CM,COMPA_InnerWalls,AREA
 
-  CMSEL,S,COMPA_LeftWall
-  CMSEL,A,COMPA_RightWall
-  CMSEL,A,COMPA_InnerWalls
-  CM,COMPA_Walls,AREA
-
-  CMSEL,S,COMPA_Floor
-  CMSEL,A,COMPA_Roof
-  CMSEL,A,COMPA_Walls
-  CM,COMPA_Tunnel,AREA
+  cmsel,s,COMPA_tunnel
+  cmsel,a,COMPA_walls
+  cm,COMPA_tunnel,area
 
 *endif
 ALLSEL
@@ -307,10 +301,10 @@ cm , COMPA_HDW_Columns   , area
   CSSLICEYZ,GEO_TUN_totEffW-GEO_HDW_stiffXOff
   CM,COMPA_Floor,AREA
   /color,CM,LGRA,COMPA_Floor
-  CMSEL,A,COMPA_Walls
-  CMSEL,A,COMPA_Roof
-  CM,COMPA_Tunnel,AREA
-  ALLSEL
+  cmsel,s,COMPA_tunnel
+  cmsel,a,COMPA_floor
+  cm,COMPA_Tunnel,area
+  allsel
   TUNNEL_V2_HDWSM , CS_Tunnel    , CS_HDW_LeftWallEnd , CS_HDW_RightWallEnd
   TUNNEL_V2_HDWSM , CS_RevTunnel , CS_HDW_LeftWallBeg , CS_HDW_RightWallBeg
   cmsel,s,COMPA_Headwalls
@@ -443,6 +437,7 @@ CM,COMPA_WALL_flat,AREA
   CMSEL,S,COMPA_Floor
   CMSEL,A,COMPA_Roof
   CMSEL,A,COMPA_Walls
+  cmsel,a,COMPA_struts
   CM,COMPA_Tunnel,AREA
 
   ! Headwalls
