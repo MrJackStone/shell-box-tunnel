@@ -1,6 +1,8 @@
 ! Roof slab
 GEO_ROOF_wallConnection = 1
 GEO_ROOF_continuity     = 0
+GEO_ROOF_gapStatus      = 0
+GEO_ROOF_gapStrutCount  = 0
 
 ! Corbels
 GEO_CORB_status = 0

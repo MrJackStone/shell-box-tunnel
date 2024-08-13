@@ -64,6 +64,23 @@ GEO_ROOF_type = 1
   !   [1] Pinned
   GEO_ROOF_continuity = 0
 
+! Gap in roof slab:
+!   [0] Off (continuous slab)
+!   [1] On
+GEO_ROOF_gapStatus = 1
+
+! > Params for GEO_ROOF_gap=1 (with gap) only:
+  ! Gap beginning (longitudinal position)
+  GEO_ROOF_gapBeg = 12
+  ! Gap end (longitudinal position)
+  GEO_ROOF_gapEnd = 15
+  ! Number of struts connecting walls (set to 0 for no struts)
+  GEO_ROOF_gapStrutCount = 4
+  ! Strut width
+  GEO_ROOF_gapStrutWidth = 0.5
+  ! Strut height
+  GEO_ROOF_gapStrutHeight = 1.2
+
 
 !! 1.1.5  Inner walls                                                                             !!
 ! Inner wall type:
