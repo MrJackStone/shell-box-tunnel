@@ -1,0 +1,16 @@
+! TUNNEL_V2_SMCOPY, compName
+! TUNNEL_V2_SMCOPY, ARG1
+
+
+cmsel,s,%ARG1%
+cm,COMPA_temp,area
+lsla,s
+ksll,s
+
+agen,2,COMPA_temp
+
+cmsel,u,COMPA_temp
+cm,%ARG1%,area
+
+cmsel,s,COMPA_temp
+adele,all,,,1
