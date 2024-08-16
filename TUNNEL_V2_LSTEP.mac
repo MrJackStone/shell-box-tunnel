@@ -20,12 +20,15 @@ FCUM,ADD
 *del , NLIST_y           ,  , nopr
 *del , NLIST_z           ,  , nopr
 *del , NLIST_apportioned ,  , nopr
+
 *vget , NLIST_num , node ,  , nlist
 *vget , NLIST_x   , node ,  , loc   , x
 *vget , NLIST_y   , node ,  , loc   , y
 *vget , NLIST_z   , node ,  , loc   , z
-*get , NLIST_count , parm , NLIST_num , dim , x
-*dim , NLIST_apportioned ,  , NLIST_count
+
+*get , NLIST_count       , parm , NLIST_num   , dim , x
+*dim , NLIST_apportioned ,      , NLIST_count
+
 *do,nthNode,1,NLIST_count,1
   NLIST_apportioned(nthNode) = arnode(NLIST_num(nthNode))
 *enddo
