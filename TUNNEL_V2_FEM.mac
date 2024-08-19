@@ -712,3 +712,43 @@ VIEW1W
 /type,,3
 /view,1,1,1,1
 EPLOT
+
+dsys,0
+view1w
+wincln,1
+boldfont,1
+/view,1,1,-1,1
+/angle,1,0
+/auto,1
+/eshape,0
+/psymb,cs,0
+/edge,1,1
+esel,s,type,,TYPE_shell181
+nsle,s,active
+eplot
+/user,1
+
+go2png,1500
+  asel,all
+  aplot
+  /noerase
+  /triad,orig
+
+  cmsel,s,COMPA_floor
+  esla,s
+  pltesys,,,1,11,'esysNum'
+  ! /psymb,cs,0
+  /triad,off
+
+  wintitle,1,'FLOOR SLAB','ESYS',chrval(esysNum),,,13
+
+  allsel
+  k1=kpnext(0)
+  ksel,s,kp,,k1
+  kplot
+
+endpng,'CS_floor',,,,,'_setup'
+/erase
+/annot,dele
+view1w
+windefa,1
