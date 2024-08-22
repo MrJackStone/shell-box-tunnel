@@ -1,7 +1,151 @@
 ! TUNNEL_V2_ETAB
 
+!     /post1
+!
+!     allsel
+!
+!     ! Auxiliary element tables
+!     *vget  , element_numbers       , elem    ,         , elist
+!     *get   , ec                    , elem    ,         , count
+!     etable , 'DUMMY'               , volu
+!     sadd   , 'ZEROS'               , 'DUMMY' , 'DUMMY' , 1     , -1
+!     detab  , element_numbers(1:ec) , 'ZEROS' , 0
+!     etable , 'DUMMY'               , eras
+!
+!
+!     !! Dead weight results (first load step) element tables                                           !!
+!     allsel
+!     set,first
+!
+!     defetabs , 0   , 'DW_' , 1e3  , 1
+!     defetabs , 181 , 'DW_' , 1e-3 , 1
+!
+!     ! SHELL181 oblique shear force
+!     etbsqsum , 'DW_Q' , 'DW_QX' , 'DW_QY'
+!
+!
+!     !! Envelope including dead & live loads:                                                          !!
+!     baseTableCount = 12
+!
+!     *del , etable_suffixes ,      , nopr
+!     *del , etable_scales   ,      , nopr
+!     *dim , etable_suffixes , char , baseTableCount
+!     *dim , etable_scales   ,      , baseTableCount
+!
+!     etable_suffixes(1)  = 'UX' , 'UY' , 'UZ'  , 'ROTX' , 'ROTY' , 'ROTZ'
+!     etable_scales(1)    = 1e3  , 1e3  , 1e3   , 1e3    , 1e3    , 1e3
+!     etable_suffixes(7)  = 'MX' , 'MY' , 'NX'  , 'NY'   , 'QX'   , 'QY'
+!     etable_scales(7)    = 1e-3 , 1e-3 , 1e-3  , 1e-3   , 1e-3   , 1e-3   ,
+!
+!     ! Create element tables that update with REFL
+!     defetabs , 0   ,  , 1 , 0
+!     defetabs , 181 ,  , 1 , 0
+!
+!     ! Loop over load steps updating element tables
+!     etenv,1,LoadStepCount,'etable_suffixes'
+!
+!     ! Scale envelope element tables
+!     *do,nthEtable,1,baseTableCount,1
+!       etSuffix = etable_suffixes(nthEtable)
+!       etScale  = etable_scales(nthEtable)
+!       sadd,'EMX_%etSuffix%','EMX_%etSuffix%',,etScale
+!       sadd,'EMN_%etSuffix%','EMN_%etSuffix%',,etScale
+!       sadd,'EAB_%etSuffix%','EAB_%etSuffix%',,etScale
+!     *enddo
+!
+!     ! Delete unused tables
+!     *do,nthEtable,1,baseTableCount,1
+!       etSuffix=etable_suffixes(nthEtable)
+!       etable,'%etSuffix%',eras
+!     *enddo
+!
+!     ! SHELL181 oblique shear force
+!     etbsqsum , 'EAB_Q' , 'EAB_QX' , 'EAB_QY'
+!
+!     ! SHELL181 positive/negative-only bending moments
+!     smax   , 'ENEG_MX' , 'EMX_MX' , 'ZEROS'
+!     smax   , 'EPOS_MX' , 'EMN_MX' , 'ZEROS'  , -1
+!     smax   , 'ENEG_MY' , 'EMX_MY' , 'ZEROS'
+!     smax   , 'EPOS_MY' , 'EMN_MY' , 'ZEROS'  , -1
+!
+!
+!     !! Element tables calculated based on DW & ENV values                                             !!
+!     ! Deflections
+!     sadd   , 'UX_g'   , 'DW_UX'  ,         , 1
+!     sadd   , 'UX_d'   , 'EMN_UX' ,         , 1
+!     sadd   , 'UX_gk'  , 'UX_g'   ,         , 1/LOAD_gammaG
+!     sadd   , 'UX_q'   , 'UX_d'   , 'UX_g'  , 1                              , -1
+!     sadd   , 'UX_qk'  , 'UX_q'   ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
+!     sadd   , 'UX_k'   , 'UX_g'   , 'UX_q'  , 1                              , 1
+!     sadd   , 'UX_frq' , 'UX_gk'  , 'UX_qk' , 1                              , LOAD_psi1
+!     etable , 'UX_g'   , eras
+!     etable , 'UX_d'   , eras
+!     etable , 'UX_q'   , eras
+!
+!     sadd   , 'UY_g'   , 'DW_UY'  ,         , 1
+!     sadd   , 'UY_d'   , 'EMN_UY' ,         , 1
+!     sadd   , 'UY_gk'  , 'UY_g'   ,         , 1/LOAD_gammaG
+!     sadd   , 'UY_q'   , 'UY_d'   , 'UY_g'  , 1                              , -1
+!     sadd   , 'UY_qk'  , 'UY_q'   ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
+!     sadd   , 'UY_k'   , 'UY_g'   , 'UY_q'  , 1                              , 1
+!     sadd   , 'UY_frq' , 'UY_gk'  , 'UY_qk' , 1                              , LOAD_psi1
+!     etable , 'UY_g'   , eras
+!     etable , 'UY_d'   , eras
+!     etable , 'UY_q'   , eras
+!
+!     sadd   , 'UZ_g'   , 'DW_UZ'  ,         , 1
+!     sadd   , 'UZ_d'   , 'EMN_UZ' ,         , 1
+!     sadd   , 'UZ_gk'  , 'UZ_g'   ,         , 1/LOAD_gammaG
+!     sadd   , 'UZ_q'   , 'UZ_d'   , 'UZ_g'  , 1                              , -1
+!     sadd   , 'UZ_qk'  , 'UZ_q'   ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
+!     sadd   , 'UZ_k'   , 'UZ_g'   , 'UZ_q'  , 1                              , 1
+!     sadd   , 'UZ_frq' , 'UZ_gk'  , 'UZ_qk' , 1                              , LOAD_psi1
+!     etable , 'UZ_g'   , eras
+!     etable , 'UZ_d'   , eras
+!     etable , 'UZ_q'   , eras
+!
+!     ! Internal reactions on piles (discounting impact coefficient & gammas)
+!     sadd   , 'N_cq'  , 'N_c'   , 'N_cg'  , 1                              , -1
+!     sadd   , 'N_cqk' , 'N_cq'  ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
+!     sadd   , 'N_ck'  , 'N_cgk' , 'N_cqk' , 1                              , 1
+!     etable , 'N_cq'  , eras
+!     etable , 'N_cg'  , eras
+!
+!     sadd   , 'Q_oq'  , 'Q_o'   , 'Q_og'  , 1                              , -1
+!     sadd   , 'Q_oqk' , 'Q_oq'  ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
+!     sadd   , 'Q_ok'  , 'Q_ogk' , 'Q_oqk' , 1                              , 1
+!     etable , 'Q_oq'  , eras
+!     etable , 'Q_og'  , eras
+!
+!     sadd   , 'M_oq'  , 'M_o'   , 'M_og'  , 1                              , -1
+!     sadd   , 'M_oqk' , 'M_oq'  ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
+!     sadd   , 'M_ok'  , 'M_ogk' , 'M_oqk' , 1                              , 1
+!     etable , 'M_oq'  , eras
+!     etable , 'M_og'  , eras
+!
+!     sadd , 'N_cd_geo' , 'N_ck' ,  , 1
+!     sadd , 'M_od_geo' , 'M_ok' ,  , 1
+!     sadd , 'Q_od_geo' , 'Q_ok' ,  , 1
+!
+!     sadd , 'N_cd_est' , 'N_cgk' , 'N_cqk' , LOAD_gammaQ , LOAD_gammaQ
+!     sadd , 'M_od_est' , 'M_ogk' , 'M_oqk' , LOAD_gammaG , LOAD_gammaQ
+!     sadd , 'Q_od_est' , 'Q_ogk' , 'Q_oqk' , LOAD_gammaG , LOAD_gammaQ
+!
+!     etable , 'M_ok' , eras
+!     etable , 'Q_ok' , eras
+!     etable , 'N_ck' , eras
+!     etable , 'M_o'  , eras
+!     etable , 'Q_o'  , eras
+!
+!
+!
+!     !!                                                                                                !!
+!     !!                                                                                                !!
+!     !!                                                                                                !!
+!     !!                                                                                                !!
+!     !!                                                                                                !!
+!     !!                                                                                                !!
 
-set,first
 
 ! Criar tabelas
 etable , fx      , smisc , 1
