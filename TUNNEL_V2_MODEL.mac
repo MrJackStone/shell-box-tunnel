@@ -53,7 +53,7 @@ cnvtol,f,,0.01,2,0.01
 save
 /uis,abort,off
 keyw,pr_sgui,1
-lssolve,1,loadstepcount,1
+lssolve,1,loadStepCount,1
 keyw,pr_sgui,0
 
 
@@ -64,35 +64,7 @@ keyw,pr_sgui,0
 TUNNEL # %s %/&
 WRITING RESULTS...
 
-/post1
-
-set,last
-
-! Element tables
-TUNNEL_V2_ETAB
-
-! Reações sobre o solo
-TUNNEL_V2_REACT
-
-! Write results
-TUNNEL_V2_WRRES
-
-! Escrever resultados
-TUNNEL_V2_MEMO
-
-
-!!                                                                                                !!
-!! 8.  Write report                                                                               !!
-!!                                                                                                !!
-TUNNEL_V2_REPORT !! TODO: format this
-
-*if,GEO_HDW_status,eq,1,and,GEO_HDW_type,eq,0,then
-  TUNNEL_V2_HDWRES
-*endif
-
-*if,GEO_APR_status,eq,1,then
-  TUNNEL_V2_APPSLBRES
-*endif
+TUNNEL_V2_POST
 
 *msg,UI,FILE_name
 TUNNEL # %s %/&
