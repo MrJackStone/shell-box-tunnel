@@ -99,7 +99,7 @@
   (';  TREM TIPO: ',A8)
   *vwrite,
   (';  Positions      | Loads')
-  *vwrite,LOADTRAIN_ARR_positions(1),LOADTRAIN_ARR_loads(1)
+  *vwrite,LOAD_LTA_FORCES_positions(1),LOAD_LTA_FORCES_loads(1)
   (';  ',F14.4,' | ',E12.4)
   *vwrite,LOAD_LTA_positionCount
   (';  xOffsetCount = ',F3.0,TL1,' ')

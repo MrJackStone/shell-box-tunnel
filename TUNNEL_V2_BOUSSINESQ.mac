@@ -11,10 +11,10 @@ QZ_0=LOAD_z0
 
 *do,nthLine,1,LOAD_LTA_count,1
 
-    *do,nthPointLoad,1,LOAD_LTPtCount,1
+    *do,nthPointLoad,1,LOAD_LTA_FORCES_count,1
 
-        LoadValue=LOADTRAIN_ARR_loads(nthPointLoad)
-        LoadPosition=LOADTRAIN_ARR_positions(nthPointLoad)
+        LoadValue=LOAD_LTA_FORCES_loads(nthPointLoad)
+        LoadPosition=LOAD_LTA_FORCES_positions(nthPointLoad)
 
         QX_i = LoadPosition+xOffset
         QY   = Eff_GalleryHeight+GEO_EMB_height

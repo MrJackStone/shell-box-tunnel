@@ -324,11 +324,11 @@ NodalSoilLoad=SoilPressure*ElementArea
 Buoyancy=WaterHeight*Gammaw
 BuoyancyLoad=Buoyancy*ElementArea
 
-! LOADTRAIN, LTname, repetitions, offset, impactCoef, udlLen
-ltCenteringOffset=0!Eff_GalleryWidth/2
-LOAD_LTA_impactCoefficient=1 ! Uniform impact coefficient deactivated. Using AREMA formulation (implemented directly in TUNNEL_V2_VERBOUSSINESQ)
-loadtrain, LOAD_LTA_name,,ltCenteringOffset,LOAD_LTA_impactCoefficient, 20
-LOAD_LTPtCount=LOADTRAIN_VAR_count
+loadtrain, LOAD_LTA_name,,,, 20, 'LOAD_LTA_FORCES'
+! LOAD_LTA_FORCES_count
+! LOAD_LTA_FORCES_length
+! LOAD_LTA_FORCES_positions
+! LOAD_LTA_FORCES_loads
 
 ! Z coordinate of point where tunnel axis intersects railway axis (pivot point)
 ! TODO: this is the same value calculated for GEO_APR_zAxis
