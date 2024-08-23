@@ -272,9 +272,6 @@ MAT_SOIL_density = 1800
 ! Name of load train
 LOAD_LTA_name = 'COOPER E-80'
 
-! Load train dynamic impact coefficient
-LOAD_LTA_impactCoefficient = 1.00
-
 ! Load train path skewness angle (degrees)
 LOAD_LTA_skew = 12
 
