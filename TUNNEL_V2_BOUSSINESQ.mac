@@ -1,5 +1,11 @@
 ! TUNNEL_V2_BOUSSINESQ
 
+*msg,fatal
+TUNNEL_V2_BOUSSINESQ error: deprecated macro.%/&
+Run terminated.
+
+/eof
+
 /nopr
 /prep7
 
