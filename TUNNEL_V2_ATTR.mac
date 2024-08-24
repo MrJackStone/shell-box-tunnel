@@ -35,7 +35,7 @@ SpringLength=1
 LongitSpringLength=(SpringLength*(MAT_SOIL_stiffness/100e6)<SpringLength)
 
 ! Gravitational acceleration
-Gravity=9.81
+LOAD_g_k = 9.81
 
 ! Number of substeps
 SubstepCount=20
@@ -304,11 +304,11 @@ MAT_RIGID_Poisson = 0.3
 !! 2.5  Loads                                                                                     !!
 !!                                                                                                !!
 ! Specific weight: water
-Gammaw=WaterDensity*Gravity
+Gammaw=WaterDensity*LOAD_g_k
 ! Specific weight: dry soil
-Gammat=MAT_SOIL_density*Gravity
+Gammat=MAT_SOIL_density*LOAD_g_k
 ! Specific weight: saturated soil
-GammaSAT=Gammat+(SaturationIncrement*Gravity)
+GammaSAT=Gammat+(SaturationIncrement*LOAD_g_k)
 ! Specific weight: submerged soil
 GammaSUB=GammaSAT-Gammaw
 
@@ -577,8 +577,6 @@ MAT_SOIL_E         = SpringElasticModulus
 
 FEM_SPR_normLength = SpringLength
 FEM_SPR_longLength = LongitSpringLength
-
-LOAD_g             = Gravity
 
 SOLU_nsubst        = SubstepCount
 

@@ -39,7 +39,7 @@ FCUM,ADD
 !!                                                                                                !!
 LoadStepIndex=1
 
-ACEL,,Gravity
+ACEL,,LOAD_g_k
 
 ! Apply soil pressures
 TUNNEL_V2_DEADLOADS
@@ -85,7 +85,7 @@ TAKEPIC,fName,1200,1,1
   ALLSEL
   LSREAD,1
   FDELE,ALL,ALL
-  ACEL,0,Gravity/100,0
+  ACEL,0,LOAD_g_k/100,0
   ESEL,S,TYPE,,1
   NSLE,S
   BF,ALL,TEMP,LOAD_thermal
