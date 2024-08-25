@@ -305,7 +305,7 @@ MAT_RIGID_Poisson = 0.3
 !!                                                                                                !!
 !! 2.5  Loads                                                                                     !!
 !!                                                                                                !!
-loadtrain, LOAD_LTA_name,,,, 20, 'LOAD_LTA_FORCES'
+loadtrain,LOAD_LTA_name,,,,20,,'LOAD_LTA_FORCES'
 ! LOAD_LTA_FORCES_count
 ! LOAD_LTA_FORCES_length
 ! LOAD_LTA_FORCES_positions
