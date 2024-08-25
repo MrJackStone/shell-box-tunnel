@@ -312,14 +312,6 @@ GammaSAT=Gammat+(SaturationIncrement*LOAD_g_k)
 ! Specific weight: submerged soil
 GammaSUB=GammaSAT-Gammaw
 
-! Tensão vertical devido à camada de cobrimento
-*if,GEO_EMB_waterDepth,GE,0,AND,GEO_EMB_waterDepth,LT,GEO_EMB_height,THEN
-  SoilPressure=Gammat*GEO_EMB_waterDepth+GammaSAT*(GEO_EMB_height-GEO_EMB_waterDepth)
-*else
-  SoilPressure=Gammat*GEO_EMB_height
-*endif
-NodalSoilLoad=SoilPressure*ElementArea
-
 ! Buoyancy load on floor slab
 Buoyancy=WaterHeight*Gammaw
 BuoyancyLoad=Buoyancy*ElementArea
