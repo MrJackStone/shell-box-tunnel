@@ -24,9 +24,11 @@ MassDensity=2500
 TopSlab_EqvMassDensity=2500*(GEO_ROOF_thk-EPSThk)/GEO_ROOF_thk
 
 ! Water mass density
-WaterDensity=1000
-! Mass density increment for saturated soils
-SaturationIncrement=100
+MAT_WATER_density = 1000
+
+! Soil porosity (used to calculate mass density increment for saturated soils)
+! Recommended value: 0.1
+MAT_SOIL_porosity = 0.1
 
 ! Soil springs: elastic modulus
 SpringElasticModulus=1e9
@@ -303,15 +305,6 @@ MAT_RIGID_Poisson = 0.3
 !!                                                                                                !!
 !! 2.5  Loads                                                                                     !!
 !!                                                                                                !!
-! Specific weight: water
-Gammaw=WaterDensity*LOAD_g_k
-! Specific weight: dry soil
-Gammat=MAT_SOIL_density*LOAD_g_k
-! Specific weight: saturated soil
-GammaSAT=Gammat+(SaturationIncrement*LOAD_g_k)
-! Specific weight: submerged soil
-GammaSUB=GammaSAT-Gammaw
-
 ! TODO  implement buoyancy calculation correctly
 ! Buoyancy load on floor slab
 ! Buoyancy=WaterHeight*Gammaw
@@ -325,6 +318,19 @@ loadtrain, LOAD_LTA_name,,,, 20, 'LOAD_LTA_FORCES'
 ! Z coordinate of point where tunnel axis intersects railway axis (pivot point)
 ! TODO: this is the same value calculated for GEO_APR_zAxis
 LOAD_z0 = (LOAD_LTA_offsets(1)+LOAD_LTA_offsets(LOAD_LTA_count))/2
+
+! Calculate design values of loads
+LOAD_g_d = LOAD_g_k*LOAD_gammaG
+
+*del,LOAD_LTA_FORCES_loads_d,,nopr
+*voper,LOAD_LTA_FORCES_loads_d,LOAD_LTA_FORCES_loads,mult,LOAD_gammaQ
+
+LOAD_WATER_gammaw_d  = MAT_WATER_density*LOAD_g_d
+
+LOAD_SOIL_gammat_d   = MAT_SOIL_density*LOAD_g_d
+LOAD_SOIL_gammaw_d   = MAT_SOIL_porosity*LOAD_WATER_gammaw_d
+LOAD_SOIL_gammasat_d = LOAD_SOIL_gammat_d+LOAD_SOIL_gammaw_d
+LOAD_SOIL_gammasub_d = LOAD_SOIL_gammasat_d-LOAD_WATER_gammaw_d
 
 
 !!                                                                                                !!
@@ -559,11 +565,6 @@ secdata,GEO_IWALL_columnThk,MAT_CONC
 MAT_CONC_Poisson   = Poisson
 MAT_CONC_dens      = MassDensity
 GEO_TUN_epsThk     = EPSThk
-
-MAT_CONC_TSeqvDens = TopSlab_EqvMassDensity
-
-MAT_WATER_dens     = WaterDensity
-MAT_WATER_satIncr  = SaturationIncrement
 
 MAT_SOIL_E         = SpringElasticModulus
 

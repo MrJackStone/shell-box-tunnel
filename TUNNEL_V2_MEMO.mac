@@ -65,17 +65,17 @@
   (';  ActiveEPCoefficient  = ',F10.4)
   *vwrite,RestEPCoefficient
   (';  RestEPCoefficient    = ',F10.4)
-  *vwrite,Gammat
+  *vwrite,LOAD_SOIL_gammat_d
   (';  Gammat               = ',F10.4)
-  *vwrite,GammaSAT
+  *vwrite,LOAD_SOIL_gammasat_d
   (';  GammaSAT             = ',F10.4)
-  *vwrite,GammaSUB
+  *vwrite,LOAD_SOIL_gammasub_d
   (';  GammaSUB             = ',F10.4)
   *vwrite,
   ('ÁGUA:')
-  *vwrite,WaterDensity
+  *vwrite,MAT_WATER_density
   (';  WaterDensity        = ',F10.4)
-  *vwrite,SaturationIncrement
+  *vwrite,LOAD_SOIL_gammaw_d
   (';  SaturationIncrement = ',F10.4)
   *vwrite,GEO_EMB_waterDepth
   (';  WaterDepth          = ',F10.4)
@@ -83,7 +83,7 @@
   (';  WaterY              = ',F10.4)
   *vwrite,WaterHeight
   (';  WaterHeight         = ',F10.4)
-  *vwrite,Gammaw
+  *vwrite,LOAD_WATER_gammaw_d
   (';  Gammaw              = ',F10.4)
   *vwrite,
   ('CARREGAMENTO:')

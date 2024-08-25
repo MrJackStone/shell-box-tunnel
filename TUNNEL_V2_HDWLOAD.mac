@@ -33,7 +33,7 @@ APPLYING GRAVITATIONAL LOADS ON FOOTINGS...
     tunnel_v2_soillevel,'soilLevel',NZ
     SoilHeightAbove = soilLevel-NY
 
-    SoilPressure = Gammat*SoilHeightAbove
+    SoilPressure = LOAD_SOIL_gammat_d*SoilHeightAbove
 
     CMSEL,S,COMPE_temp
     NSEL,S,NODE,,NodeNum
@@ -87,7 +87,7 @@ APPLYING HORIZONTAL LOADS ON WALLS...
     SoilHeightAbove = soilLevel-NY
 
     ! Tensão horizontal devido à camada de solo
-    EffectivePressure    = Gammat*SoilHeightAbove
+    EffectivePressure    = LOAD_SOIL_gammat_d*SoilHeightAbove
     HorEffectivePressure = EffectivePressure*ActiveEPCoefficient-2*MAT_SOIL_cohesion*SQRT(ActiveEPCoefficient)
 
     NSEL,S,NODE,,NodeNum
@@ -158,7 +158,7 @@ APPLYING HORIZONTAL LOADS ON WINGS...
     SoilHeightAbove=GEO_HDW_Height-NY                                                                                !!
 
     ! Tensão horizontal devido à camada de solo
-    EffectivePressure    = Gammat*SoilHeightAbove
+    EffectivePressure    = LOAD_SOIL_gammat_d*SoilHeightAbove
     HorEffectivePressure = EffectivePressure*ActiveEPCoefficient-2*MAT_SOIL_cohesion*SQRT(ActiveEPCoefficient)
 
     NSEL,S,NODE,,NodeNum
