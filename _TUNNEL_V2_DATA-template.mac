@@ -268,6 +268,19 @@ MAT_SOIL_density = 1800
 !! 1.8  Loads                                                                                     !!
 !!                                                                                                !!
 
+!! 1.8.0  Load combination coefficients                                                           !!
+! Dead load factor
+LOAD_gammaG = 1.4
+
+! Live load factor
+LOAD_gammaQ = 1.4
+
+! Live load reduction coefficients
+LOAD_psi0 = 0.7
+LOAD_psi1 = 0.6
+LOAD_psi2 = 0.4
+
+
 !! 1.8.1  Load train above embankment                                                             !!
 ! Name of load train
 LOAD_LTA_name = 'COOPER E-80'
