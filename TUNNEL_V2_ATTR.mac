@@ -305,10 +305,6 @@ MAT_RIGID_Poisson = 0.3
 !!                                                                                                !!
 !! 2.5  Loads                                                                                     !!
 !!                                                                                                !!
-! TODO  implement buoyancy calculation correctly
-! Buoyancy load on floor slab
-! Buoyancy=WaterHeight*Gammaw
-
 loadtrain, LOAD_LTA_name,,,, 20, 'LOAD_LTA_FORCES'
 ! LOAD_LTA_FORCES_count
 ! LOAD_LTA_FORCES_length
@@ -331,6 +327,10 @@ LOAD_SOIL_gammat_d   = MAT_SOIL_density*LOAD_g_d
 LOAD_SOIL_gammaw_d   = MAT_SOIL_porosity*LOAD_WATER_gammaw_d
 LOAD_SOIL_gammasat_d = LOAD_SOIL_gammat_d+LOAD_SOIL_gammaw_d
 LOAD_SOIL_gammasub_d = LOAD_SOIL_gammasat_d-LOAD_WATER_gammaw_d
+
+! TODO  implement buoyancy calculation correctly
+! Buoyancy load on floor slab
+! Buoyancy=WaterHeight*Gammaw
 
 
 !!                                                                                                !!
