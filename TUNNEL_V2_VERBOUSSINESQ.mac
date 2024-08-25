@@ -19,7 +19,7 @@ QZ_0 = LOAD_z0
 
   *do,nthPointLoad,1,LOAD_LTA_FORCES_count,1
 
-    ForceValue   = LOAD_LTA_FORCES_loads(nthPointLoad)
+    ForceValue   = LOAD_LTA_FORCES_loads_d(nthPointLoad)
     LoadPosition = LOAD_LTA_FORCES_positions(nthPointLoad)
 
     QX_i = LoadPosition+xOffset
