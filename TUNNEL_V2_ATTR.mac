@@ -324,6 +324,11 @@ LOAD_SOIL_gammaw_d   = MAT_SOIL_porosity*LOAD_WATER_gammaw_d
 LOAD_SOIL_gammasat_d = LOAD_SOIL_gammat_d+LOAD_SOIL_gammaw_d
 LOAD_SOIL_gammasub_d = LOAD_SOIL_gammasat_d-LOAD_WATER_gammaw_d
 
+! Adjust impact coefficient
+*if,LOAD_LTA_impactOpt,eq,0,then
+  LOAD_LTA_impactCoefficient = 1
+*endif
+
 ! Z coordinate of point where tunnel axis intersects railway axis (pivot point)
 ! TODO: this is the same value calculated for GEO_APR_zAxis
 LOAD_z0 = (LOAD_LTA_offsets(1)+LOAD_LTA_offsets(LOAD_LTA_count))/2

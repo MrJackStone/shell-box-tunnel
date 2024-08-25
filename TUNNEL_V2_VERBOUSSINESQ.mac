@@ -53,8 +53,8 @@ QZ_0 = LOAD_z0
         !F,ClosestNode,FY,-ABS(LoadValue)
         LeftTrackNode  = NODE(QX,QY,QZ-(LOAD_LTA_gauge/2))
         RightTrackNode = NODE(QX,QY,QZ+(LOAD_LTA_gauge/2))
-        F , LeftTrackNode  , FY , -ABS(ForceValue/2)
-        F , RightTrackNode , FY , -ABS(ForceValue/2)
+        F , LeftTrackNode  , FY , -ABS(ForceValue/2)*LOAD_LTA_impactCoefficient
+        F , RightTrackNode , FY , -ABS(ForceValue/2)*LOAD_LTA_impactCoefficient
       *endif
 
     *else
@@ -80,11 +80,19 @@ QZ_0 = LOAD_z0
       *voper , deltaY , QY , sub , NLIST_y
       *voper , deltaZ , QZ , sub , NLIST_z
 
-      ! Calculate impact coefficients (according to AREMA Chapter 8)
-      *voper , dynImpact , deltaY    , mult , -0.2353
-      *voper , dynImpact , dynImpact , add  , 1.7060
-      *voper , dynImpact , dynImpact , max  , 1
-      *voper , dynImpact , dynImpact , min  , 1.6
+      ! Calculate impact coefficients:
+      *if,LOAD_LTA_impactOpt,eq,2,then
+        ! According to AREMA Chapter 8
+        *voper , dynImpact , deltaY    , mult , -0.2353
+        *voper , dynImpact , dynImpact , add  , 1.7060
+        *voper , dynImpact , dynImpact , max  , 1
+        *voper , dynImpact , dynImpact , min  , 1.6
+      *else
+        ! Constant impact coefficient
+        *get,arrLen,parm,NLIST_x,dim,x
+        *dim,dynImpact,,arrLen
+        *vfill,dynImpact,ramp,LOAD_LTA_impactCoefficient,0
+      *endif
 
       *vfun , deltaXSquared , pwr , deltaX , 2
       *vfun , deltaYSquared , pwr , deltaY , 2

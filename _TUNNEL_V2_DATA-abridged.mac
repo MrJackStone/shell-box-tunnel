@@ -225,6 +225,16 @@ LOAD_LTA_positionCount = 8
 *dim,LOAD_LTA_positions,,LOAD_LTA_positionCount
 LOAD_LTA_positions(1) = -1.5 , 0 , 1.5 , 3 , 4.5 , 7.5 , 12 , 16
 
+! Impact coefficient option:
+!   [0] Off (no impact coefficient applied)
+!   [1] Constant impact coefficient applied
+!   [2] Constant impact coefficient for no cover, AREMA impact coefficient for buried elements
+LOAD_LTA_impactOpt = 2
+
+! > Params for LOAD_LTA_impactOpt equal to 1 or 2:
+  ! Constant impact load coefficient value
+  LOAD_LTA_impactCoefficient = 1.6
+
 
 !! 1.8.2  Load train inside tunnel                                                                !!
 ! Name of load train
