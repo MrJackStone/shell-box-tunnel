@@ -79,6 +79,7 @@ TAKEPIC,fName,1200,1,1
 !!                                                                                                !!
 !! 5.2  Second load step: temperature variation                                                   !!
 !!                                                                                                !!
+! TODO  load_thermal seems undefined, whole thing is broken
 *get,parmType,PARM,LOAD_thermal,TYPE
 *if,parmType,EQ,0,AND,LOAD_thermal,NE,0,THEN
   LoadStepIndex=LoadStepIndex+1
@@ -106,6 +107,7 @@ TAKEPIC,fName,1200,1,1
 !!                                                                                                !!
 !! 5.3  Third load step: vehicle load inside tunnel                                               !!
 !!                                                                                                !!
+! TODO  fix this hardcoded load step
 *get,parType,parm,LOAD_LTI_name,type
 *if,parType,eq,3,then
   *if,LOAD_LTI_name,eq,'TB-450',then
@@ -128,7 +130,7 @@ TAKEPIC,fName,1200,1,1
     cmsel,r,COMPN_temp
 
     esln,s,1
-    sfe,all,1,pres,,5e3
+    sfe,all,1,pres,,5e3*LOAD_gammaQ
 
     cmsel,s,COMPN_temp
     n1 = node(LV_xcen-1,0,LOAD_LTI_position-3)
@@ -145,7 +147,7 @@ TAKEPIC,fName,1200,1,1
     nsel , a , node ,  , n5
     nsel , a , node ,  , n6
 
-    f,all,fy,-75e3
+    f,all,fy,-75e3*LOAD_gammaQ
 
     ALLSEL
     TIME,LoadStepIndex
