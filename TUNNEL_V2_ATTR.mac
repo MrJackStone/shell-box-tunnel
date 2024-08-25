@@ -311,10 +311,6 @@ loadtrain, LOAD_LTA_name,,,, 20, 'LOAD_LTA_FORCES'
 ! LOAD_LTA_FORCES_positions
 ! LOAD_LTA_FORCES_loads
 
-! Z coordinate of point where tunnel axis intersects railway axis (pivot point)
-! TODO: this is the same value calculated for GEO_APR_zAxis
-LOAD_z0 = (LOAD_LTA_offsets(1)+LOAD_LTA_offsets(LOAD_LTA_count))/2
-
 ! Calculate design values of loads
 LOAD_g_d = LOAD_g_k*LOAD_gammaG
 
@@ -327,6 +323,10 @@ LOAD_SOIL_gammat_d   = MAT_SOIL_density*LOAD_g_d
 LOAD_SOIL_gammaw_d   = MAT_SOIL_porosity*LOAD_WATER_gammaw_d
 LOAD_SOIL_gammasat_d = LOAD_SOIL_gammat_d+LOAD_SOIL_gammaw_d
 LOAD_SOIL_gammasub_d = LOAD_SOIL_gammasat_d-LOAD_WATER_gammaw_d
+
+! Z coordinate of point where tunnel axis intersects railway axis (pivot point)
+! TODO: this is the same value calculated for GEO_APR_zAxis
+LOAD_z0 = (LOAD_LTA_offsets(1)+LOAD_LTA_offsets(LOAD_LTA_count))/2
 
 ! TODO  implement buoyancy calculation correctly
 ! Buoyancy load on floor slab
