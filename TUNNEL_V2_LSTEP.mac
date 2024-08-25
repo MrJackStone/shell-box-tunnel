@@ -243,6 +243,12 @@ TUNNEL # %s %/&
 LOAD STEP %4I %/&
 APPLYING BUOYANCY LOADS ON FLOOR SLAB...
 
+    ! TODO  needs to be revised to correctly use nodal apportioned area
+    !       and to be converted to design value instead of characteristic value
+    *msg,fatal
+FATAL: buoyancy loads not correctly implemented in TUNNEL_V2.%/&
+Fix implementation and run the simulation again.%/&
+Run terminated.
     F,ALL,FY,BuoyancyLoad
 
   *endif

@@ -312,9 +312,9 @@ GammaSAT=Gammat+(SaturationIncrement*LOAD_g_k)
 ! Specific weight: submerged soil
 GammaSUB=GammaSAT-Gammaw
 
+! TODO  implement buoyancy calculation correctly
 ! Buoyancy load on floor slab
-Buoyancy=WaterHeight*Gammaw
-BuoyancyLoad=Buoyancy*ElementArea
+! Buoyancy=WaterHeight*Gammaw
 
 loadtrain, LOAD_LTA_name,,,, 20, 'LOAD_LTA_FORCES'
 ! LOAD_LTA_FORCES_count
