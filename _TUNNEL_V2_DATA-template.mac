@@ -273,7 +273,7 @@ MAT_SOIL_density = 1800
 LOAD_gammaG = 1.4
 
 ! Live load factor
-LOAD_gammaQ = 1.4
+LOAD_gammaQ = 1.5
 
 ! Live load reduction coefficients
 LOAD_psi0 = 0.7
