@@ -2,6 +2,22 @@
 ! TUNNEL_V2_HDWSM,  arg1,            arg2,             arg3
 
 
+! Exported solid model components:
+! COMPA_HDW_BackBeam
+! COMPA_HDW_BotBeam
+! COMPA_HDW_ColLeft
+! COMPA_HDW_ColRight
+! COMPA_HDW_Columns
+! COMPA_HDW_Footing
+! COMPA_HDW_LeftWall
+! COMPA_HDW_RightWall
+! COMPA_HDW_Slab
+! COMPA_HDW_Stiffener
+! COMPA_HDW_TopBeam
+! COMPA_HDW_Walls
+! COMPA_Headwalls
+
+
 CS_HDW_LeftWall  = arg2
 CS_HDW_RightWall = arg3
 
