@@ -1,6 +1,11 @@
 ! TUNNEL_V2_ETCVL
 
 
+! Prepare environment
+csbackup
+csys,CS_tunnel
+
+! Initialize element tables
 convolutionTableCount = 14
 *del , convolution_etnames ,      , nopr
 *dim , convolution_etnames , char , convolutionTableCount
@@ -14,8 +19,7 @@ convolution_etnames(11) = 'EPOS_MX' , 'ENEG_MX' , 'EPOS_MY' , 'ENEG_MY'
   sadd,'A%lab%','%lab%',,1
 *enddo
 
-csys,CS_tunnel
-
+! Apply convolution to tunnel shells
 cmsel,s,COMPA_roof
 esla,s
 nsle,s
@@ -43,6 +47,7 @@ etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
   etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 *endif
 
+! Apply convolution to headwall shells
 *if,GEO_HDW_status,eq,1,then
   *if,GEO_HDW_type,eq,0,then
     *do,nthInlet,1,2,1
@@ -81,3 +86,5 @@ etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
   *endif
 *endif
 
+! Clean up
+csrestore

@@ -25,49 +25,14 @@
 ! -         EPOS_MY    ENEG_MX    -
 ! -         EPOS_MX    ENEG_MY    -
 
-!!                                                                                                !!
-
-! SHELL181 (averaged by convolution): -------- 12
+! SHELL181 (averaged by convolution): --------- 14
 ! ADW_MX    AEMN_MX    AEMX_MX    AEAB_MX
 ! ADW_MY    AEMN_MY    AEMX_MY    AEAB_MY
 ! ADW_Q     -          -          AEAB_Q
-! -         -          AENEG_MX   -
-! -         AEPOS_MX   -          -
+! -         AEPOS_MX   AENEG_MX   -
+! -         AEPOS_MY   AENEG_MY   -
 
-! BEAM188 (raw DW or ENV): ------------------- 50
-! DW_Ni     EMN_Ni     EMX_Ni     EAB_Ni
-! DW_Nj     EMN_Nj     EMX_Nj     EAB_Nj
-! DW_QZi    EMN_QZi    EMX_QZi    EAB_QZi
-! DW_QZj    EMN_QZj    EMX_QZj    EAB_QZj
-! DW_QYi    EMN_QYi    EMX_QYi    EAB_QYi
-! DW_QYj    EMN_QYj    EMX_QYj    EAB_QYj
-! DW_MYi    EMN_MYi    EMX_MYi    EAB_MYi
-! DW_MYj    EMN_MYj    EMX_MYj    EAB_MYj
-! DW_MZi    EMN_MZi    EMX_MZi    EAB_MZi
-! DW_MZj    EMN_MZj    EMX_MZj    EAB_MZj
-! DW_TQi    EMN_TQi    EMX_TQi    EAB_TQi
-! DW_TQj    EMN_TQj    EMX_TQj    EAB_TQj
-! N_c  -  axial compression
-! N_t  -  axial tension
-
-! BEAM188 (calculated based on DW/ENV): ------- 12
-! M_ogk     M_oqk      M_od_geo   M_od_est
-! Q_ogk     Q_oqk      Q_od_geo   Q_od_est
-! N_cgk     N_cqk      N_cd_geo   N_cd_est
-!
-! Legend:
-!    ?_#gk     -  characteristic value due to dead loads only
-!    ?_#qk     -  characteristic value due to live loads only
-!    ?_#d_geo  -  design value for geotechnical verifications of piles
-!    ?_#d_est  -  design value for structural verifications of piles
-!
-!    ?: M - bending moment
-!       Q - shear force
-!       N - axial force
-!    #: o - oblique (vector sum, for bending moment & shear force)
-!       c - compression (for axial force)
-
-! Service limit state deflections: ------------- 12
+! Service limit state deflections: ------------ 12
 ! UX_gk     UX_qk     UX_k      UX_frq
 ! UY_gk     UY_qk     UY_k      UY_frq
 ! UZ_gk     UZ_qk     UZ_k      UZ_frq
@@ -78,7 +43,10 @@
 !    U?_k    -  dead + live loads, characteristic values
 !    U?_frq  -  SLS frequent combination (uses PSI1)
 
-! TOTAL element table count: ----------------- 139
+! NOTE: all characteristic values (k) include impact coefficient
+
+! TOTAL element table count: ----------------- 81
+
 
 /post1
 
