@@ -42,6 +42,11 @@ asel,none
 *endif
 cm,COMPA_Struts,area
 
+! Floor slab
+asel,s,loc,y,0
+asel,r,loc,z,0,GEO_TUN_length
+cm,COMPA_floor,area
+
 ! Roof slab
 asel,S,LOC,Y,GEO_TUN_effH
 asel,R,LOC,Z,0,GEO_TUN_length
