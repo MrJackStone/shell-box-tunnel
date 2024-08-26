@@ -1,5 +1,8 @@
 ! TUNNEL_V2_BUILDCM
 
+! Prepare environment
+csbackup
+csys,CS_tunnel
 
 ! Tunnel walls
 asel,s,loc,z,0,GEO_TUN_length
@@ -24,10 +27,12 @@ cmsel,U,COMPA_LeftWall
 cmsel,U,COMPA_RightWall
 cm,COMPA_InnerWalls,AREA
 
-! Floor slab
-asel,S,LOC,Y,0
-asel,R,LOC,Z,0,GEO_TUN_length
-cm,COMPA_Floor,AREA
+*do,nthWall,1,GEO_IWALL_count,1
+  xCoord = GEO_IWALL_x_coords(nthWall)
+  cmsel,s,COMPA_innerWalls
+  asel,r,loc,x,xCoord
+  cm,COMPA_IWALL_%nthWall%,area
+*enddo
 
 ! Roof struts
 asel,none
@@ -54,3 +59,6 @@ lsla,S
 ksll,S
 cm,COMPL_Tunnel,LINE
 cm,COMPK_Tunnel,KP
+
+! Clean up
+csrestore

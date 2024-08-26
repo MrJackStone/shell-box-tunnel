@@ -665,9 +665,8 @@ ALLSEL
 *if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
   csys,CS_Tunnel
 
-  wallX = 0
-  *do,nthWall,1,GEO_TUN_modules-1,1
-    wallX = wallX+GEO_TUN_effW
+  *do,nthWall,1,GEO_IWALL_count,1
+    wallX = GEO_IWALL_x_coords(nthWall)
     cmsel,s,COMPA_InnerWalls
     asel,r,loc,x,wallX
     lsla,s

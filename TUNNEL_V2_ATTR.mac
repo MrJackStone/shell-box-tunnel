@@ -262,6 +262,13 @@ WARNING: Pin and corbel are incompatible. GEO_CORB_status set to 0 (OFF).
   *endif
 *endif
 
+! Inner wall positions
+GEO_IWALL_count = GEO_TUN_modules-1
+
+*del,GEO_IWALL_x_coords,,nopr
+*dim,GEO_IWALL_x_coords,,GEO_IWALL_count
+*vfill,GEO_IWALL_x_coords,ramp,GEO_TUN_effW,GEO_TUN_effW
+
 ! Inner wall openings
 *if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
   GEO_TUN_opW  = (GEO_TUN_length-GEO_IWALL_columnCount*GEO_IWALL_columnWidth)/(GEO_IWALL_columnCount-1)
