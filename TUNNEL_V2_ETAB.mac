@@ -261,6 +261,12 @@ etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
       nsle,s
       etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 
+      cmsel,s,COMPA_HDW_footing
+      cmsel,r,COMPA_HDW_%nthInlet%
+      esla,s
+      nsle,s
+      etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
+
     *enddo
   *endif
 *endif
