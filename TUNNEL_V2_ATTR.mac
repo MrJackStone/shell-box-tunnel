@@ -48,6 +48,8 @@ MinimumSoilCover=1.4
 ! Cross-sectional area of rigid struts
 REAL_rigidStrut_A=1
 
+POST_convolutionRadius = 0.50
+
 
 !!                                                                                                !!
 !! 2.2  Indices                                                                                   !!
