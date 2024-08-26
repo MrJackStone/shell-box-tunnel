@@ -257,7 +257,7 @@ cmsel,s,COMPA_struts
   AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_backBeam
 
   cmsel,s,COMPA_HDW_Columns
-  aatt,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_Column
+  aatt,MAT_CONC,,TYPE_SHELL181,CS_HDW_columns,SEC_FRAME_Column
 
   cmsel,s,COMPA_Headwalls
   AESIZE,ALL,FEM_HDW_esize
