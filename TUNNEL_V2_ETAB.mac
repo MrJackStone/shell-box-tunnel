@@ -1,150 +1,288 @@
 ! TUNNEL_V2_ETAB
 
-!     /post1
+
+! Output element tables:
+
+! Auxiliary: ----------------------------------- 1
+! ZEROS
+
+! DOFs: --------------------------------------- 24
+! DW_UX     EMN_UX     EMX_UX     EAB_UX
+! DW_UY     EMN_UY     EMX_UY     EAB_UY
+! DW_UZ     EMN_UZ     EMX_UZ     EAB_UZ
+! DW_ROTX   EMN_ROTX   EMX_ROTX   EAB_ROTX
+! DW_ROTY   EMN_ROTY   EMX_ROTY   EAB_ROTY
+! DW_ROTZ   EMN_ROTZ   EMX_ROTZ   EAB_ROTZ
+
+! SHELL181 (raw): ----------------------------- 30
+! DW_MX     EMN_MX     EMX_MX     EAB_MX
+! DW_MY     EMN_MY     EMX_MY     EAB_MY
+! DW_NX     EMN_NX     EMX_NX     EAB_NX
+! DW_NY     EMN_NY     EMX_NY     EAB_NY
+! DW_QX     EMN_QX     EMX_QX     EAB_QX
+! DW_QY     EMN_QY     EMX_QY     EAB_QY
+! DW_Q      -          -          EAB_Q
+! -         EPOS_MY    ENEG_MX    -
+! -         EPOS_MX    ENEG_MY    -
+
+!!                                                                                                !!
+
+! SHELL181 (averaged by convolution): -------- 12
+! ADW_MX    AEMN_MX    AEMX_MX    AEAB_MX
+! ADW_MY    AEMN_MY    AEMX_MY    AEAB_MY
+! ADW_Q     -          -          AEAB_Q
+! -         -          AENEG_MX   -
+! -         AEPOS_MX   -          -
+
+! BEAM188 (raw DW or ENV): ------------------- 50
+! DW_Ni     EMN_Ni     EMX_Ni     EAB_Ni
+! DW_Nj     EMN_Nj     EMX_Nj     EAB_Nj
+! DW_QZi    EMN_QZi    EMX_QZi    EAB_QZi
+! DW_QZj    EMN_QZj    EMX_QZj    EAB_QZj
+! DW_QYi    EMN_QYi    EMX_QYi    EAB_QYi
+! DW_QYj    EMN_QYj    EMX_QYj    EAB_QYj
+! DW_MYi    EMN_MYi    EMX_MYi    EAB_MYi
+! DW_MYj    EMN_MYj    EMX_MYj    EAB_MYj
+! DW_MZi    EMN_MZi    EMX_MZi    EAB_MZi
+! DW_MZj    EMN_MZj    EMX_MZj    EAB_MZj
+! DW_TQi    EMN_TQi    EMX_TQi    EAB_TQi
+! DW_TQj    EMN_TQj    EMX_TQj    EAB_TQj
+! N_c  -  axial compression
+! N_t  -  axial tension
+
+! BEAM188 (calculated based on DW/ENV): ------- 12
+! M_ogk     M_oqk      M_od_geo   M_od_est
+! Q_ogk     Q_oqk      Q_od_geo   Q_od_est
+! N_cgk     N_cqk      N_cd_geo   N_cd_est
 !
-!     allsel
+! Legend:
+!    ?_#gk     -  characteristic value due to dead loads only
+!    ?_#qk     -  characteristic value due to live loads only
+!    ?_#d_geo  -  design value for geotechnical verifications of piles
+!    ?_#d_est  -  design value for structural verifications of piles
 !
-!     ! Auxiliary element tables
-!     *vget  , element_numbers       , elem    ,         , elist
-!     *get   , ec                    , elem    ,         , count
-!     etable , 'DUMMY'               , volu
-!     sadd   , 'ZEROS'               , 'DUMMY' , 'DUMMY' , 1     , -1
-!     detab  , element_numbers(1:ec) , 'ZEROS' , 0
-!     etable , 'DUMMY'               , eras
+!    ?: M - bending moment
+!       Q - shear force
+!       N - axial force
+!    #: o - oblique (vector sum, for bending moment & shear force)
+!       c - compression (for axial force)
+
+! Service limit state deflections: ------------- 12
+! UX_gk     UX_qk     UX_k      UX_frq
+! UY_gk     UY_qk     UY_k      UY_frq
+! UZ_gk     UZ_qk     UZ_k      UZ_frq
 !
-!
-!     !! Dead weight results (first load step) element tables                                           !!
-!     allsel
-!     set,first
-!
-!     defetabs , 0   , 'DW_' , 1e3  , 1
-!     defetabs , 181 , 'DW_' , 1e-3 , 1
-!
-!     ! SHELL181 oblique shear force
-!     etbsqsum , 'DW_Q' , 'DW_QX' , 'DW_QY'
-!
-!
-!     !! Envelope including dead & live loads:                                                          !!
-!     baseTableCount = 12
-!
-!     *del , etable_suffixes ,      , nopr
-!     *del , etable_scales   ,      , nopr
-!     *dim , etable_suffixes , char , baseTableCount
-!     *dim , etable_scales   ,      , baseTableCount
-!
-!     etable_suffixes(1)  = 'UX' , 'UY' , 'UZ'  , 'ROTX' , 'ROTY' , 'ROTZ'
-!     etable_scales(1)    = 1e3  , 1e3  , 1e3   , 1e3    , 1e3    , 1e3
-!     etable_suffixes(7)  = 'MX' , 'MY' , 'NX'  , 'NY'   , 'QX'   , 'QY'
-!     etable_scales(7)    = 1e-3 , 1e-3 , 1e-3  , 1e-3   , 1e-3   , 1e-3   ,
-!
-!     ! Create element tables that update with REFL
-!     defetabs , 0   ,  , 1 , 0
-!     defetabs , 181 ,  , 1 , 0
-!
-!     ! Loop over load steps updating element tables
-!     etenv,1,LoadStepCount,'etable_suffixes'
-!
-!     ! Scale envelope element tables
-!     *do,nthEtable,1,baseTableCount,1
-!       etSuffix = etable_suffixes(nthEtable)
-!       etScale  = etable_scales(nthEtable)
-!       sadd,'EMX_%etSuffix%','EMX_%etSuffix%',,etScale
-!       sadd,'EMN_%etSuffix%','EMN_%etSuffix%',,etScale
-!       sadd,'EAB_%etSuffix%','EAB_%etSuffix%',,etScale
-!     *enddo
-!
-!     ! Delete unused tables
-!     *do,nthEtable,1,baseTableCount,1
-!       etSuffix=etable_suffixes(nthEtable)
-!       etable,'%etSuffix%',eras
-!     *enddo
-!
-!     ! SHELL181 oblique shear force
-!     etbsqsum , 'EAB_Q' , 'EAB_QX' , 'EAB_QY'
-!
-!     ! SHELL181 positive/negative-only bending moments
-!     smax   , 'ENEG_MX' , 'EMX_MX' , 'ZEROS'
-!     smax   , 'EPOS_MX' , 'EMN_MX' , 'ZEROS'  , -1
-!     smax   , 'ENEG_MY' , 'EMX_MY' , 'ZEROS'
-!     smax   , 'EPOS_MY' , 'EMN_MY' , 'ZEROS'  , -1
-!
-!
-!     !! Element tables calculated based on DW & ENV values                                             !!
-!     ! Deflections
-!     sadd   , 'UX_g'   , 'DW_UX'  ,         , 1
-!     sadd   , 'UX_d'   , 'EMN_UX' ,         , 1
-!     sadd   , 'UX_gk'  , 'UX_g'   ,         , 1/LOAD_gammaG
-!     sadd   , 'UX_q'   , 'UX_d'   , 'UX_g'  , 1                              , -1
-!     sadd   , 'UX_qk'  , 'UX_q'   ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
-!     sadd   , 'UX_k'   , 'UX_g'   , 'UX_q'  , 1                              , 1
-!     sadd   , 'UX_frq' , 'UX_gk'  , 'UX_qk' , 1                              , LOAD_psi1
-!     etable , 'UX_g'   , eras
-!     etable , 'UX_d'   , eras
-!     etable , 'UX_q'   , eras
-!
-!     sadd   , 'UY_g'   , 'DW_UY'  ,         , 1
-!     sadd   , 'UY_d'   , 'EMN_UY' ,         , 1
-!     sadd   , 'UY_gk'  , 'UY_g'   ,         , 1/LOAD_gammaG
-!     sadd   , 'UY_q'   , 'UY_d'   , 'UY_g'  , 1                              , -1
-!     sadd   , 'UY_qk'  , 'UY_q'   ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
-!     sadd   , 'UY_k'   , 'UY_g'   , 'UY_q'  , 1                              , 1
-!     sadd   , 'UY_frq' , 'UY_gk'  , 'UY_qk' , 1                              , LOAD_psi1
-!     etable , 'UY_g'   , eras
-!     etable , 'UY_d'   , eras
-!     etable , 'UY_q'   , eras
-!
-!     sadd   , 'UZ_g'   , 'DW_UZ'  ,         , 1
-!     sadd   , 'UZ_d'   , 'EMN_UZ' ,         , 1
-!     sadd   , 'UZ_gk'  , 'UZ_g'   ,         , 1/LOAD_gammaG
-!     sadd   , 'UZ_q'   , 'UZ_d'   , 'UZ_g'  , 1                              , -1
-!     sadd   , 'UZ_qk'  , 'UZ_q'   ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
-!     sadd   , 'UZ_k'   , 'UZ_g'   , 'UZ_q'  , 1                              , 1
-!     sadd   , 'UZ_frq' , 'UZ_gk'  , 'UZ_qk' , 1                              , LOAD_psi1
-!     etable , 'UZ_g'   , eras
-!     etable , 'UZ_d'   , eras
-!     etable , 'UZ_q'   , eras
-!
-!     ! Internal reactions on piles (discounting impact coefficient & gammas)
-!     sadd   , 'N_cq'  , 'N_c'   , 'N_cg'  , 1                              , -1
-!     sadd   , 'N_cqk' , 'N_cq'  ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
-!     sadd   , 'N_ck'  , 'N_cgk' , 'N_cqk' , 1                              , 1
-!     etable , 'N_cq'  , eras
-!     etable , 'N_cg'  , eras
-!
-!     sadd   , 'Q_oq'  , 'Q_o'   , 'Q_og'  , 1                              , -1
-!     sadd   , 'Q_oqk' , 'Q_oq'  ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
-!     sadd   , 'Q_ok'  , 'Q_ogk' , 'Q_oqk' , 1                              , 1
-!     etable , 'Q_oq'  , eras
-!     etable , 'Q_og'  , eras
-!
-!     sadd   , 'M_oq'  , 'M_o'   , 'M_og'  , 1                              , -1
-!     sadd   , 'M_oqk' , 'M_oq'  ,         , 1/(LOAD_gammaQ*LOAD_dynImpact)
-!     sadd   , 'M_ok'  , 'M_ogk' , 'M_oqk' , 1                              , 1
-!     etable , 'M_oq'  , eras
-!     etable , 'M_og'  , eras
-!
-!     sadd , 'N_cd_geo' , 'N_ck' ,  , 1
-!     sadd , 'M_od_geo' , 'M_ok' ,  , 1
-!     sadd , 'Q_od_geo' , 'Q_ok' ,  , 1
-!
-!     sadd , 'N_cd_est' , 'N_cgk' , 'N_cqk' , LOAD_gammaQ , LOAD_gammaQ
-!     sadd , 'M_od_est' , 'M_ogk' , 'M_oqk' , LOAD_gammaG , LOAD_gammaQ
-!     sadd , 'Q_od_est' , 'Q_ogk' , 'Q_oqk' , LOAD_gammaG , LOAD_gammaQ
-!
-!     etable , 'M_ok' , eras
-!     etable , 'Q_ok' , eras
-!     etable , 'N_ck' , eras
-!     etable , 'M_o'  , eras
-!     etable , 'Q_o'  , eras
-!
-!
-!
-!     !!                                                                                                !!
-!     !!                                                                                                !!
-!     !!                                                                                                !!
-!     !!                                                                                                !!
-!     !!                                                                                                !!
-!     !!                                                                                                !!
+! Legend:
+!    U?_gk   -  dead loads, characteristic value
+!    U?_qk   -  live loads, characteristic value
+!    U?_k    -  dead + live loads, characteristic values
+!    U?_frq  -  SLS frequent combination (uses PSI1)
+
+! TOTAL element table count: ----------------- 139
+
+/post1
+
+allsel
+
+! Auxiliary element tables
+*vget  , element_numbers       , elem    ,         , elist
+*get   , ec                    , elem    ,         , count
+etable , 'DUMMY'               , volu
+sadd   , 'ZEROS'               , 'DUMMY' , 'DUMMY' , 1     , -1
+detab  , element_numbers(1:ec) , 'ZEROS' , 0
+etable , 'DUMMY'               , eras
+
+
+!! Dead weight results (first load step) element tables                                           !!
+allsel
+set,first
+
+defetabs , 0   , 'DW_' , 1e3  , 1
+defetabs , 181 , 'DW_' , 1e-3 , 1
+
+! SHELL181 oblique shear force
+etbsqsum , 'DW_Q' , 'DW_QX' , 'DW_QY'
+
+
+!! Envelope including dead & live loads:                                                          !!
+baseTableCount = 12
+
+*del , etable_suffixes ,      , nopr
+*del , etable_scales   ,      , nopr
+*dim , etable_suffixes , char , baseTableCount
+*dim , etable_scales   ,      , baseTableCount
+
+etable_suffixes(1)  = 'UX' , 'UY' , 'UZ'  , 'ROTX' , 'ROTY' , 'ROTZ'
+etable_scales(1)    = 1e3  , 1e3  , 1e3   , 1e3    , 1e3    , 1e3
+etable_suffixes(7)  = 'MX' , 'MY' , 'NX'  , 'NY'   , 'QX'   , 'QY'
+etable_scales(7)    = 1e-3 , 1e-3 , 1e-3  , 1e-3   , 1e-3   , 1e-3
+
+! Create element tables that update with REFL
+defetabs , 0   ,  , 1 , 0
+defetabs , 181 ,  , 1 , 0
+
+! Loop over load steps updating element tables
+etenv,1,LoadStepCount,'etable_suffixes'
+
+! Scale envelope element tables
+*do,nthEtable,1,baseTableCount,1
+  etSuffix = etable_suffixes(nthEtable)
+  etScale  = etable_scales(nthEtable)
+  sadd,'EMX_%etSuffix%','EMX_%etSuffix%',,etScale
+  sadd,'EMN_%etSuffix%','EMN_%etSuffix%',,etScale
+  sadd,'EAB_%etSuffix%','EAB_%etSuffix%',,etScale
+*enddo
+
+! Delete unused tables
+*do,nthEtable,1,baseTableCount,1
+  etSuffix=etable_suffixes(nthEtable)
+  etable,'%etSuffix%',eras
+*enddo
+
+! SHELL181 oblique shear force
+etbsqsum , 'EAB_Q' , 'EAB_QX' , 'EAB_QY'
+
+! SHELL181 positive/negative-only bending moments
+smax   , 'ENEG_MX' , 'EMX_MX' , 'ZEROS'
+smax   , 'EPOS_MX' , 'EMN_MX' , 'ZEROS'  , -1
+smax   , 'ENEG_MY' , 'EMX_MY' , 'ZEROS'
+smax   , 'EPOS_MY' , 'EMN_MY' , 'ZEROS'  , -1
+
+
+!! Element tables calculated based on DW & ENV values                                             !!
+! NOTE: because of the AREMA approach to calculate impact coefficient (depth-dependent value),
+!       it is not possible to cleanly remove the influence of said impact coefficient in post.
+!       Therefore, loads labeled as "characteristic" (k index) still include the effect of the
+!       impact coefficient, if one was applied.
+
+! Deflections
+sadd   , 'UX_g'   , 'DW_UX'  ,         , 1
+sadd   , 'UX_d'   , 'EMN_UX' ,         , 1
+sadd   , 'UX_gk'  , 'UX_g'   ,         , 1/LOAD_gammaG
+sadd   , 'UX_q'   , 'UX_d'   , 'UX_g'  , 1             , -1
+sadd   , 'UX_qk'  , 'UX_q'   ,         , 1/LOAD_gammaQ
+sadd   , 'UX_k'   , 'UX_g'   , 'UX_q'  , 1             , 1
+sadd   , 'UX_frq' , 'UX_gk'  , 'UX_qk' , 1             , LOAD_psi1
+etable , 'UX_g'   , eras
+etable , 'UX_d'   , eras
+etable , 'UX_q'   , eras
+
+sadd   , 'UY_g'   , 'DW_UY'  ,         , 1
+sadd   , 'UY_d'   , 'EMN_UY' ,         , 1
+sadd   , 'UY_gk'  , 'UY_g'   ,         , 1/LOAD_gammaG
+sadd   , 'UY_q'   , 'UY_d'   , 'UY_g'  , 1             , -1
+sadd   , 'UY_qk'  , 'UY_q'   ,         , 1/LOAD_gammaQ
+sadd   , 'UY_k'   , 'UY_g'   , 'UY_q'  , 1             , 1
+sadd   , 'UY_frq' , 'UY_gk'  , 'UY_qk' , 1             , LOAD_psi1
+etable , 'UY_g'   , eras
+etable , 'UY_d'   , eras
+etable , 'UY_q'   , eras
+
+sadd   , 'UZ_g'   , 'DW_UZ'  ,         , 1
+sadd   , 'UZ_d'   , 'EMN_UZ' ,         , 1
+sadd   , 'UZ_gk'  , 'UZ_g'   ,         , 1/LOAD_gammaG
+sadd   , 'UZ_q'   , 'UZ_d'   , 'UZ_g'  , 1             , -1
+sadd   , 'UZ_qk'  , 'UZ_q'   ,         , 1/LOAD_gammaQ
+sadd   , 'UZ_k'   , 'UZ_g'   , 'UZ_q'  , 1             , 1
+sadd   , 'UZ_frq' , 'UZ_gk'  , 'UZ_qk' , 1             , LOAD_psi1
+etable , 'UZ_g'   , eras
+etable , 'UZ_d'   , eras
+etable , 'UZ_q'   , eras
+
+
+!! Average results by performing convolution                                                      !!
+convolutionTableCount = 14
+*del , convolution_etnames ,      , nopr
+*dim , convolution_etnames , char , convolutionTableCount
+convolution_etnames(1)  = 'DW_MX'   , 'EMN_MX'  , 'EMX_MX'  , 'EAB_MX'
+convolution_etnames(5)  = 'DW_MY'   , 'EMN_MY'  , 'EMX_MY'  , 'EAB_MY'
+convolution_etnames(9)  = 'DW_Q'    , 'EAB_Q'
+convolution_etnames(11) = 'EPOS_MX' , 'ENEG_MX' , 'EPOS_MY' , 'ENEG_MY'
+
+*do,nthConv,1,convolutionTableCount,1
+  lab = convolution_etnames(nthConv)
+  sadd,'A%lab%','%lab%',,1
+*enddo
+
+csys,CS_tunnel
+
+cmsel,s,COMPA_roof
+esla,s
+nsle,s
+etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
+
+cmsel,s,COMPA_floor
+esla,s
+nsle,s
+etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
+
+cmsel,s,COMPA_leftWall
+esla,s
+nsle,s
+etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
+
+cmsel,s,COMPA_rightWall
+esla,s
+nsle,s
+etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
+
+*if,GEO_IWALL_count,eq,0,then
+  cmsel,s,COMPA_innerWalls
+  esla,s
+  nsle,s
+  etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
+*endif
+
+*if,GEO_HDW_status,eq,1,then
+  *if,GEO_HDW_type,eq,0,then
+    *do,nthInlet,1,2,1
+
+      cmsel,s,COMPA_HDW_leftWall
+      cmsel,r,COMPA_HDW_%nthInlet%
+      esla,s
+      nsle,s
+      etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
+
+      cmsel,s,COMPA_HDW_rightWall
+      cmsel,r,COMPA_HDW_%nthInlet%
+      esla,s
+      nsle,s
+      etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
+
+      cmsel,s,COMPA_HDW_slab
+      cmsel,r,COMPA_HDW_%nthInlet%
+      esla,s
+      nsle,s
+      etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
+
+      cmsel,s,COMPA_HDW_stiffener
+      cmsel,r,COMPA_HDW_%nthInlet%
+      esla,s
+      nsle,s
+      etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
+
+    *enddo
+  *endif
+*endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+!!                                                                                                !!
+!!                                                                                                !!
+!!                                                                                                !!
+!!                                                                                                !!
+!!                                                                                                !!
+!!                                                                                                !!
 
 
 ! Criar tabelas
