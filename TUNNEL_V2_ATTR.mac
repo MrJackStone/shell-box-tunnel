@@ -63,10 +63,19 @@ CS_right          = 15
 CS_tunnel         = 16
 CS_RevTunnel      = 17
 CS_HDW_columns    = 18
+
 CS_HDW1_leftWall  = 19
 CS_HDW1_rightWall = 20
 CS_HDW2_leftWall  = 21
 CS_HDW2_rightWall = 22
+
+CS_HDW1_leftFoot  = 23
+CS_HDW1_rightFoot = 24
+CS_HDW2_leftFoot  = 25
+CS_HDW2_rightFoot = 26
+
+CS_dummy = 99
+
 CS_BASE_corbelBot = 1000
 CS_BASE_corbelTop = 2000
 CS_BASE_iwall     = 3000
@@ -502,6 +511,30 @@ wpcsys,-1
 wpoffs,,,GEO_TUN_length
 wprota,,,90-GEO_HDW_angle
 cswpla,CS_HDW2_rightWall,cart
+
+csys,CS_HDW1_leftWall
+wpcsys,-1
+wprota,,-90
+wpoffs,,,-GEO_HDW_footDepth
+cswpla,CS_HDW1_leftFoot,cart
+
+csys,CS_HDW1_rightWall
+wpcsys,-1
+wprota,,-90
+wpoffs,,,-GEO_HDW_footDepth
+cswpla,CS_HDW1_rightFoot,cart
+
+csys,CS_HDW2_leftWall
+wpcsys,-1
+wprota,,-90
+wpoffs,,,-GEO_HDW_footDepth
+cswpla,CS_HDW2_leftFoot,cart
+
+csys,CS_HDW2_rightWall
+wpcsys,-1
+wprota,,-90
+wpoffs,,,-GEO_HDW_footDepth
+cswpla,CS_HDW2_rightFoot,cart
 
 csys,0
 
