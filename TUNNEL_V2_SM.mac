@@ -391,31 +391,37 @@ TUNNEL_V2_SMIWALL
 !!                                                                                                !!
 !! 3.10  Area direction                                                                           !!
 !!                                                                                                !!
-CMSEL,S,COMPA_Floor
-ARYORI,-1
-CMSEL,S,COMPA_Roof
-cmsel,a,COMPA_struts
-cmsel,a,COMPA_approach
-ARYORI,1
-CMSEL,S,COMPA_LeftWall
-ARXORI,-1
-CMSEL,S,COMPA_RightWall
-CMSEL,A,COMPA_InnerWalls
-ARXORI,1
+cmsel , s , COMPA_Floor
+aryori,-1
 
-CMSEL,S,COMPA_HDW_Stiffener
-CMSEL,A,COMPA_HDW_Slab
-CMSEL,A,COMPA_HDW_Footing
-ARYORI,-1
-CMSEL,S,COMPA_HDW_LeftWall
-ARXORI,-1
-CMSEL,S,COMPA_HDW_RightWall
-ARXORI,1
-!CMSEL,S,COMPA_HDW_TopBeam
-!COMPA_HDW_BotBeam
-!COMPA_HDW_BackBeam
+cmsel , s , COMPA_Roof
+cmsel , a , COMPA_struts
+cmsel , a , COMPA_approach
+aryori,1
 
-ALLSEL
+cmsel , s , COMPA_LeftWall
+arxori,-1
+
+cmsel , s , COMPA_RightWall
+cmsel , a , COMPA_InnerWalls
+arxori,1
+
+cmsel , s , COMPA_HDW_Stiffener
+cmsel , a , COMPA_HDW_Slab
+cmsel , a , COMPA_HDW_Footing
+aryori,-1
+
+cmsel , s , COMPA_HDW_LeftWall
+arxori,-1
+
+cmsel , s , COMPA_HDW_RightWall
+arxori,1
+
+!cmsel,S,COMPA_HDW_TopBeam
+!compa_HDW_BotBeam
+!compa_HDW_BackBeam
+
+allsel
 
 
 !!                                                                                                !!
