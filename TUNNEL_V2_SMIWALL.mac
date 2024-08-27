@@ -51,12 +51,15 @@ cm,COMPA_columns,area
   cmsel,s,COMPA_InnerWalls
   asel,r,loc,y,0,GEO_IWALL_botBeamHeight
   cm,COMPA_bBeam,area
+
   cmsel,s,COMPA_InnerWalls
   asel,r,loc,y,GEO_TUN_effH-GEO_IWALL_topBeamHeight,GEO_TUN_effH
   cm,COMPA_tBeam,area
+
   cmsel,s,COMPA_InnerWalls
   cmsel,u,COMPA_bBeam
   cmsel,u,COMPA_tBeam
   cm,COMPA_Columns,area
+
   TUNNEL_V2_BUILDCM
 *endif
