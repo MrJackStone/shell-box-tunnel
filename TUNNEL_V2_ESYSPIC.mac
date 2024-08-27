@@ -37,6 +37,7 @@ go2png,1500
   /device,vector,off
 
   cmsel,s,%ARG1%
+  lsla,s
   esla,s
   nsle,s
   pltesys,,,1,11,'esysNum'
