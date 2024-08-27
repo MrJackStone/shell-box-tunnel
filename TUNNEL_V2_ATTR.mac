@@ -73,6 +73,8 @@ CS_HDW1_leftFoot  = 23
 CS_HDW1_rightFoot = 24
 CS_HDW2_leftFoot  = 25
 CS_HDW2_rightFoot = 26
+CS_hdw1           = 27
+CS_hdw2           = 28
 
 CS_dummy = 99
 
@@ -481,6 +483,17 @@ wprota,90
 cswpla,CS_HDW_columns,cart
 
 ! Headwall coordinate systems
+csys,CS_tunnel
+wpcsys,-1
+wpoffs,GEO_TUN_totEffW/2
+wprota,,,180
+cswpla,CS_hdw1,cart
+
+csys,CS_tunnel
+wpcsys,-1
+wpoffs,GEO_TUN_totEffW/2,,GEO_TUN_length
+cswpla,CS_hdw2,cart
+
 csys,CS_tunnel
 wpcsys,-1
 wprota,,,90+GEO_HDW_angle
