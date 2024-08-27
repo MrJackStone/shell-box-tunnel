@@ -137,22 +137,14 @@ REAL_rigidStrut  = 5
 !!                                                                                                !!
 ! Inner wall thickness
 *if,GEO_TUN_modules,gt,1,then
-  *if,GEO_IWALL_type,eq,0,then
-    ! Do nothing
-  *elseif,GEO_IWALL_type,eq,1,then
+  *if,GEO_IWALL_type,eq,1,then
     GEO_IWALL_thk = ((GEO_IWALL_topBeamWidth>GEO_IWALL_botBeamWidth)>GEO_IWALL_columnThk)
   *endif
-*else
-  GEO_IWALL_thk=0
 *endif
 
 ! Calculate effective spans (distance between mid-planes)
-*if,GEO_IWALL_thk,eq,0,then
-  Eff_GalleryWidth=GEO_TUN_moduleWidth+GEO_OWALL_thk
-*else
-  Eff_GalleryWidth=GEO_TUN_moduleWidth+(GEO_OWALL_thk+GEO_IWALL_thk)/2
-*endif
-Eff_GalleryHeight=GEO_TUN_height+(GEO_FLOOR_thk+GEO_ROOF_thk)/2
+Eff_GalleryWidth  = GEO_TUN_moduleWidth+GEO_OWALL_thk
+Eff_GalleryHeight = GEO_TUN_height+(GEO_FLOOR_thk+GEO_ROOF_thk)/2
 
 GEO_TUN_effW    = Eff_GalleryWidth
 GEO_TUN_effH    = Eff_GalleryHeight
