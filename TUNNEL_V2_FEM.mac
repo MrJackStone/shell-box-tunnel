@@ -732,42 +732,123 @@ VIEW1W
 /view,1,1,1,1
 EPLOT
 
-dsys,0
-view1w
-wincln,1
-boldfont,1
-/view,1,1,-1,1
-/angle,1,0
-/auto,1
-/eshape,0
-/psymb,cs,0
-/edge,1,1
-esel,s,type,,TYPE_shell181
-nsle,s,active
-eplot
-/user,1
+! *do,nthCM,1,cmTunnelCount,1
+!   cmName = cmnames_tunnel(1,nthCM)
+!   cmpatoe,,cmName
+! *enddo
+!
+! *do,nthCM,1,cmHeadwallCount,1
+!   cmName = cmnames_headwalls(1,nthCM)
+!   cmpatoe,,cmName
+! *enddo
 
-go2png,1500
-  asel,all
-  aplot
-  /noerase
-  /triad,orig
+cmEsysCount=31
 
-  cmsel,s,COMPA_floor
-  esla,s
-  pltesys,,,1,11,'esysNum'
-  ! /psymb,cs,0
-  /triad,off
+*del,cmnames_esys,,nopr
+*dim,cmnames_esys,string,248,cmEsysCount
+cmnames_esys(1,1)  = 'COMPA_Floor'
+cmnames_esys(1,2)  = 'COMPA_Roof'
+cmnames_esys(1,3)  = 'COMPA_LeftWall'
+cmnames_esys(1,4)  = 'COMPA_RightWall'
+cmnames_esys(1,5)  = 'COMPA_bBeam'
+cmnames_esys(1,6)  = 'COMPA_tBeam'
+cmnames_esys(1,7)  = 'COMPA_Columns'
+cmnames_esys(1,8)  = 'COMPA_HDW1_BackBeam'
+cmnames_esys(1,9)  = 'COMPA_HDW1_BotBeam'
+cmnames_esys(1,10) = 'COMPA_HDW1_leftColumn'
+cmnames_esys(1,11) = 'COMPA_HDW1_rightColumn'
+cmnames_esys(1,12) = 'COMPA_HDW1_leftFoot'
+cmnames_esys(1,13) = 'COMPA_HDW1_rightFoot'
+cmnames_esys(1,14) = 'COMPA_HDW1_leftWall'
+cmnames_esys(1,15) = 'COMPA_HDW1_rightWall'
+cmnames_esys(1,16) = 'COMPA_HDW1_slab'
+cmnames_esys(1,17) = 'COMPA_HDW1_leftStiffener'
+cmnames_esys(1,18) = 'COMPA_HDW1_rightStiffener'
+cmnames_esys(1,19) = 'COMPA_HDW1_topBeam'
+cmnames_esys(1,20) = 'COMPA_HDW2_BackBeam'
+cmnames_esys(1,21) = 'COMPA_HDW2_BotBeam'
+cmnames_esys(1,22) = 'COMPA_HDW2_leftColumn'
+cmnames_esys(1,23) = 'COMPA_HDW2_rightColumn'
+cmnames_esys(1,24) = 'COMPA_HDW2_leftFoot'
+cmnames_esys(1,25) = 'COMPA_HDW2_rightFoot'
+cmnames_esys(1,26) = 'COMPA_HDW2_leftWall'
+cmnames_esys(1,27) = 'COMPA_HDW2_rightWall'
+cmnames_esys(1,28) = 'COMPA_HDW2_slab'
+cmnames_esys(1,29) = 'COMPA_HDW2_leftStiffener'
+cmnames_esys(1,30) = 'COMPA_HDW2_rightStiffener'
+cmnames_esys(1,31) = 'COMPA_HDW2_topBeam'
 
-  wintitle,1,'FLOOR SLAB','ESYS',chrval(esysNum),,,13
+*del,img_titles,,nopr
+*dim,img_titles,string,248,cmEsysCount
+img_titles(1,1)  = 'FLOOR SLAB'
+img_titles(1,2)  = 'ROOF SLAB'
+img_titles(1,3)  = 'LEFT WALL'
+img_titles(1,4)  = 'RIGHT WALL'
+img_titles(1,5)  = 'BOTTOM BEAM'
+img_titles(1,6)  = 'TOP BEAM'
+img_titles(1,7)  = 'COLUMNS'
+img_titles(1,8)  = 'FRAME 1: BOTTOM BEAM'
+img_titles(1,9)  = 'INLET 1: FRONT BEAM'
+img_titles(1,10) = 'FRAME 1: LEFT COLUMN'
+img_titles(1,11) = 'FRAME 1: RIGHT COLUMN'
+img_titles(1,12) = 'INLET 1: LEFT FOOTING'
+img_titles(1,13) = 'INLET 1: RIGHT FOOTING'
+img_titles(1,14) = 'INLET 1: LEFT WALL'
+img_titles(1,15) = 'INLET 1: RIGHT WALL'
+img_titles(1,16) = 'INLET 1: FLOOR SLAB'
+img_titles(1,17) = 'INLET 1: LEFT FLOOR STIFFENER'
+img_titles(1,18) = 'INLET 1: RIGHT FLOOR STIFFENER'
+img_titles(1,19) = 'FRAME 1: TOP BEAM'
+img_titles(1,20) = 'FRAME 2: BOTTOM BEAM'
+img_titles(1,21) = 'INLET 2: FRONT BEAM'
+img_titles(1,22) = 'FRAME 2: LEFT COLUMN'
+img_titles(1,23) = 'FRAME 2: RIGHT COLUMN'
+img_titles(1,24) = 'INLET 2: LEFT FOOTING'
+img_titles(1,25) = 'INLET 2: RIGHT FOOTING'
+img_titles(1,26) = 'INLET 2: LEFT WALL'
+img_titles(1,27) = 'INLET 2: RIGHT WALL'
+img_titles(1,28) = 'INLET 2: FLOOR SLAB'
+img_titles(1,29) = 'INLET 2: LEFT FLOOR STIFFENER'
+img_titles(1,30) = 'INLET 2: RIGHT FLOOR STIFFENER'
+img_titles(1,31) = 'FRAME 2: TOP BEAM'
 
-  allsel
-  k1=kpnext(0)
-  ksel,s,kp,,k1
-  kplot
+*del,file_names,,nopr
+*dim,file_names,string,248,cmEsysCount
+file_names(1,1)  = 'esys_tun_FLOOR_SLAB'
+file_names(1,2)  = 'esys_tun_ROOF_SLAB'
+file_names(1,3)  = 'esys_tun_LEFT_WALL'
+file_names(1,4)  = 'esys_tun_RIGHT_WALL'
+file_names(1,5)  = 'esys_tun_BOTTOM_BEAM'
+file_names(1,6)  = 'esys_tun_TOP_BEAM'
+file_names(1,7)  = 'esys_tun_COLUMNS'
+file_names(1,8)  = 'esys_fr1_BOTTOM_BEAM'
+file_names(1,9)  = 'esys_in1_FRONT_BEAM'
+file_names(1,10) = 'esys_fr1_LEFT_COLUMN'
+file_names(1,11) = 'esys_fr1_RIGHT_COLUMN'
+file_names(1,12) = 'esys_in1_LEFT_FOOTING'
+file_names(1,13) = 'esys_in1_RIGHT_FOOTING'
+file_names(1,14) = 'esys_in1_LEFT_WALL'
+file_names(1,15) = 'esys_in1_RIGHT_WALL'
+file_names(1,16) = 'esys_in1_FLOOR_SLAB'
+file_names(1,17) = 'esys_in1_LEFT_FLOOR_STIFFENER'
+file_names(1,18) = 'esys_in1_RIGHT_FLOOR_STIFFENER'
+file_names(1,19) = 'esys_fr1_TOP_BEAM'
+file_names(1,20) = 'esys_fr2_BOTTOM_BEAM'
+file_names(1,21) = 'esys_in2_FRONT_BEAM'
+file_names(1,22) = 'esys_fr2_LEFT_COLUMN'
+file_names(1,23) = 'esys_fr2_RIGHT_COLUMN'
+file_names(1,24) = 'esys_in2_LEFT_FOOTING'
+file_names(1,25) = 'esys_in2_RIGHT_FOOTING'
+file_names(1,26) = 'esys_in2_LEFT_WALL'
+file_names(1,27) = 'esys_in2_RIGHT_WALL'
+file_names(1,28) = 'esys_in2_FLOOR_SLAB'
+file_names(1,29) = 'esys_in2_LEFT_FLOOR_STIFFENER'
+file_names(1,30) = 'esys_in2_RIGHT_FLOOR_STIFFENER'
+file_names(1,31) = 'esys_fr2_TOP_BEAM'
 
-endpng,'CS_floor',,,,,'_setup'
-/erase
-/annot,dele
-view1w
-windefa,1
+*do,nthCM,1,cmEsysCount,1
+  cmName   = cmnames_esys(1,nthCM)
+  imgTitle = img_titles(1,nthCM)
+  fileName = file_names(1,nthCM)
+  TUNNEL_V2_ESYSPIC , cmName , imgTitle , fileName
+*enddo

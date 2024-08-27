@@ -1,0 +1,59 @@
+! TUNNEL_V2_ESYSPIC , cmName , imgTitle , fileName
+! TUNNEL_V2_ESYSPIC , ARG1   , ARG2     , ARG3
+
+
+_imgTitle = ARG2
+_fileName = ARG3
+
+cmsel,s,%ARG1%
+*get,ac,area,,count
+*if,ac,eq,0,then
+  *return,-1
+*endif
+
+dsys,0
+view1w
+wincln,1
+boldfont,1
+/pbc,f,,0
+/view,1,1,1,1
+/angle,1,0
+/auto,1
+/eshape,0
+/psymb,cs,0
+/edge,1,1
+esel,s,type,,TYPE_shell181
+nsle,s,active
+eplot
+/user,1
+
+go2png,1500
+  /device,vector,on
+  /type,1,0
+  /edge,1,1
+  eplot
+  /noerase
+  /triad,orig
+  /device,vector,off
+
+  cmsel,s,%ARG1%
+  esla,s
+  nsle,s
+  pltesys,,,1,11,'esysNum'
+  /triad,off
+
+  wintitle,1,_imgTitle,'ESYS = %esysNum%',' ',,,13
+
+  esel,s,type,,TYPE_shell181
+  nsle,s
+  /device,vector,on
+  /type,1,0
+  eplot
+  /device,vector,off
+  /type,1,3
+
+endpng,_fileName,,,,,'_setup'
+/erase
+/annot,dele
+view1w
+windefa,1
