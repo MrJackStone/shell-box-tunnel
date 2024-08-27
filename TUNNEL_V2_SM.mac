@@ -251,31 +251,10 @@ TUNNEL_V2_BUILDCM
 !! 3.2  Split wings                                                                               !!
 !!                                                                                                !!
 *if,GEO_HDW_type,EQ,1,AND,GEO_HDW_wingBottomOffset,GT,0,THEN
-
-  ! Walls
-  CMSEL,S,COMPA_Walls
-  CSSLICEXZ,GEO_HDW_wingBottomOffset
-  CM,COMPA_walls,AREA
-
-  CMSEL,S,COMPA_walls
-  ASEL,R,LOC,X,0
-  CM,COMPA_LeftWall,AREA
-
-  CMSEL,S,COMPA_walls
-  ASEL,R,LOC,X,Eff_GalleryWidth
-  CM,COMPA_RightWall,AREA
-
-  CMSEL,S,COMPA_walls
-  CMSEL,U,COMPA_LeftWall
-  CMSEL,U,COMPA_RightWall
-  CM,COMPA_InnerWalls,AREA
-
-  cmsel,s,COMPA_tunnel
-  cmsel,a,COMPA_walls
-  cm,COMPA_tunnel,area
-
+  cmsel,s,COMPA_Walls
+  csslicexz,GEO_HDW_wingBottomOffset
+  TUNNEL_V2_BUILDCM
 *endif
-ALLSEL
 
 
 !!                                                                                                !!
