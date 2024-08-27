@@ -362,7 +362,7 @@ cm , COMPA_WALL_topCorbel    , area
 cm , COMPA_WALL_botCorbel    , area
 cm , COMPA_WALL_flat         , area
 
-*if,GEO_CORB_status,GE,1,THEN
+*if,GEO_CORB_status,ge,1,then
   TUNNEL_V2_SMCORBEL
 *endif
 
