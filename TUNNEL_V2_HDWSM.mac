@@ -444,8 +444,8 @@ KP32 = KPMaxD+32
     *else
       AL,L27,L26,L26b,L23,L7,L25
     *endif
-    CMSEL,A,COMPA_HDW_LeftWall
-    CM,COMPA_HDW_LeftWall,AREA
+    CMSEL,A,COMPA_HDW_RightWall
+    CM,COMPA_HDW_RightWall,AREA
     ASEL,U,AREA,,ALL
   *else
     AL,L21,L7,L19,L16
@@ -454,8 +454,8 @@ KP32 = KPMaxD+32
     *else
       AL,L27,L26,L23,L7,L25
     *endif
-    CMSEL,A,COMPA_HDW_LeftWall
-    CM,COMPA_HDW_LeftWall,AREA
+    CMSEL,A,COMPA_HDW_RightWall
+    CM,COMPA_HDW_RightWall,AREA
     ASEL,U,AREA,,ALL
   *endif
 
@@ -466,8 +466,8 @@ KP32 = KPMaxD+32
     *else
       AL,L30,L29,L29b,L24,L10,L28
     *endif
-    CMSEL,A,COMPA_HDW_RightWall
-    CM,COMPA_HDW_RightWall,AREA
+    CMSEL,A,COMPA_HDW_LeftWall
+    CM,COMPA_HDW_LeftWall,AREA
   *else
     AL,L22,L10,L20,L17
     *if,GEO_HDW_endH,gt,0,then
@@ -475,18 +475,9 @@ KP32 = KPMaxD+32
     *else
       AL,L30,L29,L24,L10,L28
     *endif
-    CMSEL,A,COMPA_HDW_RightWall
-    CM,COMPA_HDW_RightWall,AREA
+    CMSEL,A,COMPA_HDW_LeftWall
+    CM,COMPA_HDW_LeftWall,AREA
   *endif
-
-  CMSEL,S,COMPA_HDW_LeftWall
-  LSLA,S
-  KSLL,S
-  CSSLICEXZ,Eff_GalleryHeight
-  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-    CSSLICEXY,zFlatTop
-  *endif
-  CM,COMPA_HDW_LeftWall,AREA
 
   CMSEL,S,COMPA_HDW_RightWall
   LSLA,S
@@ -496,6 +487,15 @@ KP32 = KPMaxD+32
     CSSLICEXY,zFlatTop
   *endif
   CM,COMPA_HDW_RightWall,AREA
+
+  CMSEL,S,COMPA_HDW_LeftWall
+  LSLA,S
+  KSLL,S
+  CSSLICEXZ,Eff_GalleryHeight
+  *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+    CSSLICEXY,zFlatTop
+  *endif
+  CM,COMPA_HDW_LeftWall,AREA
 
   CMSEL,S,COMPA_HDW_RightWall
   CMSEL,A,COMPA_HDW_LeftWall
