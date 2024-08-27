@@ -315,7 +315,22 @@ TUNNEL_V2_HDWBUILDCM
 !!                                                                                                !!
 !! 3.4  Split corbels                                                                             !!
 !!                                                                                                !!
-TUNNEL_V2_SMCORBEL
+asel,none
+cm , COMPA_ROOF_leftCorbel   , area
+cm , COMPA_ROOF_rightCorbel  , area
+cm , COMPA_ROOF_flat         , area
+cm , COMPA_FLOOR_leftCorbel  , area
+cm , COMPA_FLOOR_rightCorbel , area
+cm , COMPA_FLOOR_flat        , area
+cm , COMPA_WALL_topCorbel    , area
+cm , COMPA_WALL_botCorbel    , area
+cm , COMPA_WALL_flat         , area
+
+*if,GEO_CORB_status,GE,1,THEN
+  TUNNEL_V2_SMCORBEL
+*endif
+
+allsel
 
 
 !!                                                                                                !!
