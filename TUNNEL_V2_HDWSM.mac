@@ -5,8 +5,8 @@
 ! Exported solid model components:
 ! COMPA_HDW_BackBeam
 ! COMPA_HDW_BotBeam
-! COMPA_HDW_ColLeft
-! COMPA_HDW_ColRight
+! COMPA_HDW_leftColumn
+! COMPA_HDW_rightColumn
 ! COMPA_HDW_Columns
 ! COMPA_HDW_Footing
 ! COMPA_HDW_LeftWall
@@ -420,19 +420,19 @@ KP32 = KPMaxD+32
     a,KP1,KP27,KP17,KP22,KP19,KP10
     csslicexz,GEO_TUN_effH
     csslicexz,0
-    cmsel,a,COMPA_HDW_ColLeft
-    cm,COMPA_HDW_ColLeft,area
+    cmsel,a,COMPA_HDW_leftColumn
+    cm,COMPA_HDW_leftColumn,area
 
     asel,none
     a,KP4,KP29,KP18,KP23,KP20,KP11
     csslicexz,GEO_TUN_effH
     csslicexz,0
-    cmsel,a,COMPA_HDW_ColRight
-    cm,COMPA_HDW_ColRight,area
+    cmsel,a,COMPA_HDW_rightColumn
+    cm,COMPA_HDW_rightColumn,area
 
     cmsel,s,COMPA_HDW_Columns
-    cmsel,a,COMPA_HDW_ColLeft
-    cmsel,a,COMPA_HDW_ColRight
+    cmsel,a,COMPA_HDW_leftColumn
+    cmsel,a,COMPA_HDW_rightColumn
     cm,COMPA_HDW_Columns,area
     asel,none
   *endif
