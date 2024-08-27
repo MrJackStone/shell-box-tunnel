@@ -11,6 +11,7 @@ cm , COMPL_pileInt , line
 
 deltaZ = GEO_TUN_length/(GEO_PILE_EXT_count-1)
 
+! Create piles beneath external walls
 *do,extWall,1,2,1
 
   xWall = (extWall-1)*GEO_TUN_totEffW
@@ -42,6 +43,7 @@ deltaZ = GEO_TUN_length/(GEO_PILE_EXT_count-1)
 *enddo
 cm,COMPL_pileExt,line
 
+! Create piles beneath internal walls
 *if,GEO_TUN_modules,gt,1,then
   lsel,none
   deltaZ = GEO_TUN_length/(GEO_PILE_INT_count-1)
@@ -76,7 +78,9 @@ cm,COMPL_pileExt,line
   cm,COMPL_pileInt,line
 *endif
 
+! Create piles beneath headwalls
 *if,GEO_HDW_status,eq,1,then
+
   cmsel,s,COMPA_HDW_Footing
   lsla,s
   cmsel,s,COMPA_HDW_walls
@@ -129,6 +133,9 @@ cm,COMPL_pileExt,line
       cm,COMPK_pileTop
     *enddo
   *enddo
+
+  TUNNEL_V2_HDWBUILDCM
+
 *endif
 
 cmsel , s , COMPL_pileExt
