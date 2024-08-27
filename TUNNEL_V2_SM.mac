@@ -281,39 +281,30 @@ ALLSEL
 !!                                                                                                !!
 !! 3.3  Headwalls                                                                                 !!
 !!                                                                                                !!
-asel,none
-cm , COMPA_HDW_BackBeam  , AREA
-cm , COMPA_HDW_BotBeam   , AREA
-cm , COMPA_HDW_TopBeam   , AREA
-cm , COMPA_HDW_Walls     , AREA
-cm , COMPA_HDW_RightWall , AREA
-cm , COMPA_HDW_LeftWall  , AREA
-cm , COMPA_HDW_Footing   , AREA
-cm , COMPA_HDW_Stiffener , AREA
-cm , COMPA_HDW_Slab      , AREA
-cm , COMPA_HDW_ColLeft   , area
-cm , COMPA_HDW_ColRight  , area
-cm , COMPA_HDW_Columns   , area
+*get,parType,parm,GEO_HDW_status,type
 
-*get,parType,PARM,GEO_HDW_status,TYPE
 *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-  GEO_HDW_stiffXOff=GEO_HDW_slabStfWidth/COS(GEO_InletRadians)
-  CMSEL,S,COMPA_Floor
-  CSSLICEYZ,GEO_HDW_stiffXOff
-  CSSLICEYZ,GEO_TUN_totEffW-GEO_HDW_stiffXOff
-  CM,COMPA_Floor,AREA
-  /color,CM,LGRA,COMPA_Floor
+
+  cmsel,s,COMPA_Floor
+  cssliceyz,GEO_HDW_stiffXOff
+  cssliceyz,GEO_TUN_totEffW-GEO_HDW_stiffXOff
+  cm,COMPA_Floor,area
+
+  /color,cm,lgra,COMPA_Floor
   cmsel,s,COMPA_tunnel
   cmsel,a,COMPA_floor
   cm,COMPA_Tunnel,area
   allsel
+
   TUNNEL_V2_HDWSM , CS_Tunnel    , CS_HDW_LeftWallEnd , CS_HDW_RightWallEnd
   TUNNEL_V2_HDWSM , CS_RevTunnel , CS_HDW_LeftWallBeg , CS_HDW_RightWallBeg
+
   cmsel,s,COMPA_Headwalls
   lsla,s
   ksll,s
   nummrg,kp
   csys,CS_Tunnel
+
 *endif
 allsel
 
