@@ -250,13 +250,13 @@ GEO_corbelYOff_BOT = GEO_CORB_height+(GEO_FLOOR_thk/2)+floor_yProjection
 *if,GEO_ROOF_type,eq,1,then
   GEO_ROOF_wallConnection=1
 
-  GEO_girderCount=NINT((GEO_TUN_length/GEO_ROOF_precastWidth)-0.5)
-  remLength=GEO_TUN_length-(GEO_girderCount*GEO_ROOF_precastWidth)
-  extrmbc=GEO_ROOF_precastWidth+(remLength/2)
+  GEO_girderCount = nint((GEO_TUN_length/GEO_ROOF_precastWidth)-0.5)
+  remLength       = GEO_TUN_length-(GEO_girderCount*GEO_ROOF_precastWidth)
+  extrmbc         = GEO_ROOF_precastWidth+(remLength/2)
 
-  *del,GEO_girderZ,,nopr
-  *dim,GEO_girderZ,array,GEO_girderCount-1
-  *vfill,GEO_girderZ,ramp,extrmbc,GEO_ROOF_precastWidth
+  *del   , GEO_girderZ ,       , nopr
+  *dim   , GEO_girderZ , array , GEO_girderCount-1
+  *vfill , GEO_girderZ , ramp  , extrmbc           , GEO_ROOF_precastWidth
 *endif
 
 ! Check corbel status and pinned roof status
