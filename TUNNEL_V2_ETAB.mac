@@ -43,9 +43,24 @@
 !    U?_k    -  dead + live loads, characteristic values
 !    U?_frq  -  SLS frequent combination (uses PSI1)
 
+! Soil pressures: -----------------------------  4
+! SIGY_gk   SIGY_qk   SIGY_k    SIGY_a
+!
+! Legend:
+!    SIGY_?? -  sigma (normal stress) in the Y direction
+!    SIGY_gk -  dead loads, characteristic value
+!    SIGY_qk -  live loads, characteristic value
+!    SIGY_k  -  dead + live loads, characteristic values
+!    SIGY_a  -  added pressure (total - dead)
+!
+! Note:
+!    SIGY_qk seems to be useless. Because of nonlinear effects,
+!    the best way to calculate added pressure is by subtracting
+!    dead load (g) pressures from total pressure (g+k).
+
 ! NOTE: all characteristic values (k) include impact coefficient
 
-! TOTAL element table count: ----------------- 81
+! TOTAL element table count: ----------------- 85
 
 
 /post1
@@ -156,6 +171,20 @@ sadd   , 'UZ_frq' , 'UZ_gk'  , 'UZ_qk' , 1             , LOAD_psi1
 etable , 'UZ_g'   , eras
 etable , 'UZ_d'   , eras
 etable , 'UZ_q'   , eras
+
+
+!! Soil pressure                                                                                  !!
+Nmm2kNm = 1e-6
+
+sadd , 'SIGY_gk' , 'UY_gk'  ,           , MAT_SOIL_stiffness*Nmm2kNm*(-1)
+sadd , 'SIGY_qk' , 'UY_qk'  ,           , MAT_SOIL_stiffness*Nmm2kNm*(-1)
+sadd , 'SIGY_k'  , 'UY_k'   ,           , MAT_SOIL_stiffness*Nmm2kNm*(-1)
+sadd , 'SIGY_a'  , 'SIGY_k' , 'SIGY_gk' , 1                               , -1
+
+smax , 'SIGY_gk' , 'SIGY_gk' , 'ZEROS'
+smax , 'SIGY_qk' , 'SIGY_qk' , 'ZEROS'
+smax , 'SIGY_k'  , 'SIGY_k'  , 'ZEROS'
+smax , 'SIGY_a'  , 'SIGY_a'  , 'ZEROS'
 
 
 !! Average results by performing convolution                                                      !!
