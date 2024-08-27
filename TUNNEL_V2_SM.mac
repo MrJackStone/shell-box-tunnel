@@ -311,6 +311,7 @@ cm , COMPA_HDW_1               , area  $  cm , COMPA_HDW_2               , area
 cm , COMPA_HDW1_backBeam       , area  $  cm , COMPA_HDW2_backBeam       , area
 cm , COMPA_HDW1_botBeam        , area  $  cm , COMPA_HDW2_botBeam        , area
 cm , COMPA_HDW1_topBeam        , area  $  cm , COMPA_HDW2_topBeam        , area
+cm , COMPA_HDW1_slab           , area  $  cm , COMPA_HDW2_slab           , area
 
 cm , COMPA_HDW2_leftWall       , area  $  cm , COMPA_HDW2_rightWall      , area
 cm , COMPA_HDW2_leftFoot       , area  $  cm , COMPA_HDW2_rightFoot      , area
