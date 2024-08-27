@@ -49,82 +49,82 @@ csys,CS_Tunnel
 
 !! 3.1.1  Draw areas                                                                              !!
 ! First wall
-xVal=0
+xVal = 0
 
-KCounter=1
-KP1=KCounter
-KP2=KCounter+1
-KP3=KCounter+2
-KP4=KCounter+3
-KCounter=KP4+1
-KTopBeginning=KP4
+KCounter      = 1
+KP1           = KCounter
+KP2           = KCounter+1
+KP3           = KCounter+2
+KP4           = KCounter+3
+KCounter      = KP4+1
+KTopBeginning = KP4
 
-K,KP1,xVal,0,0
-K,KP2,xVal,0,GEO_TUN_length
-K,KP3,xVal,Eff_GalleryHeight,GEO_TUN_length
-K,KP4,xVal,Eff_GalleryHeight,0
+k , KP1 , xVal , 0                 , 0
+k , KP2 , xVal , 0                 , GEO_TUN_length
+k , KP3 , xVal , Eff_GalleryHeight , GEO_TUN_length
+k , KP4 , xVal , Eff_GalleryHeight , 0
 
-LSEL,U,LINE,,ALL
-L,KP1,KP2
-*get,L1,LINE,0,NUM,MAX
-L,KP2,KP3
-*get,L2,LINE,0,NUM,MAX
-L,KP3,KP4
-*get,L3,LINE,0,NUM,MAX
-L,KP4,KP1
-*get,L4,LINE,0,NUM,MAX
+lsel,none
+l,KP1,KP2
+*get,L1,line,0,num,max
+l,KP2,KP3
+*get,L2,line,0,num,max
+l,KP3,KP4
+*get,L3,line,0,num,max
+l,KP4,KP1
+*get,L4,line,0,num,max
 
-AL,L1,L2,L3,L4
+al,L1,L2,L3,L4
 
 allsel
 
 ! Inner walls, floors, and ceilings
 *do,GalleryModuleIndex,1,GEO_TUN_modules,1
 
-  KPA=KP(xVal,0,0)
-  KPB=KP(xVal,0,GEO_TUN_length)
-  KPC=KP(xVal,Eff_GalleryHeight,GEO_TUN_length)
-  KPD=KP(xVal,Eff_GalleryHeight,0)
+  KPA = kp(xVal,0,0)
+  KPB = kp(xVal,0,GEO_TUN_length)
+  KPC = kp(xVal,Eff_GalleryHeight,GEO_TUN_length)
+  KPD = kp(xVal,Eff_GalleryHeight,0)
 
-  KSEL,S,KP,,KPA
-  KSEL,A,KP,,KPB
-  KSEL,A,KP,,KPC
-  KSEL,A,KP,,KPD
-  CM,LastKeypoints,KP
+  ksel , s , kp ,  , KPA
+  ksel , a , kp ,  , KPB
+  ksel , a , kp ,  , KPC
+  ksel , a , kp ,  , KPD
+  cm,LastKeypoints,kp
 
-  xVal=xVal+Eff_GalleryWidth
+  xVal = xVal+Eff_GalleryWidth
 
-  KP1=KCounter
-  KP2=KCounter+1
-  KP3=KCounter+2
-  KP4=KCounter+3
-  KCounter=KP4+1
+  KP1      = KCounter
+  KP2      = KCounter+1
+  KP3      = KCounter+2
+  KP4      = KCounter+3
+  KCounter = KP4+1
 
-  KSEL,U,KP,,ALL
-  K,KP1,xVal,0,0
-  K,KP2,xVal,0,GEO_TUN_length
-  K,KP3,xVal,Eff_GalleryHeight,GEO_TUN_length
-  K,KP4,xVal,Eff_GalleryHeight,0
-  CM,NewKeypoints,KP
+  ksel,none
+  K , KP1 , xVal , 0                 , 0
+  K , KP2 , xVal , 0                 , GEO_TUN_length
+  K , KP3 , xVal , Eff_GalleryHeight , GEO_TUN_length
+  K , KP4 , xVal , Eff_GalleryHeight , 0
+  cm,NewKeypoints,kp
 
-  LSEL,U,LINE,,ALL
+  lsel,none
   L,KP1,KP2
-  *get,L1,LINE,0,NUM,MAX
-  L,KP2,KP3
-  *get,L2,LINE,0,NUM,MAX
-  L,KP3,KP4
-  *get,L3,LINE,0,NUM,MAX
-  L,KP4,KP1
-  *get,L4,LINE,0,NUM,MAX
-  CM,NewLines,LINE
+  *get,L1,LINE,0,num,max
+  l,KP2,KP3
+  *get,L2,LINE,0,num,max
+  l,KP3,KP4
+  *get,L3,LINE,0,num,max
+  l,KP4,KP1
+  *get,L4,LINE,0,num,max
+  cm,NewLines,line
 
-  AL,L1,L2,L3,L4
+  al,L1,L2,L3,L4
 
-  CMSEL,S,LastKeypoints
-  LSLK,S,1
-  CM,LastLines,LINE
+  cmsel,s,LastKeypoints
+  lslk,s,1
+  cm,LastLines,line
 
-  LSEL,R,LOC,Y,0
+  lsel,r,loc,y,0
   *get,LA,LINE,0,NUM,MIN
   CMSEL,S,LastLines
   LSEL,R,LOC,Z,GEO_TUN_length
@@ -136,26 +136,26 @@ allsel
   LSEL,R,LOC,Z,0
   *get,LD,LINE,0,NUM,MIN
 
-  CMSEL,S,NewKeypoints
-  CMSEL,A,LastKeypoints
+  cmsel , s , NewKeypoints
+  cmsel , a , LastKeypoints
 
-  LSEL,U,LINE,,ALL
-  L,KP1,KPA
-  *get,L5,LINE,0,NUM,MAX
-  L,KP2,KPB
-  *get,L6,LINE,0,NUM,MAX
-  L,KP3,KPC
-  *get,L7,LINE,0,NUM,MAX
-  L,KP4,KPD
-  *get,L8,LINE,0,NUM,MAX
-  CM,TransLines,LINE
+  lsel,none
+  l,KP1,KPA
+  *get,L5,line,0,num,max
+  l,KP2,KPB
+  *get,L6,line,0,num,max
+  l,KP3,KPC
+  *get,L7,line,0,num,max
+  l,KP4,KPD
+  *get,L8,line,0,num,max
+  cm,TransLines,line
 
-  CMSEL,S,NewLines
-  CMSEL,A,LastLines
-  CMSEL,A,TransLines
+  cmsel,s,NewLines
+  cmsel,a,LastLines
+  cmsel,a,TransLines
 
-  AL,LA,L6,L1,L5
-  AL,L3,L7,LC,L8
+  al,LA,L6,L1,L5
+  al,L3,L7,LC,L8
 
 *enddo
 
@@ -475,7 +475,7 @@ zPT3         = zPT4-(depthFromEnd/TAN(GEO_EMB_slopeEnd))
 *afun,RAD
 
 ! Draw embankment contour
-LSEL,U,LINE,,ALL
+lsel,none
 *get,KPMax,KP,,NUM,MAXD
 KPT1 = KPMax+1
 KPT2 = KPMax+2
@@ -555,7 +555,7 @@ TAKEPIC,'SM_Tunnel'
 
 ! Capture schematic side view (shows railway lines and embankment contour)
 ALLSEL
-KSEL,U,KP,,ALL
+ksel,none
 /view,1,-1,0,0
 /pnum,AREA,1
 /number,1
