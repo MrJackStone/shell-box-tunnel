@@ -218,7 +218,7 @@ cmsel,u,COMPA_HDW_1
 cm,COMPA_HDW_2,area
 
 ! Split each structural part component
-cmRootCount = 11
+cmRootCount = 12
 *del,cmname_roots,,nopr
 *dim,cmname_roots,string,248,cmRootCount
 
@@ -233,12 +233,13 @@ cmname_roots(1,8)  = 'rightColumn'
 cmname_roots(1,9)  = 'backBeam'
 cmname_roots(1,10) = 'botBeam'
 cmname_roots(1,11) = 'topBeam'
+cmname_roots(1,12) = 'slab'
 
 *do,nthCM,1,cmRootCount,1
   root = cmname_roots(1,nthCM)
   *do,nthHDW,1,2,1
     cmsel,s,COMPA_HDW_%root%
     cmsel,r,COMPA_HDW_%nthHDW%
-    cm,COMPA_HDW1_%root%,area
+    cm,COMPA_HDW%nthHDW%_%root%,area
   *enddo
 *enddo
