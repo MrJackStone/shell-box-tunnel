@@ -34,6 +34,11 @@ cm,COMPA_InnerWalls,area
   cm,COMPA_IWALL_%nthWall%,area
 *enddo
 
+! Floor slab
+asel,s,loc,y,0
+asel,r,loc,z,0,GEO_TUN_length
+cm,COMPA_floor,area
+
 ! Roof struts
 asel,none
 *if,GEO_ROOF_gapStatus,eq,1,and,GEO_ROOF_gapStrutCount,gt,0,then
@@ -42,11 +47,6 @@ asel,none
 *endif
 cm,COMPA_Struts,area
 
-! Floor slab
-asel,s,loc,y,0
-asel,r,loc,z,0,GEO_TUN_length
-cm,COMPA_floor,area
-
 ! Roof slab
 asel,s,loc,y,GEO_TUN_effH
 asel,r,loc,z,0,GEO_TUN_length
@@ -54,12 +54,27 @@ asel,r,loc,x,0,GEO_TUN_totEffW
 cmsel,u,COMPA_Struts
 cm,COMPA_Roof,area
 
+! Roof precast girders
+*if,GEO_ROOF_type,eq,1,then
+  zi = 0
+  *do,nthGirder,1,GEO_girderCount-1,1
+    zf = GEO_girderZ(nthGirder)
+    cmsel,s,COMPA_roof
+    asel,r,loc,z,zi,zf
+    cm,COMPA_RG%nthGirder%,area
+    zi = zf
+  *enddo
+  cmsel,s,COMPA_roof
+  asel,r,loc,z,zi,GEO_TUN_Length
+  cm,COMPA_RG%GEO_girderCount%,area
+*endif
+
 ! Tunnel
-cmsel , s , COMPA_Walls
-cmsel , a , COMPA_Floor
-cmsel , a , COMPA_Roof
-cmsel , a , COMPA_Struts
-cm , COMPA_Tunnel , area
+cmsel , s , COMPA_walls
+cmsel , a , COMPA_floor
+cmsel , a , COMPA_roof
+cmsel , a , COMPA_struts
+cm,COMPA_Tunnel,area
 
 lsla,s
 ksll,s

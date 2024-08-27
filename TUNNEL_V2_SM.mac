@@ -226,7 +226,7 @@ TUNNEL_V2_BUILDCM
   cmsel,s,COMPA_Tunnel
   cmsel,u,COMPA_Roof
   *do,nthSlice,1,GEO_girderCount-1,1
-    z=GEO_girderZ(nthSlice)
+    z = GEO_girderZ(nthSlice)
     csslicexy,z
   *enddo
 
@@ -235,7 +235,7 @@ TUNNEL_V2_BUILDCM
   ksll,s
   wpcsys,,CS_Tunnel
   *do,nthSlice,1,GEO_girderCount-1,1
-    z=GEO_girderZ(nthSlice)
+    z = GEO_girderZ(nthSlice)
     wpoffs,,,z
     asbw,all,sepo,delete
     wpoffs,,,-z
@@ -309,8 +309,6 @@ cm , COMPA_WALL_flat         , area
   TUNNEL_V2_SMCORBEL
 *endif
 
-allsel
-
 
 !!                                                                                                !!
 !! 3.5  Approach slabs                                                                            !!
@@ -324,28 +322,7 @@ cm,COMPA_approach,area
 
 
 !!                                                                                                !!
-!! 3.6  Build roof girder components                                                              !!
-!!                                                                                                !!
-*if,GEO_ROOF_type,eq,1,then
-  zi = 0
-  *do,nthGirder,1,GEO_girderCount-1,1
-    zf = GEO_girderZ(nthGirder)
-    cmsel,s,COMPA_Roof
-    asel,r,loc,z,zi,zf
-    cm,COMPA_RG%nthGirder%,area
-    zi = zf
-  *enddo
-
-  cmsel,s,COMPA_Roof
-  asel,r,loc,z,zi,GEO_TUN_Length
-  cm,COMPA_RG%GEO_girderCount%,area
-
-  allsel
-*endif
-
-
-!!                                                                                                !!
-!! 3.7  Pin roof to walls                                                                         !!
+!! 3.6  Pin roof to walls                                                                         !!
 !!                                                                                                !!
 *if,GEO_ROOF_wallConnection,eq,1,then
 
@@ -374,13 +351,13 @@ cm,COMPA_approach,area
 
 
 !!                                                                                                !!
-!! 3.8  Open inner walls                                                                          !!
+!! 3.7  Open inner walls                                                                          !!
 !!                                                                                                !!
 TUNNEL_V2_SMIWALL
 
 
 !!                                                                                                !!
-!! 3.9  Piles                                                                                     !!
+!! 3.8  Piles                                                                                     !!
 !!                                                                                                !!
 *if,GEO_PILE_status,eq,1,then
   TUNNEL_V2_SMPILES
@@ -388,7 +365,7 @@ TUNNEL_V2_SMIWALL
 
 
 !!                                                                                                !!
-!! 3.10  Area direction                                                                           !!
+!! 3.9  Area direction                                                                            !!
 !!                                                                                                !!
 cmsel , s , COMPA_Floor
 aryori,-1
@@ -424,7 +401,7 @@ allsel
 
 
 !!                                                                                                !!
-!! 3.11  Embankment                                                                               !!
+!! 3.10  Embankment                                                                               !!
 !!                                                                                                !!
 ! NOTE: embankment is drawn for display purposes only.
 CSYS,CS_Tunnel
@@ -474,7 +451,7 @@ CM,COMPL_Embankment,LINE
 
 
 !!                                                                                                !!
-!! 3.12  Railway lines                                                                            !!
+!! 3.11  Railway lines                                                                            !!
 !!                                                                                                !!
 ! NOTE: railwaylines (indicated as arrows) are drawn for display purposes only.
 
@@ -510,7 +487,7 @@ CM,COMPL_Railway,LINE
 
 
 !!                                                                                                !!
-!! 3.13  Capture images                                                                           !!
+!! 3.12  Capture images                                                                           !!
 !!                                                                                                !!
 /color , CM , DGRA , COMPA_Walls
 /color , CM , LGRA , COMPA_Floor
