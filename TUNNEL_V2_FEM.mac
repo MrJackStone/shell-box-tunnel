@@ -732,16 +732,6 @@ VIEW1W
 /view,1,1,1,1
 EPLOT
 
-! *do,nthCM,1,cmTunnelCount,1
-!   cmName = cmnames_tunnel(1,nthCM)
-!   cmpatoe,,cmName
-! *enddo
-!
-! *do,nthCM,1,cmHeadwallCount,1
-!   cmName = cmnames_headwalls(1,nthCM)
-!   cmpatoe,,cmName
-! *enddo
-
 cmEsysCount=31
 
 *del,cmnames_esys,,nopr
