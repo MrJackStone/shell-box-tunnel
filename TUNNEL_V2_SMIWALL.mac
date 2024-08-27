@@ -1,0 +1,62 @@
+! TUNNEL_V2_SMIWALL
+
+
+asel,none
+cm,COMPA_bBeam,area
+cm,COMPA_tBeam,area
+cm,COMPA_columns,area
+
+*if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
+  csys,CS_Tunnel
+
+  *do,nthWall,1,GEO_IWALL_count,1
+    wallX = GEO_IWALL_x_coords(nthWall)
+    cmsel,s,COMPA_InnerWalls
+    asel,r,loc,x,wallX
+    lsla,s
+    ksll,s
+    cm,COMPA_temp,area
+
+    k_1 = kp(wallX , 0            , 0)
+    k_2 = kp(wallX , 0            , GEO_TUN_length)
+    k_3 = kp(wallX , GEO_TUN_effH , 0)
+    kwplan,1,k_1,k_2,k_3
+
+    *do,nthOp,1,GEO_IWALL_columnCount-1,1
+      xOp = GEO_TUN_ozCenter(nthOp)
+      asel,u,area,,all
+      blc5,xOp,GEO_TUN_oyCenter,GEO_TUN_opW,GEO_TUN_opH
+      *get,aOP,area,,num,min
+      cmsel,s,COMPA_temp
+      asel,a,area,,aOP
+      asba,COMPA_temp,aOP,,delete,delete
+      cm,COMPA_temp,area
+    *enddo
+
+    cmsel,s,COMPA_temp
+    safe_cmsel,'a','COMPA_InnerWalls'
+    cm,COMPA_InnerWalls,area
+  *enddo
+
+  cmsel,s,COMPA_InnerWalls
+  lsla,s
+  ksll,s
+  csslicexz,GEO_IWALL_botBeamHeight
+  csslicexz,GEO_TUN_effH-GEO_IWALL_topBeamHeight
+  nummrg,kp
+  cm,COMPA_InnerWalls,area
+  cmsel,a,COMPA_Walls,area
+  cm,COMPA_Walls,area
+
+  cmsel,s,COMPA_InnerWalls
+  asel,r,loc,y,0,GEO_IWALL_botBeamHeight
+  cm,COMPA_bBeam,area
+  cmsel,s,COMPA_InnerWalls
+  asel,r,loc,y,GEO_TUN_effH-GEO_IWALL_topBeamHeight,GEO_TUN_effH
+  cm,COMPA_tBeam,area
+  cmsel,s,COMPA_InnerWalls
+  cmsel,u,COMPA_bBeam
+  cmsel,u,COMPA_tBeam
+  cm,COMPA_Columns,area
+  TUNNEL_V2_BUILDCM
+*endif
