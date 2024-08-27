@@ -328,19 +328,19 @@ TUNNEL_V2_SMAPPSLAB
 !! 3.6  Build roof girder components                                                              !!
 !!                                                                                                !!
 *if,GEO_ROOF_type,eq,1,then
-  zi=0
+  zi = 0
   *do,nthGirder,1,GEO_girderCount-1,1
-    zf=GEO_girderZ(nthGirder)
+    zf = GEO_girderZ(nthGirder)
     cmsel,s,COMPA_Roof
     asel,r,loc,z,zi,zf
-    compName=STRCAT('COMPA_RG',CHRVAL(nthGirder))
-    cm,%compName%,area
-    zi=zf
+    cm,COMPA_RG%nthGirder%,area
+    zi = zf
   *enddo
+
   cmsel,s,COMPA_Roof
   asel,r,loc,z,zi,GEO_TUN_Length
-  compName=STRCAT('COMPA_RG',CHRVAL(GEO_girderCount))
-  cm,%compName%,area
+  cm,COMPA_RG%GEO_girderCount%,area
+
   allsel
 *endif
 
