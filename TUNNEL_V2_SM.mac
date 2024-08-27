@@ -321,7 +321,12 @@ TUNNEL_V2_SMCORBEL
 !!                                                                                                !!
 !! 3.5  Approach slabs                                                                            !!
 !!                                                                                                !!
-TUNNEL_V2_SMAPPSLAB
+*if,GEO_APR_status,eq,1,then
+  TUNNEL_V2_SMAPPSLAB
+*else
+  asel,u,area,,all
+  cm,COMPA_approach,area
+*endif
 
 
 !!                                                                                                !!
