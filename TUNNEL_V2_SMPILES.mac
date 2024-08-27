@@ -1,0 +1,138 @@
+! TUNNEL_V2_SMPILES
+
+
+lsel,none
+ksel,none
+
+cm , COMPK_pileTop , kp
+cm , COMPK_pileBot , kp
+cm , COMPL_pileExt , line
+cm , COMPL_pileInt , line
+
+deltaZ = GEO_TUN_length/(GEO_PILE_EXT_count-1)
+
+*do,extWall,1,2,1
+
+  xWall = (extWall-1)*GEO_TUN_totEffW
+  z     = 0
+
+  *do,nthPile,1,GEO_PILE_EXT_count,1
+    *get,KMX,kp,,num,maxd
+    K_top = KMX+1
+    K_bot = KMX+2
+    k,K_top,xWall,0,z
+    csys,0
+    x = kx(K_top)
+    y = ky(K_top)
+    z = kz(K_top)
+    k,K_bot,x,y-GEO_PILE_length,z
+    csys,CS_Tunnel
+    l,K_top,K_bot
+
+    ksel,s,kp,,K_top
+    cmsel,a,COMPK_pileTop
+    cm,COMPK_pileTop,kp
+
+    ksel,s,kp,,K_bot
+    cmsel,a,COMPK_pileBot
+    cm,COMPK_pileBot,kp
+
+    z = z+deltaZ
+  *enddo
+*enddo
+cm,COMPL_pileExt,line
+
+*if,GEO_TUN_modules,gt,1,then
+  lsel,none
+  deltaZ = GEO_TUN_length/(GEO_PILE_INT_count-1)
+  *do,innWall,1,GEO_TUN_modules-1,1
+    xWall = innWall*GEO_TUN_effW
+    z     = 0
+
+    *do,nthPile,1,GEO_PILE_EXT_count,1
+      *get,KMX,kp,,num,maxd
+      K_top = KMX+1
+      K_bot = KMX+2
+      k,K_top,xWall,0,z
+      csys,0
+      x = kx(K_top)
+      y = ky(K_top)
+      z = kz(K_top)
+      k,K_bot,x,y-GEO_PILE_length,z
+      csys,CS_Tunnel
+      l,K_top,K_bot
+
+      ksel,s,kp,,K_top
+      cmsel,a,COMPK_pileTop
+      cm,COMPK_pileTop,kp
+
+      ksel,s,kp,,K_bot
+      cmsel,a,COMPK_pileBot
+      cm,COMPK_pileBot,kp
+
+      z = z+deltaZ
+    *enddo
+  *enddo
+  cm,COMPL_pileInt,line
+*endif
+
+*if,GEO_HDW_status,eq,1,then
+  cmsel,s,COMPA_HDW_Footing
+  lsla,s
+  cmsel,s,COMPA_HDW_walls
+  lsla,r
+  ksll,s
+  cm,COMPL_ref,line
+  cm,COMPK_ref,kp
+
+  *get,lc,line,,count
+  lnum=0
+
+  *do,nthLine,1,lc,1
+    cmsel,s,COMPL_ref
+    lnum = lsnext(lnum)
+
+    *get,llen,line,lnum,leng
+    pileCount = nint(0.5+(llen/(GEO_TUN_length/GEO_PILE_EXT_count)))
+    ldiv,lnum,,,pileCount+1,1
+
+    cmsel,u,COMPK_ref
+    cmsel,u,COMPL_ref
+    ldele,all,,,0
+    cm,COMPK_temp,kp
+
+    *get,kc,kp,,count
+    kpnum = 0
+
+    *do,nthKP,1,kc,1
+      cmsel,s,COMPK_temp
+      kpnum = kpnext(kpnum)
+
+      csys,0
+      *get,kmxd,kp,,num,maxd
+      K_bot = kmxd+1
+      k,K_bot,kx(kpnum),ky(kpnum)-GEO_PILE_length,kz(kpnum)
+
+      lsel,none
+      l,kpnum,K_bot
+      cmsel,a,COMPL_pileExt
+      cm,COMPL_pileExt,line
+
+      csys,CS_Tunnel
+
+      cmsel,s,COMPK_pileBot
+      ksel,a,kp,,K_bot
+      cm,COMPK_pileBot
+
+      cmsel,s,COMPK_pileTop
+      ksel,a,kp,,kpnum
+      cm,COMPK_pileTop
+    *enddo
+  *enddo
+*endif
+
+cmsel , s , COMPL_pileExt
+cmsel , a , COMPL_pileInt
+ksll,s
+cm , COMPL_piles , line
+cm , COMPK_piles , kp
