@@ -5,27 +5,27 @@ csbackup
 csys,CS_tunnel
 
 ! Tunnel walls
-asel,s,loc,z,0,GEO_TUN_length
-asel,u,loc,z,0
-asel,u,loc,z,GEO_TUN_length
-asel,U,LOC,Y,0
-asel,U,LOC,Y,GEO_TUN_effH
+asel , s , loc , z , 0              , GEO_TUN_length
+asel , u , loc , z , 0
+asel , u , loc , z , GEO_TUN_length
+asel , u , loc , y , 0
+asel , u , loc , y , GEO_TUN_effH
 cm,COMPA_Walls,AREA
 
 ! Left tunnel wall
-asel,R,LOC,X,0
-cm,COMPA_LeftWall,AREA
+asel,r,loc,x,0
+cm,COMPA_LeftWall,area
 
 ! Right tunnel wall
 cmsel,S,COMPA_Walls
-asel,R,LOC,X,GEO_TUN_totEffW
-cm,COMPA_RightWall,AREA
+asel,r,loc,x,GEO_TUN_totEffW
+cm,COMPA_RightWall,area
 
 ! Inner tunnel walls
-cmsel,S,COMPA_Walls
-cmsel,U,COMPA_LeftWall
-cmsel,U,COMPA_RightWall
-cm,COMPA_InnerWalls,AREA
+cmsel,s,COMPA_Walls
+cmsel,u,COMPA_LeftWall
+cmsel,u,COMPA_RightWall
+cm,COMPA_InnerWalls,area
 
 *do,nthWall,1,GEO_IWALL_count,1
   xCoord = GEO_IWALL_x_coords(nthWall)
@@ -48,22 +48,23 @@ asel,r,loc,z,0,GEO_TUN_length
 cm,COMPA_floor,area
 
 ! Roof slab
-asel,S,LOC,Y,GEO_TUN_effH
-asel,R,LOC,Z,0,GEO_TUN_length
+asel,s,loc,y,GEO_TUN_effH
+asel,r,loc,z,0,GEO_TUN_length
 asel,r,loc,x,0,GEO_TUN_totEffW
 cmsel,u,COMPA_Struts
-cm,COMPA_Roof,AREA
+cm,COMPA_Roof,area
 
 ! Tunnel
-cmsel,S,COMPA_Walls
-cmsel,A,COMPA_Floor
-cmsel,A,COMPA_Roof
-cmsel,a,COMPA_Struts
-cm,COMPA_Tunnel,AREA
-lsla,S
-ksll,S
-cm,COMPL_Tunnel,LINE
-cm,COMPK_Tunnel,KP
+cmsel , s , COMPA_Walls
+cmsel , a , COMPA_Floor
+cmsel , a , COMPA_Roof
+cmsel , a , COMPA_Struts
+cm , COMPA_Tunnel , area
+
+lsla,s
+ksll,s
+cm,COMPL_Tunnel,line
+cm,COMPK_Tunnel,kp
 
 ! Clean up
 csrestore
