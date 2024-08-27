@@ -314,51 +314,6 @@ cm , COMPA_HDW_Columns   , area
   ksll,s
   nummrg,kp
   csys,CS_Tunnel
-
-  cmsel,s,COMPA_headwalls
-  asel,r,loc,z,-1e6,0
-  cm,COMPA_HDW_1,area
-  cmsel,s,COMPA_headwalls
-  cmsel,u,COMPA_HDW_1
-  cm,COMPA_HDW_2,area
-
-  wpcsys,-1
-  wpoffs,GEO_TUN_totEffW/2
-  cswpla,CS_dummy,cart
-
-  cmsel,s,COMPA_HDW_footing
-  cmsel,r,COMPA_HDW_1
-  asel,r,loc,x,0,1e6
-  cm,COMPA_HDW1_rightFoot,area
-
-  cmsel,s,COMPA_HDW_footing
-  cmsel,r,COMPA_HDW_1
-  asel,r,loc,x,0,-1e6
-  cm,COMPA_HDW1_leftFoot,area
-
-  cmsel,s,COMPA_HDW_footing
-  cmsel,r,COMPA_HDW_2
-  asel,r,loc,x,0,1e6
-  cm,COMPA_HDW2_leftFoot,area
-
-  cmsel,s,COMPA_HDW_footing
-  cmsel,r,COMPA_HDW_2
-  asel,r,loc,x,0,-1e6
-  cm,COMPA_HDW2_rightFoot,area
-
-  ! Create components that split first/second inlets
-  *do,nthHdw,1,2,1
-    *do,nthCM,1,cmHeadwallCount,1
-      cmName = cmnames_headwalls(1,nthCM)
-      cmRoot = strsub(cmName,11,32)
-      cmNew  = 'COMPA_HDW%nthHdw%_%cmRoot%'
-      cmsel,s,%cmName%
-      cmsel,r,COMPA_HDW_%nthHdw%
-      cm,%cmNew%,area
-    *enddo
-  *enddo
-
-  csys,CS_tunnel
 *endif
 allsel
 

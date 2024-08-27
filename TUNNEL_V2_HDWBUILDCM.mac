@@ -1,0 +1,259 @@
+! TUNNEL_V2_HDWBUILDCM
+
+
+! Exported solid model selection components:
+!
+! COMPA_headwalls
+!
+! COMPA_HDW_backBeam
+! COMPA_HDW_botBeam
+! COMPA_HDW_columns
+! COMPA_HDW_footing
+! COMPA_HDW_slab
+! COMPA_HDW_stiffener
+! COMPA_HDW_topBeam
+! COMPA_HDW_walls
+!
+! COMPA_HDW_left
+! COMPA_HDW_right
+!
+! COMPA_HDW_leftWall
+! COMPA_HDW_rightWall
+! COMPA_HDW_leftFoot
+! COMPA_HDW_rightFoot
+! COMPA_HDW_leftStiffener
+! COMPA_HDW_rightStiffener
+! COMPA_HDW_leftColumn
+! COMPA_HDW_rightColumn
+!
+! COMPA_HDW_1
+! COMPA_HDW_2
+!
+! COMPA_HDW1_leftWall
+! COMPA_HDW1_rightWall
+! COMPA_HDW1_leftFoot
+! COMPA_HDW1_rightFoot
+! COMPA_HDW1_leftStiffener
+! COMPA_HDW1_rightStiffener
+! COMPA_HDW1_leftColumn
+! COMPA_HDW1_rightColumn
+! COMPA_HDW1_backBeam
+! COMPA_HDW1_botBeam
+! COMPA_HDW1_topBeam
+!
+! COMPA_HDW2_leftWall
+! COMPA_HDW2_rightWall
+! COMPA_HDW2_leftFoot
+! COMPA_HDW2_rightFoot
+! COMPA_HDW2_leftStiffener
+! COMPA_HDW2_rightStiffener
+! COMPA_HDW2_leftColumn
+! COMPA_HDW2_rightColumn
+! COMPA_HDW2_backBeam
+! COMPA_HDW2_botBeam
+
+
+!! A.  Prepare environment                                                                        !!
+asel,none
+
+cm , COMPA_HDW_1              , area
+cm , COMPA_HDW_2              , area
+cm , COMPA_HDW_left           , area
+cm , COMPA_HDW_right          , area
+cm , COMPA_HDW_leftWall       , area
+cm , COMPA_HDW_rightWall      , area
+cm , COMPA_HDW_leftFoot       , area
+cm , COMPA_HDW_rightFoot      , area
+cm , COMPA_HDW_leftStiffener  , area
+cm , COMPA_HDW_rightStiffener , area
+cm , COMPA_HDW_leftColumn     , area
+cm , COMPA_HDW_rightColumn    , area
+
+
+!! B.  Components by structural part                                                              !!
+! All headwall areas
+allsel
+cmsel,u,COMPA_tunnel
+cm,COMPA_headwalls,area
+
+! Walls
+asel,none
+csys,CS_HDW1_leftWall
+asel,a,loc,z,0
+csys,CS_HDW1_rightWall
+asel,a,loc,z,0
+csys,CS_HDW2_leftWall
+asel,a,loc,z,0
+csys,CS_HDW2_rightWall
+asel,a,loc,z,0
+cmsel,r,COMPA_headwalls
+cm,COMPA_HDW_walls,area
+
+! Slab stiffeners
+asel,none
+csys,CS_HDW1_leftWall
+asel,a,loc,z,0,GEO_HDW_slabStfWidth
+csys,CS_HDW1_rightWall
+asel,a,loc,z,0,GEO_HDW_slabStfWidth
+csys,CS_HDW2_leftWall
+asel,a,loc,z,0,GEO_HDW_slabStfWidth
+csys,CS_HDW2_rightWall
+asel,a,loc,z,0,GEO_HDW_slabStfWidth
+csys,CS_tunnel
+asel,r,loc,y,0
+cmsel,r,COMPA_headwalls
+cm,COMPA_HDW_stiffener,area
+
+! Floor slabs
+csys,CS_tunnel
+cmsel,s,COMPA_headwalls
+cmsel,u,COMPA_HDW_stiffener
+asel,r,loc,y,0
+cm,COMPA_HDW_slab,area
+
+! Footings
+csys,CS_tunnel
+cmsel,s,COMPA_headwalls
+asel,r,loc,y,-GEO_HDW_footDepth
+cm,COMPA_HDW_footing,area
+
+! Front bottom beam
+asel,none
+csys,CS_hdw1
+asel,a,loc,z,GEO_HDW_length
+csys,CS_hdw2
+asel,a,loc,z,GEO_HDW_length
+csys,CS_tunnel
+cmsel,r,COMPA_headwalls
+cm,COMPA_HDW_botBeam,area
+
+! Frame bottom beam
+asel,none
+csys,CS_hdw1
+asel,a,loc,z,0
+csys,CS_hdw2
+asel,a,loc,z,0
+csys,CS_tunnel
+asel,r,loc,y,-GEO_HDW_footDepth,0
+cmsel,r,COMPA_headwalls
+cm,COMPA_HDW_backBeam,area
+
+! Frame top beam
+asel,none
+csys,CS_hdw1
+asel,a,loc,z,0
+csys,CS_hdw2
+asel,a,loc,z,0
+csys,CS_tunnel
+asel,r,loc,y,GEO_TUN_effH,GEO_TUN_effH+GEO_FRAME_headBeamHeight
+cmsel,r,COMPA_headwalls
+cm,COMPA_HDW_topBeam,area
+
+! Frame columns
+asel,none
+csys,CS_hdw1
+asel,a,loc,z,0
+csys,CS_hdw2
+asel,a,loc,z,0
+csys,CS_tunnel
+cmsel,u,COMPA_HDW_backBeam
+cmsel,u,COMPA_HDW_topBeam
+cm,COMPA_HDW_columns,area
+
+
+!! C.  Left/right split                                                                           !!
+! First inlet
+csys,CS_hdw1
+cmsel,s,COMPA_headwalls
+asel,r,loc,x,0,1e6
+asel,r,loc,z,0,1e6
+cmpadd,'COMPA_HDW_left'
+cmsel,s,COMPA_headwalls
+asel,r,loc,x,0,-1e6
+asel,r,loc,z,0,1e6
+cmpadd,'COMPA_HDW_right'
+
+! Second inlet
+csys,CS_hdw2
+cmsel,s,COMPA_headwalls
+asel,r,loc,x,0,1e6
+asel,r,loc,z,0,1e6
+cmpadd,'COMPA_HDW_left'
+cmsel,s,COMPA_headwalls
+asel,r,loc,x,0,-1e6
+asel,r,loc,z,0,1e6
+cmpadd,'COMPA_HDW_right'
+
+! Walls
+cmsel,s,COMPA_HDW_walls
+cmsel,r,COMPA_HDW_left
+cmpadd,'COMPA_HDW_leftWall'
+
+cmsel,s,COMPA_HDW_walls
+cmsel,r,COMPA_HDW_right
+cmpadd,'COMPA_HDW_rightWall'
+
+! Footings
+cmsel,s,COMPA_HDW_footing
+cmsel,r,COMPA_HDW_left
+cmpadd,'COMPA_HDW_leftFoot'
+
+cmsel,s,COMPA_HDW_footing
+cmsel,r,COMPA_HDW_right
+cmpadd,'COMPA_HDW_rightFoot'
+
+! Slab stiffeners
+cmsel,s,COMPA_HDW_stiffener
+cmsel,r,COMPA_HDW_left
+cmpadd,'COMPA_HDW_leftStiffener'
+
+cmsel,s,COMPA_HDW_stiffener
+cmsel,r,COMPA_HDW_right
+cmpadd,'COMPA_HDW_rightStiffener'
+
+! Columns
+cmsel,s,COMPA_HDW_columns
+cmsel,r,COMPA_HDW_left
+cmpadd,'COMPA_HDW_leftColumn'
+
+cmsel,s,COMPA_HDW_columns
+cmsel,r,COMPA_HDW_right
+cmpadd,'COMPA_HDW_rightColumn'
+
+
+!! D.  1st/2nd split                                                                              !!
+csys,CS_tunnel
+
+cmsel,s,COMPA_headwalls
+asel,r,loc,z,-1e6,0
+cm,COMPA_HDW_1,area
+
+cmsel,s,COMPA_headwalls
+cmsel,u,COMPA_HDW_1
+cm,COMPA_HDW_2,area
+
+! Split each structural part component
+cmRootCount = 11
+*del,cmname_roots,,nopr
+*dim,cmname_roots,string,248,cmRootCount
+
+cmname_roots(1,1)  = 'leftWall'
+cmname_roots(1,2)  = 'rightWall'
+cmname_roots(1,3)  = 'leftFoot'
+cmname_roots(1,4)  = 'rightFoot'
+cmname_roots(1,5)  = 'leftStiffener'
+cmname_roots(1,6)  = 'rightStiffener'
+cmname_roots(1,7)  = 'leftColumn'
+cmname_roots(1,8)  = 'rightColumn'
+cmname_roots(1,9)  = 'backBeam'
+cmname_roots(1,10) = 'botBeam'
+cmname_roots(1,11) = 'topBeam'
+
+*do,nthCM,1,cmRootCount,1
+  root = cmname_roots(1,nthCM)
+  *do,nthHDW,1,2,1
+    cmsel,s,COMPA_HDW_%root%
+    cmsel,r,COMPA_HDW_%nthHDW%
+    cm,COMPA_HDW1_%root%,area
+  *enddo
+*enddo
