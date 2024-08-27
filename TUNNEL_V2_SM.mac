@@ -297,7 +297,7 @@ cm , COMPA_HDW2_leftColumn     , area  $  cm , COMPA_HDW2_rightColumn    , area
 
 *get,parType,parm,GEO_HDW_status,type
 
-*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
+*if,parType,eq,0,and,GEO_HDW_status,gt,0,then
 
   cmsel,s,COMPA_Floor
   cssliceyz,GEO_HDW_stiffXOff
