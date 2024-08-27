@@ -53,24 +53,7 @@
 ! COMPA_HDW2_botBeam
 
 
-!! A.  Prepare environment                                                                        !!
-asel,none
-
-cm , COMPA_HDW_1              , area
-cm , COMPA_HDW_2              , area
-cm , COMPA_HDW_left           , area
-cm , COMPA_HDW_right          , area
-cm , COMPA_HDW_leftWall       , area
-cm , COMPA_HDW_rightWall      , area
-cm , COMPA_HDW_leftFoot       , area
-cm , COMPA_HDW_rightFoot      , area
-cm , COMPA_HDW_leftStiffener  , area
-cm , COMPA_HDW_rightStiffener , area
-cm , COMPA_HDW_leftColumn     , area
-cm , COMPA_HDW_rightColumn    , area
-
-
-!! B.  Components by structural part                                                              !!
+!! A.  Components by structural part                                                              !!
 ! All headwall areas
 allsel
 cmsel,u,COMPA_tunnel
@@ -161,7 +144,7 @@ cmsel,u,COMPA_HDW_topBeam
 cm,COMPA_HDW_columns,area
 
 
-!! C.  Left/right split                                                                           !!
+!! B.  Left/right split                                                                           !!
 ! First inlet
 csys,CS_hdw1
 cmsel,s,COMPA_headwalls
@@ -221,7 +204,7 @@ cmsel,r,COMPA_HDW_right
 cmpadd,'COMPA_HDW_rightColumn'
 
 
-!! D.  1st/2nd split                                                                              !!
+!! C.  1st/2nd split                                                                              !!
 csys,CS_tunnel
 
 cmsel,s,COMPA_headwalls

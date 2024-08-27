@@ -260,6 +260,41 @@ TUNNEL_V2_BUILDCM
 !!                                                                                                !!
 !! 3.3  Headwalls                                                                                 !!
 !!                                                                                                !!
+asel,none
+
+cm , COMPA_headwalls           , area
+cm , COMPA_HDW_backBeam        , area
+cm , COMPA_HDW_botBeam         , area
+cm , COMPA_HDW_columns         , area
+cm , COMPA_HDW_footing         , area
+cm , COMPA_HDW_slab            , area
+cm , COMPA_HDW_stiffener       , area
+cm , COMPA_HDW_topBeam         , area
+cm , COMPA_HDW_walls           , area
+cm , COMPA_HDW_left            , area
+cm , COMPA_HDW_right           , area
+
+cm , COMPA_HDW_leftWall        , area  $  cm , COMPA_HDW_rightWall       , area
+cm , COMPA_HDW_leftFoot        , area  $  cm , COMPA_HDW_rightFoot       , area
+cm , COMPA_HDW_leftStiffener   , area  $  cm , COMPA_HDW_rightStiffener  , area
+cm , COMPA_HDW_leftColumn      , area  $  cm , COMPA_HDW_rightColumn     , area
+
+cm , COMPA_HDW1_leftWall       , area  $  cm , COMPA_HDW1_rightWall      , area
+cm , COMPA_HDW1_leftFoot       , area  $  cm , COMPA_HDW1_rightFoot      , area
+cm , COMPA_HDW1_leftStiffener  , area  $  cm , COMPA_HDW1_rightStiffener , area
+cm , COMPA_HDW1_leftColumn     , area  $  cm , COMPA_HDW1_rightColumn    , area
+
+cm , COMPA_HDW_1               , area  $  cm , COMPA_HDW_2               , area
+
+cm , COMPA_HDW1_backBeam       , area  $  cm , COMPA_HDW2_backBeam       , area
+cm , COMPA_HDW1_botBeam        , area  $  cm , COMPA_HDW2_botBeam        , area
+cm , COMPA_HDW1_topBeam        , area  $  cm , COMPA_HDW2_topBeam        , area
+
+cm , COMPA_HDW2_leftWall       , area  $  cm , COMPA_HDW2_rightWall      , area
+cm , COMPA_HDW2_leftFoot       , area  $  cm , COMPA_HDW2_rightFoot      , area
+cm , COMPA_HDW2_leftStiffener  , area  $  cm , COMPA_HDW2_rightStiffener , area
+cm , COMPA_HDW2_leftColumn     , area  $  cm , COMPA_HDW2_rightColumn    , area
+
 *get,parType,parm,GEO_HDW_status,type
 
 *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
