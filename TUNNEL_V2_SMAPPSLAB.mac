@@ -1,0 +1,110 @@
+! TUNNEL_V2_SMAPPSLAB
+
+
+*if,GEO_APR_status,eq,1,then
+  CSYS,CS_Tunnel
+  *get,KMXD,KP,,NUM,MAXD
+  K1A = KMXD+1
+  K1B = KMXD+2
+  K2A = KMXD+3
+  K2B = KMXD+4
+  K3A = KMXD+5
+  K3B = KMXD+6
+  K4A = KMXD+7
+  K4B = KMXD+8
+
+  cmsel,s,COMPA_Roof
+  lsla,s
+  ksll,s
+  cm,COMPK_temp,kp
+  ksel,s,loc,x,0
+  ksel,a,loc,x,GEO_TUN_totEffW
+  cmsel,r,COMPK_temp
+  kp_L1 = kp(              0 , GEO_TUN_effH , GEO_APR_z1)
+  kp_L2 = kp(              0 , GEO_TUN_effH , GEO_APR_z2)
+  kp_R3 = kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z3)
+  kp_R4 = kp(GEO_TUN_totEffW , GEO_TUN_effH , GEO_APR_z4)
+
+  xLeft  = 0
+  xRight = GEO_TUN_totEffW
+  K , K1A , xRight , GEO_TUN_effH , GEO_APR_z1
+  K , K2A , xRight , GEO_TUN_effH , GEO_APR_z2
+  K , K3A , xLeft  , GEO_TUN_effH , GEO_APR_z3
+  K , K4A , xLeft  , GEO_TUN_effH , GEO_APR_z4
+
+  xREnd = xRight+GEO_APR_length
+  xLEnd = xLeft-GEO_APR_length
+  K , K1B , xREnd , GEO_TUN_effH , GEO_APR_z1L
+  K , K2B , xREnd , GEO_TUN_effH , GEO_APR_z2L
+  K , K3B , xLEnd , GEO_TUN_effH , GEO_APR_z3L
+  K , K4B , xLEnd , GEO_TUN_effH , GEO_APR_z4L
+
+  asel,none
+  A , K1A , K1B , K2B , K2A
+  *if , GEO_APR_z3 , gt , GEO_APR_z1 , and , GEO_APR_z3 , lt , GEO_APR_z2 , then
+    wpcsys,1,CS_Tunnel
+    kwpave,kp_R3
+    wprota,,,LOAD_LTA_skew
+    asbw,all,,delete
+    wpcsys,1,0
+  *elseif , GEO_APR_z4 , gt , GEO_APR_z1 , and , GEO_APR_z4 , lt , GEO_APR_z2 , then
+    wpcsys,1,CS_Tunnel
+    kwpave,kp_R4
+    wprota,,,LOAD_LTA_skew
+    asbw,all,,delete
+    wpcsys,1,0
+  *endif
+  cm,COMPA_approachR,area
+
+  asel,none
+  A , K3A , K3B , K4B , K4A
+  *if , GEO_APR_z1 , gt , GEO_APR_z3 , and , GEO_APR_z1 , lt , GEO_APR_z4 , then
+    wpcsys,1,CS_Tunnel
+    kwpave,kp_L1
+    wprota,,,LOAD_LTA_skew
+    asbw,all,,delete
+    wpcsys,1,0
+  *elseif , GEO_APR_z2 , gt , GEO_APR_z3 , and , GEO_APR_z2 , lt , GEO_APR_z4 , then
+    wpcsys,1,CS_Tunnel
+    kwpave,kp_L2
+    wprota,,,LOAD_LTA_skew
+    asbw,all,,delete
+    wpcsys,1,0
+  *endif
+  cm,COMPA_approachL,area
+
+  ! Slice approach slabs at intersections with roof girders
+  *if,GEO_ROOF_type,eq,1,then
+    wpcsys,,CS_Tunnel
+    *do,nthSlice,1,GEO_girderCount-1,1
+      z=GEO_girderZ(nthSlice)
+      *if,z,gt,GEO_APR_z3,and,z,lt,GEO_APR_z4,then
+        cmsel,s,COMPA_approachL
+        wpoffs,,,z
+        wprota,,,LOAD_LTA_skew
+        asbw,all,,delete
+        wprota,,,-LOAD_LTA_skew
+        wpoffs,,,-z
+        cm,COMPA_approachL,area
+      *endif
+      *if,z,gt,GEO_APR_z1,and,z,lt,GEO_APR_z2,then
+        cmsel,s,COMPA_approachR
+        wpoffs,GEO_TUN_totEffW
+        wpoffs,,,z
+        wprota,,,LOAD_LTA_skew
+        asbw,all,,delete
+        wprota,,,-LOAD_LTA_skew
+        wpoffs,,,-z
+        wpoffs,-GEO_TUN_totEffW
+        cm,COMPA_approachR,area
+      *endif
+    *enddo
+  *endif
+
+  cmsel,s,COMPA_approachL
+  cmsel,a,COMPA_approachR
+  cm,COMPA_approach,area
+*else
+  asel,u,area,,all
+  cm,COMPA_approach,area
+*endif

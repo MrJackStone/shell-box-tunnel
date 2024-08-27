@@ -175,6 +175,8 @@ cm , COMPA_WALL_flat         , area
     ALLSEL
     CMSEL,U,COMPA_Tunnel
     CM,COMPA_Headwalls,AREA
+
+    TUNNEL_V2_HDWBUILDCM
   *endif
 *endif
 
