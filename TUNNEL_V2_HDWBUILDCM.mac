@@ -55,7 +55,10 @@
 ! COMPA_HDW2_slab
 
 
-!! A.  Components by structural part                                                              !!
+!! A.  Prepare environment                                                                        !!
+TUNNEL_V2_HDWINITCM
+
+!! B.  Components by structural part                                                              !!
 ! All headwall areas
 allsel
 cmsel,u,COMPA_tunnel
@@ -146,7 +149,7 @@ cmsel,u,COMPA_HDW_topBeam
 cm,COMPA_HDW_columns,area
 
 
-!! B.  Left/right split                                                                           !!
+!! C.  Left/right split                                                                           !!
 ! First inlet
 csys,CS_hdw1
 cmsel,s,COMPA_headwalls
@@ -206,7 +209,7 @@ cmsel,r,COMPA_HDW_right
 cmpadd,'COMPA_HDW_rightColumn'
 
 
-!! C.  1st/2nd split                                                                              !!
+!! D.  1st/2nd split                                                                              !!
 csys,CS_tunnel
 
 cmsel,s,COMPA_headwalls
