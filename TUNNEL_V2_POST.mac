@@ -7,8 +7,10 @@ set,last
 ! Element tables
 TUNNEL_V2_ETAB
 
-! Reações sobre o solo
-TUNNEL_V2_REACT
+! Vertical pressure transmitted to foundation soil
+TUNNEL_V2_POSTSOILPIC , 'SIGY_k'  , 'TOTAL VERTICAL SOIL PRESSURE'    , 'SIGY_k'
+TUNNEL_V2_POSTSOILPIC , 'SIGY_gk' , 'PERM. VERTICAL SOIL PRESSURE'    , 'SIGY_gk'
+TUNNEL_V2_POSTSOILPIC , 'SIGY_a'  , 'VERTICAL SOIL PRESSURE INCREASE' , 'SIGY_a'
 
 ! Write results
 TUNNEL_V2_WRRES

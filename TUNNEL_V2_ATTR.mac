@@ -50,6 +50,11 @@ REAL_rigidStrut_A=1
 
 POST_convolutionRadius = 0.50
 
+GRAPH_picRes = 1500
+
+FOLDER_setup   = '_setup'
+FOLDER_results = '_results'
+
 
 !!                                                                                                !!
 !! 2.2  Indices                                                                                   !!

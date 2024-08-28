@@ -1,0 +1,54 @@
+! TUNNEL_V2_POSTSOILPIC , etableName , imgTitle , fileName
+! TUNNEL_V2_POSTSOILPIC , ARG1       , ARG2     , ARG3
+
+
+_etableName = ARG1
+_imgTitle   = ARG2
+_fileName   = ARG3
+
+boldfont,1
+g_picres,GRAPH_picRes
+/gformat,f,2,1
+
+view1w
+wincln,1
+/plopts,leg3,on
+/eshape,0
+/view,1,1,-1,1
+/auto,1
+/angle,1,0
+/edge,1,1
+/udoc,1,cntr,right
+/type,1,3
+esel,s,type,,TYPE_shell181
+nsle,s
+
+wintitle,1,'FLOOR SLABS / FOOTINGS',_imgTitle,'ELU-Geo [kPa]',,1,13
+
+go2png,GRAPH_picRes
+  /device,vector,on
+  /type,1,0
+  eplot
+  /user,1
+  /noerase
+  /device,vector,off
+
+  cmsel,s,COMPA_floor
+  cmsel,a,COMPA_HDW_slab
+  cmsel,a,COMPA_HDW_stiffener
+  cmsel,a,COMPA_HDW_footing
+  esla,s
+  nsle,s
+  cleanplot,'pletab',_etableName,'1'
+
+  /device,vector,on
+  /type,1,4
+  esel,s,type,,TYPE_shell181
+  nsle,s
+  eplot
+  /device,vector,off
+
+endpng,_fileName,,,,,FOLDER_results
+
+/erase
+/annot,dele
