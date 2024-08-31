@@ -7,35 +7,35 @@
 ! ZEROS
 
 ! DOFs: --------------------------------------- 24
-! DW_UX     EMN_UX     EMX_UX     EAB_UX
-! DW_UY     EMN_UY     EMX_UY     EAB_UY
-! DW_UZ     EMN_UZ     EMX_UZ     EAB_UZ
-! DW_ROTX   EMN_ROTX   EMX_ROTX   EAB_ROTX
-! DW_ROTY   EMN_ROTY   EMX_ROTY   EAB_ROTY
-! DW_ROTZ   EMN_ROTZ   EMX_ROTZ   EAB_ROTZ
+! DW_UX      EMN_UX     EMX_UX     EAB_UX
+! DW_UY      EMN_UY     EMX_UY     EAB_UY
+! DW_UZ      EMN_UZ     EMX_UZ     EAB_UZ
+! DW_ROTX    EMN_ROTX   EMX_ROTX   EAB_ROTX
+! DW_ROTY    EMN_ROTY   EMX_ROTY   EAB_ROTY
+! DW_ROTZ    EMN_ROTZ   EMX_ROTZ   EAB_ROTZ
 
 ! SHELL181 (raw): ----------------------------- 30
-! DW_MX     EMN_MX     EMX_MX     EAB_MX
-! DW_MY     EMN_MY     EMX_MY     EAB_MY
-! DW_NX     EMN_NX     EMX_NX     EAB_NX
-! DW_NY     EMN_NY     EMX_NY     EAB_NY
-! DW_QX     EMN_QX     EMX_QX     EAB_QX
-! DW_QY     EMN_QY     EMX_QY     EAB_QY
-! DW_Q      -          -          EAB_Q
-! -         EPOS_MY    ENEG_MX    -
-! -         EPOS_MX    ENEG_MY    -
+! DW_MX      EMN_MX     EMX_MX     EAB_MX
+! DW_MY      EMN_MY     EMX_MY     EAB_MY
+! DW_NX      EMN_NX     EMX_NX     EAB_NX
+! DW_NY      EMN_NY     EMX_NY     EAB_NY
+! DW_QX      EMN_QX     EMX_QX     EAB_QX
+! DW_QY      EMN_QY     EMX_QY     EAB_QY
+! DW_Q       -          -          EAB_Q
+! -          EPOS_MY    ENEG_MX    -
+! -          EPOS_MX    ENEG_MY    -
 
 ! SHELL181 (averaged by convolution): --------- 14
-! ADW_MX    AEMN_MX    AEMX_MX    AEAB_MX
-! ADW_MY    AEMN_MY    AEMX_MY    AEAB_MY
-! ADW_Q     -          -          AEAB_Q
-! -         AEPOS_MX   AENEG_MX   -
-! -         AEPOS_MY   AENEG_MY   -
+! ADW_MX     AEMN_MX    AEMX_MX    AEAB_MX
+! ADW_MY     AEMN_MY    AEMX_MY    AEAB_MY
+! ADW_Q      -          -          AEAB_Q
+! -          AEPOS_MX   AENEG_MX   -
+! -          AEPOS_MY   AENEG_MY   -
 
 ! Service limit state deflections: ------------ 12
-! UX_gk     UX_qk     UX_k      UX_frq
-! UY_gk     UY_qk     UY_k      UY_frq
-! UZ_gk     UZ_qk     UZ_k      UZ_frq
+! UX_gk      UX_qk      UX_k       UX_frq
+! UY_gk      UY_qk      UY_k       UY_frq
+! UZ_gk      UZ_qk      UZ_k       UZ_frq
 !
 ! Legend:
 !    U?_gk   -  dead loads, characteristic value
@@ -43,8 +43,8 @@
 !    U?_k    -  dead + live loads, characteristic values
 !    U?_frq  -  SLS frequent combination (uses PSI1)
 
-! Soil pressures: -----------------------------  4
-! SIGY_gk   SIGY_qk   SIGY_k    SIGY_a
+! Reaction soil pressures: --------------------  4
+! SIGY_gk    SIGY_qk    SIGY_k     SIGY_a
 !
 ! Legend:
 !    SIGY_?? -  sigma (normal stress) in the Y direction
@@ -58,9 +58,12 @@
 !    the best way to calculate added pressure is by subtracting
 !    dead load (g) pressures from total pressure (g+k).
 
+! Applied soil pressures: --------------------  (3)
+! LS[i]_PX   LS[i]_PY   LS[i]_PZ
+
 ! NOTE: all characteristic values (k) include impact coefficient
 
-! TOTAL element table count: ----------------- 85
+! TOTAL element table count: ------------------ 85 (88)
 
 
 /post1
