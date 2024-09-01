@@ -1,0 +1,104 @@
+! TUNNEL_V2_LOADPICS_altB , cmaName , presDir , lsNum , part
+! TUNNEL_V2_LOADPICS_altB , ARG1    , ARG2    , ARG3  , ARG4
+
+
+! Parse inputs
+_lsNum     = ARG3
+_part      = ARG4
+_fileName  = 'PRES_LS%_lsNum%_%lwcase(_part)%'
+_winTitle  = 'LS %_lsNum%: %upcase(_part)%'
+etableName = 'LS%nthLS%_P%ARG2%'
+
+pxEtable = 'ZEROS'
+pyEtable = 'ZEROS'
+pzEtable = 'ZEROS'
+*if,upcase(ARG2),eq,'X',then
+  pxEtable = etableName
+*elseif,upcase(ARG2),eq,'Y',then
+  pyEtable = etableName
+*endif
+
+! Calculate absolute values for PLETAB
+allsel
+sabs,1
+sadd,ABS_P,%etableName%,,1
+
+! Prepare display
+/window , all , dele
+/window , 1   , -1.00 , 1.67 , 0.33  , 1.00
+/window , 2   , -1.00 , 1.67 , -1.00 , 0.33
+wincln
+g_picres,GRAPH_picRes
+boldfont,1
+
+/plopts,leg3,on
+/udoc,2,cntr,right
+/gformat,f,2,1
+/eshape,0
+
+*if,upcase(ARG2),eq,'X',then
+  /view,1,0,1,0
+  /angle,1,90
+*elseif,upcase(ARG2),eq,'Y',then
+  /view,1,1,0,0
+  /angle,1,0
+*endif
+wpcsys,2,CS_tunnel
+/angle,2,0
+/auto,all
+/vscale,all,0.5
+
+/window,1,on
+/window,2,off
+asel,all
+lsla
+cmsel,a,COMPL_embankment
+aplot
+/user,1
+
+/window,1,off
+/window,2,on
+aplot
+/user,2
+
+/window,1,on
+/window,2,on
+
+/color,default
+esel,s,type,,TYPE_shell181
+cm,COMPE_color,elem
+/color,cm,dgra,COMPE_color
+/color,cm,oran,COMPL_embankment
+! cmpcolor
+
+wintitle,2,_winTitle,'APPLIED SOIL PRESSURES','ELU-Normal [kPa]',,1,13
+
+go2png,GRAPH_picRes
+  esel,s,type,,TYPE_shell181
+  nsle,s
+  /type,all,0
+  /edge,all,1
+  eplot
+  /noerase
+  /user,all
+  /type,all,3
+
+  /device,vector,on
+  eplot
+  /device,vector,off
+
+  /window,2,off
+  cmsel,s,COMPL_embankment
+  lplot
+  /window,2,on
+
+  cmsel,s,%ARG1%
+  esla,s
+  nsle,s
+  cleanplot,'pletab','ABS_P'
+
+  plvect,%pxEtable%,%pyEtable%,%pzEtable%,'P%ARG2%'
+
+endpng,_fileName,,,,,FOLDER_setup
+/erase
+/annot,dele
