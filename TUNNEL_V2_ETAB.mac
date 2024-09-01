@@ -60,6 +60,7 @@
 
 ! Applied soil pressures: --------------------  (3)
 ! LS[i]_PX   LS[i]_PY   LS[i]_PZ
+! NET[i]_PX  NET[i]_PY  -
 
 ! NOTE: all characteristic values (k) include impact coefficient
 
@@ -179,10 +180,10 @@ etable , 'UZ_q'   , eras
 !! Soil pressure                                                                                  !!
 Nmm2kNm = 1e-6
 
-sadd , 'SIGY_gk' , 'UY_gk'  ,           , MAT_SOIL_stiffness*Nmm2kNm*(-1)
-sadd , 'SIGY_qk' , 'UY_qk'  ,           , MAT_SOIL_stiffness*Nmm2kNm*(-1)
-sadd , 'SIGY_k'  , 'UY_k'   ,           , MAT_SOIL_stiffness*Nmm2kNm*(-1)
-sadd , 'SIGY_a'  , 'SIGY_k' , 'SIGY_gk' , 1                               , -1
+sadd , 'SIGY_gk' , 'UY_gk' ,  , MAT_SOIL_stiffness*Nmm2kNm*(-1)
+sadd , 'SIGY_qk' , 'UY_qk' ,  , MAT_SOIL_stiffness*Nmm2kNm*(-1)
+sadd , 'SIGY_k'  , 'UY_k'  ,  , MAT_SOIL_stiffness*Nmm2kNm*(-1)
+sadd , 'SIGY_a' , 'SIGY_k' , 'SIGY_gk' , 1 , -1
 
 smax , 'SIGY_gk' , 'SIGY_gk' , 'ZEROS'
 smax , 'SIGY_qk' , 'SIGY_qk' , 'ZEROS'
@@ -193,6 +194,25 @@ smax , 'SIGY_a'  , 'SIGY_a'  , 'ZEROS'
 !! Average results by performing convolution                                                      !!
 TUNNEL_V2_ETCVL
 
+
+!! Applied forces, converted to pressures                                                         !!
+N2kN = 1e-3
+
+*do,nthLS,1,LoadStepCount,1
+  allsel
+  set,nthLS
+  esel,s,type,,TYPE_shell181
+  nsle,s
+
+  ! Total applied pressures
+  etbfor2pres,N2kN,'LS%nthLS%_P'
+
+  ! Net live load pressure increases
+  *if,nthLS,gt,1,then
+    sadd,NET%nthLS%_PX,LS%nthLS%_PX,LS1_PX,1,-1
+    sadd,NET%nthLS%_PY,LS%nthLS%_PY,LS1_PY,1,-1
+  *endif
+*enddo
 
 
 
