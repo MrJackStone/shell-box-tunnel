@@ -1,13 +1,21 @@
-! TUNNEL_V2_LOADPICS2 , cmaName , presDir , lsNum , part
-! TUNNEL_V2_LOADPICS2 , ARG1    , ARG2    , ARG3  , ARG4
+! TUNNEL_V2_LOADPICS2 , cmaName , presDir , lsNum , part , netPres
+! TUNNEL_V2_LOADPICS2 , ARG1    , ARG2    , ARG3  , ARG4 , ARG5
 
 
 ! Parse inputs
+key      = 'LS'
+midTitle = 'APPLIED SOIL PRESSURES'
+*if,ARG5,eq,1,then
+  key      = 'NET'
+  midTitle = 'NET PRESSURE INCREASE'
+*endif
+
 _lsNum     = ARG3
 _part      = ARG4
-_fileName  = 'PRES_LS%_lsNum%_%lwcase(_part)%'
+_fileName  = 'PRES_%key%%_lsNum%_%lwcase(_part)%'
 _winTitle  = 'LS %_lsNum%: %upcase(_part)%'
-etableName = 'LS%nthLS%_P%ARG2%'
+etableName = '%key%%nthLS%_P%ARG2%'
+vecName    = 'P%ARG2%'
 
 pxEtable = 'ZEROS'
 pyEtable = 'ZEROS'
@@ -51,7 +59,7 @@ cm,COMPE_color,elem
 /color,cm,oran,COMPL_embankment
 ! cmpcolor
 
-wintitle,1,_winTitle,'APPLIED SOIL PRESSURES','ELU-Normal [kPa]',,1,13
+wintitle,1,_winTitle,midTitle,'ELU-Normal [kPa]',,1,13
 
 go2png,GRAPH_picRes
   esel,s,type,,TYPE_shell181
@@ -70,7 +78,7 @@ go2png,GRAPH_picRes
   nsle,s
   cleanplot,'pletab','ABS_P',1
 
-  plvect,%pxEtable%,%pyEtable%,%pzEtable%,'P%ARG2%',vect
+  plvect,%pxEtable%,%pyEtable%,%pzEtable%,%vecName%,vect
 
   /device,vector,on
   /type,all,3
