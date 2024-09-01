@@ -43,7 +43,7 @@ LOAD_g_k = 9.81
 SubstepCount=20
 
 ! Minimum soil cover (smaller depths mean loads are applied directly on top slab)
-MinimumSoilCover=1.4
+MinimumSoilCover = 0.01
 
 ! Cross-sectional area of rigid struts
 REAL_rigidStrut_A=1
