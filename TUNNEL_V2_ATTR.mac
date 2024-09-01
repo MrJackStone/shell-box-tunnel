@@ -40,7 +40,7 @@ LongitSpringLength=(SpringLength*(MAT_SOIL_stiffness/100e6)<SpringLength)
 LOAD_g_k = 9.81
 
 ! Number of substeps
-SubstepCount=20
+SubstepCount = 5
 
 ! Minimum soil cover (smaller depths mean loads are applied directly on top slab)
 MinimumSoilCover = 0.01
