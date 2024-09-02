@@ -1,0 +1,74 @@
+! TUNNEL_V2_POSTETABPICS , cmaName , etName , part , reactType , unit , fileName
+! TUNNEL_V2_POSTETABPICS , ARG1    , ARG2   , ARG3 , ARG4      , ARG5 , ARG6
+
+
+! Parse inputs
+_cmaName    = ARG1
+_etName     = ARG2
+_leftTitle  = ARG3
+_midTitle   = ARG4
+_rightTitle = ARG5
+_fileName   = ARG6
+
+! Prepare display
+view1w
+wincln
+g_picres,GRAPH_picRes
+boldfont,1
+
+/plopts,leg3,on
+/udoc,1,cntr,right
+/gformat,f,2,1
+/eshape,0
+
+/angle,all,0
+/auto,all
+
+asel,all
+lsla
+cmsel,a,COMPL_embankment
+aplot
+/user,all
+
+wintitle,1,_leftTitle,_midTitle,_rightTitle,,1,13
+
+! Plot element table
+go2png,GRAPH_picRes
+
+  esel,s,type,,TYPE_shell181
+  nsle,s
+  /device,vector,on
+  /type,all,0
+  /edge,all,1
+  eplot
+  /noerase
+  /user,all
+  /type,all,3
+  /device,vector,off
+
+  /edge,all,0
+  cmsel,s,%_cmaName%
+  esla,s
+  nsle,s
+  cleanplot,'pletab',_etName,'1'
+  /edge,all,1
+
+  /triad,orig
+  ksel,all
+  ksel,s,kp,,kpnext(0)
+  pltesys,,'kplot',1
+  /triad,off
+
+  /device,vector,on
+  /type,all,3
+  esel,s,type,,TYPE_shell181
+  nsle
+  eplot
+  /device,vector,off
+
+endpng,_fileName,,,,,FOLDER_results
+
+! Clean up
+/erase
+/annot,dele
+/type,all,3

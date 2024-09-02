@@ -7,39 +7,39 @@
 
 COMPA_floor
 ! Tunnel floor (Z points downwards):
-!   - Bending moment MY (transversal)
-!   - Bending moment MX (longitudinal)
-!   - Shear force
-!   - Axial force NY (longitudinal)
-!   - Axial force NX (transversal)
-!   - Deflection UZ
+! ✅  - Bending moment MY (transversal)
+! ✅  - Bending moment MX (longitudinal)
+! ✅  - Shear force
+! ✅  - Axial force NY (longitudinal)
+! ✅  - Axial force NX (transversal)
+! ⌚  - Deflection UZ
 
 COMPA_roof
 ! Tunnel roof (Z points upwards):
-!   - Bending moment MY (transversal)
-!   - Bending moment MX (longitudinal)
-!   - Shear force
-!   - Axial force NY (longitudinal)
-!   - Axial force NX (transversal)
-!   - Deflection UZ
+! ✅  - Bending moment MY (transversal)
+! ✅  - Bending moment MX (longitudinal)
+! ✅  - Shear force
+! ✅  - Axial force NY (longitudinal)
+! ✅  - Axial force NX (transversal)
+! ⌚  - Deflection UZ
 
 COMPA_leftWall
 ! Tunnel left wall (Z points outwards):
-!   - Bending moment MY (transversal)
-!   - Bending moment MX (longitudinal)
-!   - Shear force
-!   - Axial force NY (longitudinal)
-!   - Axial force NX (transversal)
-!   - Deflection UZ
+! ✅  - Bending moment MY (transversal)
+! ✅  - Bending moment MX (longitudinal)
+! ✅  - Shear force
+! ✅  - Axial force NY (longitudinal)
+! ✅  - Axial force NX (transversal)
+! ⌚  - Deflection UZ
 
 COMPA_rightWall
 ! Tunnel right wall (Z points outwards):
-!   - Bending moment MY (transversal)
-!   - Bending moment MX (longitudinal)
-!   - Shear force
-!   - Axial force NY (longitudinal)
-!   - Axial force NX (transversal)
-!   - Deflection UZ
+! ✅  - Bending moment MY (transversal)
+! ✅  - Bending moment MX (longitudinal)
+! ✅  - Shear force
+! ✅  - Axial force NY (longitudinal)
+! ✅  - Axial force NX (transversal)
+! ⌚  - Deflection UZ
 
 COMPA_tBeam / COMPA_bBeam / COMPA_columns
 ! Inner wall top beam (Z points towards left wall):
@@ -73,32 +73,28 @@ COMPA_HDW_ColLeft / COMPA_HDW_ColRight
 
 COMPA_HDW_LeftWall / COMPA_HDW_RightWall
 ! Inlet walls (Z points inwards at beginning inlet, outwards at ending inlet):
-!   - Bending moment MY (about horizontal axis)
-!   - Bending moment MX (about vertical axis)
-!   - Shear force
-!   - Axial force NY (vertical)
-!   - Axial force NX (horizontal)
-!   - Deflection UZ
+! ✅  - Bending moment MY (about horizontal axis)
+! ✅  - Bending moment MX (about vertical axis)
+! ✅  - Shear force
+! ✅  - Axial force NY (vertical)
+! ✅  - Axial force NX (horizontal)
+! ⌚  - Deflection UZ
 
 COMPA_HDW_Footing
 ! Headwall footings (Z points upwards):
-!   - Bending moment MX (transversal)
-!   - Bending moment MY (longitudinal)
-!   - Shear force
-!   - Axial force NX (longitudinal)
-!   - Axial force NY (transversal)
-!   - Deflection UZ
+! ✅  - Bending moment MX (transversal)
+! ✅  - Bending moment MY (longitudinal)
+! ✅  - Shear force
+! ✅  - Axial force NX (longitudinal)
+! ✅  - Axial force NY (transversal)
+! ⌚  - Deflection UZ
 
 COMPA_HDW_Slab / COMPA_HDW_Stiffener
 ! Inlet slabs (Z points downwards):
-!   - Bending moment MY (transversal)
-!   - Bending moment MX (longitudinal)
-!   - Shear force
-!   - Axial force NX (transversal)
-!   - Axial force NY (longitudinal)
-!   - Deflection UZ
+! ✅  - Bending moment MY (transversal)
+! ✅  - Bending moment MX (longitudinal)
+! ✅  - Shear force
+! ✅  - Axial force NX (transversal)
+! ✅  - Axial force NY (longitudinal)
+! ⌚  - Deflection UZ
 
-
-
-pltesys,,,1
-pltesys,,'gplot',1
