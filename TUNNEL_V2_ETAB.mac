@@ -226,3 +226,21 @@ smax , 'SIGY_a'  , 'SIGY_a'  , 'ZEROS'
 
 !! Average results by performing convolution                                                      !!
 TUNNEL_V2_ETCVL
+
+
+!! Adjust shear values for elements near supports                                                 !!
+allsel
+
+! Element tables to zero for selected elements
+shearEtableCount = 15
+*del,shear_etables,,nopr
+*dim,shear_etables,char,shearEtableCount
+shear_etables(1)  = 'DW_QX' , 'EMN_QX' , 'EMX_QX' , 'EAB_QX'
+shear_etables(5)  = 'DW_QY' , 'EMN_QY' , 'EMX_QY' , 'EAB_QY'
+shear_etables(9)  = 'DW_Q'  , 'EMN_Q'  , 'EMX_Q'  , 'EAB_Q'
+shear_etables(13) = 'DLT_Q' , 'ADW_Q ' , 'AEAB_Q'
+
+*do,nthEtable,1,shearEtableCount,1
+  etLabel = shear_etables(nthEtable)
+  detab , COMPE_ROOF_noShear , etLabel , 0
+*enddo

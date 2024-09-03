@@ -642,7 +642,7 @@ NSLA,S,1
 
 
 !!                                                                                                !!
-!! 4.8  Soil friction                                                                             !!
+!! 4.7  Soil friction                                                                             !!
 !!                                                                                                !!
 *get,parmType,PARM,LOAD_thermal,TYPE
 *if,parmType,EQ,0,AND,LOAD_thermal,NE,0,THEN
@@ -703,7 +703,7 @@ NSLA,S,1
 
 
 !!                                                                                                !!
-!! 4.7  Capture images                                                                            !!
+!! 4.8  Capture images                                                                            !!
 !!                                                                                                !!
 ALLSEL
 /eshape,1
@@ -842,3 +842,35 @@ file_names(1,31) = 'esys_fr2_TOP_BEAM'
   fileName = file_names(1,nthCM)
   TUNNEL_V2_ESYSPIC , cmName , imgTitle , fileName
 *enddo
+
+
+!!                                                                                                !!
+!! 4.9  Create special selection components                                                       !!
+!!                                                                                                !!
+! Tunnel roof elements that should be considered for shear force design
+csys,CS_tunnel
+
+cmsel,s,COMPA_roof
+esla,s
+nsle,s
+
+! Elements near external walls
+nsel , u , loc , x , 0                            , GEO_ROOF_thk
+nsel , u , loc , x , GEO_TUN_totEffW-GEO_ROOF_thk , GEO_TUN_totEffW
+
+! Elements near internal walls
+*do,nthIWall,1,GEO_IWALL_count,1
+  xIWall = GEO_IWALL_x_coords(nthIWall)
+  nsel , u , loc , x , xIWall-GEO_ROOF_thk , xIWall+GEO_ROOF_thk
+*enddo
+
+! Define element component for shear foce results
+esln,r,1
+cm,COMPE_ROOF_shear,elem
+cmsel,s,COMPA_roof
+esla,s
+cmsel,u,COMPE_ROOF_shear
+cm,COMPE_ROOF_noShear,elem
+
+allsel
+csys,0
