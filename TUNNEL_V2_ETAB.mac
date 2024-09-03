@@ -139,12 +139,34 @@ etenv,1,LoadStepCount,'etable_suffixes'
 
 ! Oblique shear force
 etbsqsum , 'EAB_Q' , 'EAB_QX' , 'EAB_QY'
+etbsqsum , 'EMX_Q' , 'EMX_QX' , 'EMX_QY'
+etbsqsum , 'EMN_Q' , 'EMN_QX' , 'EMN_QY'
 
 ! Positive/negative-only bending moments
 smax   , 'ENEG_MX' , 'EMX_MX' , 'ZEROS'
 smax   , 'EPOS_MX' , 'EMN_MX' , 'ZEROS'  , -1
 smax   , 'ENEG_MY' , 'EMX_MY' , 'ZEROS'
 smax   , 'EPOS_MY' , 'EMN_MY' , 'ZEROS'  , -1
+
+! Variation
+difTableCount = 5
+
+*del , diftable_suffixes ,      , nopr
+*dim , diftable_suffixes , char , difTableCount
+diftable_suffixes(1) = 'MX' , 'MY' , 'NX' , 'NY' , 'Q'
+
+*do,nthEtable,1,difTableCount,1
+  suffix = diftable_suffixes(nthEtable)
+  sadd , 'MXDIF' , 'EMX_%suffix%' , 'DW_%suffix%' , 1 , -1
+  sadd , 'MNDIF' , 'EMN_%suffix%' , 'DW_%suffix%' , 1 , -1
+  sabs , 1
+  smax , 'DLT_ELU' , 'MXDIF' , 'MNDIF'
+  sadd , 'DLT_%suffix%' , 'DLT_ELU' ,  , 1/LOAD_gammaQ
+*enddo
+
+etable , 'MXDIF'   , erase
+etable , 'MNDIF'   , erase
+etable , 'DLT_ELU' , erase
 
 
 !! Element tables calculated based on DW & ENV values                                             !!
