@@ -14,16 +14,18 @@
 ! DW_ROTY    EMN_ROTY   EMX_ROTY   EAB_ROTY
 ! DW_ROTZ    EMN_ROTZ   EMX_ROTZ   EAB_ROTZ
 
-! SHELL181 (raw): ----------------------------- 30
+! SHELL181 (raw): ----------------------------- 35
 ! DW_MX      EMN_MX     EMX_MX     EAB_MX
 ! DW_MY      EMN_MY     EMX_MY     EAB_MY
 ! DW_NX      EMN_NX     EMX_NX     EAB_NX
 ! DW_NY      EMN_NY     EMX_NY     EAB_NY
 ! DW_QX      EMN_QX     EMX_QX     EAB_QX
 ! DW_QY      EMN_QY     EMX_QY     EAB_QY
-! DW_Q       -          -          EAB_Q
+! DW_Q       EMN_Q      EMX_Q      EAB_Q
 ! -          EPOS_MY    ENEG_MX    -
 ! -          EPOS_MX    ENEG_MY    -
+! DLT_MX     DLT_MY     DLT_NX     DLT_NY
+! DLT_Q      -          -          -
 
 ! SHELL181 (averaged by convolution): --------- 14
 ! ADW_MX     AEMN_MX    AEMX_MX    AEAB_MX
@@ -43,7 +45,7 @@
 !    U?_k    -  dead + live loads, characteristic values
 !    U?_frq  -  SLS frequent combination (uses PSI1)
 
-! Reaction soil pressures: --------------------  4
+! Reaction soil pressures: --------------------- 4
 ! SIGY_gk    SIGY_qk    SIGY_k     SIGY_a
 !
 ! Legend:
@@ -58,13 +60,22 @@
 !    the best way to calculate added pressure is by subtracting
 !    dead load (g) pressures from total pressure (g+k).
 
-! Applied soil pressures: --------------------  (3)
-! LS[i]_PX   LS[i]_PY   LS[i]_PZ
-! NET[i]_PX  NET[i]_PY  -
+! Applied soil pressures: --------------------- (5)
+! LS[i]_PX   LS[i]_PY   LS[i]_PZ   -
+! NET[i]_PX  NET[i]_PY
+!
+! Note:
+!    These element tables are immediately deleted after used
+!    to generate plots, and therefore do not add to the overall
+!    limit of 200 element tables.
+!    Index 'i' stands for load step number, making the total
+!    count of element tables of this kind dependent upon a
+!    volatile input parameter (number of load train positions).
+!    For i=1 (dead loads) the 'NET' ETABLEs are not created.
 
 ! NOTE: all characteristic values (k) include impact coefficient
 
-! TOTAL element table count: ------------------ 85 (88)
+! TOTAL element table count: ------------------ 90 (95)
 
 
 /post1
@@ -122,14 +133,14 @@ etenv,1,LoadStepCount,'etable_suffixes'
 
 ! Delete unused tables
 *do,nthEtable,1,baseTableCount,1
-  etSuffix=etable_suffixes(nthEtable)
+  etSuffix = etable_suffixes(nthEtable)
   etable,'%etSuffix%',eras
 *enddo
 
-! SHELL181 oblique shear force
+! Oblique shear force
 etbsqsum , 'EAB_Q' , 'EAB_QX' , 'EAB_QY'
 
-! SHELL181 positive/negative-only bending moments
+! Positive/negative-only bending moments
 smax   , 'ENEG_MX' , 'EMX_MX' , 'ZEROS'
 smax   , 'EPOS_MX' , 'EMN_MX' , 'ZEROS'  , -1
 smax   , 'ENEG_MY' , 'EMX_MY' , 'ZEROS'
