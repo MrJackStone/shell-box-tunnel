@@ -57,7 +57,6 @@ esel,s,type,,TYPE_shell181
 cm,COMPE_color,elem
 /color,cm,dgra,COMPE_color
 /color,cm,oran,COMPL_embankment
-! cmpcolor
 
 wintitle,1,_winTitle,midTitle,'ELU-Normal [kPa]',,1,13
 

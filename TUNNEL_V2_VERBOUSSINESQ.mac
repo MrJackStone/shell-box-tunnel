@@ -5,7 +5,7 @@
 /prep7
 
 ! Prepare to generate line named selection component of load arrows
-lsel,u,line,,all
+lsel,none
 
 ! X-Z coordinates at the center of the tunnel
 QX_0 = GEO_TUN_totEffW/2

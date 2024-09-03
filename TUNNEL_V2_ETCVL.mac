@@ -5,6 +5,9 @@
 csbackup
 csys,CS_tunnel
 
+*msg,ui
+ETABLE: performing convolutions...
+
 ! Initialize element tables
 convolutionTableCount = 14
 *del , convolution_etnames ,      , nopr
