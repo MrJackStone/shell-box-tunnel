@@ -66,4 +66,11 @@ fname_roots(1,8) = 'HDWFOOT'
   TUNNEL_V2_POSTETABPICS , cmaName , 'AEMN_MY' , partName , 'MIN. BENDING MOMENT (AMY)' , 'ELU-Normal [kNm/m]'     , '%fnameRoot%_EMN_my2'
   TUNNEL_V2_POSTETABPICS , cmaName , 'ADW_Q'   , partName , 'SHEAR FORCE (AQ)'          , 'ELU-Permanente [kN/m]'  , '%fnameRoot%_DW_q2'
   TUNNEL_V2_POSTETABPICS , cmaName , 'AEAB_Q'  , partName , 'SHEAR FORCE (AQ)'          , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EAB_q2'
+
+  ! Results variation for fatigue verifications
+  TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_MX' , partName , 'DELTA BENDING MOMENT (MX)' , 'ELU-Fadiga [kNm/m]' , '%fnameRoot%_DLT_mx'
+  TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_MY' , partName , 'DELTA BENDING MOMENT (MY)' , 'ELU-Fadiga [kNm/m]' , '%fnameRoot%_DLT_my'
+  TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_Q'  , partName , 'DELTA SHEAR FORCE'         , 'ELU-Fadiga [kN/m]'  , '%fnameRoot%_DLT_q'
+  TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_NX' , partName , 'DELTA AXIAL FORCE (NX)'    , 'ELU-Fadiga [kN/m]'  , '%fnameRoot%_DLT_nx'
+  TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_NY' , partName , 'DELTA AXIAL FORCE (NY)'    , 'ELU-Fadiga [kN/m]'  , '%fnameRoot%_DLT_ny'
 *enddo
