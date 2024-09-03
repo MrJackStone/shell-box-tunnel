@@ -1,0 +1,53 @@
+! TUNNEL_V2_POSTBEAMS
+
+*do,nthLS,1,LoadStepCount,1
+
+  cmsel,s,COMPA_HDW_1
+  cmsel,a,COMPA_HDW_2
+  esla
+  nsle
+
+  subset,nthLS,last
+
+  etable , 'M11'   , smisc , 4
+  etable , 'SM_11' , smisc , 34
+  etable , 'SM_12' , smisc , 36
+
+  *do,nthHDW,1,2,1
+    ! Frame top beam
+    cmsel,s,COMPA_HDW%nthHDW%_topBeam
+    esla
+    nsle
+    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%TOP', 'top_beam_envelope'
+
+    ! Frame bottom beam
+    cmsel,s,COMPA_HDW%nthHDW%_backBeam
+    esla
+    nsle
+    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%BOT', 'bot_beam_envelope'
+
+    ! Frame left column
+    cmsel,s,COMPA_HDW%nthHDW%_leftColumn
+    esla
+    nsle
+    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%LCOL', 'left_column_envelope'
+
+    ! Frame right column
+    cmsel,s,COMPA_HDW%nthHDW%_rightColumn
+    esla
+    nsle
+    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%RCOL', 'right_column_envelope'
+
+    ! Inlet front beam
+    cmsel,s,COMPA_HDW%nthHDW%_botBeam
+    esla
+    nsle
+    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%FRT', 'front_beam_envelope'
+  *enddo
+
+*enddo
+
+/eof
+! pthenv, option, pathEnvDataParm, resultSetIdentifier
+pthenv,'CLEAR'
+

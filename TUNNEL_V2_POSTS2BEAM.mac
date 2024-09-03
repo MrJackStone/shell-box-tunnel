@@ -1,0 +1,42 @@
+! TUNNEL_V2_POSTS2BEAM , beamRoot , envelope_table
+! TUNNEL_V2_POSTS2BEAM , ARG1     , ARG2
+
+
+_pthRoot      = ARG1
+_envelopeName = ARG2
+pathDivs      = 20
+
+! Prepare environment
+csbackup
+ebackup
+nbackup
+
+! Collect attributes from representative element (based on current area selection)
+esla
+nsle
+e1 = elnext(0)
+*get , esysNum , elem , e1     , attr , esys
+*get , secNum  , elem , e1     , attr , secn
+*get , width   , shel , secNum , prop , tthk
+
+! Get path-defining nodes
+csys,esysNum
+ndbbox,'xmin','xmax','ymin','ymax'
+
+tn1 = node(xmin , ymax , 0)
+tn2 = node(xmax , ymax , 0)
+bn1 = node(xmin , ymin , 0)
+bn2 = node(xmax , ymin , 0)
+
+! Calculate beam cross-sectional properties
+depth   = ymax-ymin
+area    = depth*width
+modulus = width*(depth**2)/6
+
+! Generate virtual beam results
+pth2beam,tn1,tn2,bn1,bn2,_pthRoot,1,pathDivs,modulus,area,,_envelopeName
+
+! Clean up
+csrestore
+elrestore
+nrestore
