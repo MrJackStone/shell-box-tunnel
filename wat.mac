@@ -1,5 +1,3 @@
-! TUNNEL_V2_POSTLOADS
-
 
 /pbc,f,,0
 /pbc,pres,,0
@@ -24,22 +22,10 @@ N2kN = 1e-3
   ! Total applied pressures
   etbfor2pres,N2kN,'LS%nthLS%_P'
 
-  TUNNEL_V2_LOADPICS , 'COMPA_roof'        , 'Y' , nthLS , 'TUNNEL ROOF'
-  TUNNEL_V2_LOADPICS , 'COMPA_floor'       , 'Y' , nthLS , 'TUNNEL FLOOR'
-  TUNNEL_V2_LOADPICS , 'COMPA_walls'       , 'X' , nthLS , 'TUNNEL WALLS'
-  TUNNEL_V2_LOADPICS , 'COMPA_HDW_walls'   , 'X' , nthLS , 'INLET WALLS'
-  TUNNEL_V2_LOADPICS , 'COMPA_HDW_footing' , 'Y' , nthLS , 'INLET FOOTING'
   TUNNEL_V2_LOADPICS , 'COMPA_approach'    , 'Y' , nthLS , 'APPROACH SLAB'
 
   ! Net live load pressure increases
   *if,nthLS,gt,1,then
-    sadd , NET%nthLS%_PX , LS%nthLS%_PX , LS1_PX , 1 , -1
-    sadd , NET%nthLS%_PY , LS%nthLS%_PY , LS1_PY , 1 , -1
-    ! TUNNEL_V2_LOADPICS , 'COMPA_roof'        , 'Y' , nthLS , 'TUNNEL ROOF'   , 1
-    ! TUNNEL_V2_LOADPICS , 'COMPA_walls'       , 'X' , nthLS , 'TUNNEL WALLS'  , 1
-    ! TUNNEL_V2_LOADPICS , 'COMPA_HDW_walls'   , 'X' , nthLS , 'INLET WALLS'   , 1
-    ! TUNNEL_V2_LOADPICS , 'COMPA_HDW_footing' , 'Y' , nthLS , 'INLET FOOTING' , 1
-
     ! Delete ETABLEs to make room
     etable , LS%nthLS%_PX  , eras
     etable , LS%nthLS%_PY  , eras
@@ -54,3 +40,18 @@ N2kN = 1e-3
 etable , LS1_PX  , eras
 etable , LS1_PY  , eras
 etable , LS1_PZ  , eras
+
+!!                                                                                                !!
+!!                                                                                                !!
+!!                                                                                                !!
+
+allsel
+/eshape,1
+view4w
+wincln
+/color,defa
+/pnum,sec,1
+/number,1
+eplot
+/graphics,full
+takepic,'MESH',,,,,FOLDER_setup
