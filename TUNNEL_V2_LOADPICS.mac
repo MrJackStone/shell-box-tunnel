@@ -1,5 +1,5 @@
-! TUNNEL_V2_LOADPICS2 , cmaName , presDir , lsNum , part , netPres
-! TUNNEL_V2_LOADPICS2 , ARG1    , ARG2    , ARG3  , ARG4 , ARG5
+! TUNNEL_V2_LOADPICS , cmaName , presDir , lsNum , part , netPres
+! TUNNEL_V2_LOADPICS , ARG1    , ARG2    , ARG3  , ARG4 , ARG5
 
 
 ! Parse inputs
@@ -16,6 +16,7 @@ _fileName  = 'PRES_%key%%_lsNum%_%lwcase(_part)%'
 _winTitle  = 'LS %_lsNum%: %upcase(_part)%'
 etableName = '%key%%nthLS%_P%ARG2%'
 vecName    = 'P%ARG2%'
+picRes     = 800
 
 pxEtable = 'ZEROS'
 pyEtable = 'ZEROS'
@@ -34,13 +35,15 @@ sadd,ABS_P,%etableName%,,1
 ! Prepare display
 view1w
 wincln
-g_picres,GRAPH_picRes
+clims
+g_picres,picRes
 boldfont,1
 
 /plopts,leg3,on
 /udoc,1,cntr,right
 /gformat,f,2,1
 /eshape,0
+/psf,pres,,2
 
 /angle,all,0
 /auto,all
@@ -60,7 +63,7 @@ cm,COMPE_color,elem
 
 wintitle,1,_winTitle,midTitle,'ELU-Normal [kPa]',,1,13
 
-go2png,GRAPH_picRes
+go2png,picRes
   esel,s,type,,TYPE_shell181
   nsle,s
   /device,vector,on
@@ -92,4 +95,5 @@ go2png,GRAPH_picRes
 endpng,_fileName,,,,,FOLDER_setup
 /erase
 /annot,dele
+/psf,pres,,0
 /type,all,3
