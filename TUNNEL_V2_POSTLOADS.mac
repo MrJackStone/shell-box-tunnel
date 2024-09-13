@@ -4,6 +4,14 @@
 /pbc,f,,0
 /pbc,pres,,0
 
+! Auxiliary element table
+*vget  , element_numbers       , elem    ,         , elist
+*get   , ec                    , elem    ,         , count
+etable , 'DUMMY'               , volu
+sadd   , 'ZEROS'               , 'DUMMY' , 'DUMMY' , 1     , -1
+detab  , element_numbers(1:ec) , 'ZEROS' , 0
+etable , 'DUMMY'               , eras
+
 ! Applied forces, converted to pressures
 N2kN = 1e-3
 
