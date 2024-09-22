@@ -129,6 +129,7 @@ GEO_HDW_wallThk = 0.35
 ! Headwall type:
 !   [0] Full inlet (walls, beam, feet, floor slab)
 !   [1] Wings (walls only, fixed to tunnel external walls)
+!   [2] Approach slab (no walls, no beams, no feet)
 GEO_HDW_type = 0
 
 ! > Params for GEO_HDW_type=0 (full inlet) only:

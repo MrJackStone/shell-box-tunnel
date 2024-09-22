@@ -2,6 +2,8 @@
 ! TUNNEL_V2_SMHDW3 , arg1  , arg2            , arg3
 
 
+/eof
+
 ! Exported solid model components:
 ! COMPA_HDW_BackBeam
 ! COMPA_HDW_BotBeam
@@ -16,6 +18,37 @@
 ! COMPA_HDW_TopBeam
 ! COMPA_HDW_Walls
 ! COMPA_Headwalls
+
+
+!! TODO  desired parts: floor slab, top beam, bottom beam, left column, right column              !!
+
+!! TODO  delete L8, L10                                                                           !!
+!!       modify L1, L2, L3, L4, L5, L6, L7, L9                                                    !!
+!!       keep   K1                                                                                !!
+!!              K2                                                                                !!
+!!              K3                                                                                !!
+!!              K4                                                                                !!
+!!              K5                                                                                !!
+!!              K6                                                                                !!
+!!              K7                                                                                !!
+!!              K8                                                                                !!
+!!              K10                                                                               !!
+!!              K11                                                                               !!
+!!              K14                                                                               !!
+!!              K15                                                                               !!
+!!              K17                                                                               !!
+!!              K18                                                                               !!
+!!              K19                                                                               !!
+!!              K20                                                                               !!
+!!              K22                                                                               !!
+!!              K23                                                                               !!
+!!              K27                                                                               !!
+!!              K29                                                                               !!
+
+!!              KBL                                                                               !!
+!!              KTL                                                                               !!
+!!              KBR                                                                               !!
+!!              KTR                                                                               !!
 
 
 CS_HDW_LeftWall  = arg2
@@ -343,25 +376,25 @@ L,Left_PI1,Left_PI2
 larc,Right_PI1,KFR,Right_AX1
 *get,L28,line,0,num,max
 
-*if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
-  larc,KP18b,Right_PI2,Right_AX2
-  *get,L29,line,0,num,max
-  L,KP18,KP18b
-  *get,L29b,line,0,num,max
-*else
-  larc,KP18,Right_PI2,Right_AX2
-  *get,L29,line,0,num,max
-*endif
+! *if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
+!   larc,KP18b,Right_PI2,Right_AX2
+!   *get,L29,line,0,num,max
+!   L,KP18,KP18b
+!   *get,L29b,line,0,num,max
+! *else
+!   larc,KP18,Right_PI2,Right_AX2
+!   *get,L29,line,0,num,max
+! *endif
 
-l,Right_PI1,Right_PI2
-*get,L30,line,0,num,max
+! l,Right_PI1,Right_PI2
+! *get,L30,line,0,num,max
 
-*if,GEO_HDW_endH,gt,0,then
-  l,KP5,KP31
-  *get,FHL,line,,num,max
-  l,KP8,KP32
-  *get,FHR,line,,num,max
-*endif
+! *if,GEO_HDW_endH,gt,0,then
+!   l,KP5,KP31
+!   *get,FHL,line,,num,max
+!   l,KP8,KP32
+!   *get,FHR,line,,num,max
+! *endif
 
 ! Columns
 *if,GEO_FRAME_columnWidth,gt,0,then
@@ -401,19 +434,6 @@ cm,COMPA_HDW_Slab,area
 asel,none
 lsel,all
 
-! Footings
-*if,GEO_FRAME_columnWidth,gt,0,and,GEO_HDW_columnWidth,le,GEO_HDW_footWidth,then
-  al,L15,L13,L16,L11a,L11b
-  al,L17,L14,L18,L12a,L12b
-*else
-  al,L15,L13,L16,L11
-  al,L17,L14,L18,L12
-*endif
-
-cmsel,A,COMPA_HDW_Footing
-cm,COMPA_HDW_Footing,area
-asel,none
-
 ! Columns
 *if,GEO_FRAME_columnWidth,gt,0,then
   asel,none
@@ -437,95 +457,70 @@ asel,none
   asel,none
 *endif
 
-*if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
-  al,L21,L7,L19,L16
-  *if,GEO_HDW_endH,gt,0,then
-    al,L27,L26,L26b,L23,L7,L25,FHL
-  *else
-    al,L27,L26,L26b,L23,L7,L25
-  *endif
-  cmsel,A,COMPA_HDW_RightWall
-  cm,COMPA_HDW_RightWall,area
-  asel,none
-*else
-  al,L21,L7,L19,L16
-  *if,GEO_HDW_endH,gt,0,then
-    al,L27,L26,L23,L7,L25,FHL
-  *else
-    al,L27,L26,L23,L7,L25
-  *endif
-  cmsel,A,COMPA_HDW_RightWall
-  cm,COMPA_HDW_RightWall,area
-  asel,none
-*endif
+! *if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
+!   al,L21,L7,L19,L16
+!   *if,GEO_HDW_endH,gt,0,then
+!     al,L27,L26,L26b,L23,L7,L25,FHL
+!   *else
+!     al,L27,L26,L26b,L23,L7,L25
+!   *endif
+!   cmsel,A,COMPA_HDW_RightWall
+!   cm,COMPA_HDW_RightWall,area
+!   asel,none
+! *else
+!   al,L21,L7,L19,L16
+!   *if,GEO_HDW_endH,gt,0,then
+!     al,L27,L26,L23,L7,L25,FHL
+!   *else
+!     al,L27,L26,L23,L7,L25
+!   *endif
+!   cmsel,A,COMPA_HDW_RightWall
+!   cm,COMPA_HDW_RightWall,area
+!   asel,none
+! *endif
 
-*if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
-  al,L22,L10,L20,L17
-  *if,GEO_HDW_endH,gt,0,then
-    al,L30,L29,L29b,L24,L10,L28,FHR
-  *else
-    al,L30,L29,L29b,L24,L10,L28
-  *endif
-  cmsel,A,COMPA_HDW_LeftWall
-  cm,COMPA_HDW_LeftWall,area
-*else
-  al,L22,L10,L20,L17
-  *if,GEO_HDW_endH,gt,0,then
-    al,L30,L29,L24,L10,L28,FHR
-  *else
-    al,L30,L29,L24,L10,L28
-  *endif
-  cmsel,A,COMPA_HDW_LeftWall
-  cm,COMPA_HDW_LeftWall,area
-*endif
+! *if,GEO_HDW_topLength,GT,2*GEO_FRAME_headBeamWidth,THEN
+!   al,L22,L10,L20,L17
+!   *if,GEO_HDW_endH,gt,0,then
+!     al,L30,L29,L29b,L24,L10,L28,FHR
+!   *else
+!     al,L30,L29,L29b,L24,L10,L28
+!   *endif
+!   cmsel,A,COMPA_HDW_LeftWall
+!   cm,COMPA_HDW_LeftWall,area
+! *else
+!   al,L22,L10,L20,L17
+!   *if,GEO_HDW_endH,gt,0,then
+!     al,L30,L29,L24,L10,L28,FHR
+!   *else
+!     al,L30,L29,L24,L10,L28
+!   *endif
+!   cmsel,A,COMPA_HDW_LeftWall
+!   cm,COMPA_HDW_LeftWall,area
+! *endif
 
-cmsel,s,COMPA_HDW_RightWall
-lsla,s
-ksll,s
-csslicexz,Eff_GalleryHeight
-*if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
-  csslicexy,zFlatTop
-*endif
-cm,COMPA_HDW_RightWall,area
+! cmsel,s,COMPA_HDW_RightWall
+! lsla,s
+! ksll,s
+! csslicexz,Eff_GalleryHeight
+! *if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
+!   csslicexy,zFlatTop
+! *endif
+! cm,COMPA_HDW_RightWall,area
 
-cmsel,s,COMPA_HDW_LeftWall
-lsla,s
-ksll,s
-csslicexz,Eff_GalleryHeight
-*if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
-  csslicexy,zFlatTop
-*endif
-cm,COMPA_HDW_LeftWall,area
-
-cmsel,s,COMPA_HDW_RightWall
-cmsel,a,COMPA_HDW_LeftWall
-cmsel,a,COMPA_HDW_Walls
-cm,COMPA_HDW_Walls,area
-
-*if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
-  cmsel,s,COMPA_HDW_Footing
-  lsla,s
-  ksll,s
-  csslicexy,zFlatTop
-  cm,COMPA_HDW_Footing,area
-
-  cmsel,s,COMPA_HDW_Slab
-  lsla,s
-  ksll,s
-  csslicexy,zFlatTop
-  cm,COMPA_HDW_Slab,area
-
-  cmsel,s,COMPA_HDW_Stiffener
-  lsla,s
-  ksll,s
-  csslicexy,zFlatTop
-  cm,COMPA_HDW_Stiffener,area
-*endif
+! cmsel,s,COMPA_HDW_LeftWall
+! lsla,s
+! ksll,s
+! csslicexz,Eff_GalleryHeight
+! *if,GEO_HDW_topLength,gt,2*GEO_FRAME_headBeamWidth,then
+!   csslicexy,zFlatTop
+! *endif
+! cm,COMPA_HDW_LeftWall,area
 
 ksel,s,loc,z,zEnd,zEnd+GEO_HDW_length
 nummrg,kp
 
-cmsel,s,COMPA_HDW_Walls
+cmsel,s,COMPA_HDW_Walls  !! TODO  this will break
 lsla,s
 ksll,s
 asel,none
