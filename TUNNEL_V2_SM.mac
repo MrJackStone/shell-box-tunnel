@@ -106,6 +106,12 @@ asel,none
 *enddo
 cm,COMPA_innerWalls,area
 
+! TODO  connect inner walls & roof/floor (L2ACNT)
+!       different inlets for each side
+!       oblique for any type of inlet
+!       remove wall slicing to match roof when using precast slabs (L2ACNT)
+
+
 
 !! 3.1.2  Oblique cut at tunnel ends                                                              !!
 *if,GEO_HDW_type,EQ,1,AND,GEO_HDW_angle,NE,0,THEN
