@@ -81,7 +81,29 @@ CS_HDW2_rightFoot = 26
 CS_hdw1           = 27
 CS_hdw2           = 28
 
-CS_dummy = 99
+CS_roof           = 29
+CS_floor          = 30
+CS_leftWall       = 31
+CS_rightWall      = 32
+CS_free           = 33
+
+*del , CS_innerWalls    ,  , nopr
+*del , CS_IWALL_beams   ,  , nopr
+*del , CS_IWALL_columns ,  , nopr
+*dim , CS_innerWalls    ,  , GEO_TUN_modules-1
+*dim , CS_IWALL_beams   ,  , GEO_TUN_modules-1
+*dim , CS_IWALL_columns ,  , GEO_TUN_modules-1
+*do,nthIwall,1,GEO_TUN_modules-1,1
+  wall                       = CS_free+(3*nthIwall-2)
+  beam                       = CS_free+(3*nthIwall-1)
+  column                     = CS_free+(3*nthIwall-0)
+  CS_innerWalls(nthIwall)    = wall
+  CS_IWALL_beams(nthIwall)   = beam
+  CS_IWALL_columns(nthIwall) = column
+  CS_innerWall%nthIwall%     = wall
+  CS_IWALL_beam%nthIwall%    = beam
+  CS_IWALL_column%nthIwall%  = column
+*enddo
 
 CS_BASE_corbelBot = 1000
 CS_BASE_corbelTop = 2000
@@ -420,28 +442,41 @@ clocal,CoordSys,cart,0,0,0,0,0,0
 csys,0
 
 !! 2.9.1  Local systems                                                                           !!
-! ! Top slab
-clocal,   CS_top, CART,  0,  0,  0,    0, -90-TunnelSlope,    0
-clocal,   CS_top, CART,  0,  0,  0, -180,               0,    0
-csys,0
-! Bottom slab
-clocal,   CS_bot, CART,  0,  0,  0,    0,  90-TunnelSlope,    0
-csys,0
-! Left wall
-clocal,  CS_left, CART,  0,  0,  0,    0,    -TunnelSlope,    0
-clocal,  CS_left, CART,  0,  0,  0,    0,               0,  -90
-clocal,  CS_left, CART,  0,  0,  0,  -90,               0,    0
-csys,0
-! Right wall (also used for inner walls)
-clocal, CS_right, CART,  0,  0,  0,    0,    -TunnelSlope,    0
-clocal, CS_right, CART,  0,  0,  0,    0,               0,   90
-clocal, CS_right, CART,  0,  0,  0,   90,               0,    0
-csys,0
 ! Tunnel
-clocal,CS_tunnel, CART,  0,  0,  0,    0,    -TunnelSlope,    0
-clocal,CS_RevTunnel, CART,GEO_TUN_totEffW,0,GEO_TUN_length
-clocal,CS_RevTunnel, CART, 0, 0, 0,,,180
-csys,0
+local  , CS_tunnel    , cart , 0               , 0 , 0              , 0 , -TunnelSlope , 0
+clocal , CS_RevTunnel , cart , GEO_TUN_totEffW , 0 , GEO_TUN_length
+clocal , CS_RevTunnel , cart , 0               , 0 , 0              ,   ,              , 180
+
+! Top slab
+csys   , CS_tunnel
+clocal , CS_roof    , cart , 0 , GEO_TUN_effH , 0 ,  , 90
+
+local  , CS_top , CART , 0 , 0 , 0 , 0    , -90-TunnelSlope , 0
+clocal , CS_top , CART , 0 , 0 , 0 , -180 , 0               , 0
+
+! Bottom slab
+csys   , CS_tunnel
+clocal , CS_floor  , cart , 0 , 0 , 0 ,  , 90
+
+local,   CS_bot, cart,  0,  0,  0,    0,  90-TunnelSlope,    0
+
+! Left wall
+csys   , CS_tunnel
+clocal , CS_leftWall , cart , 0 , 0 , 0 , 90 , 90
+
+local  , CS_left , cart , 0 , 0 , 0 , 0   , -TunnelSlope , 0
+clocal , CS_left , cart , 0 , 0 , 0 , 0   , 0            , -90
+clocal , CS_left , cart , 0 , 0 , 0 , -90 , 0            , 0
+
+! Right wall (also used for inner walls)
+csys   , CS_tunnel
+clocal , CS_rightWall , cart , GEO_TUN_totEffW , 0 , 0 , 90 , 90
+
+local  , CS_right , cart , 0 , 0 , 0 , 0  , -TunnelSlope , 0
+clocal , CS_right , cart , 0 , 0 , 0 , 0  , 0            , 90
+clocal , CS_right , cart , 0 , 0 , 0 , 90 , 0            , 0
+
+csys , 0
 
 ! Corbel coordinate systems
 xWall=0
@@ -460,23 +495,13 @@ csys,0
 
 ! Inner wall coordinate systems
 *if,GEO_TUN_modules,gt,1,then
-  *del,CS_IWALL_beams
-  *del,CS_IWALL_columns
-  *dim,CS_IWALL_beams,array,GEO_TUN_modules-1
-  *dim,CS_IWALL_columns,array,GEO_TUN_modules-1
-  xWall=0
-  *do,nthWall,1,GEO_TUN_modules-1,1
-    beamCS=CS_BASE_iwall+(2*nthWall-1)
-    colCS=CS_BASE_iwall+(2*nthWall)
-
-    xWall=xWall+GEO_TUN_effW
-    csys,CS_Tunnel
-    clocal,beamCS,cart,xWall,0,0,,,-90
-    csys,beamCS
-    clocal,colCS,cart,0,0,0,90
-
-    CS_IWALL_beams(nthWall)=beamCS
-    CS_IWALL_columns(nthWall)=colCS
+  *do,nthWall,1,GEO_IWALL_count,1
+    xWall  = GEO_IWALL_x_coords(nthWall)
+    csys   , CS_leftWall
+    clocal , CS_innerWall%nthWall%    , cart , 0     , 0 , -xWall
+    csys   , CS_Tunnel
+    clocal , CS_IWALL_beam%nthWall%   , cart , xWall , 0 , 0      ,    ,  , -90
+    clocal , CS_IWALL_column%nthWall% , cart , 0     , 0 , 0      , 90
   *enddo
   csys,0
 *endif
