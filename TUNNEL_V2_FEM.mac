@@ -324,9 +324,12 @@ elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticMod
   l2acnt , 'COMPA_leftWall'  , 'COMPL_APR_leftInterface'  ,  , 1
   l2acnt , 'COMPA_rightWall' , 'COMPL_APR_rightInterface' ,  , 1
 
+  xMin = -GEO_APR_length/3
+  xMax = GEO_TUN_totEffW+(GEO_APR_length/3)
   cmsel,s,COMPA_approach
   esla
   nsle
+  nsel,u,loc,x,xMin,xMax
   elasticbase,'EBASE_approach','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_approach','COMPE_SOILSPR_approach'
 *endif
 
