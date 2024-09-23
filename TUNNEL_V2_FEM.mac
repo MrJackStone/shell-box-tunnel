@@ -323,6 +323,11 @@ elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticMod
 *if,GEO_APR_status,eq,1,then
   l2acnt , 'COMPA_leftWall'  , 'COMPL_APR_leftInterface'  ,  , 1
   l2acnt , 'COMPA_rightWall' , 'COMPL_APR_rightInterface' ,  , 1
+
+  cmsel,s,COMPA_approach
+  esla
+  nsle
+  elasticbase,'EBASE_approach','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_approach','COMPE_SOILSPR_approach'
 *endif
 
 
