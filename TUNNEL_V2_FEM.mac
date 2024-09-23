@@ -275,99 +275,35 @@ mat  , MAT_soil
 
 !! 4.3.1  Floor slab                                                                              !!
 ! Bottom supports
-CMSEL,S,COMPA_Floor
-NSLA,S,1
-*get,NodeCount,NODE,0,COUNT
+cmsel,s,COMPA_floor
+esla
+nsle
+elasticbase,'EBASE_floor','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_floor','COMPE_SOILSPR_floor'
 
-*do,NodeIndex,1,NodeCount,1
-
-  *get,nthNode,NODE,0,NUM,MIN
-  xVal = NX(nthNode)
-  yVal = NY(nthNode)
-  zVal = NZ(nthNode)
-
-  *get,MaxNode,NODE,0,NUM,MAXD
-  NewNode=MaxNode+1
-  N,NewNode,xVal,yVal-SpringLength,zVal
-  E,NewNode,nthNode
-
-  D,NewNode,UX,0,,,,UY,UZ
-
-  NSEL,U,NODE,,nthNode
-
-*enddo
 
 !! 4.3.2  Left wall                                                                               !!
 ! Left wall supports
-CMSEL,S,COMPA_LeftWall
-NSLA,S,1
-*get,NodeCount,NODE,0,COUNT
+cmsel,s,COMPA_LeftWall
+esla
+nsle
+elasticbase,'EBASE_leftWall','X',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_leftWall','COMPE_SOILSPR_leftWall'
 
-*do,NodeIndex,1,NodeCount,1
-
-  *get,nthNode,NODE,0,NUM,MIN
-  xVal = NX(nthNode)
-  yVal = NY(nthNode)
-  zVal = NZ(nthNode)
-
-  *get,MaxNode,NODE,0,NUM,MAXD
-  NewNode = MaxNode+1
-  N,NewNode,xVal-SpringLength,yVal,zVal
-  E,NewNode,nthNode
-
-  D,NewNode,UX,0,,,,UY,UZ
-
-  NSEL,U,NODE,,nthNode
-
-*enddo
 
 !! 4.3.3  Right wall                                                                              !!
 ! Right wall supports
-CMSEL,S,COMPA_RightWall
-NSLA,S,1
-*get,NodeCount,NODE,0,COUNT
+cmsel,s,COMPA_RightWall
+esla
+nsle
+elasticbase,'EBASE_rightWall','X',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_leftWall','COMPE_SOILSPR_leftWall'
 
-*do,NodeIndex,1,NodeCount,1
-
-  *get,nthNode,NODE,0,NUM,MIN
-  xVal = NX(nthNode)
-  yVal = NY(nthNode)
-  zVal = NZ(nthNode)
-
-  *get,MaxNode,NODE,0,NUM,MAXD
-  NewNode = MaxNode+1
-  N,NewNode,xVal+SpringLength,yVal,zVal
-  E,NewNode,nthNode
-
-  D,NewNode,UX,0,,,,UY,UZ
-
-  NSEL,U,NODE,,nthNode
-
-*enddo
 
 !! 4.3.4  Top slab                                                                                !!
 ! Top supports
-CMSEL,S,COMPA_Roof
-NSLA,S,1
-*get,NodeCount,NODE,0,COUNT
+cmsel,s,COMPA_Roof
+esla
+nsle
+elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_roof','COMPE_SOILSPR_roof'
 
-*do,NodeIndex,1,NodeCount,1
-
-  *get,nthNode,NODE,0,NUM,MIN
-  xVal = NX(nthNode)
-  yVal = NY(nthNode)
-  zVal = NZ(nthNode)
-
-  *get,MaxNode,NODE,0,NUM,MAXD
-  NewNode = MaxNode+1
-  N,NewNode,xVal,yVal+SpringLength,zVal
-  E,NewNode,nthNode
-
-  D,NewNode,UX,0,,,,UY,UZ
-
-  NSEL,U,NODE,,nthNode
-
-*enddo
 
 !! 4.3.7  Headwalls                                                                               !!
 *get,parType,PARM,GEO_HDW_status,TYPE
