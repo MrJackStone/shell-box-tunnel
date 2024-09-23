@@ -15,17 +15,35 @@ cm,COMPA_Walls,AREA
 ! Left tunnel wall
 asel,r,loc,x,0
 cm,COMPA_LeftWall,area
+lsla
+lsel,r,loc,y,0
+cm,COMPL_LWALL_floorInterface,line
+lsla
+lsel,r,loc,y,GEO_TUN_effH
+cm,COMPL_LWALL_roofInterface,line
 
 ! Right tunnel wall
 cmsel,S,COMPA_Walls
 asel,r,loc,x,GEO_TUN_totEffW
 cm,COMPA_RightWall,area
+lsla
+lsel,r,loc,y,0
+cm,COMPL_RWALL_floorInterface,line
+lsla
+lsel,r,loc,y,GEO_TUN_effH
+cm,COMPL_RWALL_roofInterface,line
 
 ! Inner tunnel walls
 cmsel,s,COMPA_Walls
 cmsel,u,COMPA_LeftWall
 cmsel,u,COMPA_RightWall
 cm,COMPA_InnerWalls,area
+lsla
+lsel,r,loc,y,0
+cm,COMPL_IWALL_floorInterface,line
+lsla
+lsel,r,loc,y,GEO_TUN_effH
+cm,COMPL_IWALL_roofInterface,line
 
 *do,nthWall,1,GEO_IWALL_count,1
   xCoord = GEO_IWALL_x_coords(nthWall)
