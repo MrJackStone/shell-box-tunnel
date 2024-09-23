@@ -27,6 +27,8 @@ GEO_TUN_moduleWidth = 5.5
 GEO_TUN_height = 6.1
 ! Tunnel slope (%)
 GEO_TUN_slope = 1.05
+! Tunnel skewness
+GEO_TUN_skewness = 45
 
 
 !! 1.1.2  Floor slab                                                                              !!

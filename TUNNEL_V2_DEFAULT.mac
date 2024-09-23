@@ -1,3 +1,5 @@
+GEO_TUN_skewness = 0
+
 ! Roof slab
 GEO_ROOF_wallConnection = 1
 GEO_ROOF_continuity     = 0
