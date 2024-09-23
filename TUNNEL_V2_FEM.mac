@@ -121,109 +121,89 @@ cmsel,s,COMPA_struts
   *enddo
 *endif
 
-! Mesh
-*if,GEO_ROOF_wallConnection,eq,0,then
-  ! Rigid roof-wall connection
-  CMSEL,S,COMPA_Tunnel
-  AESIZE,ALL,FEM_TUN_esize
-  AMESH,ALL
+! Mesh floor & walls
+cmsel,s,COMPA_tunnel
+cmsel,u,COMPA_roof
+aesize,all,FEM_TUN_esize
+amesh,all
 
-*elseif,GEO_ROOF_wallConnection,eq,1,then
-  ! Pinned roof-wall connection
-  csys,CS_Tunnel
+! Mesh roof
+cmsel,s,COMPA_roof
+aesize,all,FEM_TUN_esize
 
-  cmsel,s,COMPA_Tunnel
-  cmsel,u,COMPA_Roof
-  cmsel,u,COMPA_struts
-  cm,COMPA_ref,area
-  aesize,all,FEM_TUN_esize
+*if,GEO_ROOF_type,eq,0,then
+  ! Flat slab
   amesh,all
 
-  cmsel,s,COMPA_ref
-  lsla,s
-  lsel,r,loc,y,GEO_TUN_effH
-  *if,GEO_ROOF_gapStrutCount,gt,0,then
-    lsel,u,loc,z,GEO_ROOF_gap_z_begs(1:GEO_ROOF_gapCount),GEO_ROOF_gap_z_ends(1:GEO_ROOF_gapCount)
-  *endif
-  cm,COMPL_ref,line
+*elseif,GEO_ROOF_type,eq,1,then
+  ! With precast girders
+  startPoint = 1
 
-  cmsel,s,COMPA_Roof
-  cmsel,a,COMPA_struts
-  lsla,s
-  cm,COMPL_targ,line
+  *do,nthGirder,1,GEO_girderCount,1
 
-  xWall = 0
-  *do,nthModule,1,GEO_TUN_modules+1,1
-    cmsel,s,COMPL_ref
-    lsel,r,loc,x,xWall
-    cm,COMPL_copy,line
-
-    cmsel,s,COMPL_targ
-    lsel,r,loc,x,xWall
-    cm,COMPL_paste,line
-
-    xWall = xWall+GEO_TUN_effW
-    cmsel,s,COMPL_paste
+    cmsel,s,COMPA_RG%nthGirder%
     *get,ac,area,,count
-    *if,ac,eq,0,cycle
+    *if,ac,eq,0,then
+      startPoint = 1
+      *cycle
+    *endif
 
-    cmsel,a,COMPL_copy
-    mshcopy,line,COMPL_copy,COMPL_paste
+    *if,startPoint,eq,1,then
+      ! First gider: mesh freely
+      startPoint = 0
+      amesh,all
+    *else
+      ! Subsequent girders: paste previously copied line mesh
+      zEdge = GEO_girderZ(nthGirder-1)
+      lsla,s
+      lsel,r,loc,z,zEdge
+      cm,COMPL_pasteG,line
+      cmsel,a,COMPL_copyG
+      mshcopy,line,COMPL_copyG,COMPL_pasteG
+      amesh,all
+    *endif
+
+    ! Girders before last: copy line mesh
+    *if,nthGirder,lt,GEO_girderCount,then
+      zEdge = GEO_girderZ(nthGirder)
+      lsla,s
+      lsel,r,loc,z,zEdge
+      cm,COMPL_copyG,line
+    *endif
+
   *enddo
+*endif
 
-  ! Mesh roof
-  cmsel,s,COMPA_Roof
+! Mesh struts
+cmsel,a,COMPA_struts
+*get,ac,area,,count
+*if,ac,gt,0,then
   aesize,all,FEM_TUN_esize
-  *if,GEO_ROOF_type,eq,0,then
-    ! Without girders
-    amesh,all
-  *elseif,GEO_ROOF_type,eq,1,then
-    ! With girders
-    startPoint = 1
-    *do,nthGirder,1,GEO_girderCount,1
-      ! Select girder areas
-      compName = STRCAT('COMPA_RG',CHRVAL(nthGirder))
-      cmsel,s,%compName%
+  amesh,all
+*endif
 
-      *get,ac,area,,count
-      *if,ac,eq,0,then
-        startPoint = 1
-        *cycle
-      *endif
+! Connect parts
+fixed  = 0
+pinned = 1
 
-      *if,startPoint,eq,1,then
-        ! First gider: mesh freely
-        startPoint = 0
-        amesh,all
-      *else
-        ! Subsequent girders: paste previously copied line mesh
-        z=GEO_girderZ(nthGirder-1)
-        lsla,s
-        lsel,r,loc,z,z
-        cm,COMPL_pasteG,line
-        cmsel,a,COMPL_copyG
-        mshcopy,line,COMPL_copyG,COMPL_pasteG
-        amesh,all
-      *endif
-      ! Girders before last: copy line mesh
-      *if,nthGirder,lt,GEO_girderCount,then
-        z=GEO_girderZ(nthGirder)
-        lsla,s
-        lsel,r,loc,z,z
-        cm,COMPL_copyG,line
-      *endif
-    *enddo
-  *endif
+roofConnection = fixed
+*if,GEO_ROOF_wallConnection,eq,1,then
+  roofConnection = pinned
+*endif
 
-  ! Mesh struts
-  cmsel,a,COMPA_struts
-  *get,ac,area,,count
-  *if,ac,gt,0,then
-    aesize,all,FEM_TUN_esize
-    amesh,all
-  *endif
+l2acnt , 'COMPA_floor' , 'COMPL_LWALL_floorInterface' ,  , fixed
+l2acnt , 'COMPA_floor' , 'COMPL_RWALL_floorInterface' ,  , fixed
+l2acnt , 'COMPA_roof'  , 'COMPL_LWALL_roofInterface'  ,  , roofConnection
+l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
 
-  csys,0
+*if,GEO_IWALL_count,ge,1,then
+  l2acnt , 'COMPA_floor' , 'COMPL_IWALL_floorInterface' ,  , fixed
+  l2acnt , 'COMPA_roof'  , 'COMPL_IWALL_roofInterface'  ,  , fixed
+*endif
+
+*if,GEO_ROOF_gapStatus,eq,1,and,GEO_ROOF_gapStrutCount,gt,0,then
+  l2acnt , 'COMPA_struts' , 'COMPL_LWALL_roofInterface' ,  , pinned
+  l2acnt , 'COMPA_struts' , 'COMPL_RWALL_roofInterface' ,  , pinned
 *endif
 
 
