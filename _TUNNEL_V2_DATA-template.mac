@@ -226,6 +226,8 @@ GEO_APR_status = 0
 !   [1] On (compression-only LINK180 springs)
 GEO_APR_oneWay = 1
 
+! Approach slab's axis position along tunnel length (optional, defaults to load train axis)
+GEO_APR_position = 12.5
 ! Approach slab length
 GEO_APR_length = 4.0
 ! Approach slab width

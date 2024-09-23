@@ -90,7 +90,10 @@ CS_HDW1_rightFoot = 33
 CS_HDW2_leftFoot  = 34
 CS_HDW2_rightFoot = 35
 
-CS_free           = 36
+CS_approachLeft   = 36
+CS_approachRight  = 37
+
+CS_free           = 38
 
 *del , CS_innerWalls    ,  , nopr
 *del , CS_IWALL_beams   ,  , nopr
@@ -241,23 +244,19 @@ GEO_corbelYOff_BOT = GEO_CORB_height+(GEO_FLOOR_thk/2)+floor_yProjection
 
 ! Calculate approach slab position
 *if,GEO_APR_status,EQ,1,THEN
+
+  ! Set default approach slab position based on load train layout
+  *if,GEO_APR_position,eq,0,then
+    GEO_APR_position = (LOAD_LTA_offsets(1)+LOAD_LTA_offsets(LOAD_LTA_count))/2
+  *endif
+
   *afun,deg
-
-  GEO_APR_zAxis = (LOAD_LTA_offsets(1)+LOAD_LTA_offsets(LOAD_LTA_count))/2
-  GEO_APR_zAxW  = tan(LOAD_LTA_skew)*(Eff_GalleryWidth*GEO_TUN_modules)/2
-  GEO_APR_zS    = GEO_APR_width/(2*cos(LOAD_LTA_skew))
-  GEO_APR_zL    = GEO_APR_length*tan(LOAD_LTA_skew)
-
-  GEO_APR_z1 = GEO_APR_zAxis - GEO_APR_zAxW - GEO_APR_zS
-  GEO_APR_z2 = GEO_APR_zAxis - GEO_APR_zAxW + GEO_APR_zS
-  GEO_APR_z3 = GEO_APR_zAxis + GEO_APR_zAxW - GEO_APR_zS
-  GEO_APR_z4 = GEO_APR_zAxis + GEO_APR_zAxW + GEO_APR_zS
-
-  GEO_APR_z1L = GEO_APR_z1 - GEO_APR_zL
-  GEO_APR_z2L = GEO_APR_z2 - GEO_APR_zL
-  GEO_APR_z3L = GEO_APR_z3 + GEO_APR_zL
-  GEO_APR_z4L = GEO_APR_z4 + GEO_APR_zL
-
+  GEO_APR_obliqueWidth      = GEO_APR_width/cos(LOAD_LTA_skew)
+  GEO_APR_positionOffset    = (GEO_TUN_totEffW/2)*tan(LOAD_LTA_skew)
+  GEO_APR_positionLeft      = GEO_APR_position+GEO_APR_positionOffset
+  GEO_APR_positionRight     = GEO_APR_position-GEO_APR_positionOffset
+  GEO_APR_obliqueLength     = GEO_APR_length*cos(LOAD_LTA_skew)
+  GEO_APR_axialSkewedLength = GEO_APR_obliqueLength*tan(LOAD_LTA_skew)
   *afun,rad
 *endif
 
@@ -378,7 +377,6 @@ LOAD_SOIL_gammasub_d = LOAD_SOIL_gammasat_d-LOAD_WATER_gammaw_d
 *endif
 
 ! Z coordinate of point where tunnel axis intersects railway axis (pivot point)
-! TODO: this is the same value calculated for GEO_APR_zAxis
 LOAD_z0 = (LOAD_LTA_offsets(1)+LOAD_LTA_offsets(LOAD_LTA_count))/2
 
 ! TODO  implement buoyancy calculation correctly
@@ -579,6 +577,18 @@ wpcsys,-1
 wprota,,-90
 wpoffs,,,-GEO_HDW_footDepth
 cswpla,CS_HDW2_rightFoot,cart
+
+! Approach slabs
+csys,CS_roof
+wpcsys,-1
+wpoffs,,GEO_APR_positionLeft
+wprota,,,180
+cswpla,CS_approachLeft,cart
+
+csys,CS_roof
+wpcsys,-1
+wpoffs,GEO_TUN_totEffW,GEO_APR_positionRight
+cswpla,CS_approachRight,cart
 
 csys,0
 

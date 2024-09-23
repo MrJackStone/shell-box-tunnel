@@ -400,79 +400,8 @@ NSLA,S,1
 !! 4.4  Approach slab                                                                             !!
 !!                                                                                                !!
 *if,GEO_APR_status,eq,1,then
-  csys,CS_Tunnel
-
-  ! Match roof mesh
-  cmsel,s,COMPA_Roof
-  lsla,s
-  cm,COMPL_ref,line
-  lsel,r,loc,x,0
-  lsel,r,loc,z,GEO_APR_z3,GEO_APR_z4
-  cm,COMPL_copyL,line
-  cmsel,s,COMPL_ref
-  lsel,r,loc,x,GEO_TUN_totEffW
-  lsel,r,loc,z,GEO_APR_z1,GEO_APR_z2
-  cm,COMPL_copyR,line
-  cmsel,s,COMPA_approach
-  lsla,s
-  cm,COMPL_targ,line
-  lsel,r,loc,x,0
-  cm,COMPL_pasteL,line
-  cmsel,s,COMPL_targ
-  lsel,r,loc,x,GEO_TUN_totEffW
-  cm,COMPL_pasteR,line
-  allsel
-  mshcopy,line,COMPL_copyL,COMPL_pasteL
-  mshcopy,line,COMPL_copyR,COMPL_pasteR
-
-  ! Mesh approach slab
-  cmsel,s,COMPA_approach
-  aatt,MAT_CONC,,TYPE_SHELL181,,SEC_APR
-  aesize,all,FEM_TUN_esize
-  amesh,all
-  esla,s
-  nsle,s
-  cm,COMPN_approach,node
-
-  ! Node selection components: approach slab interfaces
-  lsel,s,loc,x,0
-  lsel,a,loc,x,GEO_TUN_totEffW
-  lsla,r
-  nsll,s,1
-  cm,COMPN_aprInterf,node
-  nsel,r,loc,x,0
-  cm,COMPN_aprInterfL,node
-  cmsel,s,COMPN_aprInterf
-  cmsel,u,COMPN_aprInterfL
-  cm,COMPN_aprInterfR,node
-
-  csys,0
-
-  ! Elastic soil supports (far from tunnel only)
-  xMin = 0-(GEO_APR_length/3)
-  xMax = GEO_TUN_totEffW+(GEO_APR_length/3)
-  type,TYPE_LINK180
-  real,REAL_normSprings
-  mat,MAT_SOIL
-  cmsel,s,COMPN_approach
-  cmsel,u,COMPN_aprInterf
-  !nsel,u,loc,x,xMin,xMax
-  cm,COMPN_temp,node
-  *get,NC,node,,count
-  nnum = 0
-  *do,nthNode,1,NC,1
-    cmsel,s,COMPN_temp
-    nnum = ndnext(nnum)
-    nx   = nx(nnum)
-    ny   = ny(nnum)
-    nz   = nz(nnum)
-    *get,NDMX,node,,num,maxd
-    newnode = NDMX+1
-    n,newnode,nx,ny-FEM_SPR_normLength,nz
-    e,nnum,newnode
-    d,newnode,all,0
-  *enddo
-
+  l2acnt , 'COMPA_roof' , 'COMPL_APR_leftInterface'  ,  , 1
+  l2acnt , 'COMPA_roof' , 'COMPL_APR_rightInterface' ,  , 1
 *endif
 
 

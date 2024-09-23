@@ -22,9 +22,10 @@ GEO_FRAME_beamRoofConnection = 1
 GEO_HDW_wingBottomOffset = 0
 
 ! Approach slabs
-GEO_APR_status = 0
-GEO_APR_oneWay = 0
-GEO_APR_thk    = 1
+GEO_APR_status   = 0
+GEO_APR_oneWay   = 0
+GEO_APR_thk      = 1
+GEO_APR_position = 0
 
 ! Piles
 GEO_PILE_status       = 0
