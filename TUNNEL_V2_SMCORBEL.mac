@@ -86,45 +86,5 @@ CMSEL,S,COMPA_temp
 ASEL,R,LOC,Y,Eff_GalleryHeight-GEO_corbelYOff_TOP,Eff_GalleryHeight
 CM,COMPA_WALL_topCorbel,AREA
 
-! Headwalls
-*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-  x_LEFT_Top  = GEO_corbelXOff_TOP
-  x_LEFT_Bot  = GEO_corbelXOff_BOT
-  x_RIGHT_Top = GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_TOP
-  x_RIGHT_Bot = GEO_TUN_modules*Eff_GalleryWidth-GEO_corbelXOff_BOT
-
-  y_BOT = GEO_corbelYOff_BOT
-  y_TOP = Eff_GalleryHeight-GEO_corbelYOff_TOP
-
-  CMSEL,S,COMPA_HDW_Slab
-  CSSLICEYZ,x_LEFT_Bot
-  CSSLICEYZ,x_RIGHT_Bot
-
-  CMSEL,S,COMPA_HDW_Stiffener
-  CSSLICEYZ,x_LEFT_Bot
-  CSSLICEYZ,x_RIGHT_Bot
-
-  CMSEL,S,COMPA_HDW_BackBeam
-  CSSLICEYZ,x_LEFT_Bot
-  CSSLICEYZ,x_RIGHT_Bot
-
-  CMSEL,S,COMPA_HDW_BotBeam
-  CSSLICEYZ,x_LEFT_Bot
-  CSSLICEYZ,x_RIGHT_Bot
-
-  CMSEL,S,COMPA_HDW_TopBeam
-  CSSLICEYZ,x_LEFT_Top
-  CSSLICEYZ,x_RIGHT_Top
-
-  CMSEL,S,COMPA_HDW_LeftWall
-  CSSLICEXZ,y_BOT
-  CSSLICEXZ,y_TOP
-
-  CMSEL,S,COMPA_HDW_RightWall
-  CSSLICEXZ,y_BOT
-  CSSLICEXZ,y_TOP
-*endif
-
 ! Rebuild selection components
 TUNNEL_V2_BUILDCM
-TUNNEL_V2_HDWBUILDCM
