@@ -321,100 +321,27 @@ elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticMod
 !! 4.4  Approach slab                                                                             !!
 !!                                                                                                !!
 *if,GEO_APR_status,eq,1,then
-  l2acnt , 'COMPA_roof' , 'COMPL_APR_leftInterface'  ,  , 1
-  l2acnt , 'COMPA_roof' , 'COMPL_APR_rightInterface' ,  , 1
+  l2acnt , 'COMPA_leftWall'  , 'COMPL_APR_leftInterface'  ,  , 1
+  l2acnt , 'COMPA_rightWall' , 'COMPL_APR_rightInterface' ,  , 1
 *endif
 
 
 !!                                                                                                !!
 !! 4.5  Pinned connections                                                                        !!
 !!                                                                                                !!
-! Between roof, walls, and approach slabs
-*if,GEO_APR_status,eq,1,or,GEO_ROOF_wallConnection,eq,1,then
-  csys,CS_Tunnel
-
-  cmsel,s,COMPA_Tunnel
-  cmsel,a,COMPA_Approach
-  cmsel,a,COMPA_HDW_TopBeam
-  lsla,s
-  nsll,s,1
-  nsel,r,loc,y,GEO_TUN_effH
-  cm,COMPN_temp,node
-
-  nsel,r,loc,x,0,GEO_TUN_totEffW,GEO_TUN_effW
-
-  *if,GEO_APR_oneWay,eq,0,then
-    cpintf,UX,1e-6
-    cpintf,UY,1e-6
-    cpintf,UZ,1e-6
-  *elseif,GEO_APR_oneWay,eq,1,then
-    ! Nodal couplings
-    cpintf,UX,1e-6
-    cpintf,UZ,1e-6
-    cmsel,s,COMPA_Approach
-    nsla,u,1
-    cpintf,UY,1e-6
-    ! One way connection
-    cmsel,s,COMPN_temp
-    cmsel,s,COMPA_Walls
-    esla,s
-    nsla,r,1
-    esln,r,0
-    cm,COMPN_temp2,node
-    nsle,s
-    cmsel,u,COMPN_temp2
-    cm,COMPN_row2,node
-    !n2=ndnext(0)
-    cmsel,s,COMPN_temp
-    cmsel,s,COMPA_Approach
-    nsla,r,1
-    cm,COMPN_row1,node
-    !n1=ndnext(0)
-    yDist=FEM_TUN_esize !abs(ny(n1)=ny(n2))
-    cmsel,s,COMPN_row1
-    cmsel,a,COMPN_row2
-    type,TYPE_LINK180
-    real,REAL_rigidStrut
-    mat,MAT_RIGID
-    eintf,5e-2,,low,CS_Tunnel,0,yDist,0
-
-  *endif
-
-  csys,0
-*endif
-
 ! Between roof precast girders
 *if,GEO_ROOF_type,eq,1,and,GEO_ROOF_continuity,eq,0,then
-  cmsel,s,COMPA_Roof
-  lsla,s
   ! Remove longitudinal lines from selection
-  x=0
-  *do,nthModule,1,GEO_TUN_Modules+1,1
-    lsel,u,loc,x,x
-    x=x+GEO_TUN_effW
-  *enddo
+  csys,CS_tunnel
+  cmsel,s,COMPA_roof
+  lsla,s
+  lsel,u,loc,x,0:GEO_TUN_totEffW:GEO_TUN_effW
   nsll,s,1
   ! Create semi-rigid connection
   type,TYPE_COMBIN39
   mat,MAT_CONC
   real,REAL_roofSprings
   eintf,1e-3
-*endif
-
-! Between headwall top beam and first/last roof slab girder
-*if,GEO_HDW_status,eq,1,and,GEO_FRAME_beamRoofConnection,eq,0,then
-  cmsel,s,COMPA_HDW_TopBeam
-  lsla,s
-  nsll,s,1
-  cm,COMPN_temp,node
-  cmsel,s,COMPA_Roof
-  lsla,s
-  nsll,s,1
-  cmsel,a,COMPN_temp
-
-  cpintf,rotx,1e-6
-  cpintf,roty,1e-6
-  cpintf,rotz,1e-6
 *endif
 
 
