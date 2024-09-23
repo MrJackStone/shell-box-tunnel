@@ -286,6 +286,8 @@ TUNNEL_V2_SMIWALL
 !!                                                                                                !!
 !! 3.9  Area direction                                                                            !!
 !!                                                                                                !!
+csys,CS_tunnel
+
 cmsel , s , COMPA_Floor
 aryori,-1
 
@@ -312,10 +314,6 @@ arxori,-1
 cmsel , s , COMPA_HDW_RightWall
 arxori,1
 
-!cmsel,S,COMPA_HDW_TopBeam
-!compa_HDW_BotBeam
-!compa_HDW_BackBeam
-
 allsel
 
 
@@ -327,7 +325,7 @@ CSYS,CS_Tunnel
 
 ! Get reference location for cover soil representation
 KSEL,S,LOC,Z,GEO_TUN_length
-KSEL,R,LOC,Y,Eff_GalleryHeight
+KSEL,R,LOC,Y,GEO_TUN_effH
 *get,KRef,KP,,NUM,MIN
 
 ! Draw embankment contour in global cartesian CS
@@ -338,9 +336,9 @@ zREF = KZ(KRef)
 ! Calculate vertex location for embankment keypoints
 *afun,DEG
 xPT          = GEO_TUN_totEffW/2
-yPT1         = COS(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
+yPT1         = COS(TunnelSlope)*(GEO_TUN_effH+(GEO_ROOF_thk/2))
 yPT2         = yPT1+GEO_EMB_height
-zPT1         = -SIN(TunnelSlope)*(Eff_GalleryHeight+(GEO_ROOF_thk/2))
+zPT1         = -SIN(TunnelSlope)*(GEO_TUN_effH+(GEO_ROOF_thk/2))
 zPT2         = zPT1+(GEO_EMB_height/TAN(GEO_EMB_slopeBeg))
 yPT3         = yPT2
 yPT4         = yREF+COS(TunnelSlope)*(GEO_ROOF_thk/2)
@@ -365,8 +363,8 @@ L , KPT2 , KPT3
 L , KPT3 , KPT4
 
 ! Create component
-CM,COMPL_Embankment,LINE
-/color,CM,WHIT,COMPL_Embankment
+cm,COMPL_Embankment,line
+/color,cm,whit,COMPL_Embankment
 
 
 !!                                                                                                !!
@@ -401,42 +399,42 @@ lsel,none
 *enddo
 
 ! Create component
-CM,COMPL_Railway,LINE
-/color,CM,RED,COMPL_Railway
+cm,COMPL_Railway,line
+/color,cm,red,COMPL_Railway
 
 
 !!                                                                                                !!
 !! 3.12  Capture images                                                                           !!
 !!                                                                                                !!
-/color , CM , DGRA , COMPA_Walls
-/color , CM , LGRA , COMPA_Floor
-/color , CM , LGRA , COMPA_Roof
+/color , cm , dgra , COMPA_Walls
+/color , cm , lgra , COMPA_Floor
+/color , cm , lgra , COMPA_Roof
 /color , cm , lgra , COMPA_struts
-/color , CM , 14   , COMPA_Headwalls
+/color , cm , 14   , COMPA_Headwalls
 /color , cm , oran , COMPA_approach
 /color , cm , gree , COMPA_Headwalls
 
 ! Tunnel
-ALLSEL
-CMSEL,S,COMPA_Tunnel
-CMSEL,S,COMPL_Tunnel
-CMSEL,S,COMPK_Tunnel
+allsel
+cmsel,s,COMPA_Tunnel
+cmsel,s,COMPL_Tunnel
+cmsel,s,COMPK_Tunnel
 /view,1,1,2,3
 /angle,1
 /auto,1
-GPLOT
-/graphics,FULL
-TAKEPIC,'SM_Tunnel'
+gplot
+/graphics,full
+takepic,'SM_Tunnel'
 
 ! Capture schematic side view (shows railway lines and embankment contour)
-ALLSEL
+allsel
 ksel,none
 /view,1,-1,0,0
 /pnum,AREA,1
 /number,1
-GPLOT
-TAKEPIC,'SM_Schematic',800
-GPLOT
+gplot
+takepic,'SM_Schematic',800
+gplot
 
 ! Capture top view
 allsel

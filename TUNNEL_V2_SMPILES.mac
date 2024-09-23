@@ -1,5 +1,11 @@
 ! TUNNEL_V2_SMPILES
 
+*msg,fatal
+TUNNEL_V2_SMPILES fatal error: not implemented.%/&
+This macro needs to be updated due to major modelling changes (contacts instead of solid model slicing).%/&
+Run terminated.
+
+/eof
 
 lsel,none
 ksel,none

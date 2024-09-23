@@ -1,10 +1,10 @@
 ! TUNNEL_V2_SMIWALL
 
 
-asel,none
-cm,COMPA_bBeam,area
-cm,COMPA_tBeam,area
-cm,COMPA_columns,area
+asel , none
+cm   , COMPA_bBeam   , area
+cm   , COMPA_tBeam   , area
+cm   , COMPA_columns , area
 
 *if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
   csys,CS_Tunnel
