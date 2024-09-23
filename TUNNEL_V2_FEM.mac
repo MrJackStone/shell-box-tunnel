@@ -261,6 +261,11 @@ l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
   cmsel,s,COMPA_Headwalls
   AESIZE,ALL,FEM_HDW_esize
   AMESH,ALL
+
+  ! TODO  connect all other parts to each other & to tunnel
+
+  l2acnt,'COMPA_floor','COMPL_HDW1_slabInterface',,1
+  l2acnt,'COMPA_floor','COMPL_HDW2_slabInterface',,1
 *endif
 
 
