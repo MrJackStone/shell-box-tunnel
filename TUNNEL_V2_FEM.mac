@@ -358,59 +358,7 @@ elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticMod
 !!                                                                                                !!
 *get,parmType,PARM,LOAD_thermal,TYPE
 *if,parmType,EQ,0,AND,LOAD_thermal,NE,0,THEN
-  ! Attributes for frictional soil springs
-  TYPE,TYPE_LINK180
-  REAL,REAL_longSprings
-  MAT,MAT_SOIL
-
-  CSYS,CS_tunnel
-  CMSEL,S,COMPA_Tunnel
-  cmsel,u,COMPA_innerWalls
-  ESLA,S
-  NSLE,S
-  CM,COMPN_temp,NODE
-  *get,nc1,node,,count
-  nummrg,node,,,sele
-  *get,nc2,node,,count
-  *if,nc2,ne,nc1,then
-    cm,COMPN_unsel,node
-    cmsel,s,COMPN_temp
-    cmsel,u,COMPN_unsel
-    CM,COMPN_temp,NODE
-  *endif
-  *get,NC,NODE,,COUNT
-  NodeNum=0
-
-  *do,nthNode,1,NC,1
-    CMSEL,S,COMPN_temp
-    NodeNum = NDNEXT(NodeNum)
-    x       = NX(NodeNum)
-    y       = NY(NodeNum)
-    z       = NZ(NodeNum)
-    *get,maxND,NODE,,NUM,MAXD
-    NewNode = maxND+1
-    N,NewNode,x,y,z+SpringLength
-    E,NodeNum,NewNode
-    D,NewNode,UZ,0
-
-    cpNum_UX = 0
-    cpNum_UY = 0
-    *get , cpNum_UX , node , NodeNum , cps , ux
-    *get , cpNum_UY , node , NodeNum , cps , uy
-
-    *if,cpNum_UX,gt,0,then
-      cp,cpNum_UX,ux,NewNode
-    *else
-      CP,NEXT,UX,NewNode,NodeNum
-    *endif
-
-    *if,cpNum_UY,gt,0,then
-      cp,cpNum_UY,uy,NewNode
-    *else
-      CP,NEXT,UY,NewNode,NodeNum
-    *endif
-  *enddo
-  CSYS,0
+  TUNNEL_V2_FEMTHERMSPRINGS
 *endif
 
 
