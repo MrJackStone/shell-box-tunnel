@@ -1,0 +1,76 @@
+! TUNNEL_V2_SMFRAME , inletNumber
+! TUNNEL_V2_SMFRAME , ARG1
+
+
+! Exported selection components:
+! COMPA_HDW_leftColumn
+! COMPA_HDW_rightColumn
+! COMPA_HDW_backBeam
+! COMPA_HDW_topBeam
+
+
+! Prepare environment
+csbackup
+
+! Get anchor positions in skewed CS
+*if,ARG1,eq,1,then
+  csys,CS_begSkewed
+*elseif,ARG1,eq,2,then
+  csys,CS_endSkewed
+*endif
+
+cmsel,s,COMPA_floor
+lsla
+ksll
+ksel,r,loc,z,0
+ksel,r,loc,y,0
+*get,xMax,kp,,mxloc,x
+kLeft  = kp(0    , 0 , 0)
+kRight = kp(xMax , 0 , 0)
+
+outerWidth  = xMax+2*GEO_FRAME_columnWidth
+outerHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW_footDepth
+
+! Draw frame
+asel,none
+blc4,-GEO_FRAME_columnWidth,-GEO_HDW_footDepth,outerWidth,outerHeight
+cm,COMPA_outer,area
+
+asel,none
+blc4,0,0,xMax,GEO_TUN_effH
+cm,COMPA_inner,area
+
+cmsel,s,COMPA_outer
+cmsel,a,COMPA_inner
+asba,COMPA_outer,COMPA_inner,,delete,delete
+
+cssliceyz,0
+cssliceyz,xMax
+
+! Create exported selection components
+cm,COMPA_frame,area
+
+cmsel,s,COMPA_frame
+asel,r,loc,x,-GEO_FRAME_columnWidth,0
+cmpadd,'COMPA_HDW_leftColumn'
+
+cmsel,s,COMPA_frame
+asel,r,loc,x,xMax,xMax+GEO_FRAME_columnWidth
+cmpadd,'COMPA_HDW_rightColumn'
+
+cmsel,s,COMPA_frame
+asel,r,loc,y,-GEO_HDW_footDepth,0
+cmpadd,'COMPA_HDW_backBeam'
+
+cmsel,s,COMPA_frame
+asel,r,loc,y,GEO_TUN_effH,GEO_TUN_effH+GEO_FRAME_headBeamHeight
+cmpadd,'COMPA_HDW_topBeam'
+
+cmsel,s,COMPA_HDW_leftColumn
+cmsel,a,COMPA_HDW_rightColumn
+cmsel,a,COMPA_HDW_backBeam
+cmsel,a,COMPA_HDW_topBeam
+cmpadd,'COMPA_headwalls'
+
+! Clean up
+csrestore

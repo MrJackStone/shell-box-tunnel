@@ -186,25 +186,22 @@ TUNNEL_V2_HDWINITCM
 
 *if,parType,eq,0,and,GEO_HDW_status,gt,0,then
 
-  cmsel,s,COMPA_Floor
-  cssliceyz,GEO_HDW_stiffXOff
-  cssliceyz,GEO_TUN_totEffW-GEO_HDW_stiffXOff
-  cm,COMPA_Floor,area
+  TUNNEL_V2_SMFRAME , 1
+  TUNNEL_V2_SMFRAME , 2
 
-  /color,cm,lgra,COMPA_Floor
-  cmsel,s,COMPA_tunnel
-  cmsel,a,COMPA_floor
-  cm,COMPA_Tunnel,area
-  allsel
-
-  TUNNEL_V2_HDWSM , CS_Tunnel    , CS_HDW_LeftWallEnd , CS_HDW_RightWallEnd
-  TUNNEL_V2_HDWSM , CS_RevTunnel , CS_HDW_LeftWallBeg , CS_HDW_RightWallBeg
-
-  cmsel,s,COMPA_Headwalls
-  lsla,s
-  ksll,s
-  nummrg,kp
-  csys,CS_Tunnel
+  *if,GEO_HDW_type,eq,0,then
+    ! Full inlet with floor slab, footings, and headwalls
+    TUNNEL_V2_SMHDW1 , 1
+    TUNNEL_V2_SMHDW1 , 2
+  *elseif,GEO_HDW_type,eq,1,then
+    ! Wings
+    TUNNEL_V2_SMHDW2 , 1
+    TUNNEL_V2_SMHDW2 , 2
+  *elseif,GEO_HDW_type,eq,2,then
+    ! Floor slab only
+    TUNNEL_V2_SMHDW3 , 1
+    TUNNEL_V2_SMHDW3 , 2
+  *endif
 
 *endif
 allsel
