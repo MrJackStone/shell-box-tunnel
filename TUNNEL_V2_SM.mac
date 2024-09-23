@@ -241,35 +241,6 @@ cm,COMPA_approach,area
 
 
 !!                                                                                                !!
-!! 3.6  Pin roof to walls                                                                         !!
-!!                                                                                                !!
-*if,GEO_ROOF_wallConnection,eq,1,then
-
-  *if,GEO_ROOF_type,eq,0,then
-    TUNNEL_V2_SMCOPY, 'COMPA_roof'
-
-  *elseif,GEO_ROOF_type,eq,1,then
-    *do,nthGirder,1,GEO_girderCount,1
-      compName = STRCAT('COMPA_RG',CHRVAL(nthGirder))
-      TUNNEL_V2_SMCOPY, compName
-      cmsel,s,COMPA_Roof
-      cmsel,a,%compName%
-      cm,COMPA_Roof,area
-    *enddo
-  *endif
-
-  *if,GEO_ROOF_gapStatus,eq,1,then
-    TUNNEL_V2_SMCOPY, 'COMPA_struts'
-  *endif
-
-  cmsel,s,COMPA_Tunnel
-  cmsel,a,COMPA_roof
-  cmsel,a,COMPA_struts
-  cm,COMPA_Tunnel,area
-*endif
-
-
-!!                                                                                                !!
 !! 3.7  Open inner walls                                                                          !!
 !!                                                                                                !!
 TUNNEL_V2_SMIWALL
