@@ -1,0 +1,76 @@
+! TUNNEL_V2_FEMPILE
+
+
+*msg,fatal
+TUNNEL_V2_FEMPILE fatal error: not implemented.%/&
+This macro needs to be updated due to major modelling changes (contacts instead of solid model slicing).%/&
+Run terminated.
+
+/eof
+
+cmsel,s,COMPL_pileExt
+latt,MAT_CONC,,TYPE_BEAM188,,,,SEC_pileExt
+lesize,all,1
+lmesh,all
+
+cmsel,s,COMPL_pileInt
+latt,MAT_CONC,,TYPE_BEAM188,,,,SEC_pileInt
+lesize,all,1
+lmesh,all
+
+type,TYPE_LINK180
+mat,MAT_SOIL
+r,REAL_normSprings
+
+nsel,u,node,,all
+cm,COMPN_pileSoilSup,node
+
+csbackup
+
+cmsel,s,COMPL_piles
+nsll,s,0
+cm,COMPN_temp,node
+*get,nc,node,,count
+nodenum=0
+*do,nthNode,1,nc,1
+  cmsel,s,COMPN_temp
+  nodenum = ndnext(nodenum)
+  csys,0
+  ndx = nx(nodenum)
+  ndy = ny(nodenum)
+  ndz = nz(nodenum)
+  *get,nmxd,node,,num,maxd
+  x_node = nmxd+1
+  z_node = nmxd+2
+  n,x_node,ndx+1,ndy,ndz
+  n,z_node,ndx,ndy,ndz+1
+  e,nodenum,x_node
+  e,nodenum,z_node
+  cmsel,s,COMPN_pileSoilSup
+  nsel,a,node,,x_node
+  nsel,a,node,,z_node
+  cm,COMPN_pileSoilSup,node
+  d,x_node,all,0
+  d,z_node,all,0
+*enddo
+
+csrestore
+
+!! *** todo: cp nearest node
+cmsel,s,COMPK_pileTop
+nslk,s
+cm,COMPN_pileTop,node
+*get,nc,node,,count
+cmsel,s,COMPA_Floor
+nsla,s,1
+cm,COMPN_Floor,node
+pileNN = 0
+*do,nthNode,1,nc,1
+  cmsel,s,COMPN_pileTop
+  pileNN = ndnext(pileNN)
+  cmsel,s,COMPN_Floor
+  nsel,a,node,,pileNN
+  floorNN = nnear(pileNN)
+  cp,next,all,pileNN,floorNN
+*enddo
+!! \\\ todo
