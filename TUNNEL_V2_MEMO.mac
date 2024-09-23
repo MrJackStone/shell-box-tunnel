@@ -109,7 +109,7 @@
   (';  zOffset      = ',F10.4)
   *vwrite,
   ('ANSYS:')
-  *vwrite,CoordSys
+  *vwrite,CS_global
   (';  CoordSys     = ',F3.0,TL1,' ')
   *vwrite,FEM_TUN_esize
   (';  ElementSize  = ',F10.4)

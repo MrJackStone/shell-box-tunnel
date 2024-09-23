@@ -290,7 +290,7 @@ cmsel,s,COMPA_struts
 ! Attributes for soil springs
 type , TYPE_link180
 real , REAL_normSprings
-csys , CoordSys
+csys , CS_global
 mat  , MAT_soil
 
 !! 4.3.1  Floor slab                                                                              !!

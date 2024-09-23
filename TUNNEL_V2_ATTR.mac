@@ -60,32 +60,34 @@ FOLDER_results = '_results'
 !! 2.2  Indices                                                                                   !!
 !!                                                                                                !!
 ! Coordinate systems
-CoordSys          = 11 ! TODO: rename to CS_global
-CS_top            = 12
-CS_bot            = 13
-CS_left           = 14
-CS_right          = 15
-CS_tunnel         = 16
-CS_RevTunnel      = 17
-CS_HDW_columns    = 18
+CS_global         = 11 ! TODO: rename to CS_global
+CS_dummy          = 12
+CS_tunnel         = 13
+CS_RevTunnel      = 14
 
-CS_HDW1_leftWall  = 19
-CS_HDW1_rightWall = 20
-CS_HDW2_leftWall  = 21
-CS_HDW2_rightWall = 22
+CS_top            = 15
+CS_bot            = 16
+CS_left           = 17
+CS_right          = 18
 
-CS_HDW1_leftFoot  = 23
-CS_HDW1_rightFoot = 24
-CS_HDW2_leftFoot  = 25
-CS_HDW2_rightFoot = 26
-CS_hdw1           = 27
-CS_hdw2           = 28
+CS_roof           = 19
+CS_floor          = 20
+CS_leftWall       = 21
+CS_rightWall      = 22
 
-CS_roof           = 29
-CS_floor          = 30
-CS_leftWall       = 31
-CS_rightWall      = 32
-CS_free           = 33
+CS_hdw1           = 23
+CS_hdw2           = 24
+CS_HDW_columns    = 25
+CS_HDW1_leftWall  = 26
+CS_HDW1_rightWall = 27
+CS_HDW2_leftWall  = 28
+CS_HDW2_rightWall = 29
+CS_HDW1_leftFoot  = 30
+CS_HDW1_rightFoot = 31
+CS_HDW2_leftFoot  = 32
+CS_HDW2_rightFoot = 33
+
+CS_free           = 34
 
 *del , CS_innerWalls    ,  , nopr
 *del , CS_IWALL_beams   ,  , nopr
@@ -438,7 +440,7 @@ mp , prxy , MAT_RIGID, MAT_RIGID_Poisson
 !! 2.9  Coordinate systems                                                                        !!
 !!                                                                                                !!
 ! Global cartesian
-clocal,CoordSys,cart,0,0,0,0,0,0
+clocal,CS_global,cart,0,0,0,0,0,0
 csys,0
 
 !! 2.9.1  Local systems                                                                           !!
