@@ -112,36 +112,22 @@ cm,COMPA_innerWalls,area
 !       remove wall slicing to match roof when using precast slabs (L2ACNT)
 
 
-
 !! 3.1.2  Oblique cut at tunnel ends                                                              !!
-*if,GEO_HDW_type,EQ,1,AND,GEO_HDW_angle,NE,0,THEN
+*if,GEO_TUN_skewness,gt,0,then
+  *del , end_cs ,  , nopr
+  *dim , end_cs ,  , 2
+  end_cs(1) = CS_begSkewed,CS_endSkewed
+  *do,nthEnd,1,2,1
+    nthCS = end_cs(nthEnd)
+    csys,nthCS
+    wpcsys,-1
+    cswpla,CS_dummy,cart
 
-  *get,CSMax,CDSY,,NUM,MAX
-  tmpCS=CSMax+1000
-
-  ALLSEL
-  wpcsys,1,CS_Tunnel
-  WPROTA,,,-GEO_HDW_angle
-  ASBW,ALL,,DELETE
-
-  CSWPLA,tmpCS,CART
-  ASEL,U,LOC,Z,0,1E3*GEO_TUN_length
-  ADELE,ALL,,,1
-
-  ALLSEL
-  WPCSYS,1,CS_Tunnel
-  WPOFFS,Eff_GalleryWidth,,GEO_TUN_length
-  WPROTA,,,-GEO_HDW_angle
-  ASBW,ALL,,DELETE
-
-  CSWPLA,tmpCS,CART
-  ASEL,S,LOC,Z,0,1E3*GEO_TUN_length
-  ADELE,ALL,,,1
-
-  allsel
-  WPCSYS,1,CS_Tunnel
-  CSYS,CS_Tunnel
-
+    TUNNEL_V2_SMSLICECM, 'COMPA_roof'
+    TUNNEL_V2_SMSLICECM, 'COMPA_floor'
+    TUNNEL_V2_SMSLICECM, 'COMPA_leftWall'
+    TUNNEL_V2_SMSLICECM, 'COMPA_rightWall'
+  *enddo
 *endif
 
 

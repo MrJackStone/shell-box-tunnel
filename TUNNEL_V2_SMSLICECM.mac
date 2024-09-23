@@ -1,0 +1,10 @@
+! TUNNEL_V2_SMSLICECM, cmaName
+! TUNNEL_V2_SMSLICECM, ARG1
+
+
+cmsel,s,%ARG1%
+asbw,all,,delete
+cm,%ARG1%,area
+asel,r,loc,z,-1e6,0
+adele,all,,,1
+cmsel,s,%ARG1%

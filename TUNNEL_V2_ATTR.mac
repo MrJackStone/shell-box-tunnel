@@ -75,19 +75,22 @@ CS_floor          = 20
 CS_leftWall       = 21
 CS_rightWall      = 22
 
-CS_hdw1           = 23
-CS_hdw2           = 24
-CS_HDW_columns    = 25
-CS_HDW1_leftWall  = 26
-CS_HDW1_rightWall = 27
-CS_HDW2_leftWall  = 28
-CS_HDW2_rightWall = 29
-CS_HDW1_leftFoot  = 30
-CS_HDW1_rightFoot = 31
-CS_HDW2_leftFoot  = 32
-CS_HDW2_rightFoot = 33
+CS_begSkewed      = 23
+CS_endSkewed      = 24
 
-CS_free           = 34
+CS_hdw1           = 25
+CS_hdw2           = 26
+CS_HDW_columns    = 27
+CS_HDW1_leftWall  = 28
+CS_HDW1_rightWall = 29
+CS_HDW2_leftWall  = 30
+CS_HDW2_rightWall = 31
+CS_HDW1_leftFoot  = 32
+CS_HDW1_rightFoot = 33
+CS_HDW2_leftFoot  = 34
+CS_HDW2_rightFoot = 35
+
+CS_free           = 36
 
 *del , CS_innerWalls    ,  , nopr
 *del , CS_IWALL_beams   ,  , nopr
@@ -181,15 +184,14 @@ GEO_TUN_effW    = Eff_GalleryWidth
 GEO_TUN_effH    = Eff_GalleryHeight
 GEO_TUN_totEffW = GEO_TUN_effW*GEO_TUN_modules
 
-*if,GEO_HDW_type,EQ,1,THEN
-  !!GEO_HDW_angle=90
-  *afun,DEG
-  GEO_ExtraLength=TAN(GEO_HDW_angle)*GEO_TUN_totEffW
-  *afun,RAD
-  GEO_TUN_length=GEO_TUN_length+2*GEO_ExtraLength
-*else
-  GEO_ExtraLength=0
+! Calculate length increment due to tunnel skewness
+GEO_ExtraLength = 0
+*if,GEO_TUN_skewness,gt,0,then
+  *afun,deg
+  GEO_ExtraLength = tan(GEO_TUN_skewness)*GEO_TUN_totEffW
+  *afun,rad
 *endif
+GEO_TUN_length = GEO_TUN_length+2*GEO_ExtraLength
 
 ! Tunnel slope (in degrees)
 TunnelSlope=ATAN(GEO_TUN_slope/100)*180/pi
@@ -448,6 +450,11 @@ csys,0
 local  , CS_tunnel    , cart , 0               , 0 , 0              , 0 , -TunnelSlope , 0
 clocal , CS_RevTunnel , cart , GEO_TUN_totEffW , 0 , GEO_TUN_length
 clocal , CS_RevTunnel , cart , 0               , 0 , 0              ,   ,              , 180
+
+csys   , CS_tunnel
+clocal , CS_begSkewed , cart , 0 , 0 , 0 ,  ,  , -GEO_TUN_begSkewness
+csys   , CS_revTunnel
+clocal , CS_endSkewed , cart , 0 , 0 , 0 ,  ,  , -GEO_TUN_endSkewness
 
 ! Top slab
 csys   , CS_tunnel
