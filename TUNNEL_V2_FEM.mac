@@ -262,10 +262,20 @@ l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
   AESIZE,ALL,FEM_HDW_esize
   AMESH,ALL
 
-  ! TODO  connect all other parts to each other & to tunnel
+  l2acnt , 'COMPA_HDW1_topBeam'     , 'COMPL_ROOF_interfaceInlet1'  ,  , 1
+  l2acnt , 'COMPA_HDW2_topBeam'     , 'COMPL_ROOF_interfaceInlet2'  ,  , 1
 
-  l2acnt,'COMPA_floor','COMPL_HDW1_slabInterface',,1
-  l2acnt,'COMPA_floor','COMPL_HDW2_slabInterface',,1
+  l2acnt , 'COMPA_HDW1_backBeam'    , 'COMPL_FLOOR_interfaceInlet1' ,  , 1
+  l2acnt , 'COMPA_HDW2_backBeam'    , 'COMPL_FLOOR_interfaceInlet2' ,  , 1
+
+  l2acnt , 'COMPA_HDW1_leftColumn'  , 'COMPL_LWALL_interfaceInlet1' ,  , 1
+  l2acnt , 'COMPA_HDW1_rightColumn' , 'COMPL_RWALL_interfaceInlet1' ,  , 1
+
+  l2acnt , 'COMPA_HDW2_leftColumn'  , 'COMPL_RWALL_interfaceInlet2' ,  , 1
+  l2acnt , 'COMPA_HDW2_rightColumn' , 'COMPL_LWALL_interfaceInlet2' ,  , 1
+
+  l2acnt , 'COMPA_floor'            , 'COMPL_HDW1_slabInterface'    ,  , 1
+  l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabInterface'    ,  , 1
 *endif
 
 
