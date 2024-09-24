@@ -113,7 +113,7 @@ IWCOL_W = GEO_IWALL_columnThk*(GEO_IWALL_columnWidth**2)/6
     *do,nthBeam,1,GEO_IWALL_columnCount-1,1
       ! Top beam
       bot_n1   = node(            xLoc , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0)
-      bot_n2   = node(xLoc+GEO_TUN_opW , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0)
+      bot_n2   = node(xLoc+GEO_TUN_opW , GEO_TUN_effH-GEO_IWALL_topBeamHeight , 0) ! TODO  opW removed (now an array) -- this operation breaks
       top_n1   = node(            xLoc , GEO_TUN_effH                         , 0)
       top_n2   = node(xLoc+GEO_TUN_opW , GEO_TUN_effH                         , 0)
       tsPName  = strcat('IWTS',chrval(nthBeam))
@@ -129,7 +129,7 @@ IWCOL_W = GEO_IWALL_columnThk*(GEO_IWALL_columnWidth**2)/6
       envAName = strcat('RES_ENV_IWALL_bSpan',chrval(nthBeam))
       pth2beam, top_n1, top_n2, bot_n1, bot_n2, bsPName, 1, pathDiv, 1, 1, 1, envAName
 
-      xLoc=xLoc+GEO_TUN_colE
+      xLoc=xLoc+GEO_TUN_colE  ! TODO  colE removed (now an array) -- this operation breaks
     *enddo
   *enddo
 *enddo
