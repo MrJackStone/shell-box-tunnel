@@ -1,4 +1,5 @@
 /uis,msgpop,3
+*del,all,,nopr
 
 !!                                                                                                !!
 !!                                                                                                !!
@@ -131,6 +132,8 @@ GEO_CORB_height = 0.9
 !!                                                                                                !!
 !! 1.2  Frame                                                                                     !!
 !!                                                                                                !!
+! Back beam width (beam below tunnel opening)
+GEO_FRAME_backBeamHeight = 1.2
 ! Back beam width (beam below tunnel opening)
 GEO_FRAME_backBeamWidth = 0.3
 
