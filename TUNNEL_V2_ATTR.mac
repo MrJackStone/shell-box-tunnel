@@ -301,25 +301,53 @@ WARNING: Pin and corbel are incompatible. GEO_CORB_status set to 0 (OFF).
 *endif
 
 ! Inner wall positions
-GEO_IWALL_count = GEO_TUN_modules-1
+GEO_IWALL_count        = GEO_TUN_modules-1
+GEO_IWALL_openingCount = GEO_IWALL_columnCount-1
 
-*del,GEO_IWALL_x_coords,,nopr
-*dim,GEO_IWALL_x_coords,,GEO_IWALL_count
-*vfill,GEO_IWALL_x_coords,ramp,GEO_TUN_effW,GEO_TUN_effW
+*del , GEO_IWALL_x_coords       ,  , nopr
+*del , GEO_IWALL_zBeg_coords    ,  , nopr
+*del , GEO_IWALL_zEnd_coords    ,  , nopr
+*del , GEO_IWALL_axial_lengths  ,  , nopr
+*dim , GEO_IWALL_x_coords       ,  , GEO_IWALL_count
+*dim , GEO_IWALL_zBeg_coords    ,  , GEO_IWALL_count
+*dim , GEO_IWALL_zEnd_coords    ,  , GEO_IWALL_count
+*dim , GEO_IWALL_axial_lengths  ,  , GEO_IWALL_count
+
+*afun  , deg
+*vfill , GEO_IWALL_x_coords      , ramp                  , GEO_TUN_effW , GEO_TUN_effW
+*voper , GEO_IWALL_zBeg_coords   , GEO_IWALL_x_coords    , mult         , tan(GEO_TUN_begSkewness)
+*voper , GEO_IWALL_zEnd_coords   , GEO_TUN_totEffW       , sub          , GEO_IWALL_x_coords
+*voper , GEO_IWALL_zEnd_coords   , GEO_IWALL_zEnd_coords , mult         , tan(GEO_TUN_endSkewness)
+*voper , GEO_IWALL_zEnd_coords   , GEO_TUN_length        , sub          , GEO_IWALL_zEnd_coords
+*voper , GEO_IWALL_axial_lengths , GEO_IWALL_zEnd_coords , sub          , GEO_IWALL_zBeg_coords
+*afun  , rad
 
 ! Inner wall openings
 *if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
-  GEO_TUN_opW  = (GEO_TUN_length-GEO_IWALL_columnCount*GEO_IWALL_columnWidth)/(GEO_IWALL_columnCount-1)
-  GEO_TUN_opH  = GEO_TUN_effH-GEO_IWALL_topBeamHeight-GEO_IWALL_botBeamHeight
-  GEO_TUN_colE = GEO_TUN_opW+GEO_IWALL_columnWidth
+  *del , GEO_IWALL_opening_widths  ,  , nopr
+  *del , GEO_IWALL_opening_pitches ,  , nopr
+  *dim , GEO_IWALL_opening_widths  ,  , GEO_IWALL_count
+  *dim , GEO_IWALL_opening_pitches ,  , GEO_IWALL_count
+
+  accColWidth = GEO_IWALL_columnCount*GEO_IWALL_columnWidth
+  *voper , GEO_IWALL_opening_widths  , GEO_IWALL_axial_lengths  , sub , accColWidth
+  *voper , GEO_IWALL_opening_widths  , GEO_IWALL_opening_widths , div , GEO_IWALL_openingCount
+  *voper , GEO_IWALL_opening_pitches , GEO_IWALL_opening_widths , add , GEO_IWALL_columnWidth
+
   ! Relative Z coordinate for opening centers
-  *del,GEO_TUN_ozCenter
-  *dim,GEO_TUN_ozCenter,array,GEO_IWALL_columnCount-1
-  *vfill,GEO_TUN_ozCenter,ramp,GEO_TUN_colE-(GEO_TUN_opW/2),GEO_TUN_colE
-  !x0=(i-1)*GEO_TUN_colE
-  !GEO_TUN_colE-(GEO_TUN_iwOW/2)
+  *del , GEO_IWALL_opening_z_centers ,  , nopr
+  *dim , GEO_IWALL_opening_z_centers ,  , GEO_IWALL_count , GEO_IWALL_openingCount
+  *do,nthIwall,1,GEO_IWALL_count,1
+    openingPitch = GEO_IWALL_opening_pitches(nthIwall)
+    firstCenter  = (openingPitch+GEO_IWALL_columnWidth)/2
+    *do,nthOpening,1,GEO_IWALL_openingCount,1
+      GEO_IWALL_opening_z_centers(nthIwall,nthOpening) = firstCenter+openingPitch*(nthOpening-1)
+    *enddo
+  *enddo
+
   ! Relative Y coordinate for opening centers
-  GEO_TUN_oyCenter = (GEO_TUN_effH-GEO_IWALL_topBeamHeight+GEO_IWALL_botBeamHeight)/2
+  GEO_IWALL_openingHeight  = GEO_TUN_effH-GEO_IWALL_topBeamHeight-GEO_IWALL_botBeamHeight
+  GEO_IWALL_openingYcenter = (GEO_IWALL_openingHeight/2)+GEO_IWALL_botBeamHeight
 *endif
 
 ! Wall height at the front of the inlets
@@ -501,9 +529,10 @@ csys,0
 ! Inner wall coordinate systems
 *if,GEO_TUN_modules,gt,1,then
   *do,nthWall,1,GEO_IWALL_count,1
-    xWall  = GEO_IWALL_x_coords(nthWall)
+    xWall = GEO_IWALL_x_coords(nthWall)
+    zWall = GEO_IWALL_zBeg_coords(nthWall)
     csys   , CS_leftWall
-    clocal , CS_innerWall%nthWall%    , cart , 0     , 0 , -xWall
+    clocal , CS_innerWall%nthWall%    , cart , 0     , zWall , xWall
     csys   , CS_Tunnel
     clocal , CS_IWALL_beam%nthWall%   , cart , xWall , 0 , 0      ,    ,  , -90
     clocal , CS_IWALL_column%nthWall% , cart , 0     , 0 , 0      , 90
