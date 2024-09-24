@@ -39,6 +39,7 @@ csys,CS_tunnel
 cmsel,s,COMPA_walls
 asel,r,loc,x,0
 cm,COMPA_LeftWall,area
+
 lsla
 lsel,r,loc,y,0
 cm,COMPL_LWALL_floorInterface,line
@@ -46,17 +47,42 @@ lsla
 lsel,r,loc,y,GEO_TUN_effH
 cm,COMPL_LWALL_roofInterface,line
 
+csys,CS_begSkewed
+cmsel,s,COMPA_leftWall
+lsla
+lsel,r,loc,z,0
+cm,COMPL_LWALL_interfaceInlet1,line
+
+csys,CS_endSkewed
+cmsel,s,COMPA_leftWall
+lsla
+lsel,r,loc,z,0
+cm,COMPL_LWALL_interfaceInlet2,line
+
 ! Right tunnel wall
 csys,CS_tunnel
 cmsel,s,COMPA_Walls
 asel,r,loc,x,GEO_TUN_totEffW
 cm,COMPA_RightWall,area
+
 lsla
 lsel,r,loc,y,0
 cm,COMPL_RWALL_floorInterface,line
 lsla
 lsel,r,loc,y,GEO_TUN_effH
 cm,COMPL_RWALL_roofInterface,line
+
+csys,CS_begSkewed
+cmsel,s,COMPA_rightWall
+lsla
+lsel,r,loc,z,0
+cm,COMPL_RWALL_interfaceInlet1,line
+
+csys,CS_endSkewed
+cmsel,s,COMPA_rightWall
+lsla
+lsel,r,loc,z,0
+cm,COMPL_RWALL_interfaceInlet2,line
 
 ! Inner tunnel walls
 csys,CS_tunnel
@@ -84,6 +110,18 @@ cmsel,s,COMPA_tunnel
 asel,r,loc,y,0
 cm,COMPA_floor,area
 
+csys,CS_begSkewed
+cmsel,s,COMPA_floor
+lsla
+lsel,r,loc,z,0
+cm,COMPL_FLOOR_interfaceInlet1,line
+
+csys,CS_endSkewed
+cmsel,s,COMPA_floor
+lsla
+lsel,r,loc,z,0
+cm,COMPL_FLOOR_interfaceInlet2,line
+
 ! Roof struts
 csys,CS_tunnel
 asel,none
@@ -99,6 +137,18 @@ cmsel,s,COMPA_tunnel
 asel,r,loc,y,GEO_TUN_effH
 cmsel,u,COMPA_Struts
 cm,COMPA_Roof,area
+
+csys,CS_begSkewed
+cmsel,s,COMPA_roof
+lsla
+lsel,r,loc,z,0
+cm,COMPL_ROOF_interfaceInlet1,line
+
+csys,CS_endSkewed
+cmsel,s,COMPA_roof
+lsla
+lsel,r,loc,z,0
+cm,COMPL_ROOF_interfaceInlet2,line
 
 ! Roof precast girders
 csys,CS_tunnel
