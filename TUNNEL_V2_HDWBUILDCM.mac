@@ -117,20 +117,20 @@ cm,COMPA_HDW_botBeam,area
 
 ! Frame bottom beam
 asel,none
-csys,CS_hdw1
+csys,CS_begSkewed
 asel,a,loc,z,0
-csys,CS_hdw2
+csys,CS_endSkewed
 asel,a,loc,z,0
 csys,CS_tunnel
-asel,r,loc,y,-GEO_HDW_footDepth,0
+asel,r,loc,y,-GEO_FRAME_backBeamHeight,0
 cmsel,r,COMPA_headwalls
 cm,COMPA_HDW_backBeam,area
 
 ! Frame top beam
 asel,none
-csys,CS_hdw1
+csys,CS_begSkewed
 asel,a,loc,z,0
-csys,CS_hdw2
+csys,CS_endSkewed
 asel,a,loc,z,0
 csys,CS_tunnel
 asel,r,loc,y,GEO_TUN_effH,GEO_TUN_effH+GEO_FRAME_headBeamHeight
@@ -139,9 +139,9 @@ cm,COMPA_HDW_topBeam,area
 
 ! Frame columns
 asel,none
-csys,CS_hdw1
+csys,CS_begSkewed
 asel,a,loc,z,0
-csys,CS_hdw2
+csys,CS_endSkewed
 asel,a,loc,z,0
 csys,CS_tunnel
 cmsel,u,COMPA_HDW_backBeam
