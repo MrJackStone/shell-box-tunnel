@@ -1,0 +1,211 @@
+! TUNNEL_V2_FEMTUNNEL
+
+
+! Left wall attributes
+CMSEL,S,COMPA_LeftWall
+AATT,MAT_conc,,TYPE_shell181,CS_left,SEC_LWALL
+
+! Right wall attributes
+CMSEL,S,COMPA_RightWall
+AATT,MAT_conc,,TYPE_shell181,CS_right,SEC_RWALL
+
+! Inner walls attributes
+*if,GEO_IWALL_type,eq,0,then
+  CMSEL,S,COMPA_InnerWalls
+  AATT,MAT_conc,,TYPE_shell181,CS_right,SEC_IWALL
+*elseif,GEO_IWALL_type,eq,1,then
+  wallX=0
+  *do,nthWall,1,GEO_TUN_modules-1,1
+    wallX=wallX+GEO_TUN_effW
+
+    beamCS=CS_IWALL_beams(nthWall)
+    colCS=CS_IWALL_columns(nthWall)
+
+    cmsel,s,COMPA_tBeam
+    asel,r,loc,x,wallX
+    aatt,MAT_CONC,,TYPE_SHELL181,beamCS,SEC_tBeam
+
+    cmsel,s,COMPA_bBeam
+    asel,r,loc,x,wallX
+    aatt,MAT_CONC,,TYPE_SHELL181,beamCS,SEC_bBeam
+
+    cmsel,s,COMPA_Columns
+    asel,r,loc,x,wallX
+    aatt,MAT_CONC,,TYPE_SHELL181,colCS,SEC_Columns
+  *enddo
+*endif
+
+! Floor slab attributes
+CMSEL,S,COMPA_Floor
+aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_FLOOR
+
+! Roof slab attributes
+CMSEL,S,COMPA_Roof
+aatt,MAT_concTs,,TYPE_shell181,CS_top,SEC_ROOF
+
+! Roof strut attributes
+cmsel,s,COMPA_struts
+*get,ac,area,,count
+*if,ac,gt,0,then
+  aatt,MAT_conc,,TYPE_shell181,CS_top,SEC_strut
+*endif
+
+*if,GEO_CORB_status,GE,1,THEN
+  ! Corbels
+  xWall=0
+  *do,nthWall,1,GEO_TUN_modules+1,1
+
+    ! Geometric limits
+    xLeft=xWall-GEO_corbelXOff_BOT
+    xRight=xWall+GEO_corbelXOff_BOT
+    ASEL,S,LOC,X,xLeft,xRight
+    CM,COMPA_insideDX,AREA
+
+    ! Coordinate system numbers
+    nthCS_ROOF_left   = SEC_ROOF_LCORBEL  + nthWall
+    nthCS_ROOF_right  = SEC_ROOF_RCORBEL  + nthWall
+    nthCS_FLOOR_left  = SEC_FLOOR_LCORBEL + nthWall
+    nthCS_FLOOR_right = SEC_FLOOR_RCORBEL + nthWall
+    nthCS_WALL_bot    = SEC_WALL_BCORBEL  + nthWall
+    nthCS_WALL_top    = SEC_WALL_TCORBEL  + nthWall
+
+    ! Walls
+    *if,xWall,EQ,0,THEN
+      nthWallCS=CS_left
+    *else
+      nthWallCS=CS_right
+    *endif
+
+    *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,2,THEN
+      ! Top slab, left side
+      CMSEL,S,COMPA_ROOF_leftCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,MAT_conc,,TYPE_shell181,CS_top,nthCS_ROOF_left
+      ! Top slab, right side
+      CMSEL,S,COMPA_ROOF_rightCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,MAT_conc,,TYPE_shell181,CS_top,nthCS_ROOF_right
+      ! Top, walls
+      CMSEL,S,COMPA_WALL_topCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,MAT_conc,,TYPE_shell181,nthWallCS,nthCS_WALL_top
+    *endif
+
+    *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,3,THEN
+      ! Bottom slab, left side
+      CMSEL,S,COMPA_FLOOR_leftCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,MAT_conc,,TYPE_shell181,CS_bot,nthCS_FLOOR_left
+      ! Bottom slab, right side
+      CMSEL,S,COMPA_FLOOR_rightCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,MAT_conc,,TYPE_shell181,CS_bot,nthCS_FLOOR_right
+      ! Bottom, walls
+      CMSEL,S,COMPA_WALL_botCorbel
+      CMSEL,R,COMPA_insideDX
+      AATT,MAT_conc,,TYPE_shell181,nthWallCS,nthCS_WALL_bot
+    *endif
+
+    xWall=xWall+Eff_GalleryWidth
+  *enddo
+*endif
+
+! Mesh floor & walls
+cmsel,s,COMPA_tunnel
+cmsel,u,COMPA_roof
+aesize,all,FEM_TUN_esize
+amesh,all
+
+! Mesh roof
+cmsel,s,COMPA_roof
+aesize,all,FEM_TUN_esize
+
+*if,GEO_ROOF_type,eq,0,then
+  ! Flat slab
+  amesh,all
+
+*elseif,GEO_ROOF_type,eq,1,then
+  ! With precast girders
+  startPoint = 1
+
+  *do,nthGirder,1,GEO_girderCount,1
+
+    cmsel,s,COMPA_RG%nthGirder%
+    *get,ac,area,,count
+    *if,ac,eq,0,then
+      startPoint = 1
+      *cycle
+    *endif
+
+    *if,startPoint,eq,1,then
+      ! First gider: mesh freely
+      startPoint = 0
+      amesh,all
+    *else
+      ! Subsequent girders: paste previously copied line mesh
+      zEdge = GEO_girderZ(nthGirder-1)
+      lsla,s
+      lsel,r,loc,z,zEdge
+      cm,COMPL_pasteG,line
+      cmsel,a,COMPL_copyG
+      mshcopy,line,COMPL_copyG,COMPL_pasteG
+      amesh,all
+    *endif
+
+    ! Girders before last: copy line mesh
+    *if,nthGirder,lt,GEO_girderCount,then
+      zEdge = GEO_girderZ(nthGirder)
+      lsla,s
+      lsel,r,loc,z,zEdge
+      cm,COMPL_copyG,line
+    *endif
+
+  *enddo
+*endif
+
+! Mesh struts
+cmsel,a,COMPA_struts
+*get,ac,area,,count
+*if,ac,gt,0,then
+  aesize,all,FEM_TUN_esize
+  amesh,all
+*endif
+
+! Connect parts
+fixed  = 0
+pinned = 1
+
+roofConnection = fixed
+*if,GEO_ROOF_wallConnection,eq,1,then
+  roofConnection = pinned
+*endif
+
+l2acnt , 'COMPA_floor' , 'COMPL_LWALL_floorInterface' ,  , fixed
+l2acnt , 'COMPA_floor' , 'COMPL_RWALL_floorInterface' ,  , fixed
+l2acnt , 'COMPA_roof'  , 'COMPL_LWALL_roofInterface'  ,  , roofConnection
+l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
+
+*if,GEO_IWALL_count,ge,1,then
+  l2acnt , 'COMPA_floor' , 'COMPL_IWALL_floorInterface' ,  , fixed
+  l2acnt , 'COMPA_roof'  , 'COMPL_IWALL_roofInterface'  ,  , fixed
+*endif
+
+*if,GEO_ROOF_gapStatus,eq,1,and,GEO_ROOF_gapStrutCount,gt,0,then
+  l2acnt , 'COMPA_struts' , 'COMPL_LWALL_roofInterface' ,  , pinned
+  l2acnt , 'COMPA_struts' , 'COMPL_RWALL_roofInterface' ,  , pinned
+*endif
+
+! Between roof precast girders
+*if,GEO_ROOF_type,eq,1,and,GEO_ROOF_continuity,eq,0,then
+  ! Remove longitudinal lines from selection
+  csys,CS_tunnel
+  cmsel,s,COMPA_roof
+  lsla,s
+  lsel,u,loc,x,0:GEO_TUN_totEffW:GEO_TUN_effW
+  nsll,s,1
+  ! Create semi-rigid connection
+  type,TYPE_COMBIN39
+  mat,MAT_conc
+  real,REAL_roofSprings
+  eintf,1e-3
+*endif

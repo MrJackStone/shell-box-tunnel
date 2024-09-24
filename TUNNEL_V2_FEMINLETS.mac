@@ -1,0 +1,70 @@
+! TUNNEL_V2_FEMINLETS
+
+
+*get,parType,PARM,GEO_HDW_status,TYPE
+*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
+  CMSEL,S,COMPA_HDW_LeftWall
+  cmsel,r,COMPA_HDW_1
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_HDW1_leftWall,SEC_HDW_Wall
+
+  CMSEL,S,COMPA_HDW_LeftWall
+  cmsel,r,COMPA_HDW_2
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_HDW2_leftWall,SEC_HDW_Wall
+
+  CMSEL,S,COMPA_HDW_rightWall
+  cmsel,r,COMPA_HDW_1
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_HDW1_rightWall,SEC_HDW_Wall
+
+  CMSEL,S,COMPA_HDW_rightWall
+  cmsel,r,COMPA_HDW_2
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_HDW2_rightWall,SEC_HDW_Wall
+
+  CMSEL,S,COMPA_HDW1_leftFoot
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_HDW1_leftFoot,SEC_HDW_Footing
+
+  CMSEL,S,COMPA_HDW2_leftFoot
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_HDW2_leftFoot,SEC_HDW_Footing
+
+  CMSEL,S,COMPA_HDW1_rightFoot
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_HDW1_rightFoot,SEC_HDW_Footing
+
+  CMSEL,S,COMPA_HDW2_rightFoot
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_HDW2_rightFoot,SEC_HDW_Footing
+
+  CMSEL,S,COMPA_HDW_Slab
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Slab
+
+  CMSEL,S,COMPA_HDW_Stiffener
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Stiffener
+
+  CMSEL,S,COMPA_HDW_TopBeam
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_headBeam
+
+  CMSEL,s,COMPA_HDW_BotBeam
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_frontBeam
+
+  CMSEL,s,COMPA_HDW_BackBeam
+  AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_backBeam
+
+  cmsel,s,COMPA_HDW_Columns
+  aatt,MAT_CONC,,TYPE_SHELL181,CS_HDW_columns,SEC_FRAME_Column
+
+  cmsel,s,COMPA_Headwalls
+  AESIZE,ALL,FEM_HDW_esize
+  AMESH,ALL
+
+  l2acnt , 'COMPA_HDW1_topBeam'     , 'COMPL_ROOF_interfaceInlet1'  ,  , 1
+  l2acnt , 'COMPA_HDW2_topBeam'     , 'COMPL_ROOF_interfaceInlet2'  ,  , 1
+
+  l2acnt , 'COMPA_HDW1_backBeam'    , 'COMPL_FLOOR_interfaceInlet1' ,  , 1
+  l2acnt , 'COMPA_HDW2_backBeam'    , 'COMPL_FLOOR_interfaceInlet2' ,  , 1
+
+  l2acnt , 'COMPA_HDW1_leftColumn'  , 'COMPL_LWALL_interfaceInlet1' ,  , 1
+  l2acnt , 'COMPA_HDW1_rightColumn' , 'COMPL_RWALL_interfaceInlet1' ,  , 1
+
+  l2acnt , 'COMPA_HDW2_leftColumn'  , 'COMPL_RWALL_interfaceInlet2' ,  , 1
+  l2acnt , 'COMPA_HDW2_rightColumn' , 'COMPL_LWALL_interfaceInlet2' ,  , 1
+
+  l2acnt , 'COMPA_floor'            , 'COMPL_HDW1_slabInterface'    ,  , 1
+  l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabInterface'    ,  , 1
+*endif
