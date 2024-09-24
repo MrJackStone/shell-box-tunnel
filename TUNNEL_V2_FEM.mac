@@ -45,18 +45,17 @@ TUNNEL_V2_FEMINLETS
 !!                                                                                                !!
 !! 4.5  Soil                                                                                      !!
 !!                                                                                                !!
-! Attributes for soil springs
-type , TYPE_link180
-real , REAL_normSprings
-csys , CS_global
-mat  , MAT_soil
+esel,s,type,,TYPE_shell181
+nsle,s,active
+apportionedstats,,'FEM_nodes_apportioned'
+
 
 !! 4.5.1  Floor slab                                                                              !!
 ! Bottom supports
 cmsel,s,COMPA_floor
 esla
 nsle
-elasticbase,'EBASE_floor','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_floor','COMPE_SOILSPR_floor'
+elasticbase,'EBASE_floor','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_floor','COMPE_SOILSPR_floor','FEM_nodes_apportioned'
 
 
 !! 4.5.2  Left wall                                                                               !!
@@ -64,7 +63,7 @@ elasticbase,'EBASE_floor','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticM
 cmsel,s,COMPA_LeftWall
 esla
 nsle
-elasticbase,'EBASE_leftWall','X',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_leftWall','COMPE_SOILSPR_leftWall'
+elasticbase,'EBASE_leftWall','X',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_leftWall','COMPE_SOILSPR_leftWall','FEM_nodes_apportioned'
 
 
 !! 4.5.3  Right wall                                                                              !!
@@ -72,7 +71,7 @@ elasticbase,'EBASE_leftWall','X',MAT_SOIL_stiffness,-1,-SpringLength,SpringElast
 cmsel,s,COMPA_RightWall
 esla
 nsle
-elasticbase,'EBASE_rightWall','X',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_leftWall','COMPE_SOILSPR_leftWall'
+elasticbase,'EBASE_rightWall','X',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_leftWall','COMPE_SOILSPR_leftWall','FEM_nodes_apportioned'
 
 
 !! 4.5.4  Top slab                                                                                !!
@@ -80,7 +79,7 @@ elasticbase,'EBASE_rightWall','X',MAT_SOIL_stiffness,-1,SpringLength,SpringElast
 cmsel,s,COMPA_Roof
 esla
 nsle
-elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_roof','COMPE_SOILSPR_roof'
+elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_roof','COMPE_SOILSPR_roof','FEM_nodes_apportioned'
 
 
 !! 4.5.7  Headwalls                                                                               !!
@@ -98,7 +97,7 @@ elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticMod
   esla
   nsle
   nsel,u,loc,x,xMin,xMax
-  elasticbase,'EBASE_approach','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_approach','COMPE_SOILSPR_approach'
+  elasticbase,'EBASE_approach','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_approach','COMPE_SOILSPR_approach','FEM_nodes_apportioned'
 *endif
 
 

@@ -16,17 +16,17 @@ cmsel,s,COMPA_HDW_slab
 cmsel,a,COMPA_HDW_stiffener
 esla
 nsle
-elasticbase,'EBASE_inletSlab','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_inletSlab','COMPE_SOILSPR_inletSlab'
+elasticbase,'EBASE_inletSlab','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_inletSlab','COMPE_SOILSPR_inletSlab','FEM_nodes_apportioned'
 
 cmsel,s,COMPA_frame1
 esla
 nsle
-elasticbase,'EBASE_frame1','Z',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_frame1','COMPE_SOILSPR_frame1'
+elasticbase,'EBASE_frame1','Z',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_frame1','COMPE_SOILSPR_frame1','FEM_nodes_apportioned'
 
 cmsel,s,COMPA_frame2
 esla
 nsle
-elasticbase,'EBASE_frame2','Z',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_frame2','COMPE_SOILSPR_frame2'
+elasticbase,'EBASE_frame2','Z',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_frame2','COMPE_SOILSPR_frame2','FEM_nodes_apportioned'
 
 allsel
 csys,0
