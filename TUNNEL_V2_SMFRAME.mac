@@ -29,11 +29,13 @@ kLeft  = kp(0    , 0 , 0)
 kRight = kp(xMax , 0 , 0)
 
 outerWidth  = xMax+2*GEO_FRAME_columnWidth
-outerHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW_footDepth
+outerHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_FRAME_backBeamHeight
 
 ! Draw frame
+wpcsys,-1
+
 asel,none
-blc4,-GEO_FRAME_columnWidth,-GEO_HDW_footDepth,outerWidth,outerHeight
+blc4,-GEO_FRAME_columnWidth,-GEO_FRAME_backBeamHeight,outerWidth,outerHeight
 cm,COMPA_outer,area
 
 asel,none
@@ -59,12 +61,16 @@ asel,r,loc,x,xMax,xMax+GEO_FRAME_columnWidth
 cmpadd,'COMPA_HDW_rightColumn'
 
 cmsel,s,COMPA_frame
-asel,r,loc,y,-GEO_HDW_footDepth,0
+asel,r,loc,y,-GEO_FRAME_backBeamHeight,0
 cmpadd,'COMPA_HDW_backBeam'
 
 cmsel,s,COMPA_frame
 asel,r,loc,y,GEO_TUN_effH,GEO_TUN_effH+GEO_FRAME_headBeamHeight
 cmpadd,'COMPA_HDW_topBeam'
+
+cmsel,s,COMPA_HDW_leftColumn
+cmsel,a,COMPA_HDW_rightColumn
+cmpadd,'COMPA_HDW_columns'
 
 cmsel,s,COMPA_HDW_leftColumn
 cmsel,a,COMPA_HDW_rightColumn
