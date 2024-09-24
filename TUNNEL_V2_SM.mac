@@ -100,9 +100,10 @@ cm,COMPA_rightWall,area
 ! Inner walls
 asel,none
 *do,nthIwall,1,GEO_IWALL_count,1
+  wallLength = GEO_IWALL_axial_lengths(nthIwall)
   csys,CS_innerWall%nthIwall%
   wpcsys,-1
-  blc4,0,0,GEO_TUN_effH,GEO_TUN_length
+  blc4,0,0,GEO_TUN_effH,wallLength
 *enddo
 cm,COMPA_innerWalls,area
 
