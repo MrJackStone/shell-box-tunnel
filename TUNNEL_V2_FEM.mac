@@ -14,16 +14,16 @@ CSYS,0
 !!                                                                                                !!
 ! Left wall attributes
 CMSEL,S,COMPA_LeftWall
-AATT,1,,1,CS_left,SEC_LWALL
+AATT,MAT_conc,,TYPE_shell181,CS_left,SEC_LWALL
 
 ! Right wall attributes
 CMSEL,S,COMPA_RightWall
-AATT,1,,1,CS_right,SEC_RWALL
+AATT,MAT_conc,,TYPE_shell181,CS_right,SEC_RWALL
 
 ! Inner walls attributes
 *if,GEO_IWALL_type,eq,0,then
   CMSEL,S,COMPA_InnerWalls
-  AATT,1,,1,CS_right,SEC_IWALL
+  AATT,MAT_conc,,TYPE_shell181,CS_right,SEC_IWALL
 *elseif,GEO_IWALL_type,eq,1,then
   wallX=0
   *do,nthWall,1,GEO_TUN_modules-1,1
@@ -91,30 +91,30 @@ cmsel,s,COMPA_struts
       ! Top slab, left side
       CMSEL,S,COMPA_ROOF_leftCorbel
       CMSEL,R,COMPA_insideDX
-      AATT,1,,1,CS_top,nthCS_ROOF_left
+      AATT,MAT_conc,,TYPE_shell181,CS_top,nthCS_ROOF_left
       ! Top slab, right side
       CMSEL,S,COMPA_ROOF_rightCorbel
       CMSEL,R,COMPA_insideDX
-      AATT,1,,1,CS_top,nthCS_ROOF_right
+      AATT,MAT_conc,,TYPE_shell181,CS_top,nthCS_ROOF_right
       ! Top, walls
       CMSEL,S,COMPA_WALL_topCorbel
       CMSEL,R,COMPA_insideDX
-      AATT,1,,1,nthWallCS,nthCS_WALL_top
+      AATT,MAT_conc,,TYPE_shell181,nthWallCS,nthCS_WALL_top
     *endif
 
     *if,GEO_CORB_status,EQ,1,OR,GEO_CORB_status,EQ,3,THEN
       ! Bottom slab, left side
       CMSEL,S,COMPA_FLOOR_leftCorbel
       CMSEL,R,COMPA_insideDX
-      AATT,1,,1,CS_bot,nthCS_FLOOR_left
+      AATT,MAT_conc,,TYPE_shell181,CS_bot,nthCS_FLOOR_left
       ! Bottom slab, right side
       CMSEL,S,COMPA_FLOOR_rightCorbel
       CMSEL,R,COMPA_insideDX
-      AATT,1,,1,CS_bot,nthCS_FLOOR_right
+      AATT,MAT_conc,,TYPE_shell181,CS_bot,nthCS_FLOOR_right
       ! Bottom, walls
       CMSEL,S,COMPA_WALL_botCorbel
       CMSEL,R,COMPA_insideDX
-      AATT,1,,1,nthWallCS,nthCS_WALL_bot
+      AATT,MAT_conc,,TYPE_shell181,nthWallCS,nthCS_WALL_bot
     *endif
 
     xWall=xWall+Eff_GalleryWidth
