@@ -188,13 +188,11 @@ GEO_TUN_effH    = Eff_GalleryHeight
 GEO_TUN_totEffW = GEO_TUN_effW*GEO_TUN_modules
 
 ! Calculate length increment due to tunnel skewness
-GEO_ExtraLength = 0
-*if,GEO_TUN_skewness,gt,0,then
-  *afun,deg
-  GEO_ExtraLength = tan(GEO_TUN_skewness)*GEO_TUN_totEffW
-  *afun,rad
-*endif
-GEO_TUN_length = GEO_TUN_length+2*GEO_ExtraLength
+*afun,deg
+GEO_extraBegLength = 0 ! tan(GEO_TUN_begSkewness)*GEO_TUN_totEffW ! TODO  these have to be zero, there is no way to correct for skewness
+GEO_extraEndLength = 0 ! tan(GEO_TUN_endSkewness)*GEO_TUN_totEffW !       withouth ambiguity given a tunnel length
+GEO_TUN_length     = GEO_TUN_length+GEO_extraBegLength+GEO_extraEndLength
+*afun,rad
 
 ! Tunnel slope (in degrees)
 TunnelSlope=ATAN(GEO_TUN_slope/100)*180/pi
