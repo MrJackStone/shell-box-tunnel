@@ -2,72 +2,76 @@
 
 
 ! Roof slab
-CMSEL,S,COMPA_Roof
-*do,nthModule,0,GEO_TUN_modules,1
-  xWall = nthModule*Eff_GalleryWidth
-  CSSLICEYZ,xWall+GEO_corbelXOff_TOP
-  CSSLICEYZ,xWall-GEO_corbelXOff_TOP
-  CM,COMPA_temp,AREA
+*if,GEO_CORB_status,eq,1,or,GEO_CORB_status,eq,2,then
+  CMSEL,S,COMPA_Roof
+  *do,nthModule,0,GEO_TUN_modules,1
+    xWall = nthModule*Eff_GalleryWidth
+    CSSLICEYZ,xWall+GEO_corbelXOff_TOP
+    CSSLICEYZ,xWall-GEO_corbelXOff_TOP
+    CM,COMPA_temp,AREA
 
-  ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_TOP
-  CMSEL,A,COMPA_ROOF_rightCorbel
-  CM,COMPA_ROOF_rightCorbel,AREA
+    ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_TOP
+    CMSEL,A,COMPA_ROOF_rightCorbel
+    CM,COMPA_ROOF_rightCorbel,AREA
 
-  CMSEL,S,COMPA_temp
-  ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_TOP
-  CMSEL,A,COMPA_ROOF_leftCorbel
-  CM,COMPA_ROOF_leftCorbel,AREA
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_TOP
+    CMSEL,A,COMPA_ROOF_leftCorbel
+    CM,COMPA_ROOF_leftCorbel,AREA
 
-  CMSEL,S,COMPA_temp
-  ASEL,R,LOC,X,xWall-GEO_corbelXOff_TOP,xWall+GEO_corbelXOff_TOP
-  CMSEL,U,COMPA_ROOF_leftCorbel
-  CMSEL,U,COMPA_ROOF_rightCorbel
-  CM,COMPA_ROOF_flat,AREA
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,xWall-GEO_corbelXOff_TOP,xWall+GEO_corbelXOff_TOP
+    CMSEL,U,COMPA_ROOF_leftCorbel
+    CMSEL,U,COMPA_ROOF_rightCorbel
+    CM,COMPA_ROOF_flat,AREA
 
-  *get,compType,COMP,COMPA_Roof,TYPE
-  *if,compType,EQ,0,THEN
-    ASEL,U,AREA,,ALL
+    *get,compType,COMP,COMPA_Roof,TYPE
+    *if,compType,EQ,0,THEN
+      ASEL,U,AREA,,ALL
+      CM,COMPA_Roof,AREA
+    *else
+      CMSEL,S,COMPA_Roof
+    *endif
+    CMSEL,A,COMPA_temp
     CM,COMPA_Roof,AREA
-  *else
-    CMSEL,S,COMPA_Roof
-  *endif
-  CMSEL,A,COMPA_temp
-  CM,COMPA_Roof,AREA
-*enddo
+  *enddo
+*endif
 
 ! Floor slab
-CMSEL,S,COMPA_Floor
-*do,nthModule,0,GEO_TUN_modules,1
-  xWall=nthModule*Eff_GalleryWidth
-  CSSLICEYZ,xWall+GEO_corbelXOff_BOT
-  CSSLICEYZ,xWall-GEO_corbelXOff_BOT
-  CM,COMPA_temp,AREA
+*if,GEO_CORB_status,eq,1,or,GEO_CORB_status,eq,3,then
+  CMSEL,S,COMPA_Floor
+  *do,nthModule,0,GEO_TUN_modules,1
+    xWall=nthModule*Eff_GalleryWidth
+    CSSLICEYZ,xWall+GEO_corbelXOff_BOT
+    CSSLICEYZ,xWall-GEO_corbelXOff_BOT
+    CM,COMPA_temp,AREA
 
-  ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_BOT
-  CMSEL,A,COMPA_FLOOR_rightCorbel
-  CM,COMPA_FLOOR_rightCorbel,AREA
+    ASEL,R,LOC,X,xWall,xWall+GEO_corbelXOff_BOT
+    CMSEL,A,COMPA_FLOOR_rightCorbel
+    CM,COMPA_FLOOR_rightCorbel,AREA
 
-  CMSEL,S,COMPA_temp
-  ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_BOT
-  CMSEL,A,COMPA_FLOOR_leftCorbel
-  CM,COMPA_FLOOR_leftCorbel,AREA
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,xWall,xWall-GEO_corbelXOff_BOT
+    CMSEL,A,COMPA_FLOOR_leftCorbel
+    CM,COMPA_FLOOR_leftCorbel,AREA
 
-  CMSEL,S,COMPA_temp
-  ASEL,R,LOC,X,xWall-GEO_corbelXOff_BOT,xWall+GEO_corbelXOff_BOT
-  CMSEL,U,COMPA_FLOOR_leftCorbel
-  CMSEL,U,COMPA_FLOOR_rightCorbel
-  CM,COMPA_FLOOR_flat,AREA
+    CMSEL,S,COMPA_temp
+    ASEL,R,LOC,X,xWall-GEO_corbelXOff_BOT,xWall+GEO_corbelXOff_BOT
+    CMSEL,U,COMPA_FLOOR_leftCorbel
+    CMSEL,U,COMPA_FLOOR_rightCorbel
+    CM,COMPA_FLOOR_flat,AREA
 
-  *get,compType,COMP,COMPA_Floor,TYPE
-  *if,compType,EQ,0,THEN
-    asel,none
-    CM,COMPA_Floor,AREA
-  *else
-    cmsel,s,COMPA_Floor
-  *endif
-  cmsel,a,compa_temp
-  cm,COMPA_Floor,area
-*enddo
+    *get,compType,COMP,COMPA_Floor,TYPE
+    *if,compType,EQ,0,THEN
+      asel,none
+      CM,COMPA_Floor,AREA
+    *else
+      cmsel,s,COMPA_Floor
+    *endif
+    cmsel,a,compa_temp
+    cm,COMPA_Floor,area
+  *enddo
+*endif
 
 ! Walls
 cmsel,s,COMPA_Walls
