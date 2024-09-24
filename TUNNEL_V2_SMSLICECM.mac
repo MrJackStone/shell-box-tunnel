@@ -3,8 +3,16 @@
 
 
 cmsel,s,%ARG1%
+
+*get,ac,area,,count
+*if,ac,eq,0,then
+  *return,-1
+*endif
+
 asbw,all,,delete
 cm,%ARG1%,area
+
 asel,r,loc,z,-1e6,0
 adele,all,,,1
+
 cmsel,s,%ARG1%
