@@ -115,12 +115,33 @@ csys,CS_tunnel
 cmsel,r,COMPA_headwalls
 cm,COMPA_HDW_botBeam,area
 
+! Auxiliary points: skewed tunnel ends
+csys,CS_begSkewed
+cmsel,s,COMPA_tunnel
+lsla
+ksll
+ksel,r,loc,z,0
+*get,xMinBegSkew,kp,,mnloc,x
+*get,xMaxBegSkew,kp,,mxloc,x
+
+csys,CS_endSkewed
+cmsel,s,COMPA_tunnel
+lsla
+ksll
+ksel,r,loc,z,0
+*get,xMinEndSkew,kp,,mnloc,x
+*get,xMaxEndSkew,kp,,mxloc,x
+
 ! Frame bottom beam
 asel,none
 csys,CS_begSkewed
 asel,a,loc,z,0
+asel,r,loc,x,xMinBegSkew,xMaxBegSkew
+cm,COMPA_temp,area
 csys,CS_endSkewed
 asel,a,loc,z,0
+asel,r,loc,x,xMinEndSkew,xMaxEndSkew
+cmsel,a,COMPA_temp
 csys,CS_tunnel
 asel,r,loc,y,-GEO_FRAME_backBeamHeight,0
 cmsel,r,COMPA_headwalls
@@ -130,8 +151,12 @@ cm,COMPA_HDW_backBeam,area
 asel,none
 csys,CS_begSkewed
 asel,a,loc,z,0
+asel,r,loc,x,xMinBegSkew,xMaxBegSkew
+cm,COMPA_temp,area
 csys,CS_endSkewed
 asel,a,loc,z,0
+asel,r,loc,x,xMinEndSkew,xMaxEndSkew
+cmsel,a,COMPA_temp
 csys,CS_tunnel
 asel,r,loc,y,GEO_TUN_effH,GEO_TUN_effH+GEO_FRAME_headBeamHeight
 cmsel,r,COMPA_headwalls
