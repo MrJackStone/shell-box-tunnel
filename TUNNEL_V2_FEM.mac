@@ -335,7 +335,7 @@ elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticMod
   esla
   nsle
   nsel,u,loc,x,xMin,xMax
-  elasticbase,'EBASE_approach','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_approach','COMPE_SOILSPR_approach'
+  elasticbase,'EBASE_approach','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_approach','COMPE_SOILSPR_approach'
 *endif
 
 
