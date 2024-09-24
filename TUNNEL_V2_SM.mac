@@ -204,7 +204,6 @@ TUNNEL_V2_HDWINITCM
   *endif
 
 *endif
-allsel
 
 ! Build inlet selection components
 TUNNEL_V2_HDWBUILDCM

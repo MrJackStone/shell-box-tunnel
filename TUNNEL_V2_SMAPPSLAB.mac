@@ -5,8 +5,8 @@ asel,none
 csys,CS_approachLeft
 wpcsys,-1
 ptxy , 0                     , (-GEO_APR_obliqueWidth/2)
-ptxy , GEO_APR_obliqueLength , (-GEO_APR_obliqueWidth/2)+GEO_APR_axialSkewedLength
-ptxy , GEO_APR_obliqueLength , (GEO_APR_obliqueWidth/2)+GEO_APR_axialSkewedLength
+ptxy , GEO_APR_obliqueLength , (-GEO_APR_obliqueWidth/2)-GEO_APR_axialSkewedLength
+ptxy , GEO_APR_obliqueLength , (GEO_APR_obliqueWidth/2)-GEO_APR_axialSkewedLength
 ptxy , 0                     , (GEO_APR_obliqueWidth/2)
 poly
 cm,COMPA_approachL,area
