@@ -2,17 +2,41 @@
 
 ! Prepare environment
 csbackup
+
+! Tunnel
+csys,CS_begSkewed
+asel,s,loc,z,0,1e6
+asel,u,loc,z,0
+csys,CS_endSkewed
+asel,r,loc,z,0,1e6
+asel,u,loc,z,0
 csys,CS_tunnel
+asel,r,loc,x,0,GEO_TUN_totEffW
+cm,COMPA_tunnel,area
+
+! End frames
+csys,CS_begSkewed
+asel,s,loc,z,0
+cm,COMPA_frame1,area
+
+csys,CS_endSkewed
+asel,s,loc,z,0
+cm,COMPA_frame2,area
+
+cmsel,s,COMPA_frame1
+cmsel,a,COMPA_frame2
+cm,COMPA_frames,area
 
 ! Tunnel walls
-asel , s , loc , z , 0              , GEO_TUN_length
-asel , u , loc , z , 0
-asel , u , loc , z , GEO_TUN_length
+csys,CS_tunnel
+cmsel , s , COMPA_tunnel
 asel , u , loc , y , 0
 asel , u , loc , y , GEO_TUN_effH
 cm,COMPA_Walls,AREA
 
 ! Left tunnel wall
+csys,CS_tunnel
+cmsel,s,COMPA_walls
 asel,r,loc,x,0
 cm,COMPA_LeftWall,area
 lsla
@@ -23,7 +47,8 @@ lsel,r,loc,y,GEO_TUN_effH
 cm,COMPL_LWALL_roofInterface,line
 
 ! Right tunnel wall
-cmsel,S,COMPA_Walls
+csys,CS_tunnel
+cmsel,s,COMPA_Walls
 asel,r,loc,x,GEO_TUN_totEffW
 cm,COMPA_RightWall,area
 lsla
@@ -34,6 +59,7 @@ lsel,r,loc,y,GEO_TUN_effH
 cm,COMPL_RWALL_roofInterface,line
 
 ! Inner tunnel walls
+csys,CS_tunnel
 cmsel,s,COMPA_Walls
 cmsel,u,COMPA_LeftWall
 cmsel,u,COMPA_RightWall
@@ -53,11 +79,13 @@ cm,COMPL_IWALL_roofInterface,line
 *enddo
 
 ! Floor slab
-asel,s,loc,y,0
-asel,r,loc,z,0,GEO_TUN_length
+csys,CS_tunnel
+cmsel,s,COMPA_tunnel
+asel,r,loc,y,0
 cm,COMPA_floor,area
 
 ! Roof struts
+csys,CS_tunnel
 asel,none
 *if,GEO_ROOF_gapStatus,eq,1,and,GEO_ROOF_gapStrutCount,gt,0,then
   asel , a , loc , z , GEO_ROOF_gap_z_ends(1:GEO_ROOF_gapStrutCount) , GEO_ROOF_gap_z_begs(2:GEO_ROOF_gapCount)
@@ -66,13 +94,14 @@ asel,none
 cm,COMPA_Struts,area
 
 ! Roof slab
-asel,s,loc,y,GEO_TUN_effH
-asel,r,loc,z,0,GEO_TUN_length
-asel,r,loc,x,0,GEO_TUN_totEffW
+csys,CS_tunnel
+cmsel,s,COMPA_tunnel
+asel,r,loc,y,GEO_TUN_effH
 cmsel,u,COMPA_Struts
 cm,COMPA_Roof,area
 
 ! Roof precast girders
+csys,CS_tunnel
 *if,GEO_ROOF_type,eq,1,then
   zi = 0
   *do,nthGirder,1,GEO_girderCount-1,1
@@ -88,14 +117,9 @@ cm,COMPA_Roof,area
 *endif
 
 ! Tunnel
-cmsel , s , COMPA_walls
-cmsel , a , COMPA_floor
-cmsel , a , COMPA_roof
-cmsel , a , COMPA_struts
-cm,COMPA_Tunnel,area
-
-lsla,s
-ksll,s
+cmsel,s,COMPA_Tunnel
+lsla
+ksll
 cm,COMPL_Tunnel,line
 cm,COMPK_Tunnel,kp
 
