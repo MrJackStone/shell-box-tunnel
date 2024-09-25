@@ -52,18 +52,53 @@
 ! COMPA_HDW2_rightColumn
 ! COMPA_HDW2_backBeam
 ! COMPA_HDW2_botBeam
+! COMPA_HDW2_topBeam
 ! COMPA_HDW2_slab
 
 
 !! A.  Prepare environment                                                                        !!
 TUNNEL_V2_HDWINITCM
 
-!! B.  Components by structural part                                                              !!
+
+!! B.  Global, multi-part components                                                              !!
+! First inlet
+csys,CS_begSkewed
+asel,s,loc,z,-1e6,0
+cm,COMPA_HDW_1,area
+
+! Second inlet
+csys,CS_endSkewed
+asel,s,loc,z,-1e6,0
+cm,COMPA_HDW_2,area
+
 ! All headwall areas
-allsel
-cmsel,u,COMPA_tunnel
+cmsel,s,COMPA_HDW_1
+cmsel,a,COMPA_HDW_2
 cm,COMPA_headwalls,area
 
+! Left side
+csys,CS_hdw1
+cmsel,s,COMPA_HDW_1
+asel,r,loc,x,0,1e6
+cmpadd,'COMPA_HDW_left'
+
+csys,CS_hdw2
+cmsel,s,COMPA_HDW_2
+asel,r,loc,x,0,1e6
+cmpadd,'COMPA_HDW_left'
+
+! Right side
+csys,CS_hdw1
+cmsel,s,COMPA_HDW_1
+asel,r,loc,x,0,-1e6
+cmpadd,'COMPA_HDW_right'
+
+cmsel,s,COMPA_HDW_2
+asel,r,loc,x,0,-1e6
+cmpadd,'COMPA_HDW_right'
+
+
+!! C.  Components by structural part                                                              !!
 ! Walls
 asel,none
 csys,CS_HDW1_leftWall
@@ -174,29 +209,7 @@ cmsel,u,COMPA_HDW_topBeam
 cm,COMPA_HDW_columns,area
 
 
-!! C.  Left/right split                                                                           !!
-! First inlet
-csys,CS_hdw1
-cmsel,s,COMPA_headwalls
-asel,r,loc,x,0,1e6
-asel,r,loc,z,0,1e6
-cmpadd,'COMPA_HDW_left'
-cmsel,s,COMPA_headwalls
-asel,r,loc,x,0,-1e6
-asel,r,loc,z,0,1e6
-cmpadd,'COMPA_HDW_right'
-
-! Second inlet
-csys,CS_hdw2
-cmsel,s,COMPA_headwalls
-asel,r,loc,x,0,1e6
-asel,r,loc,z,0,1e6
-cmpadd,'COMPA_HDW_left'
-cmsel,s,COMPA_headwalls
-asel,r,loc,x,0,-1e6
-asel,r,loc,z,0,1e6
-cmpadd,'COMPA_HDW_right'
-
+!! D.  Left/right part split                                                                      !!
 ! Walls
 cmsel,s,COMPA_HDW_walls
 cmsel,r,COMPA_HDW_left
@@ -234,17 +247,7 @@ cmsel,r,COMPA_HDW_right
 cmpadd,'COMPA_HDW_rightColumn'
 
 
-!! D.  1st/2nd split                                                                              !!
-csys,CS_tunnel
-
-cmsel,s,COMPA_headwalls
-asel,r,loc,z,-1e6,0
-cm,COMPA_HDW_1,area
-
-cmsel,s,COMPA_headwalls
-cmsel,u,COMPA_HDW_1
-cm,COMPA_HDW_2,area
-
+!! E.  1st/2nd part split                                                                         !!
 ! Split each structural part component
 cmRootCount = 12
 *del,cmname_roots,,nopr
