@@ -4,7 +4,7 @@
 allsel
 /eshape,1
 view4w
-/pnum,SEC,1
+/pnum,sec,1
 /number,1
 eplot
 /graphics,FULL

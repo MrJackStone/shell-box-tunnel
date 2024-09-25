@@ -93,6 +93,7 @@ cmsel,s,COMPA_HDW_1
 asel,r,loc,x,0,-1e6
 cmpadd,'COMPA_HDW_right'
 
+csys,CS_hdw2
 cmsel,s,COMPA_HDW_2
 asel,r,loc,x,0,-1e6
 cmpadd,'COMPA_HDW_right'

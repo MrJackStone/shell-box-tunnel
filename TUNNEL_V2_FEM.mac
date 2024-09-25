@@ -151,3 +151,7 @@ cm,COMPE_ROOF_noShear,elem
 
 allsel
 csys,0
+
+! Clean up
+*msg,ui,
+Mesh created!
