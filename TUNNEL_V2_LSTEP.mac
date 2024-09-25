@@ -8,7 +8,7 @@ ALLSEL
 ANTYPE,0
 NLGEOM,ON
 
-NSUBST,SubstepCount,SubstepCount*2,SubstepCount/2
+NSUBST,SubstepCount,SubstepCount*20,SubstepCount/2
 
 OUTRES,ERASE
 OUTRES,ALL,LAST
@@ -95,7 +95,7 @@ TAKEPIC,fName,1200,1,1
   ALLSEL
   TIME,LoadStepIndex
 
-  NSUBST,SubstepCount,SubstepCount*2,SubstepCount/2
+  NSUBST,SubstepCount,SubstepCount*20,SubstepCount/2
 
   OUTRES,ERASE
   OUTRES,ALL,LAST
@@ -152,7 +152,7 @@ TAKEPIC,fName,1200,1,1
     ALLSEL
     TIME,LoadStepIndex
 
-    NSUBST,SubstepCount,SubstepCount*2,SubstepCount/2
+    NSUBST,SubstepCount,SubstepCount*20,SubstepCount/2
 
     OUTRES,ERASE
     OUTRES,ALL,LAST
@@ -302,7 +302,7 @@ APPLYING LOADS ON WINGS...
   !! allsel             !!
   !!                                                                                            !!
 
-  NSUBST,SubstepCount,SubstepCount*2,SubstepCount/2
+  NSUBST,SubstepCount,SubstepCount*20,SubstepCount/2
 
   OUTRES,ERASE
   OUTRES,ALL,LAST
