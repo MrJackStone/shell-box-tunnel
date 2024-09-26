@@ -122,32 +122,34 @@ TAKEPIC,fName,1200,1,1
     nsle,s
     cm,COMPN_temp,node
 
-    LV_xcen=(GEO_TUN_effW/2)
+    *do,nthModule,1,GEO_TUN_modules,1
+      LV_xcen=(GEO_TUN_effW/2)+(GEO_TUN_effW*(nthModule-1))
 
-    nsel,s,loc,z,LOAD_LTI_position-3,LOAD_LTI_position+3
-    nsel,r,loc,x,LV_xcen-1.5,LV_xcen+1.5
-    nsel,inve
-    cmsel,r,COMPN_temp
+      nsel,s,loc,z,LOAD_LTI_position-3,LOAD_LTI_position+3
+      nsel,r,loc,x,LV_xcen-1.5,LV_xcen+1.5
+      nsel,inve
+      cmsel,r,COMPN_temp
 
-    esln,s,1
-    sfe,all,1,pres,,5e3*LOAD_gammaQ
+      esln,s,1
+      sfe,all,1,pres,,5e3*LOAD_gammaQ
 
-    cmsel,s,COMPN_temp
-    n1 = node(LV_xcen-1,0,LOAD_LTI_position-3)
-    n2 = node(LV_xcen+1,0,LOAD_LTI_position-3)
-    n3 = node(LV_xcen-1,0,LOAD_LTI_position)
-    n4 = node(LV_xcen+1,0,LOAD_LTI_position)
-    n5 = node(LV_xcen-1,0,LOAD_LTI_position+3)
-    n6 = node(LV_xcen+1,0,LOAD_LTI_position+3)
+      cmsel,s,COMPN_temp
+      n1 = node(LV_xcen-1,0,LOAD_LTI_position-3)
+      n2 = node(LV_xcen+1,0,LOAD_LTI_position-3)
+      n3 = node(LV_xcen-1,0,LOAD_LTI_position)
+      n4 = node(LV_xcen+1,0,LOAD_LTI_position)
+      n5 = node(LV_xcen-1,0,LOAD_LTI_position+3)
+      n6 = node(LV_xcen+1,0,LOAD_LTI_position+3)
 
-    nsel , s , node ,  , n1
-    nsel , a , node ,  , n2
-    nsel , a , node ,  , n3
-    nsel , a , node ,  , n4
-    nsel , a , node ,  , n5
-    nsel , a , node ,  , n6
+      nsel , s , node ,  , n1
+      nsel , a , node ,  , n2
+      nsel , a , node ,  , n3
+      nsel , a , node ,  , n4
+      nsel , a , node ,  , n5
+      nsel , a , node ,  , n6
 
-    f,all,fy,-75e3*LOAD_gammaQ
+      f,all,fy,-75e3*LOAD_gammaQ
+    *enddo
 
     ALLSEL
     TIME,LoadStepIndex
