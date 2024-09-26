@@ -96,6 +96,10 @@ label_N(1)   = 'N_MIN'   , 'N_MAX'
 label_V(1)   = 'V_MIN'   , 'V_MAX'
 label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
 
+cmsel,s,COMPA_frame1
+esla,s
+nsle,s
+
 view4w
 clims
 boldfont,1
@@ -126,6 +130,7 @@ go2png,picRes
   oplot,,'E11'
   /device,vector,off
   /noerase
+  /plopts,info,3
 
   /window , 1 , off
   /window , 2 , off
