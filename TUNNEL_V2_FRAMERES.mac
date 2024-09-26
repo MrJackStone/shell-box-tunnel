@@ -47,6 +47,27 @@ etable , 'M11'   , smisc , 4
 
 *enddo
 
+*del , path_names    ,      , nopr
+*del , path_labels   ,      , nopr
+*del , scale_factors ,      , nopr
+*dim , path_names    , char , 8
+*dim , path_labels   , char , 10
+*dim , scale_factors ,      , 10
+
+path_names(1)    = 'TBEAM1' , 'BBEAM1' , 'LCOL1'  , 'RCOL1'  , 'TBEAM2' , 'BBEAM2' , 'LCOL2' , 'RCOL2'
+path_labels(1)   = 'MP_MIN' , 'MP_MAX' , 'MB_MIN' , 'MB_MAX' , 'N_MIN'  , 'N_MAX'  , 'V_MIN' , 'V_MAX' , 'DYB_MIN' , 'DYB_MAX'
+scale_factors(1) = 1e-3     , 1e-3     , 1e-3     , 1e-3     , 1e-3     , 1e-3     , 1e-3    , 1e-3    , 1e3       , 1e3
+
+*do,nthPath,1,8,1
+  pthName = path_names(nthPath)
+  path,pthName
+  *do,nthLabel,1,10,1
+    pthLabel    = path_labels(nthLabel)
+    scaleFactor = scale_factors(nthLabel)
+    pcalc,add,pthLabel,pthLabel,,scaleFactor
+  *enddo
+*enddo
+
 *del , top_beam  ,      , nopr
 *del , bot_beam  ,      , nopr
 *del , left_col  ,      , nopr
