@@ -78,22 +78,27 @@ CS_rightWall      = 22
 CS_begSkewed      = 23
 CS_endSkewed      = 24
 
-CS_hdw1           = 25
-CS_hdw2           = 26
-CS_HDW_columns    = 27
-CS_HDW1_leftWall  = 28
-CS_HDW1_rightWall = 29
-CS_HDW2_leftWall  = 30
-CS_HDW2_rightWall = 31
-CS_HDW1_leftFoot  = 32
-CS_HDW1_rightFoot = 33
-CS_HDW2_leftFoot  = 34
-CS_HDW2_rightFoot = 35
+CS_FRM1_beams     = 25
+CS_FRM1_columns   = 26
+CS_FRM2_beams     = 27
+CS_FRM2_columns   = 28
 
-CS_approachLeft   = 36
-CS_approachRight  = 37
+CS_hdw1           = 29
+CS_hdw2           = 30
+CS_HDW_columns    = 31
+CS_HDW1_leftWall  = 32
+CS_HDW1_rightWall = 33
+CS_HDW2_leftWall  = 34
+CS_HDW2_rightWall = 35
+CS_HDW1_leftFoot  = 36
+CS_HDW1_rightFoot = 37
+CS_HDW2_leftFoot  = 38
+CS_HDW2_rightFoot = 39
 
-CS_free           = 38
+CS_approachLeft   = 40
+CS_approachRight  = 41
+
+CS_free           = 42
 
 *del , CS_innerWalls    ,  , nopr
 *del , CS_IWALL_beams   ,  , nopr
@@ -545,6 +550,14 @@ csys,CS_tunnel
 wpcsys,-1
 wprota,90
 cswpla,CS_HDW_columns,cart
+
+csys,CS_begSkewed
+clocal , CS_FRM1_beams   , cart
+clocal , CS_FRM1_columns , cart ,  ,  ,  , 90
+
+csys,CS_endSkewed
+clocal , CS_FRM2_beams   , cart
+clocal , CS_FRM2_columns , cart ,  ,  ,  , 90
 
 ! Headwall coordinate systems
 csys,CS_tunnel
