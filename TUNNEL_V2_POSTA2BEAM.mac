@@ -1,0 +1,57 @@
+! TUNNEL_V2_POSTA2BEAM , cmaName , pthName , env_name
+! TUNNEL_V2_POSTA2BEAM , ARG1    , ARG2    , ARG3
+
+! X: axial direction
+! Y: depth direction
+! Z: perpendicular to area
+
+_pthName = ARG2
+_envName = ARG3
+pathDiv = 20
+
+
+cmsel,s,%ARG1%
+esla
+nsle
+
+*del , esel_status ,  , nopr
+*del , all_esys    ,  , nopr
+*del , all_secn    ,  , nopr
+*del , sel_esys    ,  , nopr
+*del , sel_secn    ,  , nopr
+
+*vget  , esel_status , elem ,          , esel
+*vget  , all_esys    , elem ,          , attr , 'ESYS'
+*vget  , all_secn    , elem ,          , attr , 'SECN'
+*vmask , esel_status
+*vfun  , sel_esys    , comp , all_esys
+*vmask , esel_status
+*vfun  , sel_secn    , comp , all_secn
+! arruniq,'sel_esys','uniq_esys',1
+! *get,esysCount,parm,uniq_esys,dim,x
+
+reprEsys = sel_esys(1)
+reprSecn = sel_secn(1)
+reprNode = ndnext(0)
+
+csys,reprEsys
+wpcsys,-1
+nwpave,reprNode
+cswpla,CS_dummy,cart
+
+*get , xMin , node ,  , mnloc , x
+*get , xMax , node ,  , mxloc , x
+*get , yMin , node ,  , mnloc , y
+*get , yMax , node ,  , mxloc , y
+
+*get,reprThk,shel,reprSecn,prop,tthk
+beamDepth   = yMax-yMin
+beamArea    = beamDepth*reprThk
+beamModulus = beamArea*(beamDepth/6)
+
+ndTL = node(xMin , yMax , 0)
+ndTR = node(xMax , yMax , 0)
+ndBL = node(xMin , yMin , 0)
+ndBR = node(xMax , yMin , 0)
+
+pth2beam , ndTL , ndTR , ndBL , ndBR , _pthName , 1 , pathDiv , beamModulus , beamArea , 1 , _envName
