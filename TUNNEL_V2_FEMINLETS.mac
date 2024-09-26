@@ -37,17 +37,23 @@
   CMSEL,S,COMPA_HDW_Stiffener
   AATT,MAT_CONC,,TYPE_SHELL181,CS_bot,SEC_HDW_Stiffener
 
-  CMSEL,S,COMPA_HDW_TopBeam
-  AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_headBeam
-
   CMSEL,s,COMPA_HDW_BotBeam
   AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_HDW_frontBeam
 
-  CMSEL,s,COMPA_HDW_BackBeam
-  AATT,MAT_CONC,,TYPE_SHELL181,CS_tunnel,SEC_FRAME_backBeam
+  cmsel,s,COMPA_HDW1_TopBeam
+  aatt,MAT_conc,,TYPE_shell181,CS_FRM1_beams,SEC_FRAME_headBeam
+  cmsel,s,COMPA_HDW2_TopBeam
+  aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_headBeam
 
-  cmsel,s,COMPA_HDW_Columns
-  aatt,MAT_CONC,,TYPE_SHELL181,CS_HDW_columns,SEC_FRAME_Column
+  cmsel,s,COMPA_HDW1_BackBeam
+  aatt,MAT_conc,,TYPE_shell181,CS_FRM1_beams,SEC_FRAME_backBeam
+  cmsel,s,COMPA_HDW2_BackBeam
+  aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_backBeam
+
+  cmsel,s,COMPA_HDW1_Columns
+  aatt,MAT_conc,,TYPE_shell181,CS_FRM1_columns,SEC_FRAME_Column
+  cmsel,s,COMPA_HDW2_Columns
+  aatt,MAT_conc,,TYPE_shell181,CS_FRM2_columns,SEC_FRAME_Column
 
   cmsel,s,COMPA_Headwalls
   AESIZE,ALL,FEM_HDW_esize
