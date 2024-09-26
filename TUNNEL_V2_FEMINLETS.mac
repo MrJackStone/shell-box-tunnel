@@ -50,9 +50,11 @@
   cmsel,s,COMPA_HDW2_BackBeam
   aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_backBeam
 
-  cmsel,s,COMPA_HDW1_Columns
+  cmsel,s,COMPA_HDW1_leftColumn
+  cmsel,a,COMPA_HDW1_rightColumn
   aatt,MAT_conc,,TYPE_shell181,CS_FRM1_columns,SEC_FRAME_Column
-  cmsel,s,COMPA_HDW2_Columns
+  cmsel,s,COMPA_HDW2_leftColumn
+  cmsel,a,COMPA_HDW2_rightColumn
   aatt,MAT_conc,,TYPE_shell181,CS_FRM2_columns,SEC_FRAME_Column
 
   cmsel,s,COMPA_Headwalls
