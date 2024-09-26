@@ -87,124 +87,136 @@ scale_factors(1) = 1e-3     , 1e-3     , 1e-3     , 1e-3     , 1e-3     , 1e-3  
 *dim , label_V   , char , 2
 *dim , label_D   , char , 2
 
-top_beam(1)  = 'TBEAM1'  , 'TBEAM1'
-bot_beam(1)  = 'BBEAM1'  , 'BBEAM1'
-left_col(1)  = 'LCOL1'   , 'LCOL1'
-right_col(1) = 'RCOL1'   , 'RCOL1'
 label_MP(1)  = 'MP_MIN'  , 'MP_MAX'
 label_N(1)   = 'N_MIN'   , 'N_MAX'
 label_V(1)   = 'V_MIN'   , 'V_MAX'
 label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
 
-cmsel,s,COMPA_frame1
-esla,s
-nsle,s
+*do,nthFrame,1,2,1
 
-view4w
-clims
-boldfont,1
-/device,text,1,50
-g_picres,picRes
-wincln
-/plopts,leg3,on
-/angle,all,0
-/edge,all,0
-wpcsys,1,CS_begSkewed
-wpcsys,2,CS_begSkewed
-wpcsys,3,CS_begSkewed
-wpcsys,4,CS_begSkewed
-/auto,all
+  *if,nthFrame,eq,1,then
+    frameCS = CS_begSkewed
+  *else
+    frameCS = CS_endSkewed
+  *endif
 
-axanno,1
+  top_beam(1)  = 'TBEAM%nthFrame%' , 'TBEAM%nthFrame%'
+  bot_beam(1)  = 'BBEAM%nthFrame%' , 'BBEAM%nthFrame%'
+  left_col(1)  = 'LCOL%nthFrame%'  , 'LCOL%nthFrame%'
+  right_col(1) = 'RCOL%nthFrame%'  , 'RCOL%nthFrame%'
 
-wintitle , 1 , 'FRAME #1' , 'M. FLETOR (MZ)' , 'ELU-Normal [kNm]' ,  , 1 , 13
-wintitle , 2 , 'FRAME #1' , 'F. NORMAL'      , 'ELU-Normal [kN]'  ,  , 1 , 13
-wintitle , 3 , 'FRAME #1' , 'F. CORTANTE'    , 'ELU-Normal [kN]'  ,  , 1 , 13
-wintitle , 4 , 'FRAME #1' , 'FLECHA'         , 'ELS-Freq. [mm]'   ,  , 1 , 13
+  cmsel,s,COMPA_frame%nthFrame%
+  esla,s
+  nsle,s
 
-oplot,,'E11'
-/user,all
-/dist,all,1.2,1
+  view4w
+  clims
+  boldfont,1
+  /device,text,1,50
+  g_picres,picRes
+  wincln
+  /plopts,leg3,on
+  /angle,all,0
+  /edge,all,0
+  wpcsys,1,frameCS
+  wpcsys,2,frameCS
+  wpcsys,3,frameCS
+  wpcsys,4,frameCS
+  /auto,all
 
-go2png,picRes
+  axanno,1
+
+  wintitle , 1 , 'FRAME #%nthFrame%' , 'M. FLETOR (MZ)' , 'ELU-Normal [kNm]' ,  , 1 , 13
+  wintitle , 2 , 'FRAME #%nthFrame%' , 'F. NORMAL'      , 'ELU-Normal [kN]'  ,  , 1 , 13
+  wintitle , 3 , 'FRAME #%nthFrame%' , 'F. CORTANTE'    , 'ELU-Normal [kN]'  ,  , 1 , 13
+  wintitle , 4 , 'FRAME #%nthFrame%' , 'FLECHA'         , 'ELS-Freq. [mm]'   ,  , 1 , 13
+
   oplot,,'E11'
-  /device,vector,off
-  /noerase
-  /plopts,info,3
+  /user,all
+  /dist,all,1.2,1
 
-  /window , 1 , off
-  /window , 2 , off
-  /window , 3 , off
-  /window , 4 , off
+  go2png,picRes
+    oplot,,'E11'
+    /device,vector,off
+    /noerase
+    /plopts,info,3
 
-  ! Bending moment (in-plane)
-  wind = 1
-  /window,wind,on
-  /gformat,f,,0
+    /window , 1 , off
+    /window , 2 , off
+    /window , 3 , off
+    /window , 4 , off
 
-  /udoc,wind,cntr,top
-  mpathplot , baseScale ,  , 'top_beam'  , 'label_MP'
-  /udoc,wind,cntr,bottom
-  mpathplot , baseScale ,  , 'bot_beam'  , 'label_MP'
-  /udoc,wind,cntr,left
-  mpathplot , baseScale ,  , 'left_col'  , 'label_MP'
-  /udoc,wind,cntr,right
-  mpathplot , baseScale ,  , 'right_col' , 'label_MP'
+    ! Bending moment (in-plane)
+    wind = 1
+    /window,wind,on
+    /gformat,f,,0
 
-  /window,wind,off
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 'top_beam'  , 'label_MP'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'bot_beam'  , 'label_MP'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'left_col'  , 'label_MP'
+    /udoc,wind,cntr,right
+    mpathplot , baseScale ,  , 'right_col' , 'label_MP'
 
-  ! Axial force
-  wind = 2
-  /window,wind,on
-  /gformat,f,,0
+    /window,wind,off
 
-  /udoc,wind,cntr,top
-  mpathplot , baseScale ,  , 'top_beam'  , 'label_N'
-  /udoc,wind,cntr,bottom
-  mpathplot , baseScale ,  , 'bot_beam'  , 'label_N'
-  /udoc,wind,cntr,left
-  mpathplot , baseScale ,  , 'left_col'  , 'label_N'
-  /udoc,wind,cntr,right
-  mpathplot , baseScale ,  , 'right_col' , 'label_N'
+    ! Axial force
+    wind = 2
+    /window,wind,on
+    /gformat,f,,0
 
-  /window,wind,off
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 'top_beam'  , 'label_N'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'bot_beam'  , 'label_N'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'left_col'  , 'label_N'
+    /udoc,wind,cntr,right
+    mpathplot , baseScale ,  , 'right_col' , 'label_N'
 
-  ! Shear force
-  wind = 3
-  /window,wind,on
-  /gformat,f,,0
+    /window,wind,off
 
-  /udoc,wind,cntr,top
-  mpathplot , baseScale ,  , 'top_beam'  , 'label_V'
-  /udoc,wind,cntr,bottom
-  mpathplot , baseScale ,  , 'bot_beam'  , 'label_V'
-  /udoc,wind,cntr,left
-  mpathplot , baseScale ,  , 'left_col'  , 'label_V'
-  /udoc,wind,cntr,right
-  mpathplot , baseScale ,  , 'right_col' , 'label_V'
+    ! Shear force
+    wind = 3
+    /window,wind,on
+    /gformat,f,,0
 
-  /window,wind,off
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 'top_beam'  , 'label_V'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'bot_beam'  , 'label_V'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'left_col'  , 'label_V'
+    /udoc,wind,cntr,right
+    mpathplot , baseScale ,  , 'right_col' , 'label_V'
 
-  ! Deflection
-  wind = 4
-  /window,wind,on
-  /gformat,f,,2
+    /window,wind,off
 
-  /udoc,wind,cntr,top
-  mpathplot , baseScale ,  , 'top_beam'  , 'label_D'
-  /udoc,wind,cntr,bottom
-  mpathplot , baseScale ,  , 'bot_beam'  , 'label_D'
-  /udoc,wind,cntr,left
-  mpathplot , baseScale ,  , 'left_col'  , 'label_D'
-  /udoc,wind,cntr,right
-  mpathplot , baseScale ,  , 'right_col' , 'label_D'
+    ! Deflection
+    wind = 4
+    /window,wind,on
+    /gformat,f,,2
 
-  /window,wind,off
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 'top_beam'  , 'label_D'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'bot_beam'  , 'label_D'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'left_col'  , 'label_D'
+    /udoc,wind,cntr,right
+    mpathplot , baseScale ,  , 'right_col' , 'label_D'
 
-endpng,'RES_FRAME_all'
+    /window,wind,off
 
-/erase
-/annot,dele
-view1w
-windefa,1
-clims
+  endpng,'RES_FRAME_%nthFrame%'
+
+  /erase
+  /annot,dele
+  view1w
+  windefa,1
+  clims
+  boldfont
+
+*enddo
