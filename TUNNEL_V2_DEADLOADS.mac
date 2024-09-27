@@ -28,7 +28,8 @@ NodeNum=0
   ! Calculate embankment height above node
   tunnel_v2_yabove, 'yAbove', NZ
 
-  SoilPressure  = LOAD_SOIL_gammat_d*(yAbove-NY)
+  heightAbove   = ((yAbove-NY)>0)
+  SoilPressure  = LOAD_SOIL_gammat_d*heightAbove
   DeadNodalLoad = -apportionedArea*SoilPressure
 
   !F,NodeNum,FY,DeadNodalLoad
