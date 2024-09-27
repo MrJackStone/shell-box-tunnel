@@ -20,9 +20,8 @@ TUNNEL_V2_POSTSHELLS
 
 TUNNEL_V2_POSTBEAMS
 
-!!                                                                                                !!
-  TUNNEL_V2_FRAMERES
-!!                                                                                                !!
+TUNNEL_V2_POSTFRAMEPICS
+TUNNEL_V2_POSTIWALLPICS
 
 /eof
 ! Write results

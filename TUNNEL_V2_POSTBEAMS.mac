@@ -1,53 +1,105 @@
 ! TUNNEL_V2_POSTBEAMS
 
+*del , RES_ENV_FRM1_topBeam     ,  , nopr
+*del , RES_ENV_FRM1_backBeam    ,  , nopr
+*del , RES_ENV_FRM1_leftColumn  ,  , nopr
+*del , RES_ENV_FRM1_rightColumn ,  , nopr
+*del , RES_ENV_FRM2_topBeam     ,  , nopr
+*del , RES_ENV_FRM2_backBeam    ,  , nopr
+*del , RES_ENV_FRM2_leftColumn  ,  , nopr
+*del , RES_ENV_FRM2_rightColumn ,  , nopr
+! *del , RES_ENV_FRM1_frontBeam   ,  , nopr
+! *del , RES_ENV_FRM2_frontBeam   ,  , nopr
+
+*do,nthIWall,1,GEO_IWALL_count,1
+  *del , RES_ENV_IWALL%nthIWall%_botBeam    ,  , nopr
+  *del , RES_ENV_IWALL%nthIWall%_topBeam    ,  , nopr
+  *do,nthColumn,1,GEO_IWALL_columnCount,1
+    *del , RES_ENV_IWALL%nthIWall%_column%nthColumn% ,  , nopr
+  *enddo
+*enddo
+
 *do,nthLS,1,LoadStepCount,1
 
-  cmsel,s,COMPA_HDW_1
-  cmsel,a,COMPA_HDW_2
-  esla
-  nsle
-
-  subset,nthLS,last
+  allsel
+  set,nthLS,last
 
   etable , 'M11'   , smisc , 4
   etable , 'SM_11' , smisc , 34
+  etable , 'SM_22' , smisc , 35
   etable , 'SM_12' , smisc , 36
+  etable , 'SB_11' , smisc , 37
+  etable , 'SB_22' , smisc , 38
+  etable , 'SB_12' , smisc , 39
+
+  cmsel,s,COMPA_frames
+  cmsel,a,COMPA_innerWalls
+  esla
+  nsle
 
   *do,nthHDW,1,2,1
-    ! Frame top beam
-    cmsel,s,COMPA_HDW%nthHDW%_topBeam
-    esla
-    nsle
-    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%TOP', 'top_beam_envelope'
 
-    ! Frame bottom beam
-    cmsel,s,COMPA_HDW%nthHDW%_backBeam
-    esla
-    nsle
-    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%BOT', 'bot_beam_envelope'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_topBeam'     , 'TBEAM1' , 'RES_ENV_FRM1_topBeam'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_backBeam'    , 'BBEAM1' , 'RES_ENV_FRM1_backBeam'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_leftColumn'  , 'LCOL1'  , 'RES_ENV_FRM1_leftColumn'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_rightColumn' , 'RCOL1'  , 'RES_ENV_FRM1_rightColumn'
 
-    ! Frame left column
-    cmsel,s,COMPA_HDW%nthHDW%_leftColumn
-    esla
-    nsle
-    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%LCOL', 'left_column_envelope'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_topBeam'     , 'TBEAM2' , 'RES_ENV_FRM2_topBeam'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_backBeam'    , 'BBEAM2' , 'RES_ENV_FRM2_backBeam'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_leftColumn'  , 'LCOL2'  , 'RES_ENV_FRM2_leftColumn'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_rightColumn' , 'RCOL2'  , 'RES_ENV_FRM2_rightColumn'
 
-    ! Frame right column
-    cmsel,s,COMPA_HDW%nthHDW%_rightColumn
-    esla
-    nsle
-    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%RCOL', 'right_column_envelope'
+    ! ! Inlet front beam
+    ! TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_botBeam' , 'FBEAM1'  , 'RES_ENV_FRM1_frontBeam'
+    ! TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_botBeam' , 'FBEAM2'  , 'RES_ENV_FRM2_frontBeam'
 
-    ! Inlet front beam
-    cmsel,s,COMPA_HDW%nthHDW%_botBeam
-    esla
-    nsle
-    TUNNEL_V2_POSTS2BEAM ,'H%nthHDW%FRT', 'front_beam_envelope'
   *enddo
 
+  *do,nthIWall,1,GEO_IWALL_count,1
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_IWALL%nthIWall%_bBeam'   , 'I%nthIWall%BBEAM' , 'RES_ENV_IWALL%nthIWall%_botBeam'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_IWALL%nthIWall%_tBeam'   , 'I%nthIWall%TBEAM' , 'RES_ENV_IWALL%nthIWall%_topBeam'
+
+    *do,nthColumn,1,GEO_IWALL_columnCount,1
+      TUNNEL_V2_POSTS2BEAM , 'COMPA_IWALL%nthIWall%_column%nthColumn%' , 'I%nthIWall%COL%nthColumn%'  , 'RES_ENV_IWALL%nthIWall%_column%nthColumn%'
+    *enddo
+  *enddo
+
+
+*enddo
+
+! TODO  this whole thing can be removed if PTH2BEAM outputs results in common units (kN, kNm, mm)
+pathCount = 8+(GEO_IWALL_count*(2+GEO_IWALL_columnCount))
+
+*del , path_names    ,      , nopr
+*del , path_labels   ,      , nopr
+*del , scale_factors ,      , nopr
+*dim , path_names    , char , pathCount
+*dim , path_labels   , char , 10
+*dim , scale_factors ,      , 10
+
+path_names(1) = 'TBEAM1' , 'BBEAM1' , 'LCOL1' , 'RCOL1' , 'TBEAM2' , 'BBEAM2' , 'LCOL2' , 'RCOL2'
+*do,nthIWall,1,GEO_IWALL_count,1
+  idx             = 9+(nthIWall-1)*(GEO_IWALL_columnCount+2)
+  path_names(idx) = 'I%nthIWall%BBEAM' , 'I%nthIWall%TBEAM'
+  *do,nthColumn,1,GEO_IWALL_columnCount,1
+    jdx             = idx+nthColumn+1
+    path_names(jdx) = 'I%nthWall%COL%nthColumn%'
+  *enddo
+*enddo
+
+path_labels(1)   = 'MP_MIN' , 'MP_MAX' , 'MB_MIN' , 'MB_MAX' , 'N_MIN' , 'N_MAX' , 'V_MIN' , 'V_MAX' , 'DYB_MIN' , 'DYB_MAX'
+scale_factors(1) = 1e-3     , 1e-3     , 1e-3     , 1e-3     , 1e-3    , 1e-3    , 1e-3    , 1e-3    , 1e3       , 1e3
+
+*do,nthPath,1,pathCount,1
+  pthName = path_names(nthPath)
+  path,pthName
+  *do,nthLabel,1,10,1
+    pthLabel    = path_labels(nthLabel)
+    scaleFactor = scale_factors(nthLabel)
+    pcalc,add,pthLabel,pthLabel,,scaleFactor
+  *enddo
 *enddo
 
 /eof
 ! pthenv, option, pathEnvDataParm, resultSetIdentifier
 pthenv,'CLEAR'
-
