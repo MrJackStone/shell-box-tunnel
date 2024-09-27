@@ -83,7 +83,7 @@ path_names(1) = 'TBEAM1' , 'BBEAM1' , 'LCOL1' , 'RCOL1' , 'TBEAM2' , 'BBEAM2' , 
   path_names(idx) = 'I%nthIWall%BBEAM' , 'I%nthIWall%TBEAM'
   *do,nthColumn,1,GEO_IWALL_columnCount,1
     jdx             = idx+nthColumn+1
-    path_names(jdx) = 'I%nthWall%COL%nthColumn%'
+    path_names(jdx) = 'I%nthIWall%COL%nthColumn%'
   *enddo
 *enddo
 

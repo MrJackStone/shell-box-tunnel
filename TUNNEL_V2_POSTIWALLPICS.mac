@@ -59,8 +59,6 @@ label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
     i_cols(idx) = 'I%nthIWall%COL%nthColumn%'  , 'I%nthIWall%COL%nthColumn%'
   *enddo
 
-  ! cols_MP(1)
-
   cmsel,s,COMPA_IWALL_%nthIWall%
   esla,s
   nsle,s
