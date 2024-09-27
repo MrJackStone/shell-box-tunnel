@@ -33,6 +33,7 @@ cm   , COMPA_columns , area
     *enddo
 
     cmsel,s,COMPA_innerWall
+    cmdele,COMPA_innerWall
     cmpadd,'COMPA_innerWalls'
   *enddo
 
@@ -45,19 +46,6 @@ cm   , COMPA_columns , area
   nummrg,kp
   cm,COMPA_InnerWalls,area
   cmpadd,'COMPA_walls'
-
-  cmsel,s,COMPA_InnerWalls
-  asel,r,loc,y,0,GEO_IWALL_botBeamHeight
-  cm,COMPA_bBeam,area
-
-  cmsel,s,COMPA_InnerWalls
-  asel,r,loc,y,GEO_TUN_effH-GEO_IWALL_topBeamHeight,GEO_TUN_effH
-  cm,COMPA_tBeam,area
-
-  cmsel,s,COMPA_InnerWalls
-  cmsel,u,COMPA_bBeam
-  cmsel,u,COMPA_tBeam
-  cm,COMPA_Columns,area
 
   TUNNEL_V2_BUILDCM
 *endif

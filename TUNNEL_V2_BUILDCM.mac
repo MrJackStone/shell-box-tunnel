@@ -97,11 +97,61 @@ lsla
 lsel,r,loc,y,GEO_TUN_effH
 cm,COMPL_IWALL_roofInterface,line
 
+cmsel,s,COMPA_InnerWalls
+lsla
+ksll
+asel,r,loc,y,0,GEO_IWALL_botBeamHeight
+cm,COMPA_bBeam,area
+
+cmsel,s,COMPA_InnerWalls
+asel,r,loc,y,GEO_TUN_effH-GEO_IWALL_topBeamHeight,GEO_TUN_effH
+cm,COMPA_tBeam,area
+
+cmsel,s,COMPA_InnerWalls
+cmsel,u,COMPA_bBeam
+cmsel,u,COMPA_tBeam
+cm,COMPA_Columns,area
+
 *do,nthWall,1,GEO_IWALL_count,1
-  xCoord = GEO_IWALL_x_coords(nthWall)
+  csys,CS_innerWall%nthWall%
+
+  openingWidth = GEO_IWALL_opening_widths(nthWall)
+
   cmsel,s,COMPA_innerWalls
-  asel,r,loc,x,xCoord
+  asel,r,loc,z,0
   cm,COMPA_IWALL_%nthWall%,area
+
+  cmsel,s,COMPA_bBeam
+  cmsel,r,COMPA_IWALL_%nthWall%
+  cm,COMPA_IWALL%nthWall%_bBeam,area
+
+  cmsel,s,COMPA_tBeam
+  cmsel,r,COMPA_IWALL_%nthWall%
+  cm,COMPA_IWALL%nthWall%_tBeam,area
+
+  cmsel,s,COMPA_columns
+  cmsel,r,COMPA_IWALL_%nthWall%
+  cm,COMPA_IWALL%nthWall%_columns,area
+
+  *do,nthOpening,1,GEO_IWALL_openingCount,1
+    openingCenter = GEO_IWALL_opening_z_centers(nthWall, nthOpening)
+    nthColIdx     = nthOpening
+    nthCol2ndEdge = openingCenter-(openingWidth/2)
+    nthCol1stEdge = nthCol2ndEdge-GEO_IWALL_columnWidth
+    mthColIdx     = nthOpening+1
+    mthCol2ndEdge = openingCenter+(openingWidth/2)
+    mthCol1stEdge = mthCol2ndEdge+GEO_IWALL_columnWidth
+
+    asel,s,loc,y,nthCol1stEdge,nthCol2ndEdge
+    cmsel,r,COMPA_IWALL_%nthWall%
+    cmsel,r,COMPA_columns
+    cm,COMPA_IWALL%nthWall%_column%nthColIdx%,area
+
+    asel,s,loc,y,mthCol1stEdge,mthCol2ndEdge
+    cmsel,r,COMPA_IWALL_%nthWall%
+    cmsel,r,COMPA_columns
+    cm,COMPA_IWALL%nthWall%_column%mthColIdx%,area
+  *enddo
 *enddo
 
 ! Floor slab
