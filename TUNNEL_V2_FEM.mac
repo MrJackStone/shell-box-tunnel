@@ -26,7 +26,7 @@ TUNNEL_V2_FEMINLETS
 !!                                                                                                !!
 *if,GEO_APR_status,eq,1,then
   cmsel,s,COMPA_approach
-  aatt,MAT_conc,,TYPE_shell181,CS_top,SEC_apr
+  aatt,MAT_conc,REAL_default,TYPE_shell181,CS_top,SEC_apr
   aesize,all,FEM_HDW_esize
   amesh,all
   l2acnt , 'COMPA_leftWall'  , 'COMPL_APR_leftInterface'  ,  , 1

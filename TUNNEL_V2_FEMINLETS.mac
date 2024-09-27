@@ -1,6 +1,8 @@
 ! TUNNEL_V2_FEMINLETS
 
 
+real,REAL_default
+
 *get,parType,PARM,GEO_HDW_status,TYPE
 *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
   CMSEL,S,COMPA_HDW_LeftWall

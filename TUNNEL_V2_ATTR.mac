@@ -167,11 +167,12 @@ TYPE_COMBIN39 = 3
 TYPE_BEAM188  = 4
 
 ! Real constants
-REAL_normSprings = 1
-REAL_longSprings = 2
-REAL_hdwSprings  = 3
-REAL_roofSprings = 4
-REAL_rigidStrut  = 5
+REAL_default     = 1
+REAL_normSprings = 2
+REAL_longSprings = 3
+REAL_hdwSprings  = 4
+REAL_roofSprings = 5
+REAL_rigidStrut  = 6
 
 
 !!                                                                                                !!
@@ -636,6 +637,8 @@ csys,0
 !!                                                                                                !!
 !! 2.10  Sections                                                                                 !!
 !!                                                                                                !!
+r,REAL_default,0
+
 ! Soil springs
 r,REAL_normSprings,SpringArea,0,-1
 
