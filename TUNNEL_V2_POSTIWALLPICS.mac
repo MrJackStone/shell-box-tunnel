@@ -79,6 +79,7 @@ label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
   /auto  , all
 
   axanno,1
+  axanno,2
 
   wintitle , 1 , 'PAREDE INTERNA #%nthIWall%' , 'M. FLETOR (MZ)'    , 'ELU-Normal [kNm]' ,  , 1 , 13
   wintitle , 2 , 'PAREDE INTERNA #%nthIWall%' , 'M. FLETOR (MX/MY)' , 'ELU-Normal [kNm]' ,  , 1 , 13

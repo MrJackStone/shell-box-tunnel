@@ -39,7 +39,7 @@ FCUM,ADD
 !!                                                                                                !!
 LoadStepIndex=1
 
-ACEL,,LOAD_g_d  ! TODO  load applied
+ACEL,,LOAD_g_d
 
 ! Apply soil pressures
 TUNNEL_V2_DEADLOADS
