@@ -1,0 +1,240 @@
+! TUNNEL_V2_POSTIWALLPICS
+
+picRes    = 1800
+baseScale = 5
+
+/post1
+allsel
+set,last
+
+*del , t_beam   ,      , nopr
+*del , b_beam   ,      , nopr
+*del , label_MP ,      , nopr
+*del , label_MB ,      , nopr
+*del , label_N  ,      , nopr
+*del , label_V  ,      , nopr
+*del , label_D  ,      , nopr
+*dim , t_beam   , char , 2
+*dim , b_beam   , char , 2
+*dim , label_MP , char , 2
+*dim , label_MB , char , 2
+*dim , label_N  , char , 2
+*dim , label_V  , char , 2
+*dim , label_D  , char , 2
+
+*del , i_cols  ,      , nopr
+*del , cols_MP ,      , nopr
+*del , cols_MB ,      , nopr
+*del , cols_N  ,      , nopr
+*del , cols_V  ,      , nopr
+*del , cols_D  ,      , nopr
+*dim , i_cols  , char , 2*GEO_IWALL_columnCount
+*dim , cols_MP , char , 2*GEO_IWALL_columnCount
+*dim , cols_MB , char , 2*GEO_IWALL_columnCount
+*dim , cols_N  , char , 2*GEO_IWALL_columnCount
+*dim , cols_V  , char , 2*GEO_IWALL_columnCount
+*dim , cols_D  , char , 2*GEO_IWALL_columnCount
+
+label_MP(1)  = 'MP_MIN'  , 'MP_MAX'
+label_MB(1)  = 'MB_MIN'  , 'MB_MAX'
+label_N(1)   = 'N_MIN'   , 'N_MAX'
+label_V(1)   = 'V_MIN'   , 'V_MAX'
+label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
+
+*do,nthColumn,1,GEO_IWALL_columnCount,1
+  idx          = (2*nthColumn)-1
+  cols_MP(idx) = 'MP_MIN' , 'MP_MAX'
+  cols_MB(idx) = 'MB_MIN' , 'MB_MAX'
+  cols_N(idx)  = 'N_MIN'  , 'N_MAX'
+  cols_V(idx)  = 'V_MIN'  , 'V_MAX'
+  cols_D(idx)  = 'D_MIN'  , 'D_MAX'
+*enddo
+
+*do,nthIWall,1,GEO_IWALL_count,1
+
+  t_beam(1) = 'I%nthIWall%TBEAM' , 'I%nthIWall%TBEAM'
+  b_beam(1) = 'I%nthIWall%BBEAM' , 'I%nthIWall%BBEAM'
+  *do,nthColumn,1,GEO_IWALL_columnCount,1
+    idx         = (2*nthColumn)-1
+    i_cols(idx) = 'I%nthIWall%COL%nthColumn%'  , 'I%nthIWall%COL%nthColumn%'
+  *enddo
+
+  ! cols_MP(1)
+
+  cmsel,s,COMPA_IWALL_%nthIWall%
+  esla,s
+  nsle,s
+
+  !!                                                                                                !!
+
+  view2w,1
+  wincln
+  clims
+  boldfont,1
+  g_picres,picRes
+  /device,text,1,75
+  /plopts,leg3,on
+
+  /view  , all , -1 , 0 , 0
+  /angle , all , 0
+  /edge  , all , 0
+  /auto  , all
+
+  axanno,1
+
+  wintitle , 1 , 'PAREDE INTERNA #%nthIWall%' , 'M. FLETOR (MZ)'    , 'ELU-Normal [kNm]' ,  , 1 , 13
+  wintitle , 2 , 'PAREDE INTERNA #%nthIWall%' , 'M. FLETOR (MX/MY)' , 'ELU-Normal [kNm]' ,  , 1 , 13
+
+  oplot,,'E11'
+  /user,all
+  /dist,all,1.2,1
+
+  go2png,picRes
+    oplot,,'E11'
+    /device,vector,off
+    /noerase
+    /plopts,info,3
+
+    /window , 1 , off
+    /window , 2 , off
+
+    ! Bending moment (in-plane)
+    wind = 1
+    /window,wind,on
+    /gformat,f,,0
+
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 't_beam'  , 'label_MP'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'b_beam'  , 'label_MP'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'i_cols'  , 'cols_MP'
+
+    /window,wind,off
+
+    ! Bending moment (off-plane)
+    wind = 2
+    /window,wind,on
+
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 't_beam'  , 'label_MB'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'b_beam'  , 'label_MB'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'i_cols'  , 'cols_MB'
+
+  endpng,'RES_IWALL_m'
+  /erase
+  /annot,dele
+
+  !!                                                                                                !!
+
+  view2w,1
+  wincln
+  clims
+  boldfont,1
+  g_picres,picRes
+  /device,text,1,75
+  /plopts,leg3,on
+
+  /view  , all , -1 , 0 , 0
+  /angle , all , 0
+  /edge  , all , 0
+  /auto  , all
+
+  axanno,1
+
+  wintitle , 1 , 'PAREDES INTERNAS' , 'F. CORTANTE' , 'ELU-Normal [kN]' ,  , 1 , 13
+  wintitle , 2 , 'PAREDES INTERNAS' , 'F. NORMAL'   , 'ELU-Normal [kN]' ,  , 1 , 13
+
+  oplot,,'E11'
+  /user,all
+  /dist,all,1.2,1
+
+  go2png,picRes
+    oplot,,'E11'
+    /device,vector,off
+    /noerase
+    /plopts,info,3
+
+    /window , 1 , off
+    /window , 2 , off
+
+    ! Shear force
+    wind = 1
+    /window,wind,on
+    /gformat,f,,0
+
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 't_beam'  , 'label_V'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'b_beam'  , 'label_V'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'i_cols'  , 'cols_V'
+
+    /window,wind,off
+
+    ! Axial force
+    wind = 2
+    /window,wind,on
+
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 't_beam'  , 'label_N'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'b_beam'  , 'label_N'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'i_cols'  , 'cols_N'
+
+  endpng,'RES_IWALL_f'
+  /erase
+  /annot,dele
+
+  !!                                                                                                !!
+
+  view2w,1
+  wincln
+  clims
+  boldfont,1
+  g_picres,picRes
+  /device,text,1,75
+  /plopts,leg3,on
+
+  /view  , all , -1 , 0 , 0
+  /angle , all , 0
+  /edge  , all , 0
+  /auto  , all
+
+  axanno,1
+
+  wintitle , 1 , 'PAREDES INTERNAS' , 'FLECHA' , 'ELS-Freq. [mm]' ,  , 1 , 13
+
+  oplot,,'E11'
+  /user,all
+  /dist,all,1.2,1
+
+  go2png,picRes
+    oplot,,'E11'
+    /device,vector,off
+    /noerase
+    /plopts,info,3
+
+    /window , 1 , off
+    /window , 2 , off
+
+    ! Deflection
+    wind = 1
+    /window,wind,on
+    /gformat,f,,2
+
+    /udoc,wind,cntr,top
+    mpathplot , baseScale ,  , 't_beam'  , 'label_D'
+    /udoc,wind,cntr,bottom
+    mpathplot , baseScale ,  , 'b_beam'  , 'label_D'
+    /udoc,wind,cntr,left
+    mpathplot , baseScale ,  , 'i_cols'  , 'cols_D'
+
+  endpng,'RES_IWALL_d'
+  /erase
+  /annot,dele
+
+*enddo
