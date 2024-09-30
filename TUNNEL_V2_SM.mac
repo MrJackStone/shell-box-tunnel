@@ -46,18 +46,14 @@ csys,CS_Tunnel
 !!                                                                                                !!
 !! 3.1  Tunnel                                                                                    !!
 !!                                                                                                !!
+! Initialize selection components
 TUNNEL_V2_SMINITCM
 
-!! 3.1.1  Draw tunnel                                                                             !!
+! Draw tunnel
 TUNNEL_V2_SMTUNNEL
 
-
-!!                                                                                                !!
-!! 3.3  Headwalls                                                                                 !!
-!!                                                                                                !!
-*get,parType,parm,GEO_HDW_status,type
-
-*if,parType,eq,0,and,GEO_HDW_status,gt,0,then
+! Draw inlets
+*if,GEO_HDW_status,gt,0,then
 
   TUNNEL_V2_SMFRAME , 1
   TUNNEL_V2_SMFRAME , 2
