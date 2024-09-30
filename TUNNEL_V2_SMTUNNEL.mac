@@ -1,0 +1,86 @@
+! TUNNEL_V2_SMTUNNEL
+
+
+! Main tunnel
+asel,none
+csys,CS_floor
+wpcsys,-1
+blc4,0,0,GEO_TUN_totEffW,GEO_TUN_length
+cm,COMPA_floor,area
+
+asel,none
+csys,CS_roof
+wpcsys,-1
+blc4,0,0,GEO_TUN_totEffW,GEO_TUN_length
+cm,COMPA_roof,area
+
+asel,none
+csys,CS_leftWall
+wpcsys,-1
+blc4,0,0,GEO_TUN_effH,GEO_TUN_length
+cm,COMPA_leftWall,area
+
+asel,none
+csys,CS_rightWall
+wpcsys,-1
+blc4,0,0,GEO_TUN_effH,GEO_TUN_length
+cm,COMPA_rightWall,area
+
+asel,none
+*do,nthIwall,1,GEO_IWALL_count,1
+  wallLength = GEO_IWALL_axial_lengths(nthIwall)
+  csys,CS_innerWall%nthIwall%
+  wpcsys,-1
+  blc4,0,0,GEO_TUN_effH,wallLength
+*enddo
+cm,COMPA_innerWalls,area
+
+! Oblique cut at tunnel ends
+*del , end_cs ,  , nopr
+*dim , end_cs ,  , 2
+end_cs(1) = CS_begSkewed,CS_endSkewed
+*do,nthEnd,1,2,1
+  nthCS = end_cs(nthEnd)
+  csys,nthCS
+  wpcsys,-1
+  cswpla,CS_dummy,cart
+
+  TUNNEL_V2_SMSLICECM, 'COMPA_roof'
+  TUNNEL_V2_SMSLICECM, 'COMPA_floor'
+  TUNNEL_V2_SMSLICECM, 'COMPA_leftWall'
+  TUNNEL_V2_SMSLICECM, 'COMPA_rightWall'
+  TUNNEL_V2_SMSLICECM, 'COMPA_innerWalls'
+*enddo
+
+! Slice roof gap
+*if,GEO_ROOF_gapStatus,eq,1,then
+  *do,nthGap,1,GEO_ROOF_gapCount,1
+    zBeg = GEO_ROOF_gap_z_begs(nthGap)
+    zEnd = GEO_ROOF_gap_z_ends(nthGap)
+
+    cmsel,s,COMPA_roof
+    csslicexy,zBeg
+    csslicexy,zEnd
+    cm,COMPA_roof,area
+    asel,r,loc,z,zBeg,zEnd
+    adele,all,,,1
+  *enddo
+*endif
+
+! Slice at precast girders
+*if,GEO_ROOF_type,eq,1,then
+  csys,CS_tunnel
+  cmsel,s,COMPA_roof
+  lsla
+  ksll
+  *do,nthSlice,1,GEO_girderCount-1,1
+    z = GEO_girderZ(nthSlice)
+    wpcsys,-1
+    wpoffs,,,z
+    asbw,all,,delete
+  *enddo
+  cm,COMPA_roof,area
+*endif
+
+! Create components
+TUNNEL_V2_BUILDCM
