@@ -1,8 +1,29 @@
-! TUNNEL_V2_HDWINITCM
+! TUNNEL_V2_SMINITCM
 
 
 asel,none
+ksel,none
+lsel,none
 
+! Tunnel
+cm , COMPA_Tunnel     , area
+cm , COMPA_Floor      , area
+cm , COMPA_Roof       , area
+cm , COMPA_Walls      , area
+cm , COMPA_LeftWall   , area
+cm , COMPA_RightWall  , area
+cm , COMPA_InnerWalls , area
+cm , COMPA_bBeam      , area
+cm , COMPA_tBeam      , area
+cm , COMPA_Columns    , area
+
+cm , COMPL_Tunnel     , line
+cm , COMPL_Embankment , line
+cm , COMPL_Railway    , line
+
+cm , COMPK_Tunnel , kp
+
+! Inlet
 cm , COMPA_headwalls           , area
 cm , COMPA_HDW_backBeam        , area
 cm , COMPA_HDW_botBeam         , area

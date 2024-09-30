@@ -46,47 +46,15 @@ csys,CS_Tunnel
 !!                                                                                                !!
 !! 3.1  Tunnel                                                                                    !!
 !!                                                                                                !!
-
-!! 3.1.0  Initialize selection components                                                         !!
-asel,none
-cm , COMPA_Tunnel     , area
-cm , COMPA_Floor      , area
-cm , COMPA_Roof       , area
-cm , COMPA_Walls      , area
-cm , COMPA_LeftWall   , area
-cm , COMPA_RightWall  , area
-cm , COMPA_InnerWalls , area
-cm , COMPA_bBeam      , area
-cm , COMPA_tBeam      , area
-cm , COMPA_Columns    , area
-
-lsel,none
-cm , COMPL_Tunnel     , line
-cm , COMPL_Embankment , line
-cm , COMPL_Railway    , line
-
-ksel,none
-cm , COMPK_Tunnel , kp
+TUNNEL_V2_SMINITCM
 
 !! 3.1.1  Draw tunnel                                                                             !!
 TUNNEL_V2_SMTUNNEL
 
 
 !!                                                                                                !!
-!! 3.2  Split wings                                                                               !!
-!!                                                                                                !!
-*if,GEO_HDW_type,EQ,1,AND,GEO_HDW_wingBottomOffset,GT,0,THEN
-  cmsel,s,COMPA_Walls
-  csslicexz,GEO_HDW_wingBottomOffset
-  TUNNEL_V2_BUILDCM
-*endif
-
-
-!!                                                                                                !!
 !! 3.3  Headwalls                                                                                 !!
 !!                                                                                                !!
-TUNNEL_V2_HDWINITCM
-
 *get,parType,parm,GEO_HDW_status,type
 
 *if,parType,eq,0,and,GEO_HDW_status,gt,0,then
