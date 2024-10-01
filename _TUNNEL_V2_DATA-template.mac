@@ -161,52 +161,201 @@ GEO_FRAME_beamRoofConnection = 1
 
 
 !!                                                                                                !!
-!! 1.3  Headwalls                                                                                 !!
+!! 1.3  Inlets                                                                                    !!
 !!                                                                                                !!
-! Headwall option:
-!   [0] Off (not modelled)
-!   [1] On
+! Inlet option:
+!   [0] Off (no inlets)
+!   [1] On (at both ends)
+!   [2] On, first end only
+!   [3] On, second end only
 GEO_HDW_status = 1
 
-! Inlet length (measured parallel to the tunnel's axis)
-GEO_HDW_length = 14
-! Inlet opening angle (in degrees)
-GEO_HDW_angle = 28
-! Headwall horizontal length at the top
-GEO_HDW_topLength = 0.6
-! Thickness of the walls
-GEO_HDW_wallThk = 0.35
-
-! Headwall type:
+!! 1.3.1  First end                                                                               !!
+! Inlet type:
 !   [0] Full inlet (walls, beam, feet, floor slab)
 !   [1] Wings (walls only, fixed to tunnel external walls)
-!   [2] Approach slab (no walls, no beams, no feet)
-GEO_HDW_type = 0
+!   [2] Approach slab & unconnected retention walls
+GEO_HDW1_type = 0
 
-! > Params for GEO_HDW_type=0 (full inlet) only:
-  ! Headwall foot width
-  GEO_HDW_footWidth = 0.9
-  ! Height of the wall's feet (supports)
-  GEO_HDW_footHeight = 0.4
-  ! Wall foot depth (vertical distance from floor slab to foot level)
-  GEO_HDW_footDepth = 1.5
-  ! Base thickness of the floor slab (outside stiffened region)
-  GEO_HDW_slabThk = 0.2
-  ! Stiffened thickness of the floor slab (next to walls)
-  GEO_HDW_slabStfThk = 0.35
-  ! Width of stiffened region of the floor slab (measured from the headwall plane)
-  GEO_HDW_slabStfWidth = 1.3
-  ! Front beam width (below floor slab)
-  GEO_HDW_frontBeamWidth = 0.3
+! > Params for GEO_HDW1_type=0 or GEO_HDW1_type=2 only:
+  ! Thickness of floor slab
+  GEO_HDW1_slabThk = 0.20
+  ! Thickness of the slab's stiffened edges (set to zero to repeat slab thickness)
+  GEO_HDW1_slabStfThk = 0.20
+  ! Width of the slab's stiffened edges (measured from the retaining wall plane)
+  GEO_HDW1_slabStfWidth = 1.0
 
-! > Params for GEO_HDW_type=1 (wings) only:
+  ! Width of front beam (below floor slab)
+  GEO_HDW1_beamWidth = 0.3
+  ! Depth of front beam
+  GEO_HDW1_beamDepth = 1.2
+
+  ! Left side:
+  ! Wall option (for GEO_HDW1_type=2 only):
+  !   [0] Off (wall & footing not modelled)
+  !   [1] On (model wall & footing)
+  GEO_HDW1_LEFT_wallStatus = 1
+  ! Thickness of the wall
+  GEO_HDW1_LEFT_wallThk = 0.40
+  ! Wall length (maximum length, at the bottom)
+  GEO_HDW1_LEFT_wallLength = 10
+  ! Length of horizontal segment at the top of the wall
+  GEO_HDW1_LEFT_wallTopLength = 1.0
+  ! Wall opening angle
+  GEO_HDW1_LEFT_wallAngle = 15
+  ! Width of footing
+  GEO_HDW1_LEFT_footWidth = 1.4
+  ! Depth of footing (vertical distance below floor slab)
+  GEO_HDW1_LEFT_footDepth = 1.5
+  ! Thickness of footing
+  GEO_HDW1_LEFT_footThk = 0.40
+
+  ! Right side:
+  ! Wall option (for GEO_HDW1_type=2 only):
+  !   [0] Off (wall & footing not modelled)
+  !   [1] On (model wall & footing)
+  GEO_HDW1_RIGHT_wallStatus = 1
+  ! Thickness of the wall
+  GEO_HDW1_RIGHT_wallThk = 0.40
+  ! Wall length (maximum length, at the bottom)
+  GEO_HDW1_RIGHT_wallLength = 10
+  ! Length of horizontal segment at the top of the wall
+  GEO_HDW1_RIGHT_wallTopLength = 1.0
+  ! Wall opening angle
+  GEO_HDW1_RIGHT_wallAngle = 15
+  ! Width of footing
+  GEO_HDW1_RIGHT_footWidth = 1.4
+  ! Depth of footing (vertical distance below floor slab)
+  GEO_HDW1_RIGHT_footDepth = 1.5
+  ! Thickness of footing
+  GEO_HDW1_RIGHT_footThk = 0.40
+
+! > Params for GEO_HDW1_type=1 (wings) only:
+  ! Left side:
   ! Wing shape:
   !   [0] Triangular
   !   [1] Rectangular
-  GEO_HDW_wingShape = 0
+  GEO_HDW1_LEFT_wingShape = 0
+  ! Wing thickness
+  GEO_HDW1_LEFT_wingThk = 0.40
+  ! Wing length
+  GEO_HDW1_LEFT_wingLength = 2.5
+  ! Chamfer height (vertical length at the end of the wing)
+  GEO_HDW1_LEFT_wingChamferHeight = 0.6
+  ! Chamfer width (horizontal length at the bottom of the wing)
+  GEO_HDW1_LEFT_wingChamferBase = 0.4
   ! Vertical distance from the bottom of the wing to the tunnel's floor slab
-  GEO_HDW_wingBottomOffset = 1.15
+  GEO_HDW1_LEFT_wingBottomOffset = 1.15
 
+  ! Right side:
+  ! Wing shape:
+  !   [0] Triangular
+  !   [1] Rectangular
+  GEO_HDW1_RIGHT_wingShape = 0
+  ! Wing thickness
+  GEO_HDW1_RIGHT_wingThk = 0.40
+  ! Wing length
+  GEO_HDW1_RIGHT_wingLength = 2.5
+  ! Chamfer height (vertical length at the end of the wing)
+  GEO_HDW1_RIGHT_wingChamferHeight = 0.6
+  ! Chamfer width (horizontal length at the bottom of the wing)
+  GEO_HDW1_RIGHT_wingChamferBase = 0.4
+  ! Vertical distance from the bottom of the wing to the tunnel's floor slab
+  GEO_HDW1_RIGHT_wingBottomOffset = 1.15
+
+
+!! 1.3.2  Second end                                                                              !!
+! Inlet type:
+!   [0] Full inlet (walls, beam, feet, floor slab)
+!   [1] Wings (walls only, fixed to tunnel external walls)
+!   [2] Approach slab & unconnected retention walls
+GEO_HDW2_type = 0
+
+! > Params for GEO_HDW2_type=0 or GEO_HDW2_type=2 only:
+  ! Thickness of floor slab
+  GEO_HDW2_slabThk = 0.20
+  ! Thickness of the slab's stiffened edges (set to zero to repeat slab thickness)
+  GEO_HDW2_slabStfThk = 0.20
+  ! Width of the slab's stiffened edges (measured from the retaining wall plane)
+  GEO_HDW2_slabStfWidth = 1.0
+
+  ! Width of front beam (below floor slab)
+  GEO_HDW2_beamWidth = 0.3
+  ! Depth of front beam
+  GEO_HDW2_beamDepth = 1.2
+
+  ! Left side:
+  ! Wall option (for GEO_HDW2_type=2 only):
+  !   [0] Off (wall & footing not modelled)
+  !   [1] On (model wall & footing)
+  GEO_HDW2_LEFT_wallStatus = 1
+  ! Thickness of the wall
+  GEO_HDW2_LEFT_wallThk = 0.40
+  ! Wall length (maximum length, at the bottom)
+  GEO_HDW2_LEFT_wallLength = 10
+  ! Length of horizontal segment at the top of the wall
+  GEO_HDW2_LEFT_wallTopLength = 1.0
+  ! Wall opening angle
+  GEO_HDW2_LEFT_wallAngle = 15
+  ! Width of footing
+  GEO_HDW2_LEFT_footWidth = 1.4
+  ! Depth of footing (vertical distance below floor slab)
+  GEO_HDW2_LEFT_footDepth = 1.5
+  ! Thickness of footing
+  GEO_HDW2_LEFT_footThk = 0.40
+
+  ! Right side:
+  ! Wall option (for GEO_HDW2_type=2 only):
+  !   [0] Off (wall & footing not modelled)
+  !   [1] On (model wall & footing)
+  GEO_HDW2_RIGHT_wallStatus = 1
+  ! Thickness of the wall
+  GEO_HDW2_RIGHT_wallThk = 0.40
+  ! Wall length (maximum length, at the bottom)
+  GEO_HDW2_RIGHT_wallLength = 10
+  ! Length of horizontal segment at the top of the wall
+  GEO_HDW2_RIGHT_wallTopLength = 1.0
+  ! Wall opening angle
+  GEO_HDW2_RIGHT_wallAngle = 15
+  ! Width of footing
+  GEO_HDW2_RIGHT_footWidth = 1.4
+  ! Depth of footing (vertical distance below floor slab)
+  GEO_HDW2_RIGHT_footDepth = 1.5
+  ! Thickness of footing
+  GEO_HDW2_RIGHT_footThk = 0.40
+
+! > Params for GEO_HDW2_type=1 (wings) only:
+  ! Left side:
+  ! Wing shape:
+  !   [0] Triangular
+  !   [1] Rectangular
+  GEO_HDW2_LEFT_wingShape = 0
+  ! Wing thickness
+  GEO_HDW2_LEFT_wingThk = 0.40
+  ! Wing length
+  GEO_HDW2_LEFT_wingLength = 2.5
+  ! Chamfer height (vertical length at the end of the wing)
+  GEO_HDW2_LEFT_wingChamferHeight = 0.6
+  ! Chamfer width (horizontal length at the bottom of the wing)
+  GEO_HDW2_LEFT_wingChamferBase = 0.4
+  ! Vertical distance from the bottom of the wing to the tunnel's floor slab
+  GEO_HDW2_LEFT_wingBottomOffset = 1.15
+
+  ! Right side:
+  ! Wing shape:
+  !   [0] Triangular
+  !   [1] Rectangular
+  GEO_HDW2_RIGHT_wingShape = 0
+  ! Wing thickness
+  GEO_HDW2_RIGHT_wingThk = 0.40
+  ! Wing length
+  GEO_HDW2_RIGHT_wingLength = 2.5
+  ! Chamfer height (vertical length at the end of the wing)
+  GEO_HDW2_RIGHT_wingChamferHeight = 0.6
+  ! Chamfer width (horizontal length at the bottom of the wing)
+  GEO_HDW2_RIGHT_wingChamferBase = 0.4
+  ! Vertical distance from the bottom of the wing to the tunnel's floor slab
+  GEO_HDW2_RIGHT_wingBottomOffset = 1.15
 
 !!                                                                                                !!
 !! 1.4  Embankment                                                                                !!
