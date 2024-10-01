@@ -1,56 +1,20 @@
 ! TUNNEL_V2_SMTUNNEL
 
 
-! Main tunnel
+!! A.  Floor slab                                                                                 !!
 asel,none
 csys,CS_floor
 wpcsys,-1
 blc4,0,0,GEO_TUN_totEffW,GEO_TUN_length
 cm,COMPA_floor,area
 
+
+!! B.  Roof slab                                                                                  !!
 asel,none
 csys,CS_roof
 wpcsys,-1
 blc4,0,0,GEO_TUN_totEffW,GEO_TUN_length
 cm,COMPA_roof,area
-
-asel,none
-csys,CS_leftWall
-wpcsys,-1
-blc4,0,0,GEO_TUN_effH,GEO_TUN_length
-cm,COMPA_leftWall,area
-
-asel,none
-csys,CS_rightWall
-wpcsys,-1
-blc4,0,0,GEO_TUN_effH,GEO_TUN_length
-cm,COMPA_rightWall,area
-
-asel,none
-*do,nthIwall,1,GEO_IWALL_count,1
-  wallLength = GEO_IWALL_axial_lengths(nthIwall)
-  csys,CS_innerWall%nthIwall%
-  wpcsys,-1
-  blc4,0,0,GEO_TUN_effH,wallLength
-*enddo
-cm,COMPA_innerWalls,area
-
-! Oblique cut at tunnel ends
-*del , end_cs ,  , nopr
-*dim , end_cs ,  , 2
-end_cs(1) = CS_begSkewed,CS_endSkewed
-*do,nthEnd,1,2,1
-  nthCS = end_cs(nthEnd)
-  csys,nthCS
-  wpcsys,-1
-  cswpla,CS_dummy,cart
-
-  TUNNEL_V2_SMSLICECM, 'COMPA_roof'
-  TUNNEL_V2_SMSLICECM, 'COMPA_floor'
-  TUNNEL_V2_SMSLICECM, 'COMPA_leftWall'
-  TUNNEL_V2_SMSLICECM, 'COMPA_rightWall'
-  TUNNEL_V2_SMSLICECM, 'COMPA_innerWalls'
-*enddo
 
 ! Slice roof gap
 *if,GEO_ROOF_gapStatus,eq,1,then
@@ -82,5 +46,49 @@ end_cs(1) = CS_begSkewed,CS_endSkewed
   cm,COMPA_roof,area
 *endif
 
-! Create components
-TUNNEL_V2_BUILDCM
+
+!! C.  External walls                                                                             !!
+asel,none
+csys,CS_leftWall
+wpcsys,-1
+blc4,0,0,GEO_TUN_effH,GEO_TUN_length
+cm,COMPA_leftWall,area
+
+asel,none
+csys,CS_rightWall
+wpcsys,-1
+blc4,0,0,GEO_TUN_effH,GEO_TUN_length
+cm,COMPA_rightWall,area
+
+
+!! D.  Internal walls                                                                             !!
+asel,none
+*do,nthIwall,1,GEO_IWALL_count,1
+  wallLength = GEO_IWALL_axial_lengths(nthIwall)
+  csys,CS_innerWall%nthIwall%
+  wpcsys,-1
+  blc4,0,0,GEO_TUN_effH,wallLength
+*enddo
+cm,COMPA_innerWalls,area
+
+
+!! E.  Oblique ends                                                                               !!
+*del , end_cs ,  , nopr
+*dim , end_cs ,  , 2
+end_cs(1) = CS_begSkewed,CS_endSkewed
+*do,nthEnd,1,2,1
+  nthCS = end_cs(nthEnd)
+  csys,nthCS
+  wpcsys,-1
+  cswpla,CS_dummy,cart
+
+  TUNNEL_V2_SMSLICECM, 'COMPA_roof'
+  TUNNEL_V2_SMSLICECM, 'COMPA_floor'
+  TUNNEL_V2_SMSLICECM, 'COMPA_leftWall'
+  TUNNEL_V2_SMSLICECM, 'COMPA_rightWall'
+  TUNNEL_V2_SMSLICECM, 'COMPA_innerWalls'
+*enddo
+
+
+!! F.  Selection components                                                                       !!
+TUNNEL_V2_BUILDCM  ! TODO  maybe remove this from here, place it in global SM?
