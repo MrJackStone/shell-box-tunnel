@@ -100,6 +100,13 @@ GEO_IWALL_type = 1
 !!                                                                                                !!
 !! 1.2  Frame                                                                                     !!
 !!                                                                                                !!
+! Frame option:
+!   [0] Off (no frames)
+!   [1] On (both ends)
+!   [2] On, first end only
+!   [3] On, second end only
+GEO_FRAME_status = 1
+
 ! Back beam width (beam below tunnel opening)
 GEO_FRAME_backBeamHeight = 1.2
 ! Back beam width (beam below tunnel opening)

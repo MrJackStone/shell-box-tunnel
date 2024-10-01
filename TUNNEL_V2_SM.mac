@@ -52,11 +52,17 @@ TUNNEL_V2_SMINITCM
 ! Draw tunnel
 TUNNEL_V2_SMTUNNEL
 
+! Draw frames
+*if,GEO_FRM1_status,eq,1,then
+  TUNNEL_V2_SMFRAME , 1
+*endif
+
+*if,GEO_FRM2_status,eq,1,then
+  TUNNEL_V2_SMFRAME , 2
+*endif
+
 ! Draw inlets
 *if,GEO_HDW_status,gt,0,then
-
-  TUNNEL_V2_SMFRAME , 1
-  TUNNEL_V2_SMFRAME , 2
 
   *if,GEO_HDW_type,eq,0,then
     ! Full inlet with floor slab, footings, and headwalls

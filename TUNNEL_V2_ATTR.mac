@@ -730,6 +730,20 @@ secdata,GEO_IWALL_columnThk,MAT_CONC
 
 *endif
 
+!!                                                                                                !!
+!! 2.11  Frames                                                                                   !!
+!!                                                                                                !!
+GEO_FRM1_status = 0
+GEO_FRM2_status = 0
+
+*if,GEO_FRAME_status,eq,1,or,GEO_FRAME_status,eq,2,then
+  GEO_FRM1_status = 1
+*endif
+
+*if,GEO_FRAME_status,eq,1,or,GEO_FRAME_status,eq,3,then
+  GEO_FRM2_status = 1
+*endif
+
 
 !!                                                                                                !!
 !! 2.11  Headwalls                                                                                !!
