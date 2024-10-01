@@ -73,9 +73,9 @@ TUNNEL_V2_SMTUNNEL
     TUNNEL_V2_SMHDW2 , 1
     TUNNEL_V2_SMHDW2 , 2
   *elseif,GEO_HDW_type,eq,2,then
-    ! Floor slab only
-    TUNNEL_V2_SMHDW3 , 1
-    TUNNEL_V2_SMHDW3 , 2
+    ! Floor slab & independent retaining walls
+    TUNNEL_V2_SMHDW3 , 1 , CS_tunnel    , CS_begSkewed
+    TUNNEL_V2_SMHDW3 , 2 , CS_revTunnel , CS_endSkewed
   *endif
 
 *endif

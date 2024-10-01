@@ -1,5 +1,5 @@
-! TUNNEL_V2_SMHDW3 , hdwNumber
-! TUNNEL_V2_SMHDW3 , ARG1
+! TUNNEL_V2_SMHDW3 , hdwNumber , tunnelCS , endCS
+! TUNNEL_V2_SMHDW3 , ARG1      , ARG2     , ARG3
 
 
 ! Exported selection components:
@@ -10,14 +10,6 @@
 
 ! Prepare environment
 csbackup
-
-*if,ARG1,eq,1,then
-  csSkewed = CS_begSkewed
-  csAxial  = CS_tunnel
-*elseif,ARG1,eq,2,then
-  csSkewed = CS_endSkewed
-  csAxial  = CS_revTunnel
-*endif
 
 ! Get anchor positions in tunnel CS
 csys,csSkewed
@@ -31,7 +23,7 @@ ksel,r,loc,y,0
 kLeft  = kp(0    , 0 , 0)
 kRight = kp(xMax , 0 , 0)
 
-csys,csAxial
+csys,ARG2
 
 xLeft  = kx(kLeft)
 yLeft  = ky(kLeft)
@@ -55,7 +47,7 @@ a , KP_slab(1) , KP_slab(2) , KP_slab(4) , KP_slab(3)
 cm,COMPA_HDW%ARG1%_slab,area
 cmpadd,'COMPA_HDW_slab'
 
-csys,csSkewed
+csys,ARG3
 lsla
 lsel,r,loc,z,0
 cm,COMPL_HDW%ARG1%_slabInterface,line
