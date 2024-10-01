@@ -103,25 +103,25 @@ cswpla,CS_hdw2,cart
 ! Retaining walls
 csys,CS_tunnel
 wpcsys,-1
-wprota,,,90+GEO_HDW_angle
+wprota,,,90+GEO_HDW1_LEFT_wallAngle
 cswpla,CS_HDW1_leftWall,cart
 
 csys,CS_tunnel
 wpcsys,-1
 wpoffs,GEO_TUN_totEffW
-wprota,,,-90-GEO_HDW_angle
+wprota,,,-90-GEO_HDW1_RIGHT_wallAngle
 cswpla,CS_HDW1_rightWall,cart
 
 csys,CS_tunnel
 wpcsys,-1
 wpoffs,GEO_TUN_totEffW,,GEO_TUN_length
-wprota,,,-90+GEO_HDW_angle
+wprota,,,-90+GEO_HDW2_LEFT_wallAngle
 cswpla,CS_HDW2_leftWall,cart
 
 csys,CS_tunnel
 wpcsys,-1
 wpoffs,,,GEO_TUN_length
-wprota,,,90-GEO_HDW_angle
+wprota,,,90-GEO_HDW2_RIGHT_wallAngle
 cswpla,CS_HDW2_rightWall,cart
 
 ! Footings
