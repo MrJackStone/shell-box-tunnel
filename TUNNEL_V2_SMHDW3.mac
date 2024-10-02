@@ -3,9 +3,14 @@
 
 
 ! Exported selection components:
-! COMPA_HDW_slab
 ! COMPA_HDW[i]_slab
 ! COMPL_HDW[i]_slabInterface
+! COMPA_HDW[i]_LEFT_wall
+! COMPA_HDW[i]_LEFT_footing
+! COMPL_HDW[i]_LEFT_wallInterface
+! COMPA_HDW[i]_RIGHT_wall
+! COMPA_HDW[i]_RIGHT_footing
+! COMPL_HDW[i]_RIGHT_wallInterface
 
 
 ! Prepare environment

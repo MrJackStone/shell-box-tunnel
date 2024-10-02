@@ -40,7 +40,6 @@
 
 seltol,1e-8
 
-! Activate cartesian coordinate to account for tunnel slope
 csys,CS_Tunnel
 
 !!                                                                                                !!
