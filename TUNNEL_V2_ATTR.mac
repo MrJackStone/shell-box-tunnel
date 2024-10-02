@@ -60,7 +60,7 @@ FOLDER_results = '_results'
 !! 2.2  Indices                                                                                   !!
 !!                                                                                                !!
 ! Coordinate systems
-CS_global         = 11 ! TODO: rename to CS_global
+CS_global         = 11
 CS_dummy          = 12
 CS_tunnel         = 13
 CS_RevTunnel      = 14

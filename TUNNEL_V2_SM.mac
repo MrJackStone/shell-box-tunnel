@@ -65,7 +65,7 @@ TUNNEL_V2_SMTUNNEL
 
   *if,GEO_HDW_type,eq,0,then
     ! Full inlet with floor slab, footings, and headwalls
-    TUNNEL_V2_SMHDW1 , 1
+    TUNNEL_V2_SMHDW1 , 1  ! TODO  implement this
     TUNNEL_V2_SMHDW1 , 2
   *elseif,GEO_HDW_type,eq,1,then
     ! Wings
