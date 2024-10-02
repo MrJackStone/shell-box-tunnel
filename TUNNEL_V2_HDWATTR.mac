@@ -43,6 +43,11 @@ GEO_HDW1_RIGHT_cornerRadius = 2*GEO_HDW1_RIGHT_wallThk
 GEO_HDW2_LEFT_cornerRadius  = 2*GEO_HDW2_LEFT_wallThk
 GEO_HDW2_RIGHT_cornerRadius = 2*GEO_HDW2_RIGHT_wallThk
 
+GEO_HDW1_LEFT_xSign  =  1
+GEO_HDW1_RIGHT_xSign = -1
+GEO_HDW2_LEFT_xSign  =  1
+GEO_HDW2_RIGHT_xSign = -1
+
 ! Calculate position where the inlet's slab stiffener intersects with the tunnel's floor slab
 GEO_HDW_stiffXOff = GEO_HDW_slabStfWidth/COS(GEO_InletRadians)
 

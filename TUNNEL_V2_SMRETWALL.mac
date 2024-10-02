@@ -1,0 +1,93 @@
+! TUNNEL_V2_SMRETWALL , wallCS , length , height , top  , radius , footCS , width , sign , cmaRoot
+! TUNNEL_V2_SMRETWALL , ARG1   , ARG2   , ARG3   , ARG4 , ARG5   , ARG6   , ARG7  , ARG8 , ARG9
+
+
+! Exported selection components:
+! COMPA_<ARG9>_wall           (eg.: COMPA_HDW1_LEFT_wall)
+! COMPA_<ARG9>_footing        (eg.: COMPA_HDW2_RIGHT_footing)
+! COMPL_<ARG9>_wallInterface  (eg.: COMPA_HDW1_RIGHT_wallInterface)
+
+
+cmaWall = 'COMPA_%ARG9%_wall'
+cmaFoot = 'COMPA_%ARG9%_footing'
+cmlWall = 'COMPL_%ARG9%_wallInterface'
+
+csbackup
+smdbackup
+
+*del , x_coords ,  , nopr
+*del , y_coords ,  , nopr
+*del , corner_r ,  , nopr
+*dim , x_coords ,  , 5
+*dim , y_coords ,  , 5
+*dim , corner_r ,  , 5
+
+! Calculate footing depth
+*get , xWallCS , cdsy , ARG1 , loc , x
+*get , yWallCS , cdsy , ARG1 , loc , y
+*get , zWallCS , cdsy , ARG1 , loc , z
+*get , xFootCS , cdsy , ARG6 , loc , x
+*get , yFootCS , cdsy , ARG6 , loc , y
+*get , zFootCS , cdsy , ARG6 , loc , z
+
+xDelta    = (xWallCS-xFootCS)
+yDelta    = (yWallCS-yFootCS)
+zDelta    = (zWallCS-zFootCS)
+footDepth = sqrt((xDelta**2)+(yDelta**2)+(zDelta**2))
+
+! Calculate key coordinates
+yWallTop = ARG3-footDepth
+
+xC = ARG4
+yC = yWallTop-ARG5
+xD = ARG2-ARG5
+yD = 0
+
+afunbackup
+*afun,deg
+beta  = atan((xD-xC)/(yC-yD))
+alpha = atan((yC-yD)/(xD-xC))
+
+yBotIntersection = ARG5*tan(beta/2)
+xTopIntersection = ARG4+ARG5*tan(alpha/2)
+afunrestore
+
+! Calculate retaining wall coordinates
+x_coords(1) = 0          , ARG8*ARG2  , ARG8*ARG2        , ARG8*xTopIntersection , 0
+y_coords(1) = -footDepth , -footDepth , yBotIntersection , yWallTop              , yWallTop
+corner_r(1) = 0          , 0          , ARG5             , ARG5                  , 0
+
+! Draw retaining wall
+csys,ARG1
+wpcsys,-1
+asel,none
+rndpoly, 'x_coords' , 'y_coords' , 'corner_r'
+cm,%cmaWall%,area
+
+! Draw footing
+csys,ARG6
+wpcsys,-1
+asel,none
+blc4,0,0,ARG2,ARG7
+cm,%cmaFoot%,area
+
+! Interface with tunnel/frame
+csys,ARG1
+cmsel,s,%cmaWall%
+lsla
+lsel,r,loc,x,0
+cm,%cmlWall%,line
+
+! Merge parts
+cmsel,s,%cmaWall%
+cmsel,a,%cmaFoot%
+lsla
+ksll
+nummrg,kp
+
+! Clean up
+csrestore
+smdrestore
+*del,x_coords,,nopr
+*del,y_coords,,nopr
+*del,corner_r,,nopr

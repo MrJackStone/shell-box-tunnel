@@ -11,8 +11,9 @@
 ! Prepare environment
 csbackup
 
+!! A.  Floor slab                                                                                 !!
 ! Get anchor positions in tunnel CS
-csys,csSkewed
+csys,ARG3
 
 cmsel,s,COMPA_floor
 lsla
@@ -45,12 +46,41 @@ a , KP_slab(1) , KP_slab(2) , KP_slab(4) , KP_slab(3)
 
 ! Create exported selection components
 cm,COMPA_HDW%ARG1%_slab,area
-cmpadd,'COMPA_HDW_slab'
 
 csys,ARG3
 lsla
 lsel,r,loc,z,0
-cm,COMPL_HDW%ARG1%_slabInterface,line
+cm,COMPL_HDW%ARG1%_slabTunnelInterface,line
 
-! Clean up
+
+!! B.  Draw retaining walls                                                                       !!
+*if,GEO_HDW%ARG1%_LEFT_wallStatus,eq,1,then
+  csLWall = CS_HDW%ARG1%_leftWall
+  csLFoot = CS_HDW%ARG1%_leftFoot
+  lLength = GEO_HDW%ARG1%_LEFT_wallLength
+  lHeight = GEO_HDW%ARG1%_LEFT_wallHeight
+  lTop    = GEO_HDW%ARG1%_LEFT_wallTopLength
+  lRadius = GEO_HDW%ARG1%_LEFT_cornerRadius
+  lWidth  = GEO_HDW%ARG1%_LEFT_footWidth
+  lSign   = GEO_HDW%ARG1%_LEFT_xSign
+
+  TUNNEL_V2_SMRETWALL , csLWall , lLength , lHeight , lTop , lRadius , csLFoot , lWidth , lSign , 'HDW%ARG1%_LEFT'
+*endif
+
+*if,GEO_HDW%ARG1%_RIGHT_wallStatus,eq,1,then
+  csRWall = CS_HDW%ARG1%_rightWall
+  csRFoot = CS_HDW%ARG1%_rightFoot
+  rLength = GEO_HDW%ARG1%_RIGHT_wallLength
+  rHeight = GEO_HDW%ARG1%_RIGHT_wallHeight
+  rTop    = GEO_HDW%ARG1%_RIGHT_wallTopLength
+  rRadius = GEO_HDW%ARG1%_RIGHT_cornerRadius
+  rWidth  = GEO_HDW%ARG1%_RIGHT_footWidth
+  rSign   = GEO_HDW%ARG1%_RIGHT_xSign
+
+  TUNNEL_V2_SMRETWALL , csRWall , rLength , rHeight , rTop , rRadius , csRFoot , rWidth , rSign , 'HDW%ARG1%_RIGHT'
+*endif
+
+
+!! C.  Clean up                                                                                   !!
 csrestore
+*del,KP_slab,,nopr
