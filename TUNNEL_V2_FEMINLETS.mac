@@ -75,6 +75,6 @@ real,REAL_default
   l2acnt , 'COMPA_HDW2_leftColumn'  , 'COMPL_RWALL_interfaceInlet2' ,  , 1
   l2acnt , 'COMPA_HDW2_rightColumn' , 'COMPL_LWALL_interfaceInlet2' ,  , 1
 
-  l2acnt , 'COMPA_floor'            , 'COMPL_HDW1_slabInterface'    ,  , 1
-  l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabInterface'    ,  , 1
+  l2acnt , 'COMPA_floor'            , 'COMPL_HDW1_slabTunnelInterface'    ,  , 1
+  l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabTunnelInterface'    ,  , 1
 *endif
