@@ -33,6 +33,16 @@ GEO_HDW_WallSlope = (GEO_HDW_Height-GEO_HDW_endH)/(WallLength-GEO_HDW_topLength)
 MinimumDepth = GEO_EMB_height-GEO_FRAME_headBeamHeight
 MaximumDepth = GEO_EMB_height+Eff_GalleryHeight+GEO_HDW_footDepth
 
+GEO_HDW1_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_LEFT_footDepth
+GEO_HDW1_RIGHT_wallHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_RIGHT_footDepth
+GEO_HDW2_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW2_LEFT_footDepth
+GEO_HDW2_RIGHT_wallHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW2_RIGHT_footDepth
+
+GEO_HDW1_LEFT_cornerRadius  = 2*GEO_HDW1_LEFT_wallThk
+GEO_HDW1_RIGHT_cornerRadius = 2*GEO_HDW1_RIGHT_wallThk
+GEO_HDW2_LEFT_cornerRadius  = 2*GEO_HDW2_LEFT_wallThk
+GEO_HDW2_RIGHT_cornerRadius = 2*GEO_HDW2_RIGHT_wallThk
+
 ! Calculate position where the inlet's slab stiffener intersects with the tunnel's floor slab
 GEO_HDW_stiffXOff = GEO_HDW_slabStfWidth/COS(GEO_InletRadians)
 
