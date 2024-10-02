@@ -49,41 +49,17 @@ esel,s,type,,TYPE_shell181
 nsle,s,active
 apportionedstats,,'FEM_nodes_apportioned'
 
+! Floor slab
+TUNNEL_V2_ELASTICBASE , 'COMPA_floor' , CS_tunnel , '-Y' , 'floor'
 
-!! 4.5.1  Floor slab                                                                              !!
-! Bottom supports
-csys,CS_tunnel
-cmsel,s,COMPA_floor
-esla
-nsle
-elasticbase,'EBASE_floor','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_floor','COMPE_SOILSPR_floor','FEM_nodes_apportioned'
+! Left wall
+TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall' , CS_tunnel , '-X' , 'leftWall'
 
+! Right wall
+TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall' , CS_tunnel , '+X' , 'rightWall'
 
-!! 4.5.2  Left wall                                                                               !!
-! Left wall supports
-csys,CS_tunnel
-cmsel,s,COMPA_LeftWall
-esla
-nsle
-elasticbase,'EBASE_leftWall','X',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_leftWall','COMPE_SOILSPR_leftWall','FEM_nodes_apportioned'
-
-
-!! 4.5.3  Right wall                                                                              !!
-! Right wall supports
-csys,CS_tunnel
-cmsel,s,COMPA_RightWall
-esla
-nsle
-elasticbase,'EBASE_rightWall','X',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_leftWall','COMPE_SOILSPR_leftWall','FEM_nodes_apportioned'
-
-
-!! 4.5.4  Top slab                                                                                !!
-! Top supports
-csys,CS_tunnel
-cmsel,s,COMPA_Roof
-esla
-nsle
-elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_roof','COMPE_SOILSPR_roof','FEM_nodes_apportioned'
+! Top slab
+TUNNEL_V2_ELASTICBASE , 'COMPA_roof' , CS_tunnel , '+Y' , 'roof'
 
 
 !! 4.5.7  Headwalls                                                                               !!
@@ -95,14 +71,7 @@ elasticbase,'EBASE_roof','Y',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticMod
 
 !! 4.5.8  Approach slabs                                                                          !!
 *if,GEO_APR_status,eq,1,then
-  csys,CS_tunnel
-  xMin = -GEO_APR_length/3
-  xMax = GEO_TUN_totEffW+(GEO_APR_length/3)
-  cmsel,s,COMPA_approach
-  esla
-  nsle
-  nsel,u,loc,x,xMin,xMax
-  elasticbase,'EBASE_approach','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_approach','COMPE_SOILSPR_approach','FEM_nodes_apportioned'
+  TUNNEL_V2_ELASTICBASE , 'COMPA_approachSup' , CS_tunnel , '-Y' , 'approach'
 *endif
 
 

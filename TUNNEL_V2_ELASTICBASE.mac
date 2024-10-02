@@ -1,0 +1,21 @@
+! TUNNEL_V2_ELASTICBASE , cmaName , csys , direction , root
+! TUNNEL_V2_ELASTICBASE , ARG1    , ARG2 , ARG3      , ARG4
+
+
+outputName = 'EBASE_%ARG4%
+compnName  = 'COMPN_SOILSPR_%ARG4%'
+compeName  = 'COMPE_SOILSPR_%ARG4%'
+dirAxis    = upcase(strsub(ARG3,2,1))
+dirSign    = strsub(ARG3,1,1)
+
+*if,dirSign,eq,'+',then
+  sign = 1
+*elseif,dirSign,eq,'-',then
+  sign = -1
+*endif
+
+csys,ARG2
+cmsel,s,%ARG1%
+esla
+nsle
+elasticbase , outputName , dirAxis , MAT_SOIL_stiffness , -1 , sign*SpringLength , SpringElasticModulus ,  ,  , compnName , compeName , 'FEM_nodes_apportioned'

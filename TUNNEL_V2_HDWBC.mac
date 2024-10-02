@@ -4,82 +4,26 @@
 cmsel , s , COMPA_HDW_BotBeam  ! TODO  elastic base under these components
 
 ! Exposed retaining walls
-csys,CS_HDW1_leftWall
-cmsel , s , COMPA_HDW1_leftWall
-esla
-nsle
-elasticbase,'EBASE_INLET1_leftWall','Z',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_INLET1_leftWall','COMPE_SOILSPR_INLET1_leftWall','FEM_nodes_apportioned'
-
-csys,CS_HDW2_leftWall
-cmsel , s , COMPA_HDW2_leftWall
-esla
-nsle
-elasticbase,'EBASE_INLET2_leftWall','Z',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_INLET2_leftWall','COMPE_SOILSPR_INLET2_leftWall','FEM_nodes_apportioned'
-
-csys,CS_HDW1_rightWall
-cmsel , s , COMPA_HDW1_rightWall
-esla
-nsle
-elasticbase,'EBASE_INLET1_rightWall','Z',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_INLET1_rightWall','COMPE_SOILSPR_INLET1_rightWall','FEM_nodes_apportioned'
-
-csys,CS_HDW2_rightWall
-cmsel , s , COMPA_HDW2_rightWall
-esla
-nsle
-elasticbase,'EBASE_INLET2_rightWall','Z',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_INLET2_rightWall','COMPE_SOILSPR_INLET2_rightWall','FEM_nodes_apportioned'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_leftWall'        , CS_HDW1_leftWall  , '-Z' , 'INLET1_leftWall'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_leftWall'        , CS_HDW2_leftWall  , '-Z' , 'INLET2_leftWall'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_rightWall'       , CS_HDW1_rightWall , '-Z' , 'INLET1_rightWall'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_rightWall'       , CS_HDW2_rightWall , '-Z' , 'INLET2_rightWall'
 
 ! Buried retaining walls
-csys,CS_HDW1_leftWall
-cmsel , s , COMPA_HDW1_leftWallBuried
-esla
-nsle
-elasticbase,'EBASE_INLET1_leftWall','Z',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_INLET1_leftWall','COMPE_SOILSPR_INLET1_leftWall','FEM_nodes_apportioned'
-
-csys,CS_HDW2_leftWall
-cmsel , s , COMPA_HDW2_leftWallBuried
-esla
-nsle
-elasticbase,'EBASE_INLET2_leftWall','Z',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_INLET2_leftWall','COMPE_SOILSPR_INLET2_leftWall','FEM_nodes_apportioned'
-
-csys,CS_HDW1_rightWall
-cmsel , s , COMPA_HDW1_rightWallBuried
-esla
-nsle
-elasticbase,'EBASE_INLET1_rightWall','Z',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_INLET1_rightWall','COMPE_SOILSPR_INLET1_rightWall','FEM_nodes_apportioned'
-
-csys,CS_HDW2_rightWallBuried
-cmsel , s , COMPA_HDW2_rightWall
-esla
-nsle
-elasticbase,'EBASE_INLET2_rightWall','Z',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_INLET2_rightWall','COMPE_SOILSPR_INLET2_rightWall','FEM_nodes_apportioned'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_leftWallBuried'  , CS_HDW1_leftWall  , '+Z' , 'INLET1_lwBuried'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_leftWallBuried'  , CS_HDW2_leftWall  , '+Z' , 'INLET2_lwBuried'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_rightWallBuried' , CS_HDW1_rightWall , '+Z' , 'INLET1_rwBuried'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_rightWallBuried' , CS_HDW2_rightWall , '+Z' , 'INLET2_rwBuried'
 
 ! Footings
-csys,CS_tunnel
-cmsel , s , COMPA_HDW_footing
-esla
-nsle
-elasticbase,'EBASE_inletFooting','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_inletFooting','COMPE_SOILSPR_inletFooting','FEM_nodes_apportioned'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_footing'          , CS_tunnel         , '-Y' , 'inletFooting'
 
 ! Floor slab
-csys,CS_tunnel
-cmsel,s,COMPA_HDW_slab
-cmsel,a,COMPA_HDW_stiffener
-esla
-nsle
-elasticbase,'EBASE_inletSlab','Y',MAT_SOIL_stiffness,-1,-SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_inletSlab','COMPE_SOILSPR_inletSlab','FEM_nodes_apportioned'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_slab'             , CS_tunnel         , '-Y' , 'inletSlab'
 
 ! Frames
-csys,CS_begSkewed
-cmsel,s,COMPA_frame1
-esla
-nsle
-elasticbase,'EBASE_frame1','Z',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_frame1','COMPE_SOILSPR_frame1','FEM_nodes_apportioned'
-
-csys,CS_endSkewed
-cmsel,s,COMPA_frame2
-esla
-nsle
-elasticbase,'EBASE_frame2','Z',MAT_SOIL_stiffness,-1,SpringLength,SpringElasticModulus,,,'COMPN_SOILSPR_frame2','COMPE_SOILSPR_frame2','FEM_nodes_apportioned'
+TUNNEL_V2_ELASTICBASE , 'COMPA_frame1'               , CS_begSkewed      , '+Z' , 'frame1'
+TUNNEL_V2_ELASTICBASE , 'COMPA_frame2'               , CS_endSkewed      , '+Z' , 'frame2'
 
 allsel
 csys,0
