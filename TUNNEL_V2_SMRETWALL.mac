@@ -62,6 +62,8 @@ csys,ARG1
 wpcsys,-1
 asel,none
 rndpoly, 'x_coords' , 'y_coords' , 'corner_r'
+wprota,,90
+asbw,all,,delete
 cm,%cmaWall%,area
 
 ! Draw footing

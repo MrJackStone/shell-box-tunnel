@@ -38,15 +38,18 @@ cm , COMPA_HDW_slab            , area
 cm , COMPA_HDW_stiffener       , area
 cm , COMPA_HDW_topBeam         , area
 cm , COMPA_HDW_walls           , area
+cm , COMPA_HDW_wallsBuried     , area
 cm , COMPA_HDW_left            , area
 cm , COMPA_HDW_right           , area
 
 cm , COMPA_HDW_leftWall        , area  $  cm , COMPA_HDW_rightWall       , area
+cm , COMPA_HDW_leftWallBuried  , area  $  cm , COMPA_HDW_rightWallBuried , area
 cm , COMPA_HDW_leftFoot        , area  $  cm , COMPA_HDW_rightFoot       , area
 cm , COMPA_HDW_leftStiffener   , area  $  cm , COMPA_HDW_rightStiffener  , area
 cm , COMPA_HDW_leftColumn      , area  $  cm , COMPA_HDW_rightColumn     , area
 
 cm , COMPA_HDW1_leftWall       , area  $  cm , COMPA_HDW1_rightWall      , area
+cm , COMPA_HDW1_leftWallBuried , area  $  cm , COMPA_HDW1_rightWallBuried, area
 cm , COMPA_HDW1_leftFoot       , area  $  cm , COMPA_HDW1_rightFoot      , area
 cm , COMPA_HDW1_leftStiffener  , area  $  cm , COMPA_HDW1_rightStiffener , area
 cm , COMPA_HDW1_leftColumn     , area  $  cm , COMPA_HDW1_rightColumn    , area
@@ -59,6 +62,7 @@ cm , COMPA_HDW1_topBeam        , area  $  cm , COMPA_HDW2_topBeam        , area
 cm , COMPA_HDW1_slab           , area  $  cm , COMPA_HDW2_slab           , area
 
 cm , COMPA_HDW2_leftWall       , area  $  cm , COMPA_HDW2_rightWall      , area
+cm , COMPA_HDW2_leftWallBuried , area  $  cm , COMPA_HDW2_rightWallBuried, area
 cm , COMPA_HDW2_leftFoot       , area  $  cm , COMPA_HDW2_rightFoot      , area
 cm , COMPA_HDW2_leftStiffener  , area  $  cm , COMPA_HDW2_rightStiffener , area
 cm , COMPA_HDW2_leftColumn     , area  $  cm , COMPA_HDW2_rightColumn    , area
@@ -67,4 +71,3 @@ cm , COMPA_HDW2_leftColumn     , area  $  cm , COMPA_HDW2_rightColumn    , area
 cm , COMPA_ROOF_leftCorbel  , area  $  cm , COMPA_ROOF_rightCorbel  , area $ cm , COMPA_ROOF_flat  , area
 cm , COMPA_FLOOR_leftCorbel , area  $  cm , COMPA_FLOOR_rightCorbel , area $ cm , COMPA_FLOOR_flat , area
 cm , COMPA_WALL_topCorbel   , area  $  cm , COMPA_WALL_botCorbel    , area $ cm , COMPA_WALL_flat  , area
-
