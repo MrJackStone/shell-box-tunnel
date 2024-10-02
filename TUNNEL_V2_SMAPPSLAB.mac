@@ -9,10 +9,18 @@ ptxy , GEO_APR_obliqueLength , (-GEO_APR_obliqueWidth/2)-GEO_APR_axialSkewedLeng
 ptxy , GEO_APR_obliqueLength , (GEO_APR_obliqueWidth/2)-GEO_APR_axialSkewedLength
 ptxy , 0                     , (GEO_APR_obliqueWidth/2)
 poly
+wpoffs,GEO_APR_unsupportedLength
+wprota,,,90
+asbw,all,,delete
 cm,COMPA_approachL,area
 lsla
 lsel,r,loc,x,0
 cm,COMPL_APR_leftInterface,line
+asel,r,loc,x,0,GEO_APR_unsupportedLength
+cm,COMPA_approachFreeL,area
+cmsel,s,COMPA_approachL
+cmsel,u,COMPA_approachFreeL
+cm,COMPA_approachSupL,area
 
 asel,none
 csys,CS_approachRight
@@ -22,10 +30,26 @@ ptxy , GEO_APR_obliqueLength , (-GEO_APR_obliqueWidth/2)+GEO_APR_axialSkewedLeng
 ptxy , GEO_APR_obliqueLength , (GEO_APR_obliqueWidth/2)+GEO_APR_axialSkewedLength
 ptxy , 0                     , (GEO_APR_obliqueWidth/2)
 poly
+wpoffs,GEO_APR_unsupportedLength
+wprota,,,90
+asbw,all,,delete
 cm,COMPA_approachR,area
 lsla
 lsel,r,loc,x,0
 cm,COMPL_APR_rightInterface,line
+asel,r,loc,x,0,GEO_APR_unsupportedLength
+cm,COMPA_approachFreeR,area
+cmsel,s,COMPA_approachR
+cmsel,u,COMPA_approachFreeR
+cm,COMPA_approachSupR,area
+
+cmsel,s,COMPA_approachSupL
+cmsel,a,COMPA_approachSupR
+cm,COMPA_approachSup,area
+
+cmsel,s,COMPA_approachFreeL
+cmsel,a,COMPA_approachFreeR
+cm,COMPA_approachFree,area
 
 cmsel,s,COMPA_approachL
 cmsel,a,COMPA_approachR
