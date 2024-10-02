@@ -23,7 +23,12 @@ cm , COMPL_Railway    , line
 
 cm , COMPK_Tunnel , kp
 
-! Inlet
+! Approach slabs
+cm , COMPA_approach  , area
+cm , COMPA_approachL , area
+cm , COMPA_approachR , area
+
+! Inlets
 cm , COMPA_headwalls           , area
 cm , COMPA_HDW_backBeam        , area
 cm , COMPA_HDW_botBeam         , area
@@ -57,3 +62,9 @@ cm , COMPA_HDW2_leftWall       , area  $  cm , COMPA_HDW2_rightWall      , area
 cm , COMPA_HDW2_leftFoot       , area  $  cm , COMPA_HDW2_rightFoot      , area
 cm , COMPA_HDW2_leftStiffener  , area  $  cm , COMPA_HDW2_rightStiffener , area
 cm , COMPA_HDW2_leftColumn     , area  $  cm , COMPA_HDW2_rightColumn    , area
+
+! Corbels
+cm , COMPA_ROOF_leftCorbel  , area  $  cm , COMPA_ROOF_rightCorbel  , area $ cm , COMPA_ROOF_flat  , area
+cm , COMPA_FLOOR_leftCorbel , area  $  cm , COMPA_FLOOR_rightCorbel , area $ cm , COMPA_FLOOR_flat , area
+cm , COMPA_WALL_topCorbel   , area  $  cm , COMPA_WALL_botCorbel    , area $ cm , COMPA_WALL_flat  , area
+
