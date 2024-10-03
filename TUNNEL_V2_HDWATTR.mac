@@ -1,8 +1,6 @@
 ! TUNNEL_V2_HDWATTR
 
 
-GEO_HDW_CornerRadius = GEO_HDW_wallThk*2
-
 CS_HDW              = 200
 CS_HDW_LeftWallBeg  = 201
 CS_HDW_RightWallBeg = 202
@@ -13,7 +11,7 @@ CS_HDW_RightWallEnd = 302
 !CS_HDW_beg = 203
 !CS_HDW_end = 303
 
-GEO_InletRadians = GEO_HDW_angle*pi/180
+GEO_InletRadians = GEO_HDW_angle*pi/180  ! TODO  this affects loads, must change to account for unique retaining walls!
 
 GEO_InletWidth = Eff_GalleryWidth*GEO_TUN_modules
 GEO_HDW_Height = Eff_GalleryHeight+GEO_FRAME_headBeamHeight
@@ -27,7 +25,7 @@ FEM_HDW_EArea   = FEM_HDW_esize**2
 WSpringConstant = MAT_SOIL_stiffness*FEM_HDW_EArea
 WSpringArea     = WSpringConstant*SpringLength/SpringElasticModulus
 
-WallLength        = GEO_HDW_length/COS(GEO_InletRadians)
+WallLength        = GEO_HDW_length/COS(GEO_InletRadians)  ! TODO  GEO_HDW_length param has been removed from input.
 GEO_HDW_WallSlope = (GEO_HDW_Height-GEO_HDW_endH)/(WallLength-GEO_HDW_topLength)
 
 MinimumDepth = GEO_EMB_height-GEO_FRAME_headBeamHeight

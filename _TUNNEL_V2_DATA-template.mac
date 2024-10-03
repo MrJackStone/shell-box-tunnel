@@ -180,7 +180,7 @@ GEO_HDW1_type = 0
 ! > Params for GEO_HDW1_type=0 or GEO_HDW1_type=2 only:
   ! Thickness of floor slab
   GEO_HDW1_slabThk = 0.20
-  ! Thickness of the slab's stiffened edges (set to zero to repeat slab thickness)
+  ! Thickness of the slab's stiffened edges (set to zero to repeat slab thickness) ! TODO  implement "set to zero" option
   GEO_HDW1_slabStfThk = 0.20
   ! Width of the slab's stiffened edges (measured from the retaining wall plane)
   GEO_HDW1_slabStfWidth = 1.0
