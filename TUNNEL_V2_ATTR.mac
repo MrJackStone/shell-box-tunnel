@@ -589,6 +589,17 @@ GEO_FRM2_status = 0
 !!                                                                                                !!
 !! 2.11  Headwalls                                                                                !!
 !!                                                                                                !!
+GEO_HDW1_status = 0
+GEO_HDW2_status = 0
+
+*if,GEO_HDW_status,eq,1,or,GEO_HDW_status,eq,2,then
+  GEO_HDW1_status = 1
+*endif
+
+*if,GEO_HDW_status,eq,1,or,GEO_HDW_status,eq,3,then
+  GEO_HDW2_status = 1
+*endif
+
 *get,parType,PARM,GEO_HDW_status,TYPE
 *if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
   TUNNEL_V2_HDWATTR
