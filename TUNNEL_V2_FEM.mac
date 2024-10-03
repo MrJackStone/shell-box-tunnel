@@ -52,16 +52,16 @@ nsle,s,active
 apportionedstats,,'FEM_nodes_apportioned'
 
 ! Floor slab
-TUNNEL_V2_ELASTICBASE , 'COMPA_floor' , CS_tunnel , '-Y' , 'floor'
+TUNNEL_V2_ELASTICBASE , 'COMPA_floor'     , CS_tunnel , '-Y' , 'floor'
 
 ! Left wall
-TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall' , CS_tunnel , '-X' , 'leftWall'
+TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall'  , CS_tunnel , '-X' , 'leftWall'
 
 ! Right wall
 TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall' , CS_tunnel , '+X' , 'rightWall'
 
 ! Top slab
-TUNNEL_V2_ELASTICBASE , 'COMPA_roof' , CS_tunnel , '+Y' , 'roof'
+TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '+Y' , 'roof'
 
 
 !! 4.5.7  Headwalls                                                                               !!

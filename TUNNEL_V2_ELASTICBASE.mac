@@ -2,7 +2,7 @@
 ! TUNNEL_V2_ELASTICBASE , ARG1    , ARG2 , ARG3      , ARG4
 
 
-outputName = 'EBASE_%ARG4%
+outputName = 'EBASE_%ARG4%'
 compnName  = 'COMPN_SOILSPR_%ARG4%'
 compeName  = 'COMPE_SOILSPR_%ARG4%'
 dirAxis    = upcase(strsub(ARG3,2,1))
