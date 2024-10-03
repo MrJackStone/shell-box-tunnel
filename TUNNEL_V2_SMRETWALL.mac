@@ -70,7 +70,7 @@ cm,%cmaWall%,area
 csys,ARG6
 wpcsys,-1
 asel,none
-blc4,0,0,ARG2,ARG7
+blc4,0,0,ARG8*ARG2,ARG7
 cm,%cmaFoot%,area
 
 ! Interface with tunnel/frame
