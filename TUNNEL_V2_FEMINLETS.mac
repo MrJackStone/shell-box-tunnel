@@ -3,98 +3,95 @@
 
 real,REAL_default
 
-*get,parType,PARM,GEO_HDW_status,TYPE
-*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
-  ! Set solid model attributes
-  cmsel,s,COMPA_HDW1_LeftWall
-  aatt,MAT_conc,,TYPE_shell181,CS_HDW1_leftWall,SEC_HDW_Wall
+! Set solid model attributes
+cmsel,s,COMPA_HDW1_LeftWall
+aatt,MAT_conc,,TYPE_shell181,CS_HDW1_leftWall,SEC_HDW_Wall
 
-  cmsel,s,COMPA_HDW2_LeftWall
-  aatt,MAT_conc,,TYPE_shell181,CS_HDW2_leftWall,SEC_HDW_Wall
+cmsel,s,COMPA_HDW2_LeftWall
+aatt,MAT_conc,,TYPE_shell181,CS_HDW2_leftWall,SEC_HDW_Wall
 
-  cmsel,s,COMPA_HDW1_rightWall
-  aatt,MAT_conc,,TYPE_shell181,CS_HDW1_rightWall,SEC_HDW_Wall
+cmsel,s,COMPA_HDW1_rightWall
+aatt,MAT_conc,,TYPE_shell181,CS_HDW1_rightWall,SEC_HDW_Wall
 
-  cmsel,s,COMPA_HDW2_rightWall
-  aatt,MAT_conc,,TYPE_shell181,CS_HDW2_rightWall,SEC_HDW_Wall
+cmsel,s,COMPA_HDW2_rightWall
+aatt,MAT_conc,,TYPE_shell181,CS_HDW2_rightWall,SEC_HDW_Wall
 
-  cmsel,s,COMPA_HDW1_leftFoot
-  aatt,MAT_conc,,TYPE_shell181,CS_HDW1_leftFoot,SEC_HDW_Footing
+cmsel,s,COMPA_HDW1_leftFoot
+aatt,MAT_conc,,TYPE_shell181,CS_HDW1_leftFoot,SEC_HDW_Footing
 
-  cmsel,s,COMPA_HDW2_leftFoot
-  aatt,MAT_conc,,TYPE_shell181,CS_HDW2_leftFoot,SEC_HDW_Footing
+cmsel,s,COMPA_HDW2_leftFoot
+aatt,MAT_conc,,TYPE_shell181,CS_HDW2_leftFoot,SEC_HDW_Footing
 
-  cmsel,s,COMPA_HDW1_rightFoot
-  aatt,MAT_conc,,TYPE_shell181,CS_HDW1_rightFoot,SEC_HDW_Footing
+cmsel,s,COMPA_HDW1_rightFoot
+aatt,MAT_conc,,TYPE_shell181,CS_HDW1_rightFoot,SEC_HDW_Footing
 
-  cmsel,s,COMPA_HDW2_rightFoot
-  aatt,MAT_conc,,TYPE_shell181,CS_HDW2_rightFoot,SEC_HDW_Footing
+cmsel,s,COMPA_HDW2_rightFoot
+aatt,MAT_conc,,TYPE_shell181,CS_HDW2_rightFoot,SEC_HDW_Footing
 
-  cmsel,s,COMPA_HDW_Slab
-  aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_HDW_Slab
+cmsel,s,COMPA_HDW_Slab
+aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_HDW_Slab
 
-  cmsel,s,COMPA_HDW_Stiffener
-  aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_HDW_Stiffener
+cmsel,s,COMPA_HDW_Stiffener
+aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_HDW_Stiffener
 
-  cmsel,s,COMPA_HDW_BotBeam
-  aatt,MAT_conc,,TYPE_shell181,CS_tunnel,SEC_HDW_frontBeam
+cmsel,s,COMPA_HDW_BotBeam
+aatt,MAT_conc,,TYPE_shell181,CS_tunnel,SEC_HDW_frontBeam
 
-  cmsel,s,COMPA_HDW1_TopBeam
-  aatt,MAT_conc,,TYPE_shell181,CS_FRM1_beams,SEC_FRAME_headBeam
-  cmsel,s,COMPA_HDW2_TopBeam
-  aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_headBeam
+cmsel,s,COMPA_HDW1_TopBeam
+aatt,MAT_conc,,TYPE_shell181,CS_FRM1_beams,SEC_FRAME_headBeam
+cmsel,s,COMPA_HDW2_TopBeam
+aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_headBeam
 
-  cmsel,s,COMPA_HDW1_BackBeam
-  aatt,MAT_conc,,TYPE_shell181,CS_FRM1_beams,SEC_FRAME_backBeam
-  cmsel,s,COMPA_HDW2_BackBeam
-  aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_backBeam
+cmsel,s,COMPA_HDW1_BackBeam
+aatt,MAT_conc,,TYPE_shell181,CS_FRM1_beams,SEC_FRAME_backBeam
+cmsel,s,COMPA_HDW2_BackBeam
+aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_backBeam
 
-  cmsel,s,COMPA_HDW1_leftColumn
-  cmsel,a,COMPA_HDW1_rightColumn
-  aatt,MAT_conc,,TYPE_shell181,CS_FRM1_columns,SEC_FRAME_Column
-  cmsel,s,COMPA_HDW2_leftColumn
-  cmsel,a,COMPA_HDW2_rightColumn
-  aatt,MAT_conc,,TYPE_shell181,CS_FRM2_columns,SEC_FRAME_Column
+cmsel,s,COMPA_HDW1_leftColumn
+cmsel,a,COMPA_HDW1_rightColumn
+aatt,MAT_conc,,TYPE_shell181,CS_FRM1_columns,SEC_FRAME_Column
+cmsel,s,COMPA_HDW2_leftColumn
+cmsel,a,COMPA_HDW2_rightColumn
+aatt,MAT_conc,,TYPE_shell181,CS_FRM2_columns,SEC_FRAME_Column
 
-  ! Mesh solid model
-  cmsel,s,COMPA_Headwalls
-  aesize,all,FEM_HDW_esize
-  amesh,all
+! Mesh solid model
+cmsel,s,COMPA_Headwalls
+aesize,all,FEM_HDW_esize
+amesh,all
 
-  ! Connect parts
-  pinned = 1
-  fixed  = 0
+! Connect parts
+pinned = 1
+fixed  = 0
 
-  l2acnt , 'COMPA_HDW1_topBeam'     , 'COMPL_ROOF_interfaceInlet1'  ,  , pinned
-  l2acnt , 'COMPA_HDW2_topBeam'     , 'COMPL_ROOF_interfaceInlet2'  ,  , pinned
+l2acnt , 'COMPA_HDW1_topBeam'     , 'COMPL_ROOF_interfaceInlet1'  ,  , pinned
+l2acnt , 'COMPA_HDW2_topBeam'     , 'COMPL_ROOF_interfaceInlet2'  ,  , pinned
 
-  l2acnt , 'COMPA_HDW1_backBeam'    , 'COMPL_FLOOR_interfaceInlet1' ,  , pinned
-  l2acnt , 'COMPA_HDW2_backBeam'    , 'COMPL_FLOOR_interfaceInlet2' ,  , pinned
+l2acnt , 'COMPA_HDW1_backBeam'    , 'COMPL_FLOOR_interfaceInlet1' ,  , pinned
+l2acnt , 'COMPA_HDW2_backBeam'    , 'COMPL_FLOOR_interfaceInlet2' ,  , pinned
 
-  l2acnt , 'COMPA_HDW1_leftColumn'  , 'COMPL_LWALL_interfaceInlet1' ,  , pinned
-  l2acnt , 'COMPA_HDW1_rightColumn' , 'COMPL_RWALL_interfaceInlet1' ,  , pinned
+l2acnt , 'COMPA_HDW1_leftColumn'  , 'COMPL_LWALL_interfaceInlet1' ,  , pinned
+l2acnt , 'COMPA_HDW1_rightColumn' , 'COMPL_RWALL_interfaceInlet1' ,  , pinned
 
-  l2acnt , 'COMPA_HDW2_leftColumn'  , 'COMPL_RWALL_interfaceInlet2' ,  , pinned
-  l2acnt , 'COMPA_HDW2_rightColumn' , 'COMPL_LWALL_interfaceInlet2' ,  , pinned
+l2acnt , 'COMPA_HDW2_leftColumn'  , 'COMPL_RWALL_interfaceInlet2' ,  , pinned
+l2acnt , 'COMPA_HDW2_rightColumn' , 'COMPL_LWALL_interfaceInlet2' ,  , pinned
 
-  l2acnt , 'COMPA_floor'            , 'COMPL_HDW1_slabTunnelInterface'    ,  , pinned
-  l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabTunnelInterface'    ,  , pinned
+l2acnt , 'COMPA_floor'            , 'COMPL_HDW1_slabTunnelInterface'    ,  , pinned
+l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabTunnelInterface'    ,  , pinned
 
-  *if,GEO_HDW1_type,eq,0,then
-    connection1 = fixed
-  *else
-    connection1 = pinned
-  *endif
-
-  l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_LEFT_wallInterface'  ,  , connection1
-  l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_RIGHT_wallInterface' ,  , connection1
-
-  *if,GEO_HDW2_type,eq,0,then
-    connection2 = fixed
-  *else
-    connection2 = pinned
-  *endif
-
-  l2acnt , 'COMPA_frame2' , 'COMPL_HDW2_LEFT_wallInterface'  ,  , connection2
-  l2acnt , 'COMPA_frame2' , 'COMPL_HDW2_RIGHT_wallInterface' ,  , connection2
+*if,GEO_HDW1_type,eq,0,then
+  connection1 = fixed
+*else
+  connection1 = pinned
 *endif
+
+l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_LEFT_wallInterface'  ,  , connection1
+l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_RIGHT_wallInterface' ,  , connection1
+
+*if,GEO_HDW2_type,eq,0,then
+  connection2 = fixed
+*else
+  connection2 = pinned
+*endif
+
+l2acnt , 'COMPA_frame2' , 'COMPL_HDW2_LEFT_wallInterface'  ,  , connection2
+l2acnt , 'COMPA_frame2' , 'COMPL_HDW2_RIGHT_wallInterface' ,  , connection2

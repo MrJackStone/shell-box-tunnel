@@ -362,9 +362,6 @@ GEO_IWALL_openingCount = GEO_IWALL_columnCount-1
   GEO_IWALL_openingYcenter = (GEO_IWALL_openingHeight/2)+GEO_IWALL_botBeamHeight
 *endif
 
-! Wall height at the front of the inlets
-setdefa,'GEO_HDW_endH',0
-
 
 !!                                                                                                !!
 !! 2.4  Materials                                                                                 !!
@@ -606,8 +603,7 @@ GEO_HDW2_status = 0
   GEO_HDW2_status = 1
 *endif
 
-*get,parType,PARM,GEO_HDW_status,TYPE
-*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
+*if,GEO_HDW_status,gt,0,then
   TUNNEL_V2_HDWATTR
 *endif
 

@@ -8,28 +8,11 @@ CS_HDW_RightWallBeg = 202
 CS_HDW_LeftWallEnd  = 301
 CS_HDW_RightWallEnd = 302
 
-!CS_HDW_beg = 203
-!CS_HDW_end = 303
-
 GEO_InletRadians = GEO_HDW_angle*pi/180  ! TODO  this affects loads, must change to account for unique retaining walls!
 
-GEO_InletWidth = Eff_GalleryWidth*GEO_TUN_modules
 GEO_HDW_Height = Eff_GalleryHeight+GEO_FRAME_headBeamHeight
 
-MaxIW = (GEO_InletWidth/2)*COS(GEO_InletRadians)
-*if,GEO_HDW_slabStfWidth,GE,MaxIW,THEN
-   GEO_HDW_slabStfWidth = 0.9*MaxIW
-*endif
-
-FEM_HDW_EArea   = FEM_HDW_esize**2
-WSpringConstant = MAT_SOIL_stiffness*FEM_HDW_EArea
-WSpringArea     = WSpringConstant*SpringLength/SpringElasticModulus
-
-WallLength        = GEO_HDW_length/COS(GEO_InletRadians)  ! TODO  GEO_HDW_length param has been removed from input.
-GEO_HDW_WallSlope = (GEO_HDW_Height-GEO_HDW_endH)/(WallLength-GEO_HDW_topLength)
-
-MinimumDepth = GEO_EMB_height-GEO_FRAME_headBeamHeight
-MaximumDepth = GEO_EMB_height+Eff_GalleryHeight+GEO_HDW_footDepth
+WallLength = GEO_HDW_length/COS(GEO_InletRadians)  ! TODO  GEO_HDW_length param has been removed from input.
 
 GEO_HDW1_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_LEFT_footDepth
 GEO_HDW1_RIGHT_wallHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_RIGHT_footDepth
@@ -46,38 +29,30 @@ GEO_HDW1_RIGHT_xSign = -1
 GEO_HDW2_LEFT_xSign  =  1
 GEO_HDW2_RIGHT_xSign = -1
 
-! Calculate position where the inlet's slab stiffener intersects with the tunnel's floor slab
-GEO_HDW_stiffXOff = GEO_HDW_slabStfWidth/COS(GEO_InletRadians)
-
 /prep7
 
-/nopr
-immed,0
-/uis,replot,0
-
 ! Atributos
-r , REAL_hdwSprings , WSpringArea , 0 , -1
+! TODO  split into sections per retaining wall
+sectype , SEC_HDW_Wall            , SHELL    ,  , 'WALL'
+secdata , GEO_HDW_wallThk         , MAT_CONC
 
-sectype , SEC_HDW_Wall    , SHELL    ,  , 'WALL'
-secdata , GEO_HDW_wallThk , MAT_CONC
+sectype , SEC_HDW_Slab            , SHELL    ,  , 'FLSLAB'
+secdata , GEO_HDW_slabThk         , MAT_CONC
 
-sectype , SEC_HDW_Slab    , SHELL    ,  , 'FLSLAB'
-secdata , GEO_HDW_slabThk , MAT_CONC
+sectype , SEC_HDW_Stiffener       , SHELL    ,  , 'SLBSTF'
+secdata , GEO_HDW_slabStfThk      , MAT_CONC
 
-sectype , SEC_HDW_Stiffener  , SHELL    ,  , 'SLBSTF'
-secdata , GEO_HDW_slabStfThk , MAT_CONC
-
-sectype , SEC_HDW_Footing    , SHELL    ,  , 'FOOTING'
-secdata , GEO_HDW_footHeight , MAT_CONC
+sectype , SEC_HDW_Footing         , SHELL    ,  , 'FOOTING'
+secdata , GEO_HDW_footHeight      , MAT_CONC
 
 sectype , SEC_FRAME_headBeam      , SHELL    ,  , 'HBEAM'
 secdata , GEO_FRAME_headBeamWidth , MAT_CONC
 
-sectype , SEC_HDW_frontBeam      , SHELL    ,  , 'FBEAM'
-secdata , GEO_HDW_frontBeamWidth , MAT_CONC
+sectype , SEC_HDW_frontBeam       , SHELL    ,  , 'FBEAM'
+secdata , GEO_HDW_frontBeamWidth  , MAT_CONC
 
 sectype , SEC_FRAME_backBeam      , SHELL    ,  , 'BBEAM'
 secdata , GEO_FRAME_backBeamWidth , MAT_CONC
 
-sectype , SEC_FRAME_Column    , shell ,  , 'COLUMN'
+sectype , SEC_FRAME_Column        , shell    ,  , 'COLUMN'
 secdata , GEO_FRAME_columnThk

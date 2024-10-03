@@ -18,7 +18,9 @@ TUNNEL_V2_FEMTUNNEL
 !!                                                                                                !!
 !! 4.2  Headwall                                                                                  !!
 !!                                                                                                !!
-TUNNEL_V2_FEMINLETS
+*if,GEO_HDW_status,gt,0,then
+  TUNNEL_V2_FEMINLETS
+*endif
 
 
 !!                                                                                                !!
@@ -63,8 +65,7 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_roof' , CS_tunnel , '+Y' , 'roof'
 
 
 !! 4.5.7  Headwalls                                                                               !!
-*get,parType,PARM,GEO_HDW_status,TYPE
-*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
+*if,GEO_HDW_status,gt,0,then
   TUNNEL_V2_HDWBC
 *endif
 

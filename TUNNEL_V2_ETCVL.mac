@@ -51,7 +51,7 @@ etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 *endif
 
 ! Apply convolution to headwall shells
-*if,GEO_HDW_status,eq,1,then
+*if,GEO_HDW_status,ge,1,then
   *if,GEO_HDW_type,eq,0,then
     *do,nthInlet,1,2,1
 

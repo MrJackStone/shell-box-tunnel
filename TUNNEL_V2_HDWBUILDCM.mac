@@ -126,13 +126,13 @@ cm,COMPA_HDW_wallsBuried,area
 ! Slab stiffeners
 asel,none
 csys,CS_HDW1_leftWall
-asel,a,loc,z,0,GEO_HDW_slabStfWidth
+asel,a,loc,z,0,GEO_HDW1_slabStfWidth
 csys,CS_HDW1_rightWall
-asel,a,loc,z,0,GEO_HDW_slabStfWidth
+asel,a,loc,z,0,GEO_HDW1_slabStfWidth
 csys,CS_HDW2_leftWall
-asel,a,loc,z,0,GEO_HDW_slabStfWidth
+asel,a,loc,z,0,GEO_HDW2_slabStfWidth
 csys,CS_HDW2_rightWall
-asel,a,loc,z,0,GEO_HDW_slabStfWidth
+asel,a,loc,z,0,GEO_HDW2_slabStfWidth
 csys,CS_tunnel
 asel,r,loc,y,0
 cmsel,r,COMPA_headwalls

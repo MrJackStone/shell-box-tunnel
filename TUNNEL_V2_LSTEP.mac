@@ -44,8 +44,7 @@ ACEL,,LOAD_g_d
 ! Apply soil pressures
 TUNNEL_V2_DEADLOADS
 
-*get,parType,PARM,GEO_HDW_status,TYPE
-*if,parType,EQ,0,AND,GEO_HDW_status,GT,0,THEN
+*if,GEO_HDW_status,gt,0,then
   TUNNEL_V2_HDWLOAD
 *endif
 

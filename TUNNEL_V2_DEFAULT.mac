@@ -20,8 +20,7 @@ GEO_FRAME_status             = 0
 GEO_FRAME_beamRoofConnection = 1
 
 ! Headwalls
-GEO_HDW_status           = 0
-GEO_HDW_wingBottomOffset = 0
+GEO_HDW_status = 0
 
 ! Approach slabs
 GEO_APR_status   = 0
