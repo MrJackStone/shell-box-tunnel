@@ -16,10 +16,8 @@ immed,0
 
 
 ! TODO HOTFIX
-GEO_HDW_angle        = GEO_HDW1_LEFT_wallAngle
-GEO_HDW_topLength    = GEO_HDW1_LEFT_wallTopLength
-GEO_HDW_footDepth    = GEO_HDW1_LEFT_footDepth
-GEO_HDW_slabStfWidth = GEO_HDW1_slabStfWidth
+GEO_HDW_topLength = GEO_HDW1_LEFT_wallTopLength
+GEO_HDW_footDepth = GEO_HDW1_LEFT_footDepth
 
 
 
