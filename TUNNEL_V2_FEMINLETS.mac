@@ -2,36 +2,33 @@
 
 
 ! Set solid model attributes
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftWall' , CS_HDW1_leftWall , SEC_HDW1_LEFT_wall
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftWall' , CS_HDW2_leftWall , SEC_HDW2_LEFT_wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftWall'       , CS_HDW1_leftWall  , SEC_HDW1_LEFT_wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightWall'      , CS_HDW1_rightWall , SEC_HDW1_RIGHT_wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftFoot'       , CS_HDW1_leftFoot  , SEC_HDW1_LEFT_footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightFoot'      , CS_HDW1_rightFoot , SEC_HDW1_RIGHT_footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftStiffener'  , CS_bot            , SEC_HDW1_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightStiffener' , CS_bot            , SEC_HDW1_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_slab'           , CS_bot            , SEC_HDW1_slab
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_botBeam'        , CS_bot            , SEC_HDW1_frontBeam
 
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightWall' , CS_HDW1_rightWall , SEC_HDW1_RIGHT_wall
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightWall' , CS_HDW2_rightWall , SEC_HDW2_RIGHT_wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_topBeam'        , CS_FRM1_beams     , SEC_FRAME_headBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_backBeam'       , CS_FRM1_beams     , SEC_FRAME_backBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftColumn'     , CS_FRM1_columns   , SEC_FRAME_column
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightColumn'    , CS_FRM1_columns   , SEC_FRAME_column
 
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftFoot' , CS_HDW1_leftFoot , SEC_HDW1_LEFT_footing
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftFoot' , CS_HDW2_leftFoot , SEC_HDW2_LEFT_footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftWall'       , CS_HDW2_leftWall  , SEC_HDW2_LEFT_wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightWall'      , CS_HDW2_rightWall , SEC_HDW2_RIGHT_wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftFoot'       , CS_HDW2_leftFoot  , SEC_HDW2_LEFT_footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightFoot'      , CS_HDW2_rightFoot , SEC_HDW2_RIGHT_footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftStiffener'  , CS_bot            , SEC_HDW2_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightStiffener' , CS_bot            , SEC_HDW2_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_slab'           , CS_bot            , SEC_HDW2_slab
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_botBeam'        , CS_bot            , SEC_HDW2_frontBeam
 
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightFoot' , CS_HDW1_rightFoot , SEC_HDW1_RIGHT_footing
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightFoot' , CS_HDW2_rightFoot , SEC_HDW2_RIGHT_footing
-
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_slab'      , CS_bot , SEC_HDW1_slab
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_stiffener' , CS_bot , SEC_HDW1_stiffener
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_botBeam'   , CS_bot , SEC_HDW1_frontBeam
-
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_slab'      , CS_bot , SEC_HDW2_slab
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_stiffener' , CS_bot , SEC_HDW2_stiffener
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_botBeam'   , CS_bot , SEC_HDW2_frontBeam
-
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_topBeam' , CS_FRM1_beams , SEC_FRAME_headBeam
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_topBeam' , CS_FRM2_beams , SEC_FRAME_headBeam
-
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_backBeam' , CS_FRM1_beams , SEC_FRAME_backBeam
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_backBeam' , CS_FRM2_beams , SEC_FRAME_backBeam
-
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftColumn'  , CS_FRM1_columns , SEC_FRAME_column
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightColumn' , CS_FRM1_columns , SEC_FRAME_column
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftColumn'  , CS_FRM2_columns , SEC_FRAME_column
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightColumn' , CS_FRM2_columns , SEC_FRAME_column
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_topBeam'        , CS_FRM2_beams     , SEC_FRAME_headBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_backBeam'       , CS_FRM2_beams     , SEC_FRAME_backBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftColumn'     , CS_FRM2_columns   , SEC_FRAME_column
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightColumn'    , CS_FRM2_columns   , SEC_FRAME_column
 
 ! Mesh solid model
 cmsel,s,COMPA_Headwalls
