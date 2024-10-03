@@ -108,7 +108,7 @@ cswpla,CS_HDW1_leftWall,cart
 
 csys,CS_tunnel
 wpcsys,-1
-wpoffs,GEO_TUN_totEffW
+wpoffs,GEO_TUN_totEffW,,GEO_RWALL_zBeg
 wprota,,,-90-GEO_HDW1_RIGHT_wallAngle
 cswpla,CS_HDW1_rightWall,cart
 
@@ -120,7 +120,7 @@ cswpla,CS_HDW2_leftWall,cart
 
 csys,CS_tunnel
 wpcsys,-1
-wpoffs,,,GEO_TUN_length
+wpoffs,,,GEO_RWALL_zEnd
 wprota,,,90-GEO_HDW2_RIGHT_wallAngle
 cswpla,CS_HDW2_rightWall,cart
 
@@ -128,25 +128,25 @@ cswpla,CS_HDW2_rightWall,cart
 csys,CS_HDW1_leftWall
 wpcsys,-1
 wprota,,-90
-wpoffs,,,-GEO_HDW_footDepth
+wpoffs,,,-GEO_HDW1_LEFT_footDepth
 cswpla,CS_HDW1_leftFoot,cart
 
 csys,CS_HDW1_rightWall
 wpcsys,-1
 wprota,,-90
-wpoffs,,,-GEO_HDW_footDepth
+wpoffs,,,-GEO_HDW1_RIGHT_footDepth
 cswpla,CS_HDW1_rightFoot,cart
 
 csys,CS_HDW2_leftWall
 wpcsys,-1
 wprota,,-90
-wpoffs,,,-GEO_HDW_footDepth
+wpoffs,,,-GEO_HDW2_LEFT_footDepth
 cswpla,CS_HDW2_leftFoot,cart
 
 csys,CS_HDW2_rightWall
 wpcsys,-1
 wprota,,-90
-wpoffs,,,-GEO_HDW_footDepth
+wpoffs,,,-GEO_HDW2_RIGHT_footDepth
 cswpla,CS_HDW2_rightFoot,cart
 
 

@@ -306,6 +306,12 @@ WARNING: Pin and corbel are incompatible. GEO_CORB_status set to 0 (OFF).
   *endif
 *endif
 
+! External right wall position
+*afun,deg
+GEO_RWALL_zBeg = tan(GEO_TUN_begSkewness)*GEO_TUN_totEffW
+GEO_RWALL_zEnd = GEO_TUN_length-tan(GEO_TUN_endSkewness)*GEO_TUN_totEffW
+*afun,rad
+
 ! Inner wall positions
 GEO_IWALL_count        = GEO_TUN_modules-1
 GEO_IWALL_openingCount = GEO_IWALL_columnCount-1
