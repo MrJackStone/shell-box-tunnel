@@ -1,0 +1,15 @@
+! TUNNEL_V2_FEMAATT , cma  , esys , secNum
+! TUNNEL_V2_FEMAATT , ARG1 , ARG2 , ARG3
+
+
+abackup
+
+cmsel,s,%ARG1%
+*get,ac,area,,count
+
+*if,ac,gt,0,then
+  aatt,MAT_conc,REAL_default,TYPE_shell181,ARG2,ARG3
+  aesize,all,FEM_HDW_esize
+*endif
+
+arestore

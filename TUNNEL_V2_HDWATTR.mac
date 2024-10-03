@@ -1,13 +1,6 @@
 ! TUNNEL_V2_HDWATTR
 
 
-CS_HDW              = 200
-CS_HDW_LeftWallBeg  = 201
-CS_HDW_RightWallBeg = 202
-
-CS_HDW_LeftWallEnd  = 301
-CS_HDW_RightWallEnd = 302
-
 GEO_InletRadians = GEO_HDW_angle*pi/180  ! TODO  this affects loads, must change to account for unique retaining walls!
 
 GEO_HDW_Height = Eff_GalleryHeight+GEO_FRAME_headBeamHeight
@@ -31,28 +24,20 @@ GEO_HDW2_RIGHT_xSign = -1
 
 /prep7
 
-! Atributos
-! TODO  split into sections per retaining wall
-sectype , SEC_HDW_Wall            , SHELL    ,  , 'WALL'
-secdata , GEO_HDW_wallThk         , MAT_CONC
+! Inlet sections
+*do,nthInlet,1,2,1
+  TUNNEL_V2_CONCSEC , SEC_HDW%nthInlet%_LEFT_wall  , GEO_HDW%nthInlet%_LEFT_wallThk  , 'I%nthInlet%LWALL'
+  TUNNEL_V2_CONCSEC , SEC_HDW%nthInlet%_RIGHT_wall , GEO_HDW%nthInlet%_RIGHT_wallThk , 'I%nthInlet%RWALL'
 
-sectype , SEC_HDW_Slab            , SHELL    ,  , 'FLSLAB'
-secdata , GEO_HDW_slabThk         , MAT_CONC
+  TUNNEL_V2_CONCSEC , SEC_HDW%nthInlet%_LEFT_footing  , GEO_HDW%nthInlet%_LEFT_footThk  , 'I%nthInlet%LFOOT'
+  TUNNEL_V2_CONCSEC , SEC_HDW%nthInlet%_RIGHT_footing , GEO_HDW%nthInlet%_RIGHT_footThk , 'I%nthInlet%RFOOT'
 
-sectype , SEC_HDW_Stiffener       , SHELL    ,  , 'SLBSTF'
-secdata , GEO_HDW_slabStfThk      , MAT_CONC
+  TUNNEL_V2_CONCSEC , SEC_HDW%nthInlet%_slab      , GEO_HDW%nthInlet%_slabThk    , 'I%nthInlet%SLAB'
+  TUNNEL_V2_CONCSEC , SEC_HDW%nthInlet%_stiffener , GEO_HDW%nthInlet%_slabStfThk , 'I%nthInlet%SSTF'
+  TUNNEL_V2_CONCSEC , SEC_HDW%nthInlet%_frontBeam , GEO_HDW%nthInlet%_beamWidth  , 'I%nthInlet%FBEAM'
+*enddo
 
-sectype , SEC_HDW_Footing         , SHELL    ,  , 'FOOTING'
-secdata , GEO_HDW_footHeight      , MAT_CONC
-
-sectype , SEC_FRAME_headBeam      , SHELL    ,  , 'HBEAM'
-secdata , GEO_FRAME_headBeamWidth , MAT_CONC
-
-sectype , SEC_HDW_frontBeam       , SHELL    ,  , 'FBEAM'
-secdata , GEO_HDW_frontBeamWidth  , MAT_CONC
-
-sectype , SEC_FRAME_backBeam      , SHELL    ,  , 'BBEAM'
-secdata , GEO_FRAME_backBeamWidth , MAT_CONC
-
-sectype , SEC_FRAME_Column        , shell    ,  , 'COLUMN'
-secdata , GEO_FRAME_columnThk
+! Frame sections
+TUNNEL_V2_CONCSEC , SEC_FRAME_headBeam , GEO_FRAME_headBeamWidth , 'HBEAM'
+TUNNEL_V2_CONCSEC , SEC_FRAME_backBeam , GEO_FRAME_backBeamWidth , 'BBEAM'
+TUNNEL_V2_CONCSEC , SEC_FRAME_column   , GEO_FRAME_columnThk     , 'COLUMN'

@@ -1,58 +1,37 @@
 ! TUNNEL_V2_FEMINLETS
 
 
-real,REAL_default
-
 ! Set solid model attributes
-cmsel,s,COMPA_HDW1_LeftWall
-aatt,MAT_conc,,TYPE_shell181,CS_HDW1_leftWall,SEC_HDW_Wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftWall' , CS_HDW1_leftWall , SEC_HDW1_LEFT_wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftWall' , CS_HDW2_leftWall , SEC_HDW2_LEFT_wall
 
-cmsel,s,COMPA_HDW2_LeftWall
-aatt,MAT_conc,,TYPE_shell181,CS_HDW2_leftWall,SEC_HDW_Wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightWall' , CS_HDW1_rightWall , SEC_HDW1_RIGHT_wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightWall' , CS_HDW2_rightWall , SEC_HDW2_RIGHT_wall
 
-cmsel,s,COMPA_HDW1_rightWall
-aatt,MAT_conc,,TYPE_shell181,CS_HDW1_rightWall,SEC_HDW_Wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftFoot' , CS_HDW1_leftFoot , SEC_HDW1_LEFT_footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftFoot' , CS_HDW2_leftFoot , SEC_HDW2_LEFT_footing
 
-cmsel,s,COMPA_HDW2_rightWall
-aatt,MAT_conc,,TYPE_shell181,CS_HDW2_rightWall,SEC_HDW_Wall
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightFoot' , CS_HDW1_rightFoot , SEC_HDW1_RIGHT_footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightFoot' , CS_HDW2_rightFoot , SEC_HDW2_RIGHT_footing
 
-cmsel,s,COMPA_HDW1_leftFoot
-aatt,MAT_conc,,TYPE_shell181,CS_HDW1_leftFoot,SEC_HDW_Footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_slab'      , CS_bot , SEC_HDW1_slab
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_stiffener' , CS_bot , SEC_HDW1_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_botBeam'   , CS_bot , SEC_HDW1_frontBeam
 
-cmsel,s,COMPA_HDW2_leftFoot
-aatt,MAT_conc,,TYPE_shell181,CS_HDW2_leftFoot,SEC_HDW_Footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_slab'      , CS_bot , SEC_HDW2_slab
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_stiffener' , CS_bot , SEC_HDW2_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_botBeam'   , CS_bot , SEC_HDW2_frontBeam
 
-cmsel,s,COMPA_HDW1_rightFoot
-aatt,MAT_conc,,TYPE_shell181,CS_HDW1_rightFoot,SEC_HDW_Footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_topBeam' , CS_FRM1_beams , SEC_FRAME_headBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_topBeam' , CS_FRM2_beams , SEC_FRAME_headBeam
 
-cmsel,s,COMPA_HDW2_rightFoot
-aatt,MAT_conc,,TYPE_shell181,CS_HDW2_rightFoot,SEC_HDW_Footing
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_backBeam' , CS_FRM1_beams , SEC_FRAME_backBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_backBeam' , CS_FRM2_beams , SEC_FRAME_backBeam
 
-cmsel,s,COMPA_HDW_Slab
-aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_HDW_Slab
-
-cmsel,s,COMPA_HDW_Stiffener
-aatt,MAT_conc,,TYPE_shell181,CS_bot,SEC_HDW_Stiffener
-
-cmsel,s,COMPA_HDW_BotBeam
-aatt,MAT_conc,,TYPE_shell181,CS_tunnel,SEC_HDW_frontBeam
-
-cmsel,s,COMPA_HDW1_TopBeam
-aatt,MAT_conc,,TYPE_shell181,CS_FRM1_beams,SEC_FRAME_headBeam
-cmsel,s,COMPA_HDW2_TopBeam
-aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_headBeam
-
-cmsel,s,COMPA_HDW1_BackBeam
-aatt,MAT_conc,,TYPE_shell181,CS_FRM1_beams,SEC_FRAME_backBeam
-cmsel,s,COMPA_HDW2_BackBeam
-aatt,MAT_conc,,TYPE_shell181,CS_FRM2_beams,SEC_FRAME_backBeam
-
-cmsel,s,COMPA_HDW1_leftColumn
-cmsel,a,COMPA_HDW1_rightColumn
-aatt,MAT_conc,,TYPE_shell181,CS_FRM1_columns,SEC_FRAME_Column
-cmsel,s,COMPA_HDW2_leftColumn
-cmsel,a,COMPA_HDW2_rightColumn
-aatt,MAT_conc,,TYPE_shell181,CS_FRM2_columns,SEC_FRAME_Column
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftColumn'  , CS_FRM1_columns , SEC_FRAME_column
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightColumn' , CS_FRM1_columns , SEC_FRAME_column
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftColumn'  , CS_FRM2_columns , SEC_FRAME_column
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightColumn' , CS_FRM2_columns , SEC_FRAME_column
 
 ! Mesh solid model
 cmsel,s,COMPA_Headwalls
@@ -63,29 +42,11 @@ amesh,all
 pinned = 1
 fixed  = 0
 
-l2acnt , 'COMPA_HDW1_topBeam'     , 'COMPL_ROOF_interfaceInlet1'  ,  , pinned
-l2acnt , 'COMPA_HDW2_topBeam'     , 'COMPL_ROOF_interfaceInlet2'  ,  , pinned
-
-l2acnt , 'COMPA_HDW1_backBeam'    , 'COMPL_FLOOR_interfaceInlet1' ,  , pinned
-l2acnt , 'COMPA_HDW2_backBeam'    , 'COMPL_FLOOR_interfaceInlet2' ,  , pinned
-
-l2acnt , 'COMPA_HDW1_leftColumn'  , 'COMPL_LWALL_interfaceInlet1' ,  , pinned
-l2acnt , 'COMPA_HDW1_rightColumn' , 'COMPL_RWALL_interfaceInlet1' ,  , pinned
-
-l2acnt , 'COMPA_HDW2_leftColumn'  , 'COMPL_RWALL_interfaceInlet2' ,  , pinned
-l2acnt , 'COMPA_HDW2_rightColumn' , 'COMPL_LWALL_interfaceInlet2' ,  , pinned
-
-l2acnt , 'COMPA_floor'            , 'COMPL_HDW1_slabTunnelInterface'    ,  , pinned
-l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabTunnelInterface'    ,  , pinned
-
 *if,GEO_HDW1_type,eq,0,then
   connection1 = fixed
 *else
   connection1 = pinned
 *endif
-
-l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_LEFT_wallInterface'  ,  , connection1
-l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_RIGHT_wallInterface' ,  , connection1
 
 *if,GEO_HDW2_type,eq,0,then
   connection2 = fixed
@@ -93,5 +54,28 @@ l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_RIGHT_wallInterface' ,  , connection1
   connection2 = pinned
 *endif
 
-l2acnt , 'COMPA_frame2' , 'COMPL_HDW2_LEFT_wallInterface'  ,  , connection2
-l2acnt , 'COMPA_frame2' , 'COMPL_HDW2_RIGHT_wallInterface' ,  , connection2
+*if,GEO_FRM1_status,eq,1,then
+  l2acnt , 'COMPA_HDW1_leftColumn'  , 'COMPL_LWALL_interfaceInlet1' ,  , pinned
+  l2acnt , 'COMPA_HDW1_rightColumn' , 'COMPL_RWALL_interfaceInlet1' ,  , pinned
+  l2acnt , 'COMPA_HDW1_topBeam'     , 'COMPL_ROOF_interfaceInlet1'  ,  , pinned
+  l2acnt , 'COMPA_HDW1_backBeam'    , 'COMPL_FLOOR_interfaceInlet1' ,  , pinned
+*endif
+
+*if,GEO_HDW1_status,eq,1,then
+  l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_LEFT_wallInterface'  ,  , connection1
+  l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_RIGHT_wallInterface' ,  , connection1
+  l2acnt , 'COMPA_floor'  , 'COMPL_HDW1_slabTunnelInterface' ,  , pinned
+*endif
+
+*if,GEO_FRM2_status,eq,1,then
+  l2acnt , 'COMPA_HDW2_leftColumn'  , 'COMPL_RWALL_interfaceInlet2'    ,  , pinned
+  l2acnt , 'COMPA_HDW2_rightColumn' , 'COMPL_LWALL_interfaceInlet2'    ,  , pinned
+  l2acnt , 'COMPA_HDW2_topBeam'     , 'COMPL_ROOF_interfaceInlet2'     ,  , pinned
+  l2acnt , 'COMPA_HDW2_backBeam'    , 'COMPL_FLOOR_interfaceInlet2'    ,  , pinned
+*endif
+
+*if,GEO_HDW2_status,eq,1,then
+  l2acnt , 'COMPA_frame2'           , 'COMPL_HDW2_LEFT_wallInterface'  ,  , connection2
+  l2acnt , 'COMPA_frame2'           , 'COMPL_HDW2_RIGHT_wallInterface' ,  , connection2
+  l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabTunnelInterface' ,  , pinned
+*endif

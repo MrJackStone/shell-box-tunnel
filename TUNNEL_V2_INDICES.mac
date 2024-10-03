@@ -1,0 +1,132 @@
+! TUNNEL_V2_INDICES
+
+
+!! A.  Coordinate systems                                                                         !!
+CS_global         = 11
+CS_dummy          = 12
+CS_tunnel         = 13
+CS_RevTunnel      = 14
+
+CS_top            = 15
+CS_bot            = 16
+CS_left           = 17
+CS_right          = 18
+
+CS_roof           = 19
+CS_floor          = 20
+CS_leftWall       = 21
+CS_rightWall      = 22
+
+CS_begSkewed      = 23
+CS_endSkewed      = 24
+
+CS_FRM1_beams     = 25
+CS_FRM1_columns   = 26
+CS_FRM2_beams     = 27
+CS_FRM2_columns   = 28
+
+CS_hdw1           = 29
+CS_hdw2           = 30
+CS_HDW_columns    = 31
+CS_HDW1_leftWall  = 32
+CS_HDW1_rightWall = 33
+CS_HDW2_leftWall  = 34
+CS_HDW2_rightWall = 35
+CS_HDW1_leftFoot  = 36
+CS_HDW1_rightFoot = 37
+CS_HDW2_leftFoot  = 38
+CS_HDW2_rightFoot = 39
+
+CS_approachLeft   = 40
+CS_approachRight  = 41
+
+CS_free           = 42
+
+*del , CS_innerWalls    ,  , nopr
+*del , CS_IWALL_beams   ,  , nopr
+*del , CS_IWALL_columns ,  , nopr
+*dim , CS_innerWalls    ,  , GEO_TUN_modules-1
+*dim , CS_IWALL_beams   ,  , GEO_TUN_modules-1
+*dim , CS_IWALL_columns ,  , GEO_TUN_modules-1
+*do,nthIwall,1,GEO_TUN_modules-1,1
+  wall                       = CS_free+(3*nthIwall-2)
+  beam                       = CS_free+(3*nthIwall-1)
+  column                     = CS_free+(3*nthIwall-0)
+  CS_innerWalls(nthIwall)    = wall
+  CS_IWALL_beams(nthIwall)   = beam
+  CS_IWALL_columns(nthIwall) = column
+  CS_innerWall%nthIwall%     = wall
+  CS_IWALL_beam%nthIwall%    = beam
+  CS_IWALL_column%nthIwall%  = column
+*enddo
+
+CS_BASE_corbelBot = 1000
+CS_BASE_corbelTop = 2000
+CS_BASE_iwall     = 3000
+
+
+!! B.  Cross-sections                                                                             !!
+SEC_roof    = 1
+SEC_floor   = 2
+SEC_lWall   = 3
+SEC_rWall   = 4
+SEC_iWall   = 5
+SEC_apr     = 6
+SEC_bBeam   = 7
+SEC_tBeam   = 8
+SEC_columns = 9
+
+SEC_HDW1_slab          = 10
+SEC_HDW1_stiffener     = 11
+SEC_HDW1_frontBeam     = 12
+SEC_HDW1_LEFT_wall     = 13
+SEC_HDW1_LEFT_footing  = 14
+SEC_HDW1_RIGHT_wall    = 15
+SEC_HDW1_RIGHT_footing = 16
+
+SEC_HDW2_slab          = 17
+SEC_HDW2_stiffener     = 18
+SEC_HDW2_frontBeam     = 19
+SEC_HDW2_LEFT_wall     = 20
+SEC_HDW2_LEFT_footing  = 21
+SEC_HDW2_RIGHT_wall    = 22
+SEC_HDW2_RIGHT_footing = 23
+
+SEC_FRAME_Column   = 24
+SEC_FRAME_headBeam = 25
+SEC_FRAME_backBeam = 26
+
+SEC_pileInt = 27
+SEC_pileExt = 28
+
+SEC_strut = 29
+
+SEC_ROOF_lcorbeL  = 400
+SEC_ROOF_rcorbel  = 500
+SEC_FLOOR_lcorbel = 600
+SEC_FLOOR_rcorbel = 700
+SEC_WALL_bcorbel  = 800
+SEC_WALL_tcorbel  = 900
+
+
+!! C.  Materials                                                                                  !!
+MAT_conc   = 1
+MAT_soil   = 2
+MAT_concts = 3
+MAT_rigid  = 4
+
+
+!! D.  Element types                                                                              !!
+TYPE_shell181 = 1
+TYPE_link180  = 2
+TYPE_combin39 = 3
+TYPE_beam188  = 4
+
+
+!! E.  Real constants                                                                             !!
+REAL_default     = 1
+REAL_normSprings = 2
+REAL_longSprings = 3
+REAL_hdwSprings  = 4  ! TODO  deleted? ELASTICBASE doesn't use this
+REAL_roofSprings = 5
+REAL_rigidStrut  = 6
