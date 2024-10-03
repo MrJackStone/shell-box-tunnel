@@ -210,6 +210,8 @@ GEO_HDW1_type = 0
   ! Thickness of footing
   GEO_HDW1_LEFT_footThk = 0.40
 
+  ! TODO  implement GEO_HDW[i]_[L/R]_wallEndHeight (currently always 0)
+
   ! Right side:
   ! Wall option (for GEO_HDW1_type=2 only):
   !   [0] Off (wall & footing not modelled)

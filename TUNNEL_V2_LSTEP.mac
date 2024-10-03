@@ -264,7 +264,7 @@ Run terminated.
   ALLSEL
 
   !! 5.4.5  Wings                                                                               !!
-  *if,GEO_HDW_type,EQ,1,THEN
+  *if,GEO_HDW_type,EQ,1,THEN  ! TODO  param eliminated
 
     *msg,UI,FILE_name,LoadStepIndex
 TUNNEL # %s %/&

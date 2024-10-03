@@ -43,7 +43,7 @@ nextkp,'KP_slab',4
 
 k , KP_slab(1) , xLeft  , yLeft  , zLeft
 k , KP_slab(2) , xRight , yRight , zRight
-k , KP_slab(3) , xLeft  , yLeft  , zLeft-GEO_HDW_length
+k , KP_slab(3) , xLeft  , yLeft  , zLeft-GEO_HDW_length  ! TODO  slab length per inlet
 k , KP_slab(4) , xRight , yRight , zRight-GEO_HDW_length
 
 asel,none

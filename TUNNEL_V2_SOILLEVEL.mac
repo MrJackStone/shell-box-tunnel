@@ -2,6 +2,8 @@
 ! TUNNEL_V2_SOILLEVEL,    arg1, arg2
 
 
+! TODO  total rewrite
+
 *if,arg2,le,0,then
   ! First inlet (beginning)
   localZ = abs(arg2)

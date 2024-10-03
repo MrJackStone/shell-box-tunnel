@@ -155,7 +155,7 @@ APPLYING HORIZONTAL LOADS ON WINGS...
     NY      = NY(NodeNum)
     NZ      = NZ(NodeNum)
 
-    SoilHeightAbove=GEO_HDW_Height-NY                                                                                !!
+    SoilHeightAbove=GEO_HDW_Height-NY  ! TODO  rewrite, param eliminated
 
     ! Tensão horizontal devido à camada de solo
     EffectivePressure    = LOAD_SOIL_gammat_d*SoilHeightAbove

@@ -170,7 +170,7 @@ TYPE_BEAM188  = 4
 REAL_default     = 1
 REAL_normSprings = 2
 REAL_longSprings = 3
-REAL_hdwSprings  = 4
+REAL_hdwSprings  = 4  ! TODO  deleted? ELASTICBASE doesn't use this
 REAL_roofSprings = 5
 REAL_rigidStrut  = 6
 
