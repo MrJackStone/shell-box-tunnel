@@ -146,10 +146,28 @@ asel,r,loc,y,0
 cm,COMPA_HDW_slab,area
 
 ! Footings
-csys,CS_tunnel
-cmsel,s,COMPA_headwalls
-asel,r,loc,y,-GEO_HDW_footDepth
+asel,none
 cm,COMPA_HDW_footing,area
+
+csys,CS_HDW1_leftFoot
+cmsel,s,COMPA_HDW_1
+asel,r,loc,z,0
+cmpadd,'COMPA_HDW_footing'
+
+csys,CS_HDW1_rightFoot
+cmsel,s,COMPA_HDW_1
+asel,r,loc,z,0
+cmpadd,'COMPA_HDW_footing'
+
+csys,CS_HDW2_leftFoot
+cmsel,s,COMPA_HDW_2
+asel,r,loc,z,0
+cmpadd,'COMPA_HDW_footing'
+
+csys,CS_HDW2_rightFoot
+cmsel,s,COMPA_HDW_2
+asel,r,loc,z,0
+cmpadd,'COMPA_HDW_footing'
 
 ! Front bottom beam
 ! TODO  rewrite -- this approach does not work for skewed inlets/tunnels
