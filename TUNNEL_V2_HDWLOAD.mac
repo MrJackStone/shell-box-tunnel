@@ -9,11 +9,11 @@
   *del , LOAD_HDW_force_h ,  , nopr
 
   *voper , LOAD_HDW_sigma_v , GEO_HDW_soilAboveNode , mult , LOAD_SOIL_gammat_d
-  *voper , LOAD_HDW_force_v , LOAD_HDW_sigma_v      , mult , FEM_nodes_apportioned
+  *voper , LOAD_HDW_force_v , LOAD_HDW_sigma_v      , mult , FEM_nodes_apportioned(1,2)
 
   *voper , LOAD_HDW_sigma_h , LOAD_HDW_sigma_v , mult , MAT_SOIL_ka
   *voper , LOAD_HDW_sigma_h , LOAD_HDW_sigma_h , sub  , 2*MAT_SOIL_cohesion*sqrt(MAT_SOIL_ka)
-  *voper , LOAD_HDW_force_h , LOAD_HDW_sigma_h , mult , FEM_nodes_apportioned
+  *voper , LOAD_HDW_force_h , LOAD_HDW_sigma_h , mult , FEM_nodes_apportioned(1,2)
 
   cmsel,s,COMPA_HDW_walls
   nsla,s,1
