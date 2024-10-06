@@ -120,15 +120,20 @@ sides(1)='LEFT','RIGHT'
     *get,nc,node,,count
     *del , node_list ,  , nopr
     *del , node_x    ,  , nopr
+    *del , node_y    ,  , nopr
     *dim , node_x    ,  , nc
+    *dim , node_y    ,  , nc
 
     *vget,node_list,node,,nlist
     *get , node_x(1:nc) , node , node_list(1:nc) , loc , x
+    *get , node_y(1:nc) , node , node_list(1:nc) , loc , y
 
     *do,nthNode,1,nc,1
       nodeNum = node_list(nthNode)
       xCoord  = node_x(nthNode)
-      hAbove  = TBLXY_HDW%nthInlet%_%side%_wallTop(xCoord,1)
+      yCoord  = node_y(nthNode)
+      yEdge   = TBLXY_HDW%nthInlet%_%side%_wallTop(xCoord,1)
+      hAbove  = yEdge-yCoord
       GEO_HDW_soilAboveNode(nodeNum) = hAbove
     *enddo
   *enddo
