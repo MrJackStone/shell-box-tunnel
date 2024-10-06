@@ -1,207 +1,112 @@
 ! TUNNEL_V2_HDWLOAD
 
 
-ALLSEL
-CSYS,CS_Tunnel
-
 *if,GEO_HDW_type,EQ,0,THEN
 
-  *msg,UI,FILE_name
-TUNNEL # %s %/&
-APPLYING GRAVITATIONAL LOADS ON FOOTINGS...
+  *del , LOAD_HDW_sigma_v ,  , nopr
+  *del , LOAD_HDW_force_v ,  , nopr
+  *del , LOAD_HDW_sigma_h ,  , nopr
+  *del , LOAD_HDW_force_h ,  , nopr
 
-  CMSEL,S,COMPA_HDW_Footing
-  NSLA,S,1
-  ESLN,S,1
-  CM,COMPN_temp,NODE
-  CM,COMPE_temp,ELEM
-  *get,NodeCount,NODE,,COUNT
+  *voper , LOAD_HDW_sigma_v , GEO_HDW_soilAboveNode , mult , LOAD_SOIL_gammat_d
+  *voper , LOAD_HDW_force_v , LOAD_HDW_sigma_v      , mult , FEM_nodes_apportioned
 
-  *del,NodalLoads
-  *dim,NodalLoads,ARRAY,NodeCount
-  *del,NodeNumbers
-  *dim,NodeNumbers,ARRAY,NodeCount
+  *voper , LOAD_HDW_sigma_h , LOAD_HDW_sigma_v , mult , MAT_SOIL_ka
+  *voper , LOAD_HDW_sigma_h , LOAD_HDW_sigma_h , sub  , 2*MAT_SOIL_cohesion*sqrt(MAT_SOIL_ka)
+  *voper , LOAD_HDW_force_h , LOAD_HDW_sigma_h , mult , FEM_nodes_apportioned
 
-  NodeNum=0
-  *do,NodeIndex,1,NodeCount,1
-    CMSEL,S,COMPN_temp
-    NodeNum = NDNEXT(NodeNum)
-    NX      = NX(NodeNum)
-    NY      = NY(NodeNum)
-    NZ      = NZ(NodeNum)
+  cmsel,s,COMPA_HDW_walls
+  nsla,s,1
+  nslcomp,'wall_forces','wall_nodes','nc','LOAD_HDW_force_h',1
+  f , wall_nodes(1:nc) , fz , wall_forces(1:nc)
 
-    tunnel_v2_soillevel,'soilLevel',NZ
-    SoilHeightAbove = soilLevel-NY
-
-    SoilPressure = LOAD_SOIL_gammat_d*SoilHeightAbove
-
-    CMSEL,S,COMPE_temp
-    NSEL,S,NODE,,NodeNum
-    ESLN,R
-    nsle,s
-
-    apportionedArea = arnode(NodeNum)
-
-    NodalSoilLoad = SoilPressure*apportionedArea
-
-    NodeNumbers(NodeIndex) = NodeNum
-    NodalLoads(NodeIndex)  = -NodalSoilLoad
-
-  *enddo
-
-  ALLSEL
-  CSYS,0
-  F,NodeNumbers(1:NodeCount),FY,NodalLoads(1:NodeCount)
-  CSYS,CS_Tunnel
-
-  *msg,UI,FILE_name
-TUNNEL # %s %/&
-APPLYING HORIZONTAL LOADS ON WALLS...
-
-  CMSEL,S,COMPA_HDW_Walls
-  NSLA,S,1
-  NSEL,U,LOC,Y,-GEO_HDW_footDepth
-
-  ESLN,S,1
-  CM,COMPE_temp,ELEM
-  CM,COMPN_temp,NODE
-
-  *get,NodeCount,NODE,0,COUNT
-  *del,NodeNumbers
-  *dim,NodeNumbers,ARRAY,NodeCount
-  *del,NodalXLoad
-  *dim,NodalXLoad,ARRAY,NodeCount
-  *del,NodalZLoad
-  *dim,NodalZLoad,ARRAY,NodeCount
-
-  NodeNum=0
-  *do,NodeIndex,1,NodeCount,1
-
-    CMSEL,S,COMPN_temp
-    NodeNum = NDNEXT(NodeNum)
-    NX      = NX(NodeNum)
-    NY      = NY(NodeNum)
-    NZ      = NZ(NodeNum)
-
-    tunnel_v2_soillevel,'soilLevel',NZ
-    SoilHeightAbove = soilLevel-NY
-
-    ! Tensão horizontal devido à camada de solo
-    EffectivePressure    = LOAD_SOIL_gammat_d*SoilHeightAbove
-    HorEffectivePressure = EffectivePressure*ActiveEPCoefficient-2*MAT_SOIL_cohesion*SQRT(ActiveEPCoefficient)
-
-    NSEL,S,NODE,,NodeNum
-    CMSEL,S,COMPE_temp
-    ESLN,R,0
-    nsle,s
-
-    apportionedArea = arnode(NodeNum)
-    HorLoad         = HorEffectivePressure*apportionedArea
-
-    *if,NX,LE,0,THEN
-      xDir = 1
-    *else
-      xDir = -1
-    *endif
-    *if,NZ,LE,0,THEN
-      zDir = -1
-    *else
-      zDir = 1
-    *endif
-
-    HorLoadX = xDir*HorLoad*COS(GEO_InletRadians)
-    HorLoadZ = zDir*HorLoad*SIN(GEO_InletRadians)
-
-    NodeNumbers(NodeIndex) = NodeNum
-    NodalXLoad(NodeIndex)  = HorLoadX
-    NodalZLoad(NodeIndex)  = HorLoadZ
-
-  *enddo
-
-  ALLSEL
-  CSYS,0
-  F,NodeNumbers(1:NodeCount),FX,NodalXLoad(1:NodeCount)
-  F,NodeNumbers(1:NodeCount),FZ,NodalZLoad(1:NodeCount)
-  CSYS,CS_Tunnel
+  cmsel,s,COMPA_HDW_footing
+  nsla,s,1
+  nslcomp,'footing_forces','footing_nodes','nc','LOAD_HDW_force_v',-1
+  f , footing_nodes(1:nc) , fy , footing_forces(1:nc)
 
 *elseif,GEO_HDW_type,EQ,1,THEN
 
-  *msg,UI,FILE_name
-TUNNEL # %s %/&
-APPLYING HORIZONTAL LOADS ON WINGS...
+  *msg,fatal
+  TUNNEL_V2_HDWLOAD error: not implemented for WINGS.%/&
+  Run terminated.
 
-  CMSEL,S,COMPA_HDW_Walls
-  CMSEL,A,COMPA_HDW_TopBeam
-  NSLA,S,1
-
-  ESLN,S,1
-  CM,COMPE_temp,ELEM
-  CM,COMPN_temp,NODE
-
-  *get , NodeCount , node , 0 , count
-  *del , NodeNumbers
-  *del , NodalXLoad
-  *del , NodalZLoad
-  *dim , NodeNumbers , ARRAY , NodeCount
-  *dim , NodalXLoad  , ARRAY , NodeCount
-  *dim , NodalZLoad  , ARRAY , NodeCount
-
-  NodeNum = 0
-  *do,NodeIndex,1,NodeCount,1
-
-    CMSEL,S,COMPN_temp
-    NodeNum = NDNEXT(NodeNum)
-    NX      = NX(NodeNum)
-    NY      = NY(NodeNum)
-    NZ      = NZ(NodeNum)
-
-    SoilHeightAbove=GEO_HDW_Height-NY  ! TODO  rewrite, param eliminated
-
-    ! Tensão horizontal devido à camada de solo
-    EffectivePressure    = LOAD_SOIL_gammat_d*SoilHeightAbove
-    HorEffectivePressure = EffectivePressure*ActiveEPCoefficient-2*MAT_SOIL_cohesion*SQRT(ActiveEPCoefficient)
-
-    NSEL,S,NODE,,NodeNum
-    CMSEL,S,COMPE_temp
-    ESLN,R,0
-    nsle,s
-
-    apportionedArea = arnode(NodeNum)
-    HorLoad         = HorEffectivePressure*apportionedArea
-
-    !        *if,NX,LE,1e-6,THEN
-    !            xDir=1
-    !        *else
-    !            xDir=-1
-    !        *endif
-    !        *if,NZ,LE,1e-6,THEN
-    !            zDir=-1
-    !        *else
-    !            zDir=1
-    !        *endif
-    !        HorLoadX=xDir*HorLoad*COS(GEO_InletRadians)
-    !        HorLoadZ=zDir*HorLoad*SIN(GEO_InletRadians)
-
-    *if,NZ,LE,GEO_TUN_length/2,THEN
-      xDir = 1
-      zDir = -1
-    *else
-      xDir = -1
-      zDir = 1
-    *endif
-    HorLoadX = xDir*HorLoad*SIN(GEO_InletRadians)
-    HorLoadZ = zDir*HorLoad*COS(GEO_InletRadians)
-
-    NodeNumbers(NodeIndex) = NodeNum
-    NodalXLoad(NodeIndex)  = HorLoadX
-    NodalZLoad(NodeIndex)  = HorLoadZ
-
-  *enddo
-
-  ALLSEL
-  CSYS,0
-  F,NodeNumbers(1:NodeCount),FX,NodalXLoad(1:NodeCount)
-  F,NodeNumbers(1:NodeCount),FZ,NodalZLoad(1:NodeCount)
-  CSYS,CS_Tunnel
+  !   *msg,UI,FILE_name
+  ! TUNNEL # %s %/&
+  ! APPLYING HORIZONTAL LOADS ON WINGS...
+  !
+  !   CMSEL,S,COMPA_HDW_Walls
+  !   CMSEL,A,COMPA_HDW_TopBeam
+  !   NSLA,S,1
+  !
+  !   ESLN,S,1
+  !   CM,COMPE_temp,ELEM
+  !   CM,COMPN_temp,NODE
+  !
+  !   *get , NodeCount , node , 0 , count
+  !   *del , NodeNumbers
+  !   *del , NodalXLoad
+  !   *del , NodalZLoad
+  !   *dim , NodeNumbers , ARRAY , NodeCount
+  !   *dim , NodalXLoad  , ARRAY , NodeCount
+  !   *dim , NodalZLoad  , ARRAY , NodeCount
+  !
+  !   NodeNum = 0
+  !   *do,NodeIndex,1,NodeCount,1
+  !
+  !     CMSEL,S,COMPN_temp
+  !     NodeNum = NDNEXT(NodeNum)
+  !     NX      = NX(NodeNum)
+  !     NY      = NY(NodeNum)
+  !     NZ      = NZ(NodeNum)
+  !
+  !     SoilHeightAbove=GEO_HDW_Height-NY  ! TODO  rewrite, param eliminated
+  !
+  !     ! Tensão horizontal devido à camada de solo
+  !     EffectivePressure    = LOAD_SOIL_gammat_d*SoilHeightAbove
+  !     HorEffectivePressure = EffectivePressure*ActiveEPCoefficient-2*MAT_SOIL_cohesion*SQRT(ActiveEPCoefficient)
+  !
+  !     NSEL,S,NODE,,NodeNum
+  !     CMSEL,S,COMPE_temp
+  !     ESLN,R,0
+  !     nsle,s
+  !
+  !     apportionedArea = arnode(NodeNum)
+  !     HorLoad         = HorEffectivePressure*apportionedArea
+  !
+  !     !        *if,NX,LE,1e-6,THEN
+  !     !            xDir=1
+  !     !        *else
+  !     !            xDir=-1
+  !     !        *endif
+  !     !        *if,NZ,LE,1e-6,THEN
+  !     !            zDir=-1
+  !     !        *else
+  !     !            zDir=1
+  !     !        *endif
+  !     !        HorLoadX=xDir*HorLoad*COS(GEO_InletRadians)
+  !     !        HorLoadZ=zDir*HorLoad*SIN(GEO_InletRadians)
+  !
+  !     *if,NZ,LE,GEO_TUN_length/2,THEN
+  !       xDir = 1
+  !       zDir = -1
+  !     *else
+  !       xDir = -1
+  !       zDir = 1
+  !     *endif
+  !     HorLoadX = xDir*HorLoad*SIN(GEO_InletRadians)
+  !     HorLoadZ = zDir*HorLoad*COS(GEO_InletRadians)
+  !
+  !     NodeNumbers(NodeIndex) = NodeNum
+  !     NodalXLoad(NodeIndex)  = HorLoadX
+  !     NodalZLoad(NodeIndex)  = HorLoadZ
+  !
+  !   *enddo
+  !
+  !   ALLSEL
+  !   CSYS,0
+  !   F,NodeNumbers(1:NodeCount),FX,NodalXLoad(1:NodeCount)
+  !   F,NodeNumbers(1:NodeCount),FZ,NodalZLoad(1:NodeCount)
+  !   CSYS,CS_Tunnel
 
 *endif

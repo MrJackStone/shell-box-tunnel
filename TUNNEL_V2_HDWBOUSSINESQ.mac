@@ -52,19 +52,19 @@
     *voper , tmp  , tmp           , add , deltaZSquared
     *vfun  , dist , sqrt          , tmp
 
-    ! Calculate force sign
-    *voper , beforeHalf , NLIST_z , le      , GEO_TUN_length/2
-    *voper , afterHalf  , NLIST_z , gt      , GEO_TUN_length/2
-    *vfun  , xDirMult   , copy    , NLIST_z
-    *vfun  , zDirMult   , copy    , NLIST_z
-    *vmask , beforeHalf
-    *vfill , xDirMult   , ramp    , 1       , 0
-    *vmask , beforeHalf
-    *vfill , zDirMult   , ramp    , -1      , 0
-    *vmask , afterHalf
-    *vfill , xDirMult   , ramp    , -1      , 0
-    *vmask , afterHalf
-    *vfill , zDirMult   , ramp    , 1       , 0
+    ! ! Calculate force sign
+    ! *voper , beforeHalf , NLIST_z , le      , GEO_TUN_length/2
+    ! *voper , afterHalf  , NLIST_z , gt      , GEO_TUN_length/2
+    ! *vfun  , xDirMult   , copy    , NLIST_z
+    ! *vfun  , zDirMult   , copy    , NLIST_z
+    ! *vmask , beforeHalf
+    ! *vfill , xDirMult   , ramp    , 1       , 0
+    ! *vmask , beforeHalf
+    ! *vfill , zDirMult   , ramp    , -1      , 0
+    ! *vmask , afterHalf
+    ! *vfill , xDirMult   , ramp    , -1      , 0
+    ! *vmask , afterHalf
+    ! *vfill , zDirMult   , ramp    , 1       , 0
 
     ! Boussinesq formula: 6*F*r²*z/(2*PI*D^5)
     *vfun  , tmp       , pwr , dist , 5
@@ -74,17 +74,19 @@
     *voper , tmp       , tmp , mult , deltaXSquared
     *voper , pressures , tmp , mult , 6*ForceValue
 
-    ! Calculate nodal forces (X-Z decomposition)
-    *voper , forces  , pressures , mult , NLIST_apportioned
-    *voper , forces  , forces    , mult , direction
-    *voper , xForces , forces    , mult , sin(GEO_InletRadians)
-    *voper , zForces , forces    , mult , cos(GEO_InletRadians)
-    *voper , xForces , xForces   , mult , xDirMult
-    *voper , zForces , zForces   , mult , zDirMult
+    ! ! Calculate nodal forces (X-Z decomposition)
+    ! *voper , forces  , pressures , mult , NLIST_apportioned
+    ! *voper , forces  , forces    , mult , direction
+    ! *voper , xForces , forces    , mult , sin(GEO_InletRadians)
+    ! *voper , zForces , forces    , mult , cos(GEO_InletRadians)
+    ! *voper , xForces , xForces   , mult , xDirMult
+    ! *voper , zForces , zForces   , mult , zDirMult
+
+    ! Calculate nodal forces (no decomposition needed, nodes already rotated)
+    *voper , forces , pressures , mult , NLIST_apportioned
 
     *vmask , NLIST_nsel
-    *vfun  , appliedXForces , comp , xForces
-    *vfun  , appliedZForces , comp , zForces
+    *vfun  , applied_forces , comp , forces
 
     *vmask , NLIST_nsel
     *vfun  , selNodes   , comp , NLIST_num
@@ -92,8 +94,7 @@
     *get , selCount , parm , selNodes , dim , x
 
     ! Apply forces
-    f , selNodes(1:selCount) , fx , appliedXForces(1:selCount)
-    f , selNodes(1:selCount) , fz , appliedZForces(1:selCount)
+    f , selNodes(1:selCount) , fz , applied_forces(1:selCount)
 
   *enddo
 *enddo
