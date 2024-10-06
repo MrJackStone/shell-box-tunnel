@@ -5,12 +5,14 @@
 ! Exported selection components:
 ! COMPA_<ARG9>_wall           (eg.: COMPA_HDW1_LEFT_wall)
 ! COMPA_<ARG9>_footing        (eg.: COMPA_HDW2_RIGHT_footing)
-! COMPL_<ARG9>_wallInterface  (eg.: COMPA_HDW1_RIGHT_wallInterface)
+! COMPL_<ARG9>_wallInterface  (eg.: COMPL_HDW1_RIGHT_wallInterface)
+! COMPK_<ARG9>_wallTopEdge    (eg.: COMPK_HDW2_LEFT_wallTopEdge)
 
 
 cmaWall = 'COMPA_%ARG9%_wall'
 cmaFoot = 'COMPA_%ARG9%_footing'
-cmlWall = 'COMPL_%ARG9%_wallInterface'
+cmlIntf = 'COMPL_%ARG9%_wallInterface'
+cmkTop  = 'COMPK_%ARG9%_wallTopEdge'
 
 csbackup
 smdbackup
@@ -78,7 +80,7 @@ csys,ARG1
 cmsel,s,%cmaWall%
 lsla
 lsel,r,loc,x,0
-cm,%cmlWall%,line
+cm,%cmlIntf%,line
 
 ! Merge parts
 cmsel,s,%cmaWall%
@@ -86,6 +88,17 @@ cmsel,a,%cmaFoot%
 lsla
 ksll
 nummrg,kp
+
+! Selection components
+csys,ARG6
+cmsel,s,%cmaWall%
+lsla
+lsel,r,loc,y,0,yWallTop
+lsel,u,loc,y,0
+lsel,u,loc,x,0
+lsel,u,loc,x,ARG8*ARG2
+ksll
+cm,%cmkTop%,kp
 
 ! Clean up
 csrestore

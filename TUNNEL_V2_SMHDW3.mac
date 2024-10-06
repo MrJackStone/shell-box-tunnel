@@ -8,9 +8,11 @@
 ! COMPA_HDW[i]_LEFT_wall
 ! COMPA_HDW[i]_LEFT_footing
 ! COMPL_HDW[i]_LEFT_wallInterface
+! COMPK_HDW[i]_LEFT_wallTopEdge
 ! COMPA_HDW[i]_RIGHT_wall
 ! COMPA_HDW[i]_RIGHT_footing
 ! COMPL_HDW[i]_RIGHT_wallInterface
+! COMPK_HDW[i]_RIGHT_wallTopEdge
 
 
 ! Prepare environment

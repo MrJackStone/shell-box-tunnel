@@ -125,6 +125,23 @@ asel,none
 cmsel,r,COMPA_HDW_walls
 cm,COMPA_HDW_wallsBuried,area
 
+! Top edge of walls
+*do,nthInlet,1,2,1
+  *do,nthSide,1,2,1
+    side = sides(nthSide)
+    csys,CS_HDW%nthInlet%_%side%Wall
+    cmsel,s,COMPA_headwalls
+    asel,r,loc,z,0
+    lsla
+    lsel,u,loc,y,0,-1e6
+    lsel,u,loc,x,0
+    lsel,u,loc,x,GEO_HDW1_LEFT_wallLength
+    lsel,u,loc,x,-GEO_HDW1_LEFT_wallLength
+    ksll
+    cm,COMPK_HDW%nthInlet%_%side%_wallTopEdge,kp
+  *enddo
+*enddo
+
 ! Slab stiffeners
 asel,none
 *do,nthInlet,1,2,1
