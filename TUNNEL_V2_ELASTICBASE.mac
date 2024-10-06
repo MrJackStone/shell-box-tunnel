@@ -16,6 +16,15 @@ dirSign    = strsub(ARG3,1,1)
 
 csys,ARG2
 cmsel,s,%ARG1%
+
+*get,ac,area,,count
+*if,ac,eq,0,then
+  *msg,warn,ARG1
+TUNNEL_V2_ELASTICBASE warning: no elastic base created for %C.%/&
+Area component was empty.
+  *return,-1
+*endif
+
 esla
 nsle
 elasticbase , outputName , dirAxis , MAT_SOIL_stiffness , -1 , sign*SpringLength , SpringElasticModulus ,  ,  , compnName , compeName , 'FEM_nodes_apportioned'
