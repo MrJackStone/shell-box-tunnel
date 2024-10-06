@@ -279,6 +279,21 @@ APPLYING LOADS ON WINGS...
 
   *endif
 
+  !! 5.4.6  Retaining walls                                                                       !!
+  *if,GEO_HDW1_type,eq,1,then
+    cmsel,s,COMPA_HDW1_walls
+    nsla,s,1
+    tunnel_v2_hdwboussinesq
+    allsel
+  *endif
+
+  *if,GEO_HDW2_type,eq,1,then
+    cmsel,s,COMPA_HDW2_walls
+    nsla,s,1
+    tunnel_v2_hdwboussinesq
+    allsel
+  *endif
+
   !! 5.4.6  Capture image                                                                       !!
   /psymb,FBCS,0
   /pbc,F,,1
