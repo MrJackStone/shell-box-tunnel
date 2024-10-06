@@ -57,6 +57,10 @@
 ! COMPA_HDW2_slab
 
 
+*del,sides,,nopr
+*dim,sides,char,2
+sides(1)='LEFT','RIGHT'
+
 !! A.  Global, multi-part components                                                              !!
 ! First inlet
 csys,CS_begSkewed
@@ -99,40 +103,37 @@ cmpadd,'COMPA_HDW_right'
 !! B.  Components by structural part                                                              !!
 ! Walls
 asel,none
-csys,CS_HDW1_leftWall
-asel,a,loc,z,0
-csys,CS_HDW1_rightWall
-asel,a,loc,z,0
-csys,CS_HDW2_leftWall
-asel,a,loc,z,0
-csys,CS_HDW2_rightWall
-asel,a,loc,z,0
+*do,nthInlet,1,2,1
+  *do,nthSide,1,2,1
+    side = sides(nthSide)
+    csys,CS_HDW%nthInlet%_%side%Wall
+    asel,a,loc,z,0
+  *enddo
+*enddo
 cmsel,r,COMPA_headwalls
 cm,COMPA_HDW_walls,area
 
 ! Buried portion of walls
 asel,none
-csys,CS_HDW1_leftWall
-asel,a,loc,y,-1e6,0
-csys,CS_HDW1_rightWall
-asel,a,loc,y,-1e6,0
-csys,CS_HDW2_leftWall
-asel,a,loc,y,-1e6,0
-csys,CS_HDW2_rightWall
-asel,a,loc,y,-1e6,0
+*do,nthInlet,1,2,1
+  *do,nthSide,1,2,1
+    side = sides(nthSide)
+    csys,CS_HDW%nthInlet%_%side%Wall
+    asel,a,loc,y,-1e6,0
+  *enddo
+*enddo
 cmsel,r,COMPA_HDW_walls
 cm,COMPA_HDW_wallsBuried,area
 
 ! Slab stiffeners
 asel,none
-csys,CS_HDW1_leftWall
-asel,a,loc,z,0,GEO_HDW1_slabStfWidth
-csys,CS_HDW1_rightWall
-asel,a,loc,z,0,GEO_HDW1_slabStfWidth
-csys,CS_HDW2_leftWall
-asel,a,loc,z,0,GEO_HDW2_slabStfWidth
-csys,CS_HDW2_rightWall
-asel,a,loc,z,0,GEO_HDW2_slabStfWidth
+*do,nthInlet,1,2,1
+  *do,nthSide,1,2,1
+    side = sides(nthSide)
+    csys,CS_HDW%nthInlet%_%side%Wall
+    asel,a,loc,z,0,GEO_HDW%nthInlet%_slabStfWidth
+  *enddo
+*enddo
 csys,CS_tunnel
 asel,r,loc,y,0
 cmsel,r,COMPA_headwalls
