@@ -146,11 +146,10 @@ cmsel , a , COMPA_HDW_Slab
 cmsel , a , COMPA_HDW_Footing
 aryori,-1
 
-cmsel , s , COMPA_HDW_LeftWall
-arxori,-1
-
-cmsel , s , COMPA_HDW_RightWall
-arxori,1
+! TODO  temporary fix, improving ARZORI needed to account for every possible case
+cmsel  , s , COMPA_HDW1_rightWall
+cmsel  , a , COMPA_HDW2_rightWall
+areverse,all
 
 allsel
 
