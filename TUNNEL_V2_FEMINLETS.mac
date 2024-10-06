@@ -1,6 +1,11 @@
 ! TUNNEL_V2_FEMINLETS
 
 
+! Exported params:
+! TBLXY_HDW[i]_[side]_wallTop
+! GEO_HDW_soilAboveNode
+
+
 ! Set solid model attributes
 TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftWall'       , CS_HDW1_leftWall  , SEC_HDW1_LEFT_wall
 TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightWall'      , CS_HDW1_rightWall , SEC_HDW1_RIGHT_wall
@@ -76,3 +81,55 @@ fixed  = 0
   l2acnt , 'COMPA_frame2'           , 'COMPL_HDW2_RIGHT_wallInterface' ,  , connection2
   l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabTunnelInterface' ,  , pinned
 *endif
+
+! Generate tables for X-Y coordinate interpolation for each retaining wall
+*del,sides,,nopr
+*dim,sides,char,2
+sides(1)='LEFT','RIGHT'
+
+*do,nthInlet,1,2,1
+  *do,nthSide,1,2,1
+    side = sides(nthSide)
+    csys,CS_HDW%nthInlet%_%side%Wall
+
+    cmsel,s,COMPK_HDW%nthInlet%_%side%_wallTopEdge
+    *get,kc,kp,,count
+    kpsort,'X','A',,'kp_x','kp_y'
+
+    *del , TBLXY_HDW%nthInlet%_%side%_wallTop ,       , nopr
+    *dim , TBLXY_HDW%nthInlet%_%side%_wallTop , table , kc   , 1
+    TBLXY_HDW%nthInlet%_%side%_wallTop(1:kc,0) = kp_x(1:kc)
+    TBLXY_HDW%nthInlet%_%side%_wallTop(1:kc,1) = kp_y(1:kc)
+  *enddo
+*enddo
+
+! Calculate soil height above each retaining wall/footing node
+*get,nmx,node,,num,maxd
+*del,GEO_HDW_soilAboveNode,,nopr
+*dim,GEO_HDW_soilAboveNode,,nmx
+
+*do,nthInlet,1,2,1
+  *do,nthSide,1,2,1
+    side = sides(nthSide)
+    csys,CS_HDW%nthInlet%_%side%Wall
+
+    cmsel,s,COMPA_HDW%nthInlet%_%side%_wall
+    cmsel,a,COMPA_HDW%nthInlet%_%side%_footing
+    nsla,s,1
+
+    *get,nc,node,,count
+    *del , node_list ,  , nopr
+    *del , node_x    ,  , nopr
+    *dim , node_x    ,  , nc
+
+    *vget,node_list,node,,nlist
+    *get , node_x(1:nc) , node , node_list(1:nc) , loc , x
+
+    *do,nthNode,1,nc,1
+      nodeNum = node_list(nthNode)
+      xCoord  = node_x(nthNode)
+      hAbove  = TBLXY_HDW%nthInlet%_%side%_wallTop(xCoord,1)
+      GEO_HDW_soilAboveNode(nodeNum) = hAbove
+    *enddo
+  *enddo
+*enddo
