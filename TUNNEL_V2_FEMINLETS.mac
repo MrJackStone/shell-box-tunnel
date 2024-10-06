@@ -40,6 +40,27 @@ cmsel,s,COMPA_Headwalls
 aesize,all,FEM_HDW_esize
 amesh,all
 
+! Adjust nodal directions
+csys,CS_HDW1_leftWall
+cmsel,s,COMPA_HDW1_leftWall
+nsla,s,1
+nrotat,all
+
+csys,CS_HDW1_rightWall
+cmsel,s,COMPA_HDW1_rightWall
+nsla,s,1
+nrotat,all
+
+csys,CS_HDW2_leftWall
+cmsel,s,COMPA_HDW2_leftWall
+nsla,s,1
+nrotat,all
+
+csys,CS_HDW2_rightWall
+cmsel,s,COMPA_HDW2_rightWall
+nsla,s,1
+nrotat,all
+
 ! Connect parts
 pinned = 1
 fixed  = 0
