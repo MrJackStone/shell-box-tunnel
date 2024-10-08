@@ -22,6 +22,7 @@ pzEtable = 'ZEROS'
 allsel
 sabs,1
 sadd,ABS_P,%etableName%,,1
+sabs,0
 
 ! Prepare display
 /window , all , dele

@@ -138,6 +138,7 @@ go2png,1200
     etable,'DFN180',smisc,1
     sabs,1
     sadd,'FRICT','DFN180',,1/(1e3*0.16)
+    sabs,0
     !pletab,'FRICT',0
     plls,'FRICT','FRICT',0.05
 

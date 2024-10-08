@@ -161,6 +161,7 @@ diftable_suffixes(1) = 'MX' , 'MY' , 'NX' , 'NY' , 'Q'
   sadd , 'MNDIF' , 'EMN_%suffix%' , 'DW_%suffix%' , 1 , -1
   sabs , 1
   smax , 'DLT_ELU' , 'MXDIF' , 'MNDIF'
+  sabs , 0
   sadd , 'DLT_%suffix%' , 'DLT_ELU' ,  , 1/LOAD_gammaQ
 *enddo
 
