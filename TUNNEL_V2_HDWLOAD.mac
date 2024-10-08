@@ -1,30 +1,29 @@
 ! TUNNEL_V2_HDWLOAD
 
 
+*del , LOAD_HDW_sigma_v ,  , nopr
+*del , LOAD_HDW_force_v ,  , nopr
+*del , LOAD_HDW_sigma_h ,  , nopr
+*del , LOAD_HDW_force_h ,  , nopr
+
+*voper , LOAD_HDW_sigma_v , GEO_HDW_soilAboveNode , mult , LOAD_SOIL_gammat_d
+*voper , LOAD_HDW_force_v , LOAD_HDW_sigma_v      , mult , FEM_nodes_apportioned(1,2)
+
+*voper , LOAD_HDW_sigma_h , LOAD_HDW_sigma_v , mult , MAT_SOIL_ka
+*voper , LOAD_HDW_sigma_h , LOAD_HDW_sigma_h , sub  , 2*MAT_SOIL_cohesion*sqrt(MAT_SOIL_ka)
+*voper , LOAD_HDW_force_h , LOAD_HDW_sigma_h , mult , FEM_nodes_apportioned(1,2)
+
+cmsel,s,COMPA_HDW_walls
+nsla,s,1
+nslcomp,'wall_forces','wall_nodes','nc','LOAD_HDW_force_h',1
+f , wall_nodes(1:nc) , fz , wall_forces(1:nc)
+
+cmsel,s,COMPA_HDW_footing
+nsla,s,1
+nslcomp,'footing_forces','footing_nodes','nc','LOAD_HDW_force_v',-1
+f , footing_nodes(1:nc) , fy , footing_forces(1:nc)
+
 *if,GEO_HDW_type,EQ,0,THEN
-
-  *del , LOAD_HDW_sigma_v ,  , nopr
-  *del , LOAD_HDW_force_v ,  , nopr
-  *del , LOAD_HDW_sigma_h ,  , nopr
-  *del , LOAD_HDW_force_h ,  , nopr
-
-  *voper , LOAD_HDW_sigma_v , GEO_HDW_soilAboveNode , mult , LOAD_SOIL_gammat_d
-  *voper , LOAD_HDW_force_v , LOAD_HDW_sigma_v      , mult , FEM_nodes_apportioned(1,2)
-
-  *voper , LOAD_HDW_sigma_h , LOAD_HDW_sigma_v , mult , MAT_SOIL_ka
-  *voper , LOAD_HDW_sigma_h , LOAD_HDW_sigma_h , sub  , 2*MAT_SOIL_cohesion*sqrt(MAT_SOIL_ka)
-  *voper , LOAD_HDW_force_h , LOAD_HDW_sigma_h , mult , FEM_nodes_apportioned(1,2)
-
-  cmsel,s,COMPA_HDW_walls
-  nsla,s,1
-  nslcomp,'wall_forces','wall_nodes','nc','LOAD_HDW_force_h',1
-  f , wall_nodes(1:nc) , fz , wall_forces(1:nc)
-
-  cmsel,s,COMPA_HDW_footing
-  nsla,s,1
-  nslcomp,'footing_forces','footing_nodes','nc','LOAD_HDW_force_v',-1
-  f , footing_nodes(1:nc) , fy , footing_forces(1:nc)
-
 *elseif,GEO_HDW_type,EQ,1,THEN
 
   *msg,fatal

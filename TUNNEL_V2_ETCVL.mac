@@ -52,41 +52,39 @@ etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 
 ! Apply convolution to headwall shells
 *if,GEO_HDW_status,ge,1,then
-  *if,GEO_HDW_type,eq,0,then
-    *do,nthInlet,1,2,1
+  *do,nthInlet,1,2,1
 
-      cmsel,s,COMPA_HDW_leftWall
-      cmsel,r,COMPA_HDW_%nthInlet%
-      esla,s
-      nsle,s
-      etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
+    cmsel,s,COMPA_HDW_leftWall
+    cmsel,r,COMPA_HDW_%nthInlet%
+    esla,s
+    nsle,s
+    etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 
-      cmsel,s,COMPA_HDW_rightWall
-      cmsel,r,COMPA_HDW_%nthInlet%
-      esla,s
-      nsle,s
-      etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
+    cmsel,s,COMPA_HDW_rightWall
+    cmsel,r,COMPA_HDW_%nthInlet%
+    esla,s
+    nsle,s
+    etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 
-      cmsel,s,COMPA_HDW_slab
-      cmsel,r,COMPA_HDW_%nthInlet%
-      esla,s
-      nsle,s
-      etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
+    cmsel,s,COMPA_HDW_slab
+    cmsel,r,COMPA_HDW_%nthInlet%
+    esla,s
+    nsle,s
+    etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 
-      cmsel,s,COMPA_HDW_stiffener
-      cmsel,r,COMPA_HDW_%nthInlet%
-      esla,s
-      nsle,s
-      etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
+    cmsel,s,COMPA_HDW_stiffener
+    cmsel,r,COMPA_HDW_%nthInlet%
+    esla,s
+    nsle,s
+    etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 
-      cmsel,s,COMPA_HDW_footing
-      cmsel,r,COMPA_HDW_%nthInlet%
-      esla,s
-      nsle,s
-      etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
+    cmsel,s,COMPA_HDW_footing
+    cmsel,r,COMPA_HDW_%nthInlet%
+    esla,s
+    nsle,s
+    etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 
-    *enddo
-  *endif
+  *enddo
 *endif
 
 ! Clean up
