@@ -1,0 +1,119 @@
+! TUNNEL_V2_POSTINLETPICS
+
+! ETABLEs to convert to LABELs:
+! EPOS_MX
+! ENEG_MX
+! EPOS_MY
+! ENEG_MY
+! DLT_MX
+! DLT_MY
+! EAB_Q
+! UX_frq
+! UZ_frq
+
+
+pathCount  = 10
+pathDivs   = 20
+labelCount = 9
+
+*del,sides,,nopr
+*dim,sides,char,2
+sides(1)='LEFT','RIGHT'
+
+*del,path_labels,,nopr
+*dim,path_labels,char,labelCount
+path_labels(1) = 'EPOS_MX'
+path_labels(2) = 'ENEG_MX'
+path_labels(3) = 'EPOS_MY'
+path_labels(4) = 'ENEG_MY'
+path_labels(5) = 'DLT_MX'
+path_labels(6) = 'DLT_MY'
+path_labels(7) = 'EAB_Q'
+path_labels(8) = 'UX_frq'
+path_labels(9) = 'UZ_frq'
+
+! *del,label_descriptions,,nopr
+! *dim,label_descriptions,string,248,labelCount
+! label_descriptions(1,1) = 
+
+! TODO  use PTHENV to calculate envelope deflections
+! *del,POST_HDW_wall_paths,,nopr
+! *dim,POST_PTHENV_HDW_walls,char,labelCount,4*pathCount
+!
+! *do,nthPath,1,4*pathCount,1
+!   POST_PTHENV_HDW_walls(
+! *enddo
+
+! Create paths
+*do,nthInlet,1,2,1
+
+  *do,nthSide,1,2,1
+
+    side = sides(nthSide)
+    csys,CS_HDW%nthInlet%_%side%Wall
+
+    yCoordBot = -GEO_HDW%nthInlet%_%side%_footDepth
+    xSign     = (-1)**(nthSide-1)
+
+    xStep = xSign*GEO_HDW%nthInlet%_%side%_WallLength/(pathCount+1)
+    *del,x_coords,,nopr
+    *dim,x_coords,,pathCount
+    *vfill,x_coords,ramp,xStep,xStep
+
+    *do,nthPath,1,pathCount,1
+      xCoord    = x_coords(nthPath)
+      yCoordTop = TBLXY_HDW%nthInlet%_%side%_wallTop(xCoord,1)
+      sideKey   = strsub(side,1,1)
+      pathName  = 'H%nthInlet%%sideKey%_P%nthPath%'
+
+      loc2glo , xCoord , yCoordBot , 0 , CS_HDW%nthInlet%_%side%Wall , 'x1Global' , 'y1Global' , 'z1Global'
+      loc2glo , xCoord , yCoordTop , 0 , CS_HDW%nthInlet%_%side%Wall , 'x2Global' , 'y2Global' , 'z2Global'
+
+      path,%pathName%,2,,pathDivs
+      ppath,1,,x1Global,y1Global,z1Global
+      ppath,2,,x2Global,y2Global,z2Global
+    *enddo
+  *enddo
+*enddo
+
+! Map envelopes onto paths
+*do,nthInlet,1,2,1
+  *do,nthSide,1,2,1
+    *do,nthPath,1,pathCount,1
+      *do,nthLabel,1,labelCount,1
+        sideKey   = strsub(side,1,1)
+        pathName  = 'H%nthInlet%%sideKey%_P%nthPath%'
+        pathLabel = path_labels(nthLabel)
+        path,%pathName%
+        pdef,%pathLabel%,etable,%pathLabel%,avg
+      *enddo
+    *enddo
+  *enddo
+*enddo
+
+! Plot path results
+*del , path_names_both ,      , nopr
+*del , path_labels_mx  ,      , nopr
+*del , path_labels_my  ,      , nopr
+*del , path_labels_q   ,      , nopr
+*dim , path_names_both , char , pathCount*2*4
+*dim , path_labels_mx  , char , pathCount*2*4
+*dim , path_labels_my  , char , pathCount*2*4
+*dim , path_labels_q   , char , pathCount*2*4
+idx = 1
+*do,nthInlet,1,2,1
+  *do,nthPath,1,pathCount,1
+    path_names_both(idx) = 'H%nthInlet%L_P%nthPath%' , 'H%nthInlet%L_P%nthPath%' , 'H%nthInlet%R_P%nthPath%' , 'H%nthInlet%R_P%nthPath%'
+    path_labels_mx(idx)  = 'EPOS_MX'                 , 'ENEG_MX'                 , 'EPOS_MX'                 , 'ENEG_MX'                 ,
+    path_labels_my(idx)  = 'EPOS_MY'                 , 'ENEG_MY'                 , 'EPOS_MY'                 , 'ENEG_MY'                 ,
+    path_labels_q(idx)   = 'EAB_Q'                   , 'EAB_Q'                   , 'EAB_Q'                   , 'EAB_Q'                   ,
+
+    idx = idx+4
+  *enddo
+*enddo
+
+*do,nthInlet,1,2,1
+  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_mx' , 'path_names_both' ,                    , 'BENDING MOMENT (MZ)' , 'kNm/m' , 'MX'
+  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_my' , 'path_names_left' , 'path_names_right' , 'BENDING MOMENT (MY)' , 'kNm/m' , 'MY'
+  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_q'  , 'path_names_left' , 'path_names_right' , 'SHEAR FORCE'         , 'kN/m'  , 'Q'
+*enddo

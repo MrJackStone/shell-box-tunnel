@@ -1,0 +1,120 @@
+! TUNNEL_V2_POSTHDWPTHPIC , inletIdx , resultLabel , path_names ,      , midTitle , units , imgName
+! TUNNEL_V2_POSTHDWPTHPIC , ARG1     , ARG2        , ARG3       , ARG4 , ARG5     , ARG6  , ARG7
+
+
+_str2         = ARG2
+_str3         = ARG3
+_midTitle     = ARG5
+_rightTitle   = 'ELU-Normal [%ARG6%]'
+_imgName      = 'HDW%ARG1%_WALL_%ARG7%'
+_resultLabels = '_str2'
+_pathNames    = '_str3'
+
+pathScale  = 50
+
+view1w
+wincln
+wintitle,1,'INLET #%ARG1%',_midTitle,_rightTitle,,1,13
+view2w,,,1,,1,2
+clims
+g_picres,GRAPH_picRes
+boldfont,1
+wintitle , 1 , ' ' , 'LEFT SIDE'  , ' ' ,  , 1
+wintitle , 2 , ' ' , 'RIGHT SIDE' , ' ' ,  , 1
+axanno,1
+axanno,2
+
+/eshape,1
+/plopts,leg3,on
+/gformat,f,1,1
+
+/udoc,1,cntr,left
+/udoc,2,cntr,right
+
+cmsel,s,COMPA_frame%ARG1%
+esla
+nsle
+
+/auto,all
+csys,CS_tunnel
+eplot
+/user,all
+
+/window,1,on
+/window,2,off
+
+cmsel,s,COMPA_HDW%ARG1%_RIGHT_wall
+cmsel,a,COMPA_HDW%ARG1%_RIGHT_footing
+esla
+nsle
+/angle,1,0
+/focus,1,auto
+eplot
+
+csys,CS_HDW%ARG1%_rightWall
+clocal,CS_dummy,cart,0,0,0,,,-90
+wpcsys,1
+/focus,1,auto
+eplot
+/user,1
+
+/window,1,off
+/window,2,on
+
+cmsel,s,COMPA_HDW%ARG1%_LEFT_wall
+cmsel,a,COMPA_HDW%ARG1%_LEFT_footing
+esla
+nsle
+/focus,2,auto
+/angle,2,0
+eplot
+
+csys,CS_HDW%ARG1%_leftWall
+clocal,CS_dummy,cart,0,0,0,,,90
+wpcsys,2
+/focus,2,auto
+eplot
+/user,2
+
+/window,1,on
+/window,2,on
+
+go2png,GRAPH_picRes
+  cmsel,s,COMPA_frame%ARG1%
+  esla
+  nsle
+  /eshape,0
+  /device,vector,on
+  /edge,all,1
+  eplot
+  /noerase
+  /eshape,1
+  /device,vector,off
+  /type,all,0
+
+  cmsel,s,COMPA_HDW%ARG1%_LEFT_wall
+  cmsel,a,COMPA_HDW%ARG1%_LEFT_footing
+  cmsel,a,COMPA_HDW%ARG1%_RIGHT_wall
+  cmsel,a,COMPA_HDW%ARG1%_RIGHT_footing
+  esla
+  nsle
+
+  ! TODO  for some reason this does not work (window 1 view perspective, perhaps?)
+
+  /window,1,on
+  /window,2,off
+  eplot
+  cleanplot,'mpathplot',pathScale,,'_pathNames','_resultLabels'
+
+  /window,1,off
+  /window,2,on
+  eplot
+  cleanplot,'mpathplot',pathScale,,'_pathNames','_resultLabels'
+
+endpng,_imgName,,,,,FOLDER_results
+
+/erase
+/annot,dele
+/type,all,3
+clims
+view1w
