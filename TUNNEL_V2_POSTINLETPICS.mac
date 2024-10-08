@@ -81,6 +81,7 @@ path_labels(9) = 'UZ_frq'
   *do,nthSide,1,2,1
     *do,nthPath,1,pathCount,1
       *do,nthLabel,1,labelCount,1
+        side      = sides(nthSide)
         sideKey   = strsub(side,1,1)
         pathName  = 'H%nthInlet%%sideKey%_P%nthPath%'
         pathLabel = path_labels(nthLabel)
@@ -92,28 +93,29 @@ path_labels(9) = 'UZ_frq'
 *enddo
 
 ! Plot path results
-*del , path_names_both ,      , nopr
-*del , path_labels_mx  ,      , nopr
-*del , path_labels_my  ,      , nopr
-*del , path_labels_q   ,      , nopr
-*dim , path_names_both , char , pathCount*2*4
-*dim , path_labels_mx  , char , pathCount*2*4
-*dim , path_labels_my  , char , pathCount*2*4
-*dim , path_labels_q   , char , pathCount*2*4
+*del , path_names_1   ,      , nopr
+*del , path_names_2   ,      , nopr
+*del , path_labels_mx ,      , nopr
+*del , path_labels_my ,      , nopr
+*del , path_labels_q  ,      , nopr
+*dim , path_names_1   , char , pathCount*4
+*dim , path_names_2   , char , pathCount*4
+*dim , path_labels_mx , char , pathCount*4
+*dim , path_labels_my , char , pathCount*4
+*dim , path_labels_q  , char , pathCount*4
 idx = 1
-*do,nthInlet,1,2,1
-  *do,nthPath,1,pathCount,1
-    path_names_both(idx) = 'H%nthInlet%L_P%nthPath%' , 'H%nthInlet%L_P%nthPath%' , 'H%nthInlet%R_P%nthPath%' , 'H%nthInlet%R_P%nthPath%'
-    path_labels_mx(idx)  = 'EPOS_MX'                 , 'ENEG_MX'                 , 'EPOS_MX'                 , 'ENEG_MX'                 ,
-    path_labels_my(idx)  = 'EPOS_MY'                 , 'ENEG_MY'                 , 'EPOS_MY'                 , 'ENEG_MY'                 ,
-    path_labels_q(idx)   = 'EAB_Q'                   , 'EAB_Q'                   , 'EAB_Q'                   , 'EAB_Q'                   ,
+*do,nthPath,1,pathCount,1
+  path_names_1(idx)   = 'H1L_P%nthPath%' , 'H1L_P%nthPath%' , 'H1R_P%nthPath%' , 'H1R_P%nthPath%'
+  path_names_2(idx)   = 'H2L_P%nthPath%' , 'H2L_P%nthPath%' , 'H2R_P%nthPath%' , 'H2R_P%nthPath%'
+  path_labels_mx(idx) = 'EPOS_MX'        , 'ENEG_MX'        , 'EPOS_MX'        , 'ENEG_MX'
+  path_labels_my(idx) = 'EPOS_MY'        , 'ENEG_MY'        , 'EPOS_MY'        , 'ENEG_MY'
+  path_labels_q(idx)  = 'EAB_Q'          , 'EAB_Q'          , 'EAB_Q'          , 'EAB_Q'
 
-    idx = idx+4
-  *enddo
+  idx = idx+4
 *enddo
 
 *do,nthInlet,1,2,1
-  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_mx' , 'path_names_both' ,                    , 'BENDING MOMENT (MZ)' , 'kNm/m' , 'MX'
-  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_my' , 'path_names_left' , 'path_names_right' , 'BENDING MOMENT (MY)' , 'kNm/m' , 'MY'
-  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_q'  , 'path_names_left' , 'path_names_right' , 'SHEAR FORCE'         , 'kN/m'  , 'Q'
+  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_mx' , 'path_names_%nthInlet%' ,  , 'BENDING MOMENT (MZ)' , 'kNm/m' , 'MX'
+  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_my' , 'path_names_%nthInlet%' ,  , 'BENDING MOMENT (MY)' , 'kNm/m' , 'MY'
+  TUNNEL_V2_POSTHDWPTHPIC , nthInlet , 'path_labels_q'  , 'path_names_%nthInlet%' ,  , 'SHEAR FORCE'         , 'kN/m'  , 'Q'
 *enddo

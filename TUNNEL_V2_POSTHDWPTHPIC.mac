@@ -30,6 +30,8 @@ axanno,2
 
 /udoc,1,cntr,left
 /udoc,2,cntr,right
+/gline,all,0
+/type,all,3
 
 cmsel,s,COMPA_frame%ARG1%
 esla
@@ -54,7 +56,7 @@ eplot
 csys,CS_HDW%ARG1%_rightWall
 clocal,CS_dummy,cart,0,0,0,,,-90
 wpcsys,1
-/focus,1,auto
+/auto,1
 eplot
 /user,1
 
@@ -72,7 +74,7 @@ eplot
 csys,CS_HDW%ARG1%_leftWall
 clocal,CS_dummy,cart,0,0,0,,,90
 wpcsys,2
-/focus,2,auto
+/auto,2
 eplot
 /user,2
 
@@ -88,33 +90,47 @@ go2png,GRAPH_picRes
   /edge,all,1
   eplot
   /noerase
-  /eshape,1
   /device,vector,off
-  /type,all,0
 
-  cmsel,s,COMPA_HDW%ARG1%_LEFT_wall
-  cmsel,a,COMPA_HDW%ARG1%_LEFT_footing
-  cmsel,a,COMPA_HDW%ARG1%_RIGHT_wall
+  cmsel,s,COMPA_HDW%ARG1%_RIGHT_wall
   cmsel,a,COMPA_HDW%ARG1%_RIGHT_footing
   esla
   nsle
 
-  ! TODO  for some reason this does not work (window 1 view perspective, perhaps?)
-
   /window,1,on
   /window,2,off
+  /eshape,1
   eplot
+  clims
   cleanplot,'mpathplot',pathScale,,'_pathNames','_resultLabels'
+
+  cmsel,s,COMPA_HDW%ARG1%_LEFT_wall
+  cmsel,a,COMPA_HDW%ARG1%_LEFT_footing
+  esla
+  nsle
 
   /window,1,off
   /window,2,on
   eplot
+  clims
   cleanplot,'mpathplot',pathScale,,'_pathNames','_resultLabels'
+
+  cmsel,s,COMPA_HDW%ARG1%_RIGHT_wall
+  cmsel,a,COMPA_HDW%ARG1%_RIGHT_footing
+  cmsel,a,COMPA_HDW%ARG1%_LEFT_wall
+  cmsel,a,COMPA_HDW%ARG1%_LEFT_footing
+  esla
+  nsle
+
+  /window,1,on
+  /window,2,on
+  /eshape,1
+  eplot
+  /eshape,0
 
 endpng,_imgName,,,,,FOLDER_results
 
 /erase
 /annot,dele
-/type,all,3
 clims
 view1w
