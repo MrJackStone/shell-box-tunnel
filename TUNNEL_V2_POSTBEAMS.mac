@@ -39,15 +39,10 @@
 
   *do,nthHDW,1,2,1
 
-    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_topBeam'     , 'TBEAM1' , 'RES_ENV_FRM1_topBeam'
-    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_backBeam'    , 'BBEAM1' , 'RES_ENV_FRM1_backBeam'
-    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_leftColumn'  , 'LCOL1'  , 'RES_ENV_FRM1_leftColumn'
-    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_rightColumn' , 'RCOL1'  , 'RES_ENV_FRM1_rightColumn'
-
-    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_topBeam'     , 'TBEAM2' , 'RES_ENV_FRM2_topBeam'
-    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_backBeam'    , 'BBEAM2' , 'RES_ENV_FRM2_backBeam'
-    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_leftColumn'  , 'LCOL2'  , 'RES_ENV_FRM2_leftColumn'
-    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_rightColumn' , 'RCOL2'  , 'RES_ENV_FRM2_rightColumn'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_topBeam'     , 'TBEAM%nthHDW%' , 'RES_ENV_FRM%nthHDW%_topBeam'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_backBeam'    , 'BBEAM%nthHDW%' , 'RES_ENV_FRM%nthHDW%_backBeam'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_leftColumn'  , 'LCOL%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_leftColumn'
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_rightColumn' , 'RCOL%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_rightColumn'
 
     ! ! Inlet front beam
     ! TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_botBeam' , 'FBEAM1'  , 'RES_ENV_FRM1_frontBeam'
