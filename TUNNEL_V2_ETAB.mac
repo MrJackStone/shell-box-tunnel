@@ -26,6 +26,11 @@
 ! -          EPOS_MX    ENEG_MY    -
 ! DLT_MX     DLT_MY     DLT_NX     DLT_NY
 ! DLT_Q      -          -          -
+!
+! Note:
+!    Default sign convention for bending moments:
+!    M > 0 : tension at +Z      /  compression at -Z
+!    M < 0 : compression at +Z  /  tension at -Z
 
 ! SHELL181 (averaged by convolution): --------- 14
 ! ADW_MX     AEMN_MX    AEMX_MX    AEAB_MX
@@ -85,6 +90,7 @@ allsel
 ! Auxiliary element tables
 *vget  , element_numbers       , elem    ,         , elist
 *get   , ec                    , elem    ,         , count
+sabs   , 0
 etable , 'DUMMY'               , volu
 sadd   , 'ZEROS'               , 'DUMMY' , 'DUMMY' , 1     , -1
 detab  , element_numbers(1:ec) , 'ZEROS' , 0
@@ -143,10 +149,10 @@ etbsqsum , 'EMX_Q' , 'EMX_QX' , 'EMX_QY'
 etbsqsum , 'EMN_Q' , 'EMN_QX' , 'EMN_QY'
 
 ! Positive/negative-only bending moments
-smax   , 'ENEG_MX' , 'EMX_MX' , 'ZEROS'
-smax   , 'EPOS_MX' , 'EMN_MX' , 'ZEROS'  , -1
-smax   , 'ENEG_MY' , 'EMX_MY' , 'ZEROS'
-smax   , 'EPOS_MY' , 'EMN_MY' , 'ZEROS'  , -1
+smax   , 'EPOS_MX' , 'EMX_MX' , 'ZEROS'
+smin   , 'ENEG_MX' , 'EMN_MX' , 'ZEROS'
+smax   , 'EPOS_MY' , 'EMX_MY' , 'ZEROS'
+smin   , 'ENEG_MY' , 'EMN_MY' , 'ZEROS'
 
 ! Variation
 difTableCount = 5
