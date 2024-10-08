@@ -56,7 +56,7 @@ go2png,GRAPH_picRes
   /triad,orig
   ksel,all
   ksel,s,kp,,kpnext(0)
-  pltesys,,'kplot',1
+  pltesys,,'kplot',1,,,1
   /triad,off
 
   /device,vector,on
