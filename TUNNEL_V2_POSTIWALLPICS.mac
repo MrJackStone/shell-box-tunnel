@@ -122,7 +122,7 @@ label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
     /udoc,wind,cntr,left
     mpathplot , baseScale ,  , 'i_cols'  , 'cols_MB'
 
-  endpng,'RES_IWALL_m'
+  endpng,'RES_IWALL_m',,,,,FOLDER_results
   /erase
   /annot,dele
 
@@ -184,7 +184,7 @@ label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
     /udoc,wind,cntr,left
     mpathplot , baseScale ,  , 'i_cols'  , 'cols_N'
 
-  endpng,'RES_IWALL_f'
+  endpng,'RES_IWALL_f',,,,,FOLDER_results
   /erase
   /annot,dele
 
@@ -232,7 +232,7 @@ label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
     /udoc,wind,cntr,left
     mpathplot , baseScale ,  , 'i_cols'  , 'cols_D'
 
-  endpng,'RES_IWALL_d'
+  endpng,'RES_IWALL_d',,,,,FOLDER_results
   /erase
   /annot,dele
 

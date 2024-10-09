@@ -150,7 +150,7 @@ label_D(1)   = 'DYB_MIN' , 'DYB_MAX'
 
     /window,wind,off
 
-  endpng,'RES_FRAME_%nthFrame%'
+  endpng,'RES_FRAME_%nthFrame%',,,,,FOLDER_results
 
   /erase
   /annot,dele
