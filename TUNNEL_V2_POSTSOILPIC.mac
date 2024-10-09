@@ -9,6 +9,7 @@ _fileName   = ARG3
 boldfont,1
 g_picres,GRAPH_picRes
 /gformat,f,2,1
+/dscale,all,off
 
 view1w
 wincln,1

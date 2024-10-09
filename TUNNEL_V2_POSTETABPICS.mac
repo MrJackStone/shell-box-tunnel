@@ -10,16 +10,25 @@ _midTitle   = ARG4
 _rightTitle = ARG5
 _fileName   = ARG6
 
+cmsel,s,%_cmaName%
+esla
+*get,ec,elem,,count
+*if,ec,eq,0,then
+  *return,-1
+*endif
+
 ! Prepare display
 view1w
 wincln
 g_picres,GRAPH_picRes
 boldfont,1
 
+/psymb,csys,0
 /plopts,leg3,on
 /udoc,1,cntr,right
 /gformat,f,2,1
 /eshape,0
+/dscale,all,off
 
 /angle,all,0
 /auto,all
