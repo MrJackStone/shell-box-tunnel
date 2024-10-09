@@ -1,10 +1,12 @@
-! TUNNEL_V2_POSTSOILPIC , etableName , imgTitle , fileName
-! TUNNEL_V2_POSTSOILPIC , ARG1       , ARG2     , ARG3
+! TUNNEL_V2_POSTSOILPIC , etableName , imgTitle , fileName , leftTitle , cmaName
+! TUNNEL_V2_POSTSOILPIC , ARG1       , ARG2     , ARG3     , ARG4      , ARG5
 
 
 _etableName = ARG1
 _imgTitle   = ARG2
 _fileName   = ARG3
+_leftTitle  = ARG4
+_cmaName    = ARG5
 
 boldfont,1
 g_picres,GRAPH_picRes
@@ -24,7 +26,7 @@ wincln,1
 esel,s,type,,TYPE_shell181
 nsle,s
 
-wintitle,1,'FLOOR SLABS / FOOTINGS',_imgTitle,'ELU-Geo [kPa]',,1,13
+wintitle,1,_leftTitle,_imgTitle,'ELU-Geo [kPa]',,1,13
 
 go2png,GRAPH_picRes
   /device,vector,on
@@ -34,10 +36,7 @@ go2png,GRAPH_picRes
   /noerase
   /device,vector,off
 
-  cmsel,s,COMPA_floor
-  cmsel,a,COMPA_HDW_slab
-  cmsel,a,COMPA_HDW_stiffener
-  cmsel,a,COMPA_HDW_footing
+  cmsel,s,%_cmaName%
   esla,s
   nsle,s
   cleanplot,'pletab',_etableName,'1'
