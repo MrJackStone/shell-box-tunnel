@@ -149,10 +149,11 @@ etbsqsum , 'EMX_Q' , 'EMX_QX' , 'EMX_QY'
 etbsqsum , 'EMN_Q' , 'EMN_QX' , 'EMN_QY'
 
 ! Positive/negative-only bending moments
-smax   , 'EPOS_MX' , 'EMX_MX' , 'ZEROS'
-smin   , 'ENEG_MX' , 'EMN_MX' , 'ZEROS'
-smax   , 'EPOS_MY' , 'EMX_MY' , 'ZEROS'
-smin   , 'ENEG_MY' , 'EMN_MY' , 'ZEROS'
+sabs , 0
+smax , 'EPOS_MX' , 'EMX_MX' , 'ZEROS'
+smin , 'ENEG_MX' , 'EMN_MX' , 'ZEROS'
+smax , 'EPOS_MY' , 'EMX_MY' , 'ZEROS'
+smin , 'ENEG_MY' , 'EMN_MY' , 'ZEROS'
 
 ! Variation
 difTableCount = 5
