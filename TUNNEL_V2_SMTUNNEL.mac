@@ -41,7 +41,7 @@ cm,COMPA_roof,area
     z = GEO_girderZ(nthSlice)
     wpcsys,-1
     wpoffs,,,z
-    asbw,all,,delete
+    asbw,all,sepo,delete
   *enddo
   cm,COMPA_roof,area
 *endif
