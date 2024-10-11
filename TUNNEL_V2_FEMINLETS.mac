@@ -88,6 +88,17 @@ fixed  = 0
   l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_LEFT_wallInterface'  ,  , connection1
   l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_RIGHT_wallInterface' ,  , connection1
   l2acnt , 'COMPA_floor'  , 'COMPL_HDW1_slabTunnelInterface' ,  , pinned
+
+  *if,GEO_HDW1_type,eq,0,then
+    ! Full inlet
+    l2acnt , 'COMPA_HDW1_leftWall'       , 'COMPL_HDW1_slabLWInterface'    , fixed
+    l2acnt , 'COMPA_HDW1_rightWall'      , 'COMPL_HDW1_slabRWInterface'    , fixed
+    l2acnt , 'COMPA_HDW1_leftWall'       , 'COMPL_HDW1_bBeamLWInterface'   , fixed
+    l2acnt , 'COMPA_HDW1_rightWall'      , 'COMPL_HDW1_bBeamRWInterface'   , fixed
+    l2acnt , 'COMPA_HDW1_slab'           , 'COMPL_HDW1_bBeamSlabInterface' , fixed
+    l2acnt , 'COMPA_HDW1_leftStiffener'  , 'COMPL_HDW1_bBeamSlabInterface' , fixed
+    l2acnt , 'COMPA_HDW1_rightStiffener' , 'COMPL_HDW1_bBeamSlabInterface' , fixed
+  *endif
 *endif
 
 *if,GEO_FRM2_status,eq,1,then
@@ -101,6 +112,17 @@ fixed  = 0
   l2acnt , 'COMPA_frame2'           , 'COMPL_HDW2_LEFT_wallInterface'  ,  , connection2
   l2acnt , 'COMPA_frame2'           , 'COMPL_HDW2_RIGHT_wallInterface' ,  , connection2
   l2acnt , 'COMPA_floor'            , 'COMPL_HDW2_slabTunnelInterface' ,  , pinned
+
+  *if,GEO_HDW2_type,eq,0,then
+    ! Full inlet
+    l2acnt , 'COMPA_HDW2_leftWall'       , 'COMPL_HDW2_slabLWInterface'    , fixed
+    l2acnt , 'COMPA_HDW2_rightWall'      , 'COMPL_HDW2_slabRWInterface'    , fixed
+    l2acnt , 'COMPA_HDW2_leftWall'       , 'COMPL_HDW2_bBeamLWInterface'   , fixed
+    l2acnt , 'COMPA_HDW2_rightWall'      , 'COMPL_HDW2_bBeamRWInterface'   , fixed
+    l2acnt , 'COMPA_HDW2_slab'           , 'COMPL_HDW2_bBeamSlabInterface' , fixed
+    l2acnt , 'COMPA_HDW2_leftStiffener'  , 'COMPL_HDW2_bBeamSlabInterface' , fixed
+    l2acnt , 'COMPA_HDW2_rightStiffener' , 'COMPL_HDW2_bBeamSlabInterface' , fixed
+  *endif
 *endif
 
 ! Generate tables for X-Y coordinate interpolation for each retaining wall
