@@ -117,6 +117,7 @@ aesize,all,FEM_TUN_esize
 amesh,all
 
 ! Mesh roof
+csys,CS_roof
 cmsel,s,COMPA_roof
 aesize,all,FEM_TUN_esize
 
@@ -143,9 +144,9 @@ aesize,all,FEM_TUN_esize
       amesh,all
     *else
       ! Subsequent girders: paste previously copied line mesh
-      zEdge = GEO_girderZ(nthGirder-1)
+      edgeCoord = GEO_girderZ(nthGirder-1)
       lsla,s
-      lsel,r,loc,z,zEdge
+      lsel,r,loc,y,edgeCoord
       cm,COMPL_pasteG,line
       cmsel,a,COMPL_copyG
       mshcopy,line,COMPL_copyG,COMPL_pasteG
@@ -154,9 +155,9 @@ aesize,all,FEM_TUN_esize
 
     ! Girders before last: copy line mesh
     *if,nthGirder,lt,GEO_girderCount,then
-      zEdge = GEO_girderZ(nthGirder)
+      edgeCoord = GEO_girderZ(nthGirder)
       lsla,s
-      lsel,r,loc,z,zEdge
+      lsel,r,loc,y,edgeCoord
       cm,COMPL_copyG,line
     *endif
 
