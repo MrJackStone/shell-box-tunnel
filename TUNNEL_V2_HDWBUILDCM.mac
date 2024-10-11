@@ -305,7 +305,7 @@ cm,COMPA_HDW_rightColumn,area
 
 !! D.  1st/2nd part split                                                                         !!
 ! Split each structural part component
-cmRootCount = 14
+cmRootCount = 13
 *del,cmname_roots,,nopr
 *dim,cmname_roots,string,248,cmRootCount
 
@@ -320,9 +320,9 @@ cmname_roots(1,8)  = 'rightStiffener'
 cmname_roots(1,9)  = 'leftColumn'
 cmname_roots(1,10) = 'rightColumn'
 cmname_roots(1,11) = 'backBeam'
-cmname_roots(1,12) = 'botBeam'
-cmname_roots(1,13) = 'topBeam'
-cmname_roots(1,14) = 'slab'
+! cmname_roots(1,12) = 'botBeam'
+cmname_roots(1,12) = 'topBeam'
+cmname_roots(1,13) = 'slab'
 
 *do,nthCM,1,cmRootCount,1
   root = cmname_roots(1,nthCM)
