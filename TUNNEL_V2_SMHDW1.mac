@@ -1,0 +1,194 @@
+! TUNNEL_V2_SMHDW1 , hdwNumber , tunnelCS , endCS
+! TUNNEL_V2_SMHDW1 , ARG1      , ARG2     , ARG3
+
+
+! Exported selection components:
+! COMPA_HDW[i]_slab
+! COMPL_HDW[i]_slabInterface
+! COMPA_HDW[i]_LEFT_wall
+! COMPA_HDW[i]_LEFT_footing
+! COMPL_HDW[i]_LEFT_wallInterface
+! COMPK_HDW[i]_LEFT_wallTopEdge
+! COMPA_HDW[i]_RIGHT_wall
+! COMPA_HDW[i]_RIGHT_footing
+! COMPL_HDW[i]_RIGHT_wallInterface
+! COMPK_HDW[i]_RIGHT_wallTopEdge
+
+
+! Prepare environment
+csbackup
+
+!! A.  Draw retaining walls                                                                       !!
+! Left wall
+csLWall = CS_HDW%ARG1%_leftWall
+csLFoot = CS_HDW%ARG1%_leftFoot
+lLength = GEO_HDW%ARG1%_LEFT_wallLength
+lHeight = GEO_HDW%ARG1%_LEFT_wallHeight
+lTop    = GEO_HDW%ARG1%_LEFT_wallTopLength
+lRadius = GEO_HDW%ARG1%_LEFT_cornerRadius
+lWidth  = GEO_HDW%ARG1%_LEFT_footWidth
+lSign   = GEO_HDW%ARG1%_LEFT_xSign
+
+TUNNEL_V2_SMRETWALL , csLWall , lLength , lHeight , lTop , lRadius , csLFoot , lWidth , lSign , 'HDW%ARG1%_LEFT'
+
+! Right wall
+csRWall = CS_HDW%ARG1%_rightWall
+csRFoot = CS_HDW%ARG1%_rightFoot
+rLength = GEO_HDW%ARG1%_RIGHT_wallLength
+rHeight = GEO_HDW%ARG1%_RIGHT_wallHeight
+rTop    = GEO_HDW%ARG1%_RIGHT_wallTopLength
+rRadius = GEO_HDW%ARG1%_RIGHT_cornerRadius
+rWidth  = GEO_HDW%ARG1%_RIGHT_footWidth
+rSign   = GEO_HDW%ARG1%_RIGHT_xSign
+
+TUNNEL_V2_SMRETWALL , csRWall , rLength , rHeight , rTop , rRadius , csRFoot , rWidth , rSign , 'HDW%ARG1%_RIGHT'
+
+
+!! B.  Floor slab                                                                                 !!
+! Get anchor positions at tunnel end
+csys,ARG3
+
+cmsel,s,COMPA_floor
+lsla
+ksll
+ksel,r,loc,z,0
+ksel,r,loc,y,0
+*get,xMax,kp,,mxloc,x
+kFloorLeft  = kp(0    , 0 , 0)
+kFloorRight = kp(xMax , 0 , 0)
+
+! Get anchor positions at the end of each retaining wall
+csys,csRWall
+
+cmsel,s,COMPA_HDW%ARG1%_RIGHT_wall
+lsla
+ksll
+ksel,r,loc,y,0
+ksel,r,loc,x,rLength*rSign
+kWallRight = kpnext(0)
+
+csys,csLWall
+
+cmsel,s,COMPA_HDW%ARG1%_LEFT_wall
+lsla
+ksll
+ksel,r,loc,y,0
+ksel,r,loc,x,lLength*lSign
+kWallLeft = kpnext(0)
+
+! Draw floor area
+ksel , s , kp ,  , kFloorLeft
+ksel , a , kp ,  , kFloorRight
+ksel , a , kp ,  , kWallLeft
+ksel , a , kp ,  , kWallRight
+
+asel,none
+a , kFloorLeft , kWallLeft , kWallRight , kFloorRight
+baseArea = arnext(0)
+agen,2,baseArea,,,0,0,0,0
+adele,baseArea,,,1
+cm,COMPA_HDW%ARG1%_slab,area
+
+! Slice slab stiffeners
+stfWidth = GEO_HDW%ARG1%_slabStfWidth
+
+*if,stfWidth,gt,0,then
+  csys,csLWall
+  wpcsys,-1
+  wpoffs,,,stfWidth
+  cmsel,s,COMPA_HDW%ARG1%_slab
+  asbw,all,,delete
+  cm,COMPA_HDW%ARG1%_slab,area
+  asel,r,loc,z,0,stfWidth
+  cm,COMPA_HDW%ARG1%_leftStiffener,area
+
+  csys,csRWall
+  wpcsys,-1
+  wpoffs,,,stfWidth
+  cmsel,s,COMPA_HDW%ARG1%_slab
+  asbw,all,,delete
+  cm,COMPA_HDW%ARG1%_slab,area
+  asel,r,loc,z,0,stfWidth
+  cm,COMPA_HDW%ARG1%_rightStiffener,area
+*endif
+
+! Create exported selection components
+cmsel,s,COMPA_HDW%ARG1%_slab
+cmsel,a,COMPA_HDW%ARG1%_leftStiffener
+cmsel,a,COMPA_HDW%ARG1%_rightStiffener
+lsla
+cm,COMPL_tmp,line
+
+csys,ARG3
+cmsel,s,COMPL_tmp
+lsel,r,loc,z,0
+cm,COMPL_HDW%ARG1%_slabTunnelInterface,line
+
+csys,csLWall
+cmsel,s,COMPL_tmp
+lsel,r,loc,z,0
+cm,COMPL_HDW%ARG1%_slabLWInterface,line
+
+csys,csRWall
+cmsel,s,COMPL_tmp
+lsel,r,loc,z,0
+cm,COMPL_HDW%ARG1%_slabRWInterface,line
+
+
+!! C. Front beam                                                                                  !!
+! Get anchor positions at footing
+csys,csRFoot
+
+cmsel,s,COMPA_HDW%ARG1%_RIGHT_footing
+lsla
+ksll
+ksel,r,loc,y,0
+ksel,r,loc,x,rSign*rLength
+kFootRight = kpnext(0)
+
+csys,csLFoot
+
+cmsel,s,COMPA_HDW%ARG1%_LEFT_footing
+lsla
+ksll
+ksel,r,loc,y,0
+ksel,r,loc,x,lSign*lLength
+kFootLeft = kpnext(0)
+
+! Draw front beam
+ksel , s , kp ,  , kWallLeft
+ksel , a , kp ,  , kWallRight
+ksel , a , kp ,  , kFootLeft
+ksel , a , kp ,  , kFootRight
+
+asel,none
+a , kWallLeft , kWallRight , kFootRight , kFootLeft
+beamArea = arnext(0)
+agen,2,beamArea,,,0,0,0,0
+adele,beamArea,,,1
+cm,COMPA_HDW%ARG1%_botBeam,area
+
+! Created exported selection components
+cmsel,COMPA_HDW%ARG1%_botBeam
+lsla
+cm,COMPL_temp,line
+
+csys,csLWall
+cmsel,s,COMPL_temp
+lsel,r,loc,z,0
+cm,COMPL_HDW%ARG1%_bBeamLWInterface,line
+
+csys,csRWall
+cmsel,s,COMPL_temp
+lsel,r,loc,z,0
+cm,COMPL_HDW%ARG1%_bBeamRWInterface,line
+
+csys,ARG3
+cmsel,s,COMPL_temp
+lsel,r,loc,y,0
+cm,COMPL_HDW%ARG1%_bBeamSlabInterface,line
+
+
+!! D.  Clean up                                                                                   !!
+csrestore
+*del,KP_slab,,nopr
