@@ -64,7 +64,7 @@ TUNNEL_V2_SMTUNNEL
 *if,GEO_HDW1_status,eq,1,then
   *if,GEO_HDW1_type,eq,0,then
     ! Full inlet with floor slab, footings, and headwalls
-    TUNNEL_V2_SMHDW1 , 1  ! TODO  implement this
+    TUNNEL_V2_SMHDW1 , 1 , CS_tunnel , CS_begSkewed
   *elseif,GEO_HDW1_type,eq,1,then
     ! Wings
     TUNNEL_V2_SMHDW2 , 1
@@ -77,7 +77,7 @@ TUNNEL_V2_SMTUNNEL
 *if,GEO_HDW2_status,eq,1,then
   *if,GEO_HDW2_type,eq,0,then
     ! Full inlet with floor slab, footings, and headwalls
-    TUNNEL_V2_SMHDW1 , 2
+    TUNNEL_V2_SMHDW1 , 2 , CS_revTunnel , CS_endSkewed
   *elseif,GEO_HDW2_type,eq,1,then
     ! Wings
     TUNNEL_V2_SMHDW2 , 2

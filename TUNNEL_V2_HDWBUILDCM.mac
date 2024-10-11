@@ -187,16 +187,16 @@ cmsel,s,COMPA_HDW_2
 asel,r,loc,z,0
 cmpadd,'COMPA_HDW_footing'
 
-! Front bottom beam
-! TODO  rewrite -- this approach does not work for skewed inlets/tunnels
-asel,none
-csys,CS_hdw1
-asel,a,loc,z,GEO_HDW_length
-csys,CS_hdw2
-asel,a,loc,z,GEO_HDW_length
-csys,CS_tunnel
-cmsel,r,COMPA_headwalls
-cm,COMPA_HDW_botBeam,area
+! ! Front bottom beam
+! ! TODO  rewrite -- this approach does not work for skewed inlets/tunnels
+! asel,none
+! csys,CS_hdw1
+! asel,a,loc,z,GEO_HDW_length
+! csys,CS_hdw2
+! asel,a,loc,z,GEO_HDW_length
+! csys,CS_tunnel
+! cmsel,r,COMPA_headwalls
+! cm,COMPA_HDW_botBeam,area
 
 ! Auxiliary points: skewed tunnel ends
 csys,CS_begSkewed
