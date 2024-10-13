@@ -7,8 +7,9 @@ GEO_ROOF_gapStatus      = 0
 GEO_ROOF_gapStrutCount  = 0
 
 ! Inner walls
-GEO_IWALL_thk  = 1
-GEO_IWALL_type = 0
+GEO_IWALL_thk         = 1
+GEO_IWALL_type        = 0
+GEO_IWALL_columnCount = 0
 
 ! Corbels
 GEO_CORB_status = 0

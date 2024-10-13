@@ -1,12 +1,6 @@
 ! TUNNEL_V2_HDWATTR
 
 
-GEO_InletRadians = GEO_HDW_angle*pi/180  ! TODO  this affects loads, must change to account for unique retaining walls!
-
-GEO_HDW_Height = Eff_GalleryHeight+GEO_FRAME_headBeamHeight
-
-WallLength = GEO_HDW_length/COS(GEO_InletRadians)  ! TODO  GEO_HDW_length param has been removed from input.
-
 GEO_HDW1_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_LEFT_footDepth
 GEO_HDW1_RIGHT_wallHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_RIGHT_footDepth
 GEO_HDW2_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW2_LEFT_footDepth
