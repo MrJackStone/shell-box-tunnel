@@ -65,9 +65,7 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '+Y' , 'roof'
 
 
 !! 4.5.7  Headwalls                                                                               !!
-*if,GEO_HDW_status,gt,0,then
-  TUNNEL_V2_HDWBC
-*endif
+TUNNEL_V2_HDWBC
 
 
 !! 4.5.8  Approach slabs                                                                          !!

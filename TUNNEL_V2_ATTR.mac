@@ -492,9 +492,7 @@ GEO_HDW2_status = 0
   GEO_HDW2_status = 1
 *endif
 
-*if,GEO_HDW_status,gt,0,then
-  TUNNEL_V2_HDWATTR
-*endif
+TUNNEL_V2_HDWATTR
 
 
 !!                                                                                                !!
