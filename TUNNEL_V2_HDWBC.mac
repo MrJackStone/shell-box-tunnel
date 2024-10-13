@@ -20,6 +20,7 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_footing'          , CS_tunnel         , '-Y' 
 
 ! Floor slab
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_slab'             , CS_tunnel         , '-Y' , 'inletSlab'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_stiffener'        , CS_tunnel         , '-Y' , 'inletStiffener'
 
 ! Frames
 TUNNEL_V2_ELASTICBASE , 'COMPA_frame1'               , CS_begSkewed      , '+Z' , 'frame1'
