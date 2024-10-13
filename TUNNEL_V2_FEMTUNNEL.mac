@@ -198,15 +198,44 @@ l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
 
 ! Between roof precast girders
 *if,GEO_ROOF_type,eq,1,and,GEO_ROOF_continuity,eq,0,then
+  csys,CS_roof
+
+  ! Connect displacement DOFs
+  *do,nthGirder,1,GEO_girderCount-1,1
+    nthCMA = 'COMPA_RG%nthGirder%'
+    cmsel,s,%nthCMA%
+    lsla
+    ksll
+    kpbbox,,,,'nthYMax'
+
+    mthGirder = nthGirder+1
+    mthCMA = 'COMPA_RG%mthGirder%'
+    cmsel,s,%mthCMA%
+    lsla
+    ksll
+    kpbbox,,,'mthYMin'
+
+    girderGap = abs(mthYMin-nthYMax)
+    *if,girderGap,le,1e-6,then
+      mthCML = 'COMPL_RG%mthGirder%_aftEdge'
+      cmsel,s,%mthCMA%
+      lsla
+      lsel,r,loc,y,mthYMin
+      cm,%mthCML%,line
+      l2acnt,nthCMA,mthCML,,pinned
+    *endif
+  *enddo
+
   ! Remove longitudinal lines from selection
-  csys,CS_tunnel
   cmsel,s,COMPA_roof
   lsla,s
   lsel,u,loc,x,0:GEO_TUN_totEffW:GEO_TUN_effW
   nsll,s,1
-  ! Create semi-rigid connection
-  type,TYPE_COMBIN39
-  mat,MAT_conc
-  real,REAL_roofSprings
-  eintf,1e-3
+
+  ! Create semi-rigid connection (rotation DOFs)
+  type  , TYPE_combin39
+  mat   , MAT_conc
+  real  , REAL_roofSprings
+  eintf , 1e-3
+
 *endif
