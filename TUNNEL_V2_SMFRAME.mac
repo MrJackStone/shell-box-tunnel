@@ -76,7 +76,7 @@ cmsel,s,COMPA_HDW_leftColumn
 cmsel,a,COMPA_HDW_rightColumn
 cmsel,a,COMPA_HDW_backBeam
 cmsel,a,COMPA_HDW_topBeam
-cmpadd,'COMPA_headwalls'
+cmpadd,'COMPA_frames'
 
 ! Clean up
 csrestore

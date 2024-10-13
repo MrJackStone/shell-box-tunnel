@@ -64,13 +64,28 @@ sides(1)='LEFT','RIGHT'
 !! A.  Global, multi-part components                                                              !!
 ! First inlet
 csys,CS_begSkewed
+
+asel,s,loc,z,0
+cm,COMPA_frame1,area
+
 asel,s,loc,z,-1e6,0
+cmsel,u,COMPA_frame1
 cm,COMPA_HDW_1,area
 
 ! Second inlet
 csys,CS_endSkewed
+
+asel,s,loc,z,0
+cm,COMPA_frame2,area
+
 asel,s,loc,z,-1e6,0
+cmsel,u,COMPA_frame2
 cm,COMPA_HDW_2,area
+
+! All frame areas
+cmsel,s,COMPA_frame1
+cmsel,a,COMPA_frame2
+cm,COMPA_frames,area
 
 ! All headwall areas
 cmsel,s,COMPA_HDW_1
@@ -79,25 +94,45 @@ cm,COMPA_headwalls,area
 
 ! Left side
 csys,CS_hdw1
+
 cmsel,s,COMPA_HDW_1
 asel,r,loc,x,0,1e6
 cm,COMPA_HDW_left,area
 
+cmsel,s,COMPA_frame1
+asel,r,loc,x,0,1e6
+cm,COMPA_FRM_left,area
+
 csys,CS_hdw2
+
 cmsel,s,COMPA_HDW_2
 asel,r,loc,x,0,1e6
 cmpadd,'COMPA_HDW_left'
 
+cmsel,s,COMPA_frame2
+asel,r,loc,x,0,1e6
+cmpadd,'COMPA_FRM_left'
+
 ! Right side
 csys,CS_hdw1
+
 cmsel,s,COMPA_HDW_1
 asel,r,loc,x,0,-1e6
 cm,COMPA_HDW_right,area
 
+cmsel,s,COMPA_frame1
+asel,r,loc,x,0,-1e6
+cm,COMPA_FRM_right,area
+
 csys,CS_hdw2
+
 cmsel,s,COMPA_HDW_2
 asel,r,loc,x,0,-1e6
 cmpadd,'COMPA_HDW_right'
+
+cmsel,s,COMPA_frame2
+asel,r,loc,x,0,-1e6
+cmpadd,'COMPA_FRM_right'
 
 
 !! B.  Components by structural part                                                              !!
@@ -227,7 +262,7 @@ asel,r,loc,x,xMinEndSkew,xMaxEndSkew
 cmsel,a,COMPA_temp
 csys,CS_tunnel
 asel,r,loc,y,-GEO_FRAME_backBeamHeight,0
-cmsel,r,COMPA_headwalls
+cmsel,r,COMPA_frames
 cm,COMPA_HDW_backBeam,area
 
 ! Frame top beam
@@ -242,7 +277,7 @@ asel,r,loc,x,xMinEndSkew,xMaxEndSkew
 cmsel,a,COMPA_temp
 csys,CS_tunnel
 asel,r,loc,y,GEO_TUN_effH,GEO_TUN_effH+GEO_FRAME_headBeamHeight
-cmsel,r,COMPA_headwalls
+cmsel,r,COMPA_frames
 cm,COMPA_HDW_topBeam,area
 
 ! Frame columns
@@ -295,34 +330,30 @@ cm,COMPA_HDW_rightStiffener,area
 
 ! Columns
 cmsel,s,COMPA_HDW_columns
-cmsel,r,COMPA_HDW_left
+cmsel,r,COMPA_FRM_left
 cm,COMPA_HDW_leftColumn,area
 
 cmsel,s,COMPA_HDW_columns
-cmsel,r,COMPA_HDW_right
+cmsel,r,COMPA_FRM_right
 cm,COMPA_HDW_rightColumn,area
 
 
 !! D.  1st/2nd part split                                                                         !!
-! Split each structural part component
-cmRootCount = 13
+! Split headwall components
+cmRootCount = 9
 *del,cmname_roots,,nopr
 *dim,cmname_roots,string,248,cmRootCount
 
-cmname_roots(1,1)  = 'leftWall'
-cmname_roots(1,2)  = 'leftWallBuried'
-cmname_roots(1,3)  = 'rightWall'
-cmname_roots(1,4)  = 'rightWallBuried'
-cmname_roots(1,5)  = 'leftFoot'
-cmname_roots(1,6)  = 'rightFoot'
-cmname_roots(1,7)  = 'leftStiffener'
-cmname_roots(1,8)  = 'rightStiffener'
-cmname_roots(1,9)  = 'leftColumn'
-cmname_roots(1,10) = 'rightColumn'
-cmname_roots(1,11) = 'backBeam'
+cmname_roots(1,1) = 'leftWall'
+cmname_roots(1,2) = 'leftWallBuried'
+cmname_roots(1,3) = 'rightWall'
+cmname_roots(1,4) = 'rightWallBuried'
+cmname_roots(1,5) = 'leftFoot'
+cmname_roots(1,6) = 'rightFoot'
+cmname_roots(1,7) = 'leftStiffener'
+cmname_roots(1,8) = 'rightStiffener'
 ! cmname_roots(1,12) = 'botBeam'
-cmname_roots(1,12) = 'topBeam'
-cmname_roots(1,13) = 'slab'
+cmname_roots(1,9) = 'slab'
 
 *do,nthCM,1,cmRootCount,1
   root = cmname_roots(1,nthCM)
@@ -330,5 +361,24 @@ cmname_roots(1,13) = 'slab'
     cmsel,s,COMPA_HDW_%root%
     cmsel,r,COMPA_HDW_%nthHDW%
     cm,COMPA_HDW%nthHDW%_%root%,area
+  *enddo
+*enddo
+
+! Split frame components
+cmRootCount = 4
+*del,cmname_roots,,nopr
+*dim,cmname_roots,string,248,cmRootCount
+
+cmname_roots(1,1) = 'leftColumn'
+cmname_roots(1,2) = 'rightColumn'
+cmname_roots(1,3) = 'backBeam'
+cmname_roots(1,4) = 'topBeam'
+
+*do,nthCM,1,cmRootCount,1
+  root = cmname_roots(1,nthCM)
+  *do,nthFRM,1,2,1
+    cmsel,s,COMPA_HDW_%root%
+    cmsel,r,COMPA_frame%nthFRM%
+    cm,COMPA_HDW%nthFRM%_%root%,area
   *enddo
 *enddo
