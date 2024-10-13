@@ -311,11 +311,12 @@ LOAD_z0 = (LOAD_LTA_offsets(1)+LOAD_LTA_offsets(LOAD_LTA_count))/2
 !! 2.6  Mesh                                                                                      !!
 !!                                                                                                !!
 *if,GEO_ROOF_type,eq,1,and,GEO_ROOF_continuity,eq,0,then
-  FEM_ROOF_posKRot=MAT_CONC_E*FEM_TUN_esize*(GEO_ROOF_precastHeight**3)/(12*GEO_ROOF_precastWidth)
-  FEM_ROOF_negKRot=-FEM_ROOF_posKRot
+  GEO_ROOF_capHeight = GEO_ROOF_thk-GEO_ROOF_precastHeight
+  FEM_ROOF_posKRot = MAT_conc_E*FEM_TUN_esize*(GEO_ROOF_capHeight**3)/(12*GEO_ROOF_precastWidth)
+  FEM_ROOF_negKRot = -FEM_ROOF_posKRot
 *else
-  FEM_ROOF_posKRot=1
-  FEM_ROOF_negKRot=-FEM_ROOF_posKRot
+  FEM_ROOF_posKRot = 1
+  FEM_ROOF_negKRot = -FEM_ROOF_posKRot
 *endif
 
 
