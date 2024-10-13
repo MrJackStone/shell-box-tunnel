@@ -247,7 +247,6 @@ cm,COMPL_Railway,line
 /color , cm , lgra , COMPA_Floor
 /color , cm , lgra , COMPA_Roof
 /color , cm , lgra , COMPA_struts
-/color , cm , 14   , COMPA_Headwalls
 /color , cm , oran , COMPA_approach
 /color , cm , gree , COMPA_headwalls
 

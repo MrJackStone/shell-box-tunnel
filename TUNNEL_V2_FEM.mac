@@ -71,6 +71,7 @@ TUNNEL_V2_HDWBC
 !! 4.5.8  Approach slabs                                                                          !!
 *if,GEO_APR_status,eq,1,then
   TUNNEL_V2_ELASTICBASE , 'COMPA_approachSup' , CS_tunnel , '-Y' , 'approach'
+  TUNNEL_V2_ELASTICBASE , 'COMPA_approachSup' , CS_tunnel , '+Y' , 'approach'
 *endif
 
 

@@ -1,8 +1,6 @@
 ! TUNNEL_V2_HDWBC
 
 
-cmsel , s , COMPA_HDW_BotBeam  ! TODO  elastic base under these components
-
 ! Exposed retaining walls
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_leftWall'        , CS_HDW1_leftWall  , '-Z' , 'INLET1_leftWall'
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_leftWall'        , CS_HDW2_leftWall  , '-Z' , 'INLET2_leftWall'
@@ -22,9 +20,17 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_footing'          , CS_tunnel         , '-Y' 
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_slab'             , CS_tunnel         , '-Y' , 'inletSlab'
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_stiffener'        , CS_tunnel         , '-Y' , 'inletStiffener'
 
+! Front beam  TODO  ensure springs are perpendicular to beam by creating front beam CSYS
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_botBeam'         , CS_tunnel         , '+Z' , 'inletStiffener'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_botBeam'         , CS_tunnel         , '-Z' , 'inletStiffener'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_botBeam'         , CS_tunnel         , '+Z' , 'inletStiffener'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_botBeam'         , CS_tunnel         , '-Z' , 'inletStiffener'
+
 ! Frames
 TUNNEL_V2_ELASTICBASE , 'COMPA_frame1'               , CS_begSkewed      , '+Z' , 'frame1'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_backBeam'        , CS_begSkewed      , '-Z' , 'frame1'
 TUNNEL_V2_ELASTICBASE , 'COMPA_frame2'               , CS_endSkewed      , '+Z' , 'frame2'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_backBeam'        , CS_endSkewed      , '-Z' , 'frame2'
 
 allsel
 csys,0
