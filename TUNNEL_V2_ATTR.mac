@@ -148,6 +148,7 @@ GEO_corbelYOff_BOT = GEO_CORB_height+(GEO_FLOOR_thk/2)+floor_yProjection
   GEO_APR_positionRight     = GEO_APR_position+GEO_APR_positionOffset
   GEO_APR_obliqueLength     = GEO_APR_length*cos(-LOAD_LTA_skew)
   GEO_APR_axialSkewedLength = GEO_APR_obliqueLength*tan(-LOAD_LTA_skew)
+  GEO_APR_unsupportedLength = GEO_APR_length/3
   *afun,rad
 *endif
 

@@ -249,7 +249,7 @@ cm,COMPL_Railway,line
 /color , cm , lgra , COMPA_struts
 /color , cm , 14   , COMPA_Headwalls
 /color , cm , oran , COMPA_approach
-/color , cm , gree , COMPA_Headwalls
+/color , cm , gree , COMPA_headwalls
 
 ! Capture schematic side view (shows railway lines and embankment contour)
 allsel
