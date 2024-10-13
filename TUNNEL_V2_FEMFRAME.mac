@@ -1,0 +1,30 @@
+! TUNNEL_V2_FEMFRAME , frameIdx
+! TUNNEL_V2_FEMFRAME , ARG1
+
+
+_idx = ARG1
+
+! Set solid model attributes
+TUNNEL_V2_FEMAATT , 'COMPA_HDW%_idx%_topBeam'        , CS_FRM%_idx%_beams     , SEC_FRAME_headBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW%_idx%_backBeam'       , CS_FRM%_idx%_beams     , SEC_FRAME_backBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW%_idx%_leftColumn'     , CS_FRM%_idx%_columns   , SEC_FRAME_column
+TUNNEL_V2_FEMAATT , 'COMPA_HDW%_idx%_rightColumn'    , CS_FRM%_idx%_columns   , SEC_FRAME_column
+
+! Mesh solid model
+cmsel,s,COMPA_frame%_idx%
+aesize,all,FEM_HDW_esize
+amesh,all
+
+! Connect parts
+*if,ARG1,eq,1,then
+  tunnelWallLeftSide  = 'L'
+  tunnelWallRightSide = 'R'
+*elseif,ARG1,eq,2,then
+  tunnelWallLeftSide  = 'R'
+  tunnelWallRightSide = 'L'
+*endif
+
+l2acnt , 'COMPA_HDW%_idx%_leftColumn'  , 'COMPL_%tunnelWallLeftSide%WALL_interfaceInlet%_idx%'  ,  , 1
+l2acnt , 'COMPA_HDW%_idx%_rightColumn' , 'COMPL_%tunnelWallRightSide%WALL_interfaceInlet%_idx%' ,  , 1
+l2acnt , 'COMPA_HDW%_idx%_topBeam'     , 'COMPL_ROOF_interfaceInlet%_idx%'                      ,  , 1
+l2acnt , 'COMPA_HDW%_idx%_backBeam'    , 'COMPL_FLOOR_interfaceInlet%_idx%'                     ,  , 1

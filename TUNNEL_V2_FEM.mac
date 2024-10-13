@@ -16,7 +16,19 @@ TUNNEL_V2_FEMTUNNEL
 
 
 !!                                                                                                !!
-!! 4.2  Headwall                                                                                  !!
+!! 4.2  Frames                                                                                    !!
+!!                                                                                                !!
+*if,GEO_FRM1_status,eq,1,then
+  TUNNEL_V2_FEMFRAME , 1
+*endif
+
+*if,GEO_FRM2_status,eq,1,then
+  TUNNEL_V2_FEMFRAME , 2
+*endif
+
+
+!!                                                                                                !!
+!! 4.3  Headwall                                                                                  !!
 !!                                                                                                !!
 *if,GEO_HDW_status,gt,0,then
   TUNNEL_V2_FEMINLETS
