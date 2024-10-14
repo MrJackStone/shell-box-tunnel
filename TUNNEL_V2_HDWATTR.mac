@@ -1,10 +1,21 @@
 ! TUNNEL_V2_HDWATTR
 
 
-GEO_HDW1_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_LEFT_footDepth
-GEO_HDW1_RIGHT_wallHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_RIGHT_footDepth
-GEO_HDW2_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW2_LEFT_footDepth
-GEO_HDW2_RIGHT_wallHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW2_RIGHT_footDepth
+*if,GEO_HDW1_LEFT_wallHeight ,eq,0,then
+  GEO_HDW1_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_LEFT_footDepth
+*endif
+
+*if,GEO_HDW1_RIGHT_wallHeight,eq,0,then
+  GEO_HDW1_RIGHT_wallHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_RIGHT_footDepth
+*endif
+
+*if,GEO_HDW2_LEFT_wallHeight ,eq,0,then
+  GEO_HDW2_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW2_LEFT_footDepth
+*endif
+
+*if,GEO_HDW2_RIGHT_wallHeight,eq,0,then
+  GEO_HDW2_RIGHT_wallHeight = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW2_RIGHT_footDepth
+*endif
 
 GEO_HDW1_LEFT_cornerRadius  = 2*GEO_HDW1_LEFT_wallThk
 GEO_HDW1_RIGHT_cornerRadius = 2*GEO_HDW1_RIGHT_wallThk

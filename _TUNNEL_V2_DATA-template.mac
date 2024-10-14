@@ -197,6 +197,8 @@ GEO_HDW1_type = 0
   !   [0] Off (wall & footing not modelled)
   !   [1] On (model wall & footing)
   GEO_HDW1_LEFT_wallStatus = 1
+  ! Wall height (set to 0 to match frame height)
+  GEO_HDW1_LEFT_wallHeight = 0
   ! Thickness of the wall
   GEO_HDW1_LEFT_wallThk = 0.40
   ! Wall length (maximum length, at the bottom)
@@ -219,6 +221,8 @@ GEO_HDW1_type = 0
   !   [0] Off (wall & footing not modelled)
   !   [1] On (model wall & footing)
   GEO_HDW1_RIGHT_wallStatus = 1
+  ! Wall height (set to 0 to match frame height)
+  GEO_HDW1_RIGHT_wallHeight = 0
   ! Thickness of the wall
   GEO_HDW1_RIGHT_wallThk = 0.40
   ! Wall length (maximum length, at the bottom)
@@ -295,6 +299,8 @@ GEO_HDW2_type = 0
   !   [0] Off (wall & footing not modelled)
   !   [1] On (model wall & footing)
   GEO_HDW2_LEFT_wallStatus = 1
+  ! Wall height (set to 0 to match frame height)
+  GEO_HDW2_LEFT_wallHeight = 0
   ! Thickness of the wall
   GEO_HDW2_LEFT_wallThk = 0.40
   ! Wall length (maximum length, at the bottom)
@@ -315,6 +321,8 @@ GEO_HDW2_type = 0
   !   [0] Off (wall & footing not modelled)
   !   [1] On (model wall & footing)
   GEO_HDW2_RIGHT_wallStatus = 1
+  ! Wall height (set to 0 to match frame height)
+  GEO_HDW2_RIGHT_wallHeight = 0
   ! Thickness of the wall
   GEO_HDW2_RIGHT_wallThk = 0.40
   ! Wall length (maximum length, at the bottom)

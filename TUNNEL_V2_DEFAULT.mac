@@ -23,6 +23,11 @@ GEO_FRAME_beamRoofConnection = 1
 ! Headwalls
 GEO_HDW_status = 0
 
+GEO_HDW1_LEFT_wallHeight  = 0
+GEO_HDW1_RIGHT_wallHeight = 0
+GEO_HDW2_LEFT_wallHeight  = 0
+GEO_HDW2_RIGHT_wallHeight = 0
+
 ! Approach slabs
 GEO_APR_status   = 0
 GEO_APR_oneWay   = 0
