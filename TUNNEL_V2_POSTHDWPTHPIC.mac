@@ -10,7 +10,7 @@ _imgName      = 'HDW%ARG1%_WALL_%ARG7%'
 _resultLabels = '_str2'
 _pathNames    = '_str3'
 
-pathScale  = 50
+pathScale  = 20
 
 view1w
 wincln

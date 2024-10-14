@@ -18,6 +18,7 @@ esla
 nsle
 n1 = ndnext(0)
 e1 = elnext(0)
+*del , esysNum ,      , nopr
 *get , esysNum , elem , e1     , attr , esys
 *get , secNum  , elem , e1     , attr , secn
 *get , width   , shel , secNum , prop , tthk
