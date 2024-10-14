@@ -154,6 +154,8 @@ cm,COMPN_shadow,node
     nsel,inve
     cmsel,r,COMPN_floor
     esln,s,1
+    cmsel,s,COMPA_floor
+    esla,r
     sfe,all,1,pres,,5e3*LOAD_gammaQ
 
     ALLSEL
