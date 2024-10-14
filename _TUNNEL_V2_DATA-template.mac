@@ -184,6 +184,8 @@ GEO_HDW1_type = 0
   GEO_HDW1_slabStfThk = 0.20
   ! Width of the slab's stiffened edges (measured from the retaining wall plane)
   GEO_HDW1_slabStfWidth = 1.0
+  ! Length of floor slab (for GEO_HDW1_type=2 only)
+  GEO_HDW1_slabLength = 4.0
 
   ! Width of front beam (below floor slab)
   GEO_HDW1_beamWidth = 0.3
@@ -280,6 +282,8 @@ GEO_HDW2_type = 0
   GEO_HDW2_slabStfThk = 0.20
   ! Width of the slab's stiffened edges (measured from the retaining wall plane)
   GEO_HDW2_slabStfWidth = 1.0
+  ! Length of floor slab (for GEO_HDW2_type=2 only)
+  GEO_HDW2_slabLength = 4.0
 
   ! Width of front beam (below floor slab)
   GEO_HDW2_beamWidth = 0.3
