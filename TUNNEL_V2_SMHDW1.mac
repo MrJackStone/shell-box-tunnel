@@ -189,6 +189,29 @@ lsel,r,loc,y,0
 cm,COMPL_HDW%ARG1%_bBeamSlabInterface,line
 
 
-!! D.  Clean up                                                                                   !!
+!! D.  Merge parts                                                                                !!
+! Merge retaining walls & floor slab/stiffener
+! NOTE  At first these parts were not merged at the solid model level. The connection between slab
+! N#1   and wall was accomplished by using the L2ACNT approach (fixed connection).
+!       However, for the first structure modelled this way it was not possible to achieve
+!       convergence, with the solution usually not getting past the 1st or 3rd load steps.
+!       Changing the approach to use solid model level merging appears to have solved the issue.
+!       It is important to note, however, that the problematic structure did manage to solve when
+!       the contact type was switched from FIXED to PINNED. Since the connection between headwalls
+!       and floor slab is usually fixed, this alternative was not applicable to the structure at
+!       hand.
+!       The possibility is left open for the future implementation of an option to define whether to
+!       use FIXED (using solid model merging) or PINNED (using L2ACNT) connection between retaining
+!       walls and floor slab.
+cmsel,s,COMPA_HDW%ARG1%_LEFT_wall
+cmsel,a,COMPA_HDW%ARG1%_RIGHT_wall
+lsla
+cmsel,a,COMPL_HDW%ARG1%_slabLWInterface
+cmsel,a,COMPL_HDW%ARG1%_slabRWInterface
+ksll
+nummrg,kp
+
+
+!! E.  Clean up                                                                                   !!
 csrestore
 *del,KP_slab,,nopr
