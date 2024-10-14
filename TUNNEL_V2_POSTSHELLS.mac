@@ -1,7 +1,7 @@
 ! TUNNEL_V2_POSTSHELLS
 
 
-partCount = 8
+partCount = 9
 *del , area_components ,  , nopr
 *del , part_names      ,  , nopr
 *del , fname_roots     ,  , nopr
@@ -17,6 +17,7 @@ area_components(1,5) = 'COMPA_HDW_walls'
 area_components(1,6) = 'COMPA_HDW_slab'
 area_components(1,7) = 'COMPA_HDW_stiffener'
 area_components(1,8) = 'COMPA_HDW_footing'
+area_components(1,9) = 'COMPA_approach'
 
 part_names(1,1) = 'TUNNEL ROOF'
 part_names(1,2) = 'TUNNEL FLOOR'
@@ -26,6 +27,7 @@ part_names(1,5) = 'INLET WALLS'
 part_names(1,6) = 'INLET SLABS'
 part_names(1,7) = 'INLET SLAB STIFFENERS'
 part_names(1,8) = 'INLET WALL FOOTINGS'
+part_names(1,9) = 'APPROACH SLABS'
 
 fname_roots(1,1) = 'ROOF'
 fname_roots(1,2) = 'FLOOR'
@@ -35,6 +37,7 @@ fname_roots(1,5) = 'HDWWALL'
 fname_roots(1,6) = 'HDWSLAB'
 fname_roots(1,7) = 'HDWSTF'
 fname_roots(1,8) = 'HDWFOOT'
+fname_roots(1,9) = 'APPR'
 
 *do,nthPart,1,partCount,1
   cmaName   = area_components(1,nthPart)
@@ -52,10 +55,10 @@ fname_roots(1,8) = 'HDWFOOT'
   ! TUNNEL_V2_POSTETABPICS , cmaName , 'EAB_Q'   , partName , 'SHEAR FORCE'               , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EAB_q'
   ! TUNNEL_V2_POSTETABPICS , cmaName , 'DW_NX'   , partName , 'AXIAL FORCE (NX)'          , 'ELU-Permanente [kN/m]'  , '%fnameRoot%_DW_nx'
   ! TUNNEL_V2_POSTETABPICS , cmaName , 'DW_NY'   , partName , 'AXIAL FORCE (NY)'          , 'ELU-Permanente [kN/m]'  , '%fnameRoot%_DW_ny'
-  TUNNEL_V2_POSTETABPICS , cmaName , 'EMN_NX'  , partName , 'MIN. AXIAL FORCE (NX)'     , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EMN_nx'
-  TUNNEL_V2_POSTETABPICS , cmaName , 'EMN_NY'  , partName , 'MIN. AXIAL FORCE (NY)'     , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EMN_ny'
-  TUNNEL_V2_POSTETABPICS , cmaName , 'EMX_NX'  , partName , 'MAX. AXIAL FORCE (NX)'     , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EMX_nx'
-  TUNNEL_V2_POSTETABPICS , cmaName , 'EMX_NY'  , partName , 'MAX. AXIAL FORCE (NY)'     , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EMX_ny'
+  ! TUNNEL_V2_POSTETABPICS , cmaName , 'EMN_NX'  , partName , 'MIN. AXIAL FORCE (NX)'     , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EMN_nx'
+  ! TUNNEL_V2_POSTETABPICS , cmaName , 'EMN_NY'  , partName , 'MIN. AXIAL FORCE (NY)'     , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EMN_ny'
+  ! TUNNEL_V2_POSTETABPICS , cmaName , 'EMX_NX'  , partName , 'MAX. AXIAL FORCE (NX)'     , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EMX_nx'
+  ! TUNNEL_V2_POSTETABPICS , cmaName , 'EMX_NY'  , partName , 'MAX. AXIAL FORCE (NY)'     , 'ELU-Normal [kN/m]'      , '%fnameRoot%_EMX_ny'
 
   ! Averaged results
   ! TUNNEL_V2_POSTETABPICS , cmaName , 'ADW_MX'  , partName , 'BENDING MOMENT (AMX)'      , 'ELU-Permanente [kNm/m]' , '%fnameRoot%_DW_mx2'
@@ -70,7 +73,7 @@ fname_roots(1,8) = 'HDWFOOT'
   ! Results variation for fatigue verifications
   TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_MX' , partName , 'DELTA BENDING MOMENT (MX)' , 'ELU-Fadiga [kNm/m]' , '%fnameRoot%_DLT_mx'
   TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_MY' , partName , 'DELTA BENDING MOMENT (MY)' , 'ELU-Fadiga [kNm/m]' , '%fnameRoot%_DLT_my'
-  TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_Q'  , partName , 'DELTA SHEAR FORCE'         , 'ELU-Fadiga [kN/m]'  , '%fnameRoot%_DLT_q'
+  ! TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_Q'  , partName , 'DELTA SHEAR FORCE'         , 'ELU-Fadiga [kN/m]'  , '%fnameRoot%_DLT_q'
   ! TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_NX' , partName , 'DELTA AXIAL FORCE (NX)'    , 'ELU-Fadiga [kN/m]'  , '%fnameRoot%_DLT_nx'
   ! TUNNEL_V2_POSTETABPICS , cmaName , 'DLT_NY' , partName , 'DELTA AXIAL FORCE (NY)'    , 'ELU-Fadiga [kN/m]'  , '%fnameRoot%_DLT_ny'
 *enddo
