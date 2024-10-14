@@ -484,10 +484,12 @@ LOAD_LTA_impactOpt = 2
   LOAD_LTA_impactCoefficient = 1.6
 
 
-!! 1.8.2  Load train inside tunnel                                                                !!
+!! 1.8.2  Load inside tunnel                                                                      !!
+! Pavement dead weight
+LOAD_INNER_pavement = 2e3
+
 ! Name of load train
 LOAD_LTI_name = 'TB-450'
-
 ! Position of the load train along the length of the tunnel
 LOAD_LTI_position = 10.3
 

@@ -284,6 +284,8 @@ loadtrain,LOAD_LTA_name,,,,20,1,'LOAD_LTA_FORCES'
 ! Calculate design values of loads
 LOAD_g_d = LOAD_g_k*LOAD_gammaG
 
+LOAD_INNER_pavement_d = LOAD_INNER_pavement*LOAD_gammaG
+
 *del,LOAD_LTA_FORCES_loads_d,,nopr
 *voper,LOAD_LTA_FORCES_loads_d,LOAD_LTA_FORCES_loads,mult,LOAD_gammaQ
 

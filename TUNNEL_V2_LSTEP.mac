@@ -44,6 +44,14 @@ ACEL,,LOAD_g_d
 ! Apply soil pressures
 TUNNEL_V2_DEADLOADS
 
+! Pavement dead weight
+cmsel,s,COMPA_floor
+cmsel,a,COMPA_HDW_slab
+cmsel,a,COMPA_HDW_stiffener
+esla
+sfe,all,1,pres,,LOAD_INNER_pavement_d
+allsel
+
 *if,GEO_HDW_status,gt,0,then
   TUNNEL_V2_HDWLOAD
 *endif

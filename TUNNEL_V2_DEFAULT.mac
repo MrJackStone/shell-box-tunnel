@@ -33,3 +33,6 @@ GEO_APR_position = 0
 GEO_PILE_status       = 0
 GEO_PILE_EXT_diameter = 1
 GEO_PILE_INT_diameter = 1
+
+! Loads
+LOAD_INNER_pavement = 0
