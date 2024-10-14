@@ -88,6 +88,7 @@
 allsel
 
 ! Auxiliary element tables
+*del   , element_numbers       ,         , nopr
 *vget  , element_numbers       , elem    ,         , elist
 *get   , ec                    , elem    ,         , count
 sabs   , 0

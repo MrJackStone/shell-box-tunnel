@@ -3,8 +3,10 @@
 
 /pbc,f,,0
 /pbc,pres,,0
+allsel
 
 ! Auxiliary element table
+*del   , element_numbers       ,         , nopr
 *vget  , element_numbers       , elem    ,         , elist
 *get   , ec                    , elem    ,         , count
 etable , 'DUMMY'               , volu
