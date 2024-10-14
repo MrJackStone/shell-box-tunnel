@@ -20,6 +20,10 @@ GEO_CORB_height = 1
 GEO_FRAME_status             = 0
 GEO_FRAME_beamRoofConnection = 1
 
+GEO_FRAME_backBeamWidth = 1
+GEO_FRAME_headBeamWidth = 1
+GEO_FRAME_columnThk     = 1
+
 ! Headwalls
 GEO_HDW_status = 0
 
@@ -27,6 +31,28 @@ GEO_HDW1_LEFT_wallHeight  = 0
 GEO_HDW1_RIGHT_wallHeight = 0
 GEO_HDW2_LEFT_wallHeight  = 0
 GEO_HDW2_RIGHT_wallHeight = 0
+
+GEO_HDW1_slabThk       = 1
+GEO_HDW1_beamWidth     = 1
+GEO_HDW1_LEFT_wallThk  = 1
+GEO_HDW1_LEFT_footThk  = 1
+
+GEO_HDW1_RIGHT_wallThk = 1
+GEO_HDW1_RIGHT_footThk = 1
+
+GEO_HDW1_LEFT_wingThk  = 1
+GEO_HDW1_RIGHT_wingThk = 1
+
+GEO_HDW2_slabThk       = 1
+GEO_HDW2_beamWidth     = 1
+GEO_HDW2_LEFT_wallThk  = 1
+GEO_HDW2_LEFT_footThk  = 1
+
+GEO_HDW2_RIGHT_wallThk = 1
+GEO_HDW2_RIGHT_footThk = 1
+
+GEO_HDW2_LEFT_wingThk  = 1
+GEO_HDW2_RIGHT_wingThk = 1
 
 ! Approach slabs
 GEO_APR_status   = 0
