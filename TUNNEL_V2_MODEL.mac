@@ -56,7 +56,8 @@ SOLVING THE MODEL...
 
 allsel
 nldiag,nrre,on
-cnvtol,f,,0.01,2,0.01
+! cnvtol,f,,0.1,2,0.1
+! cnvtol,m,-1
 save
 /uis,abort,off
 keyw,pr_sgui,1
