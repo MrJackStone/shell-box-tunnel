@@ -8,10 +8,10 @@ ALLSEL
 ANTYPE,0
 NLGEOM,ON
 
-NSUBST,SubstepCount,SubstepCount*20,SubstepCount/2
+nsubst,SubstepCount
 
-OUTRES,ERASE
-OUTRES,ALL,LAST
+outres,erase
+outres,all,last
 
 FCUM,ADD
 
@@ -94,10 +94,10 @@ TAKEPIC,fName,1200,1,1
   ALLSEL
   TIME,LoadStepIndex
 
-  NSUBST,SubstepCount,SubstepCount*20,SubstepCount/2
+  nsubst,SubstepCount
 
-  OUTRES,ERASE
-  OUTRES,ALL,LAST
+  outres,erase
+  outres,all,last
 
   LSWRITE,LoadStepIndex
 *endif
@@ -161,10 +161,10 @@ cm,COMPN_shadow,node
     ALLSEL
     TIME,LoadStepIndex
 
-    NSUBST,SubstepCount,SubstepCount*20,SubstepCount/2
+    nsubst,SubstepCount
 
-    OUTRES,ERASE
-    OUTRES,ALL,LAST
+    outres,erase
+    outres,all,last
 
     LSWRITE,LoadStepIndex
 
@@ -326,10 +326,10 @@ APPLYING LOADS ON WINGS...
   !! allsel             !!
   !!                                                                                            !!
 
-  NSUBST,SubstepCount,SubstepCount*20,SubstepCount/2
+  nsubst,SubstepCount
 
-  OUTRES,ERASE
-  OUTRES,ALL,LAST
+  outres,erase
+  outres,all,last
 
   LSWRITE,LoadStepIndex
 
