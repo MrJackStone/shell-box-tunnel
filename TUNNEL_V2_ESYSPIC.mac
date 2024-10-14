@@ -40,10 +40,17 @@ go2png,1500
   lsla,s
   esla,s
   nsle,s
-  pltesys,,,1,11,'esysNum'
+  pltesys,,,1,11,'esys_num'
   /triad,off
 
-  wintitle,1,_imgTitle,'ESYS = %esysNum%',' ',,,13
+  *get,esysCount,parm,esys_num,dim,x
+  esysString = chrval(esys_num(1))
+  *do,nthEsys,2,esysCount,1
+    nthString = '%esys_num(nthEsys)%'
+    esysString = strcat(esysString,strcat(', ',nthString))
+  *enddo
+
+  wintitle,1,_imgTitle,'ESYS = %esysString%',' ',,,13
 
   esel,s,type,,TYPE_shell181
   nsle,s
