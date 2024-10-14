@@ -29,7 +29,7 @@ N2kN = 1e-3
   TUNNEL_V2_LOADPICS , 'COMPA_roof'        , 'Y' , nthLS , 'TUNNEL ROOF'
   TUNNEL_V2_LOADPICS , 'COMPA_floor'       , 'Y' , nthLS , 'TUNNEL FLOOR'
   TUNNEL_V2_LOADPICS , 'COMPA_walls'       , 'X' , nthLS , 'TUNNEL WALLS'
-  TUNNEL_V2_LOADPICS , 'COMPA_HDW_walls'   , 'X' , nthLS , 'INLET WALLS'
+  TUNNEL_V2_LOADPICS , 'COMPA_HDW_walls'   , 'Z' , nthLS , 'INLET WALLS'
   TUNNEL_V2_LOADPICS , 'COMPA_HDW_footing' , 'Y' , nthLS , 'INLET FOOTING'
   TUNNEL_V2_LOADPICS , 'COMPA_approach'    , 'Y' , nthLS , 'APPROACH SLAB'
 
@@ -39,7 +39,7 @@ N2kN = 1e-3
     sadd , NET%nthLS%_PY , LS%nthLS%_PY , LS1_PY , 1 , -1
     ! TUNNEL_V2_LOADPICS , 'COMPA_roof'        , 'Y' , nthLS , 'TUNNEL ROOF'   , 1
     ! TUNNEL_V2_LOADPICS , 'COMPA_walls'       , 'X' , nthLS , 'TUNNEL WALLS'  , 1
-    ! TUNNEL_V2_LOADPICS , 'COMPA_HDW_walls'   , 'X' , nthLS , 'INLET WALLS'   , 1
+    ! TUNNEL_V2_LOADPICS , 'COMPA_HDW_walls'   , 'Z' , nthLS , 'INLET WALLS'   , 1
     ! TUNNEL_V2_LOADPICS , 'COMPA_HDW_footing' , 'Y' , nthLS , 'INLET FOOTING' , 1
 
     ! Delete ETABLEs to make room

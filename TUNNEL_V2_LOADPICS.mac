@@ -25,6 +25,8 @@ pzEtable = 'ZEROS'
   pxEtable = etableName
 *elseif,upcase(ARG2),eq,'Y',then
   pyEtable = etableName
+*elseif,upcase(ARG2),eq,'Z',then
+  pxEtable = etableName
 *endif
 
 ! Calculate absolute values for PLETAB
@@ -44,7 +46,7 @@ boldfont,1
 /udoc,1,cntr,right
 /gformat,f,2,1
 /eshape,0
-/psf,pres,,2
+/psf,pres,,0
 
 /angle,all,0
 /auto,all
@@ -81,7 +83,9 @@ go2png,picRes
   nsle,s
   cleanplot,'pletab','ABS_P',1
 
+  /psf,pres,,2
   plvect,%pxEtable%,%pyEtable%,%pzEtable%,%vecName%,vect
+  /psf,pres,,0
 
   /device,vector,on
   /type,all,3
@@ -96,5 +100,4 @@ go2png,picRes
 endpng,_fileName,,,,,FOLDER_setup
 /erase
 /annot,dele
-/psf,pres,,0
 /type,all,3
