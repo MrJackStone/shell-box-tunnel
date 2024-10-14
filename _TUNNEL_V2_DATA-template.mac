@@ -437,7 +437,7 @@ GEO_PILE_INT_diameter = 0.41
 ! Soil stiffness
 MAT_SOIL_stiffness = 14e6
 ! Soil friction angle
-MAT_SOIL_frictionAngle = 0.28
+MAT_SOIL_frictionAngle = 28
 ! Soil cohesion
 MAT_SOIL_cohesion = 0
 ! Soil mass density
