@@ -207,11 +207,13 @@ csys,CS_tunnel
   *do,nthGirder,1,GEO_girderCount-1,1
     zf = GEO_girderZ(nthGirder)
     cmsel,s,COMPA_roof
+    cmsel,u,COMPA_struts
     asel,r,loc,z,zi,zf
     cm,COMPA_RG%nthGirder%,area
     zi = zf
   *enddo
   cmsel,s,COMPA_roof
+  cmsel,u,COMPA_struts
   asel,r,loc,z,zi,GEO_TUN_Length
   cm,COMPA_RG%GEO_girderCount%,area
 *endif

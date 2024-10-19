@@ -2,16 +2,18 @@
 
 
 !! A.  Floor slab                                                                                 !!
-asel,none
 csys,CS_floor
+
+asel,none
 wpcsys,-1
 blc4,0,0,GEO_TUN_totEffW,GEO_TUN_length
 cm,COMPA_floor,area
 
 
 !! B.  Roof slab                                                                                  !!
-asel,none
 csys,CS_roof
+
+asel,none
 wpcsys,-1
 blc4,0,0,GEO_TUN_totEffW,GEO_TUN_length
 cm,COMPA_roof,area
@@ -29,18 +31,22 @@ cm,COMPA_roof,area
     asel,r,loc,y,zBeg,zEnd
     adele,all,,,1
   *enddo
+  cmsel,s,COMPA_roof
+  asel,r,loc,y,GEO_ROOF_gapBeg,GEO_ROOF_gapEnd
+  cm,COMPA_struts,area
 *endif
 
 ! Slice at precast girders
 *if,GEO_ROOF_type,eq,1,then
-  csys,CS_tunnel
   cmsel,s,COMPA_roof
+  cmsel,u,COMPA_struts
   lsla
   ksll
   *do,nthSlice,1,GEO_girderCount-1,1
-    z = GEO_girderZ(nthSlice)
+    long = GEO_girderZ(nthSlice)
     wpcsys,-1
-    wpoffs,,,z
+    wpoffs,,long
+    wprota,,90
     asbw,all,sepo,delete
   *enddo
   cm,COMPA_roof,area
