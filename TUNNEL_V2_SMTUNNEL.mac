@@ -23,10 +23,10 @@ cm,COMPA_roof,area
     zEnd = GEO_ROOF_gap_z_ends(nthGap)
 
     cmsel,s,COMPA_roof
-    csslicexy,zBeg
-    csslicexy,zEnd
+    csslicexz,zBeg
+    csslicexz,zEnd
     cm,COMPA_roof,area
-    asel,r,loc,z,zBeg,zEnd
+    asel,r,loc,y,zBeg,zEnd
     adele,all,,,1
   *enddo
 *endif
