@@ -44,12 +44,17 @@ path_labels(9) = 'UZ_frq'
 !   POST_PTHENV_HDW_walls(
 ! *enddo
 
+allsel
+
 ! Create paths
 *do,nthInlet,1,2,1
 
   *do,nthSide,1,2,1
 
     side = sides(nthSide)
+
+    *if,GEO_HDW%nthInlet%_%side%_wallStatus,eq,0,cycle
+
     csys,CS_HDW%nthInlet%_%side%Wall
 
     yCoordBot = -GEO_HDW%nthInlet%_%side%_footDepth
@@ -79,9 +84,12 @@ path_labels(9) = 'UZ_frq'
 ! Map envelopes onto paths
 *do,nthInlet,1,2,1
   *do,nthSide,1,2,1
+
+    side = sides(nthSide)
+    *if,GEO_HDW%nthInlet%_%side%_wallStatus,eq,0,cycle
+
     *do,nthPath,1,pathCount,1
       *do,nthLabel,1,labelCount,1
-        side      = sides(nthSide)
         sideKey   = strsub(side,1,1)
         pathName  = 'H%nthInlet%%sideKey%_P%nthPath%'
         pathLabel = path_labels(nthLabel)
@@ -105,8 +113,8 @@ path_labels(9) = 'UZ_frq'
 *dim , path_labels_q  , char , pathCount*4
 idx = 1
 *do,nthPath,1,pathCount,1
-  path_names_1(idx)   = 'H1L_P%nthPath%' , 'H1L_P%nthPath%' , 'H1R_P%nthPath%' , 'H1R_P%nthPath%'
-  path_names_2(idx)   = 'H2L_P%nthPath%' , 'H2L_P%nthPath%' , 'H2R_P%nthPath%' , 'H2R_P%nthPath%'
+  path_names_1(idx)   = 'H1L_P%nthPath%' , 'H1L_P%nthPath%' , 'H1L_P%nthPath%' , 'H1L_P%nthPath%'
+  path_names_2(idx)   = 'H2L_P%nthPath%' , 'H2L_P%nthPath%' , 'H2L_P%nthPath%' , 'H2L_P%nthPath%'
   path_labels_mx(idx) = 'EPOS_MX'        , 'ENEG_MX'        , 'EPOS_MX'        , 'ENEG_MX'
   path_labels_my(idx) = 'EPOS_MY'        , 'ENEG_MY'        , 'EPOS_MY'        , 'ENEG_MY'
   path_labels_q(idx)  = 'EAB_Q'          , 'EAB_Q'          , 'EAB_Q'          , 'EAB_Q'

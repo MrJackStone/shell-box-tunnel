@@ -2,19 +2,23 @@
 ! TUNNEL_V2_POSTHDWPTHPIC , ARG1     , ARG2        , ARG3       , ARG4 , ARG5     , ARG6  , ARG7
 
 
+_idx          = ARG1
 _str2         = ARG2
 _str3         = ARG3
 _midTitle     = ARG5
 _rightTitle   = 'ELU-Normal [%ARG6%]'
-_imgName      = 'HDW%ARG1%_WALL_%ARG7%'
+_imgName      = 'HDW%_idx%_WALL_%ARG7%'
 _resultLabels = '_str2'
 _pathNames    = '_str3'
 
 pathScale  = 20
 
+/erase
+/annot,dele
+clims
 view1w
 wincln
-wintitle,1,'INLET #%ARG1%',_midTitle,_rightTitle,,1,13
+wintitle,1,'INLET #%_idx%',_midTitle,_rightTitle,,1,13
 view2w,,,1,,1,2
 clims
 g_picres,GRAPH_picRes
@@ -33,7 +37,7 @@ axanno,2
 /gline,all,0
 /type,all,3
 
-cmsel,s,COMPA_frame%ARG1%
+cmsel,s,COMPA_frame%_idx%
 esla
 nsle
 
@@ -42,47 +46,51 @@ csys,CS_tunnel
 eplot
 /user,all
 
-/window,1,on
-/window,2,off
+*if,GEO_HDW%_idx%_RIGHT_wallStatus,eq,1,then
+  /window,1,on
+  /window,2,off
 
-cmsel,s,COMPA_HDW%ARG1%_RIGHT_wall
-cmsel,a,COMPA_HDW%ARG1%_RIGHT_footing
-esla
-nsle
-/angle,1,0
-/focus,1,auto
-eplot
+  cmsel,s,COMPA_HDW%_idx%_RIGHT_wall
+  cmsel,a,COMPA_HDW%_idx%_RIGHT_footing
+  esla
+  nsle
+  /angle,1,0
+  /focus,1,auto
+  eplot
 
-csys,CS_HDW%ARG1%_rightWall
-clocal,CS_dummy,cart,0,0,0,,,-90
-wpcsys,1
-/auto,1
-eplot
-/user,1
+  csys,CS_HDW%_idx%_rightWall
+  clocal,CS_dummy,cart,0,0,0,,,-90
+  wpcsys,1
+  /auto,1
+  eplot
+  /user,1
+*endif
 
-/window,1,off
-/window,2,on
+*if,GEO_HDW%_idx%_LEFT_wallStatus,eq,1,then
+  /window,1,off
+  /window,2,on
 
-cmsel,s,COMPA_HDW%ARG1%_LEFT_wall
-cmsel,a,COMPA_HDW%ARG1%_LEFT_footing
-esla
-nsle
-/focus,2,auto
-/angle,2,0
-eplot
+  cmsel,s,COMPA_HDW%_idx%_LEFT_wall
+  cmsel,a,COMPA_HDW%_idx%_LEFT_footing
+  esla
+  nsle
+  /focus,2,auto
+  /angle,2,0
+  eplot
 
-csys,CS_HDW%ARG1%_leftWall
-clocal,CS_dummy,cart,0,0,0,,,90
-wpcsys,2
-/auto,2
-eplot
-/user,2
+  csys,CS_HDW%_idx%_leftWall
+  clocal,CS_dummy,cart,0,0,0,,,90
+  wpcsys,2
+  /auto,2
+  eplot
+  /user,2
+*endif
 
 /window,1,on
 /window,2,on
 
 go2png,GRAPH_picRes
-  cmsel,s,COMPA_frame%ARG1%
+  cmsel,s,COMPA_frame%_idx%
   esla
   nsle
   /eshape,0
@@ -92,33 +100,42 @@ go2png,GRAPH_picRes
   /noerase
   /device,vector,off
 
-  cmsel,s,COMPA_HDW%ARG1%_RIGHT_wall
-  cmsel,a,COMPA_HDW%ARG1%_RIGHT_footing
-  esla
-  nsle
+  *if,GEO_HDW%_idx%_RIGHT_wallStatus,eq,1,then
+    cmsel,s,COMPA_HDW%_idx%_RIGHT_wall
+    cmsel,a,COMPA_HDW%_idx%_RIGHT_footing
+    esla
+    nsle
 
-  /window,1,on
-  /window,2,off
-  /eshape,1
-  eplot
-  clims
-  cleanplot,'mpathplot',pathScale,,'_pathNames','_resultLabels'
+    /window,1,on
+    /window,2,off
+    /eshape,1
+    eplot
+    clims
+    cleanplot,'mpathplot',pathScale,,'_pathNames','_resultLabels'
+  *endif
 
-  cmsel,s,COMPA_HDW%ARG1%_LEFT_wall
-  cmsel,a,COMPA_HDW%ARG1%_LEFT_footing
-  esla
-  nsle
+  *if,GEO_HDW%_idx%_LEFT_wallStatus,eq,1,then
+    cmsel,s,COMPA_HDW%_idx%_LEFT_wall
+    cmsel,a,COMPA_HDW%_idx%_LEFT_footing
+    esla
+    nsle
 
-  /window,1,off
-  /window,2,on
-  eplot
-  clims
-  cleanplot,'mpathplot',pathScale,,'_pathNames','_resultLabels'
+    /window,1,off
+    /window,2,on
+    eplot
+    clims
+    cleanplot,'mpathplot',pathScale,,'_pathNames','_resultLabels'
+  *endif
 
-  cmsel,s,COMPA_HDW%ARG1%_RIGHT_wall
-  cmsel,a,COMPA_HDW%ARG1%_RIGHT_footing
-  cmsel,a,COMPA_HDW%ARG1%_LEFT_wall
-  cmsel,a,COMPA_HDW%ARG1%_LEFT_footing
+  asel,none
+  *if,GEO_HDW%_idx%_RIGHT_wallStatus,eq,1,then
+    cmsel,s,COMPA_HDW%_idx%_RIGHT_wall
+    cmsel,a,COMPA_HDW%_idx%_RIGHT_footing
+  *endif
+  *if,GEO_HDW%_idx%_LEFT_wallStatus,eq,1,then
+    cmsel,a,COMPA_HDW%_idx%_LEFT_wall
+    cmsel,a,COMPA_HDW%_idx%_LEFT_footing
+  *endif
   esla
   nsle
 
