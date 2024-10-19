@@ -55,19 +55,13 @@ nrotat,all
 pinned = 1
 fixed  = 0
 
-*if,GEO_HDW1_type,eq,0,then
-  connection1 = fixed
-*else
-  connection1 = pinned
-*endif
-
-*if,GEO_HDW2_type,eq,0,then
-  connection2 = fixed
-*else
-  connection2 = pinned
-*endif
-
 *if,GEO_HDW1_status,eq,1,then
+
+  *if,GEO_HDW1_type,eq,0,then
+    connection1 = fixed
+  *else
+    connection1 = pinned
+  *endif
 
   *if,GEO_HDW1_LEFT_wallStatus,eq,1,then
     l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_LEFT_wallInterface' ,  , connection1
@@ -77,7 +71,7 @@ fixed  = 0
     l2acnt , 'COMPA_frame1' , 'COMPL_HDW1_RIGHT_wallInterface' ,  , connection1
   *endif
 
-  l2acnt , 'COMPA_floor' , 'COMPL_HDW1_slabTunnelInterface' ,  , fixed
+  l2acnt , 'COMPA_floor' , 'COMPL_HDW1_slabTunnelInterface' ,  , connection1
 
   *if,GEO_HDW1_type,eq,0,then
     ! Full inlet
@@ -96,6 +90,12 @@ fixed  = 0
 
 *if,GEO_HDW2_status,eq,1,then
 
+  *if,GEO_HDW2_type,eq,0,then
+    connection2 = fixed
+  *else
+    connection2 = pinned
+  *endif
+
   *if,GEO_HDW2_LEFT_wallStatus,eq,1,then
     l2acnt , 'COMPA_frame2' , 'COMPL_HDW2_LEFT_wallInterface' ,  , connection2
   *endif
@@ -104,7 +104,7 @@ fixed  = 0
     l2acnt , 'COMPA_frame2' , 'COMPL_HDW2_RIGHT_wallInterface' ,  , connection2
   *endif
 
-  l2acnt , 'COMPA_floor' , 'COMPL_HDW2_slabTunnelInterface' ,  , fixed
+  l2acnt , 'COMPA_floor' , 'COMPL_HDW2_slabTunnelInterface' ,  , connection2
 
   *if,GEO_HDW2_type,eq,0,then
     ! Full inlet
