@@ -15,7 +15,7 @@ AATT,MAT_conc,,TYPE_shell181,CS_right,SEC_RWALL
   AATT,MAT_conc,,TYPE_shell181,CS_right,SEC_IWALL
 *elseif,GEO_IWALL_type,eq,1,then
   wallX=0
-  *do,nthWall,1,GEO_TUN_modules-1,1
+  *do,nthWall,1,GEO_IWALL_count,1
     wallX=wallX+GEO_TUN_effW
 
     beamCS=CS_IWALL_beams(nthWall)
