@@ -194,6 +194,7 @@ l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
 *if,GEO_ROOF_gapStatus,eq,1,and,GEO_ROOF_gapStrutCount,gt,0,then
   l2acnt , 'COMPA_struts' , 'COMPL_LWALL_roofInterface' ,  , pinned
   l2acnt , 'COMPA_struts' , 'COMPL_RWALL_roofInterface' ,  , pinned
+  l2acnt , 'COMPA_struts' , 'COMPL_IWALL_roofInterface' ,  , pinned
 *endif
 
 ! Between roof precast girders
