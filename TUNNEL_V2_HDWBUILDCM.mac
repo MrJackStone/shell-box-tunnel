@@ -179,17 +179,17 @@ cm,COMPA_HDW_wallsBuried,area
 
 ! Slab stiffeners
 asel,none
+cm,COMPA_HDW_stiffener,area
 *do,nthInlet,1,2,1
   *do,nthSide,1,2,1
     side = sides(nthSide)
     csys,CS_HDW%nthInlet%_%side%Wall
-    asel,a,loc,z,0,GEO_HDW%nthInlet%_slabStfWidth
+    cmsel,s,COMPA_HDW_%nthInlet%
+    asel,r,loc,y,0
+    asel,r,loc,z,0,GEO_HDW%nthInlet%_slabStfWidth
+    cmpadd,'COMPA_HDW_stiffener'
   *enddo
 *enddo
-csys,CS_tunnel
-asel,r,loc,y,0
-cmsel,r,COMPA_headwalls
-cm,COMPA_HDW_stiffener,area
 
 ! Floor slabs
 csys,CS_tunnel
