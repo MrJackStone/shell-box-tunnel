@@ -165,7 +165,7 @@ aesize,all,FEM_TUN_esize
 *endif
 
 ! Mesh struts
-cmsel,a,COMPA_struts
+cmsel,s,COMPA_struts
 *get,ac,area,,count
 *if,ac,gt,0,then
   aesize,all,FEM_TUN_esize
@@ -203,18 +203,23 @@ l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
 
   ! Connect displacement DOFs
   *do,nthGirder,1,GEO_girderCount-1,1
-    nthCMA = 'COMPA_RG%nthGirder%'
+    mthGirder = nthGirder+1
+    nthCMA    = 'COMPA_RG%nthGirder%'
+    mthCMA    = 'COMPA_RG%mthGirder%'
+
     cmsel,s,%nthCMA%
     lsla
     ksll
     kpbbox,,,,'nthYMax'
+    *get,nthAcount,area,,count
 
-    mthGirder = nthGirder+1
-    mthCMA = 'COMPA_RG%mthGirder%'
     cmsel,s,%mthCMA%
     lsla
     ksll
     kpbbox,,,'mthYMin'
+    *get,mthAcount,area,,count
+
+    *if,nthAcount,eq,0,or,mthAcount,eq,0,cycle
 
     girderGap = abs(mthYMin-nthYMax)
     *if,girderGap,le,1e-6,then
@@ -230,7 +235,6 @@ l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
   ! Remove longitudinal lines from selection
   cmsel,s,COMPA_roof
   lsla,s
-  lsel,u,loc,x,0:GEO_TUN_totEffW:GEO_TUN_effW
   nsll,s,1
 
   ! Create semi-rigid connection (rotation DOFs)
