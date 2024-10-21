@@ -79,9 +79,9 @@ cm,COMPA_roof,area
   cm,COMPA_struts,area
   csrestore
 
-  TUNNEL_V2_SMGLUE , CS_roof , 'COMPA_struts' , 'COMPA_leftWall'
-  TUNNEL_V2_SMGLUE , CS_roof , 'COMPA_struts' , 'COMPA_rightWall'
-  TUNNEL_V2_SMGLUE , CS_roof , 'COMPA_struts' , 'COMPA_innerWalls'
+  ! TUNNEL_V2_SMGLUE , CS_roof , 'COMPA_struts' , 'COMPA_leftWall'
+  ! TUNNEL_V2_SMGLUE , CS_roof , 'COMPA_struts' , 'COMPA_rightWall'
+  ! TUNNEL_V2_SMGLUE , CS_roof , 'COMPA_struts' , 'COMPA_innerWalls'
 *endif
 
 ! Slice at precast girders
