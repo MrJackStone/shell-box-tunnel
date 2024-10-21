@@ -1,5 +1,5 @@
-! TUNNEL_V2_ELASTICBASE , cmaName , csys , direction , root
-! TUNNEL_V2_ELASTICBASE , ARG1    , ARG2 , ARG3      , ARG4
+! TUNNEL_V2_ELASTICBASE , cmaName , csys , direction , root , stfMultiplier , bidirectional
+! TUNNEL_V2_ELASTICBASE , ARG1    , ARG2 , ARG3      , ARG4 , ARG5          , ARG6
 
 
 outputName = 'EBASE_%ARG4%'
@@ -12,6 +12,16 @@ dirSign    = strsub(ARG3,1,1)
   sign = 1
 *elseif,dirSign,eq,'-',then
   sign = -1
+*endif
+
+stfMult = 1
+*if,ARG5,gt,0,then
+  stfMult = ARG5
+*endif
+
+sprType = -1
+*if,ARG6,eq,1,then
+  sprType = 0
 *endif
 
 csys,ARG2
@@ -27,4 +37,4 @@ Area component was empty.
 
 esla
 nsle
-elasticbase , outputName , dirAxis , MAT_SOIL_stiffness , -1 , sign*SpringLength , SpringElasticModulus ,  ,  , compnName , compeName , 'FEM_nodes_apportioned'
+elasticbase , outputName , dirAxis , MAT_SOIL_stiffness*stfMult , sprType , sign*SpringLength , SpringElasticModulus ,  ,  , compnName , compeName , 'FEM_nodes_apportioned'
