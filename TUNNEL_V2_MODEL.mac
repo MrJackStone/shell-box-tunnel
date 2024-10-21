@@ -42,21 +42,7 @@ TUNNEL_V2_LSTEP
 !!                                                                                                !!
 !! 6.  Solution                                                                                   !!
 !!                                                                                                !!
-*msg,UI,FILE_name
-TUNNEL # %s %/&
-SOLVING THE MODEL...
-
-/solu
-
-allsel
-nldiag,nrre,on
-! cnvtol,f,,0.1,2,0.1
-! cnvtol,m,-1
-save
-/uis,abort,off
-keyw,pr_sgui,1
-lssolve,1,loadStepCount,1
-keyw,pr_sgui,0
+TUNNEL_V2_SOLU
 
 
 !!                                                                                                !!
