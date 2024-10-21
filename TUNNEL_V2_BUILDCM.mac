@@ -181,6 +181,22 @@ asel,none
 *endif
 cm,COMPA_Struts,area
 
+cmsel,s,COMPA_struts
+lsla
+lsel,r,loc,x,0
+cm,COMPL_strutsLWallInterface,line
+
+cmsel,s,COMPA_struts
+lsla
+lsel,r,loc,x,GEO_TUN_totEffW
+cm,COMPL_strutsRWallInterface,line
+
+cmsel,s,COMPA_struts
+lsel,none
+lsel,a,loc,x,GEO_IWALL_x_coords(1:GEO_IWALL_count)
+lsla,r
+cm,COMPL_strutsIWallInterface,line
+
 ! Roof slab
 csys,CS_tunnel
 cmsel,s,COMPA_tunnel

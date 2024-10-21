@@ -191,10 +191,11 @@ l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
   l2acnt , 'COMPA_roof'  , 'COMPL_IWALL_roofInterface'  ,  , roofConnection
 *endif
 
+! TODO  this doesn't work, convergence issues. See note N#4.
 *if,GEO_ROOF_gapStatus,eq,1,and,GEO_ROOF_gapStrutCount,gt,0,then
-  l2acnt , 'COMPA_struts' , 'COMPL_LWALL_roofInterface' ,  , pinned
-  l2acnt , 'COMPA_struts' , 'COMPL_RWALL_roofInterface' ,  , pinned
-  l2acnt , 'COMPA_struts' , 'COMPL_IWALL_roofInterface' ,  , pinned
+  l2acnt , 'COMPA_leftWall'   , 'COMPL_strutsLWallInterface' ,  , pinned
+  l2acnt , 'COMPA_rightWall'  , 'COMPL_strutsRWallInterface' ,  , pinned
+  l2acnt , 'COMPA_InnerWalls' , 'COMPL_strutsIWallInterface' ,  , pinned
 *endif
 
 ! Between roof precast girders
