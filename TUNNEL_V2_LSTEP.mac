@@ -6,7 +6,11 @@
 ALLSEL
 
 ANTYPE,0
-NLGEOM,ON
+*if,FEM_linear,eq,1,then
+  nlgeom,off
+*else
+  nlgeom,on
+*endif
 
 nsubst,SubstepCount
 

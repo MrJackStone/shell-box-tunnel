@@ -514,6 +514,9 @@ FEM_TUN_esize = 0.25
 ! Element size for headwall parts
 FEM_HDW_esize = 0.15
 
+! Linear analysis option (WARNING: NOT RECOMMENDED!!!)
+FEM_linear = 0
+
 
 
 
