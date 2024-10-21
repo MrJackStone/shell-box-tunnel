@@ -1,0 +1,25 @@
+! TUNNEL_V2_SMGLUE , csNum , cma1 , cma2
+! TUNNEL_V2_SMGLUE , ARG1  , ARG2 , ARG3
+
+csbackup
+
+csys,ARG1
+
+cmsel,s,%ARG2%
+cmsel,a,%ARG3%
+aglue,all
+
+cm,COMPA_temp,area
+
+cmsel,s,COMPA_temp
+asel,u,loc,z,0
+cm,%ARG3%,area
+
+cmsel,s,COMPA_temp
+cmsel,u,%ARG3%
+cm,%ARG2%,area
+
+cmsel,s,COMPA_temp
+cmdele,COMPA_temp
+
+csrestore
