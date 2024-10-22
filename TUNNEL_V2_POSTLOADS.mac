@@ -3,6 +3,7 @@
 
 /pbc,f,,0
 /pbc,pres,,0
+/dscale,all,off
 allsel
 
 ! Auxiliary element table
