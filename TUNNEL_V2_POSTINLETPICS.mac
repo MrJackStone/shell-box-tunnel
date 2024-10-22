@@ -113,8 +113,8 @@ allsel
 *dim , path_labels_q  , char , pathCount*4
 idx = 1
 *do,nthPath,1,pathCount,1
-  path_names_1(idx)   = 'H1L_P%nthPath%' , 'H1L_P%nthPath%' , 'H1L_P%nthPath%' , 'H1L_P%nthPath%'
-  path_names_2(idx)   = 'H2L_P%nthPath%' , 'H2L_P%nthPath%' , 'H2L_P%nthPath%' , 'H2L_P%nthPath%'
+  path_names_1(idx)   = 'H1L_P%nthPath%' , 'H1L_P%nthPath%' , 'H1R_P%nthPath%' , 'H1R_P%nthPath%'
+  path_names_2(idx)   = 'H2L_P%nthPath%' , 'H2L_P%nthPath%' , 'H2R_P%nthPath%' , 'H2R_P%nthPath%'
   path_labels_mx(idx) = 'EPOS_MX'        , 'ENEG_MX'        , 'EPOS_MX'        , 'ENEG_MX'
   path_labels_my(idx) = 'EPOS_MY'        , 'ENEG_MY'        , 'EPOS_MY'        , 'ENEG_MY'
   path_labels_q(idx)  = 'EAB_Q'          , 'EAB_Q'          , 'EAB_Q'          , 'EAB_Q'
