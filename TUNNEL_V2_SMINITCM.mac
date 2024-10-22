@@ -16,6 +16,7 @@ cm , COMPA_InnerWalls , area
 cm , COMPA_bBeam      , area
 cm , COMPA_tBeam      , area
 cm , COMPA_Columns    , area
+cm , COMPA_struts     , area
 
 cm , COMPL_Tunnel     , line
 cm , COMPL_Embankment , line
