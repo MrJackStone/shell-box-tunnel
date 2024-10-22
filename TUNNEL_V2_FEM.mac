@@ -63,6 +63,10 @@ esel,s,type,,TYPE_shell181
 nsle,s,active
 apportionedstats,,'FEM_nodes_apportioned'
 
+! Top slab
+TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '+Y' , 'roof'
+TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '-Z' , 'FRIC_roof' , 1e-1 , 1
+
 ! Floor slab
 TUNNEL_V2_ELASTICBASE , 'COMPA_floor'     , CS_tunnel , '-Y' , 'floor'
 TUNNEL_V2_ELASTICBASE , 'COMPA_floor'     , CS_tunnel , '-Z' , 'FRIC_floor' , 1e-1 , 1
@@ -74,12 +78,6 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall'  , CS_tunnel , '-Z' , 'FRIC_leftWall' ,
 ! Right wall
 TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall' , CS_tunnel , '+X' , 'rightWall'
 TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall' , CS_tunnel , '-Z' , 'FRIC_rightWall' , 1e-1 , 1
-
-! Top slab
-*if,FEM_linear,ne,1,then
-  TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '+Y' , 'roof'
-  TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '-Z' , 'FRIC_roof' , 1e-1 , 1
-*endif
 
 
 !! 4.5.7  Headwalls                                                                               !!

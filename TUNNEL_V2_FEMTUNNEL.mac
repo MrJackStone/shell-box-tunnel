@@ -239,7 +239,7 @@ l2acnt , 'COMPA_roof'  , 'COMPL_RWALL_roofInterface'  ,  , roofConnection
   nsll,s,1
 
   ! Create semi-rigid connection (rotation DOFs)
-  type  , TYPE_combin39
+  type  , TYPE_combin
   mat   , MAT_conc
   real  , REAL_roofSprings
   eintf , 1e-3

@@ -119,7 +119,7 @@ MAT_rigid  = 4
 !! D.  Element types                                                                              !!
 TYPE_shell181 = 1
 TYPE_link180  = 2
-TYPE_combin39 = 3
+TYPE_combin   = 3
 TYPE_beam188  = 4
 
 

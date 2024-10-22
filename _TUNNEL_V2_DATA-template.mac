@@ -514,8 +514,15 @@ FEM_TUN_esize = 0.25
 ! Element size for headwall parts
 FEM_HDW_esize = 0.15
 
-! Linear analysis option (WARNING: NOT RECOMMENDED!!!)
-FEM_linear = 0
+! Large displacement theory:
+!   [0] Off (small displacement theory)
+!   [1] On (large displacement theory)
+FEM_nlgeom = 1
+
+! Roof springs option:
+!   [0] Linear
+!   [1] Nonlinear
+FEM_nlsprings = 0
 
 
 

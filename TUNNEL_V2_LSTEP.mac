@@ -5,11 +5,12 @@
 
 ALLSEL
 
-ANTYPE,0
-*if,FEM_linear,eq,1,then
-  nlgeom,off
-*else
+antype,0
+
+*if,FEM_nlgeom,eq,1,then
   nlgeom,on
+*else
+  nlgeom,off
 *endif
 
 nsubst,SubstepCount
