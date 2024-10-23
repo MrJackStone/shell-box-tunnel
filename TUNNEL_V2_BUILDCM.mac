@@ -179,7 +179,13 @@ asel,none
   asel , a , loc , z , GEO_ROOF_gap_z_ends(1:GEO_ROOF_gapStrutCount) , GEO_ROOF_gap_z_begs(2:GEO_ROOF_gapCount)
   asel , r , loc , y , GEO_TUN_effH
 *endif
-cm,COMPA_Struts,area
+cm,COMPA_struts,area
+
+*do,nthStrut,1,GEO_ROOF_gapStrutCount,1
+  asel,s,loc,z,GEO_ROOF_gap_z_ends(nthStrut),GEO_ROOF_gap_z_begs(nthStrut+1)
+  cmsel,r,COMPA_struts
+  cm,COMPA_strut%nthStrut%,area
+*enddo
 
 cmsel,s,COMPA_struts
 lsla
