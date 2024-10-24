@@ -19,6 +19,10 @@
   *enddo
 *enddo
 
+*do,nthStrut,1,GEO_ROOF_gapStrutCount,1
+  *del,RES_ENV_strut%nthStrut%,,nopr
+*enddo
+
 *do,nthLS,1,LoadStepCount,1
 
   allsel
@@ -59,11 +63,17 @@
     *enddo
   *enddo
 
+  *do,nthStrut,1,GEO_ROOF_gapStrutCount,1
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_strut%nthStrut%' , 'STRUT%nthStrut%' , 'RES_ENV_strut%nthStrut%'
+  *enddo
+
 
 *enddo
 
 ! TODO  this whole thing can be removed if PTH2BEAM outputs results in common units (kN, kNm, mm)
-pathCount = 8+(GEO_IWALL_count*(2+GEO_IWALL_columnCount))
+pathCount = 8+(GEO_IWALL_count*(2+GEO_IWALL_columnCount))+(GEO_ROOF_gapStrutCount)
+iwallIdx  = 9
+strutIdx  = pathCount-GEO_ROOF_gapStrutCount
 
 *del , path_names    ,      , nopr
 *del , path_labels   ,      , nopr
@@ -74,12 +84,16 @@ pathCount = 8+(GEO_IWALL_count*(2+GEO_IWALL_columnCount))
 
 path_names(1) = 'TBEAM1' , 'BBEAM1' , 'LCOL1' , 'RCOL1' , 'TBEAM2' , 'BBEAM2' , 'LCOL2' , 'RCOL2'
 *do,nthIWall,1,GEO_IWALL_count,1
-  idx             = 9+(nthIWall-1)*(GEO_IWALL_columnCount+2)
+  idx             = iwallIdx+(nthIWall-1)*(GEO_IWALL_columnCount+2)
   path_names(idx) = 'I%nthIWall%BBEAM' , 'I%nthIWall%TBEAM'
   *do,nthColumn,1,GEO_IWALL_columnCount,1
     jdx             = idx+nthColumn+1
     path_names(jdx) = 'I%nthIWall%COL%nthColumn%'
   *enddo
+*enddo
+*do,nthStrut,1,GEO_ROOF_gapStrutCount,1
+  kdx             = strutIdx+nthStrut
+  path_names(kdx) = 'STRUT%nthStrut%'
 *enddo
 
 path_labels(1)   = 'MP_MIN' , 'MP_MAX' , 'MB_MIN' , 'MB_MAX' , 'N_MIN' , 'N_MAX' , 'V_MIN' , 'V_MAX' , 'DYB_MIN' , 'DYB_MAX'

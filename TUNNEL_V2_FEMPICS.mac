@@ -28,7 +28,7 @@ view1w
 /view,1,1,1,1
 eplot
 
-cmEsysCount = 31
+cmEsysCount = 32
 
 *del,cmnames_esys,,nopr
 *dim,cmnames_esys,string,248,cmEsysCount
@@ -63,6 +63,7 @@ cmnames_esys(1,28) = 'COMPA_HDW2_slab'
 cmnames_esys(1,29) = 'COMPA_HDW2_leftStiffener'
 cmnames_esys(1,30) = 'COMPA_HDW2_rightStiffener'
 cmnames_esys(1,31) = 'COMPA_HDW2_topBeam'
+cmnames_esys(1,32) = 'COMPA_struts'
 
 *del,img_titles,,nopr
 *dim,img_titles,string,248,cmEsysCount
@@ -97,6 +98,7 @@ img_titles(1,28) = 'INLET 2: FLOOR SLAB'
 img_titles(1,29) = 'INLET 2: LEFT FLOOR STIFFENER'
 img_titles(1,30) = 'INLET 2: RIGHT FLOOR STIFFENER'
 img_titles(1,31) = 'FRAME 2: TOP BEAM'
+img_titles(1,32) = 'ROOF STRUTS'
 
 *del,file_names,,nopr
 *dim,file_names,string,248,cmEsysCount
@@ -131,6 +133,7 @@ file_names(1,28) = 'esys_in2_FLOOR_SLAB'
 file_names(1,29) = 'esys_in2_L_FLOOR_STIFFENER'
 file_names(1,30) = 'esys_in2_R_FLOOR_STIFFENER'
 file_names(1,31) = 'esys_fr2_TOP_BEAM'
+file_names(1,32) = 'esys_tun_STRUTS'
 
 *do,nthCM,1,cmEsysCount,1
   cmName   = cmnames_esys(1,nthCM)
