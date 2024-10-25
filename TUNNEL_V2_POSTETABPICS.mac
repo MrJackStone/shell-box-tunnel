@@ -17,10 +17,24 @@ esla
   *return,-1
 *endif
 
+! Calculate contour limits
+cmsel,s,%_cmaName%
+esla
+nsle
+pletab,_etName,1
+cntrlims,'minScale','maxScale'
+
+*if,upcase(strsub(_etName,1,4)),eq,'EPOS',then
+  clims,1e-9,maxScale
+*elseif,upcase(strsub(_etName,1,4)),eq,'ENEG',then
+  clims,minScale,-1e-9
+*else
+  clims
+*endif
+
 ! Prepare display
 view1w
 wincln
-clims
 g_picres,GRAPH_picRes
 boldfont,1
 
