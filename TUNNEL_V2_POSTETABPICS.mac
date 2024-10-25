@@ -20,6 +20,7 @@ esla
 ! Prepare display
 view1w
 wincln
+clims
 g_picres,GRAPH_picRes
 boldfont,1
 
