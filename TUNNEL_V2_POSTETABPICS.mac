@@ -25,9 +25,9 @@ pletab,_etName,1
 cntrlims,'minScale','maxScale'
 
 *if,upcase(strsub(_etName,1,4)),eq,'EPOS',then
-  clims,1e-9,maxScale
+  clims,1,maxScale,1
 *elseif,upcase(strsub(_etName,1,4)),eq,'ENEG',then
-  clims,minScale,-1e-9
+  clims,minScale,-1,1
 *else
   clims
 *endif
