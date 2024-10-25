@@ -110,7 +110,9 @@ TUNNEL_V2_HDWBUILDCM
 !!                                                                                                !!
 !! 3.7  Open inner walls                                                                          !!
 !!                                                                                                !!
-TUNNEL_V2_SMIWALL
+*if,GEO_TUN_modules,gt,1,and,GEO_IWALL_type,eq,1,then
+  TUNNEL_V2_SMIWALL
+*endif
 
 
 !!                                                                                                !!
