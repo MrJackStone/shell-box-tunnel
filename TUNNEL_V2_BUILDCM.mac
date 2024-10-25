@@ -32,7 +32,22 @@ csys,CS_tunnel
 cmsel , s , COMPA_tunnel
 asel , u , loc , y , 0
 asel , u , loc , y , GEO_TUN_effH
-cm,COMPA_Walls,AREA
+cm,COMPA_Walls,area
+
+! Wall corbels
+csys,CS_tunnel
+
+cmsel,s,COMPA_walls
+asel,r,loc,y,GEO_corbelYOff_BOT,GEO_TUN_effH-GEO_corbelYOff_TOP
+cm,COMPA_WALL_flat,area
+
+cmsel,s,COMPA_walls
+asel,r,loc,y,0,GEO_corbelYOff_BOT
+cm,COMPA_WALL_botCorbel,area
+
+cmsel,s,COMPA_walls
+asel,r,loc,y,GEO_TUN_effH-GEO_corbelYOff_TOP,GEO_TUN_effH
+cm,COMPA_WALL_topCorbel,area
 
 ! Left tunnel wall
 csys,CS_tunnel
@@ -172,6 +187,30 @@ lsla
 lsel,r,loc,z,0
 cm,COMPL_FLOOR_interfaceInlet2,line
 
+! Floor corbels
+csys,CS_tunnel
+
+*if,GEO_CORB_floorStatus,eq,1,then
+  *do,nthModule,1,GEO_TUN_modules,1
+    xWall  = nthModule*GEO_TUN_effW
+    xLeft  = xWall-GEO_corbelXOff_BOT
+    xRight = xWall+GEO_corbelXOff_BOT
+
+    cmsel,s,COMPA_floor
+    asel,r,loc,x,xWall,xLeft
+    cmpadd,'COMPA_FLOOR_leftCorbel'
+
+    cmsel,s,COMPA_floor
+    asel,r,loc,x,xWall,xRight
+    cmpadd,'COMPA_FLOOR_rightCorbel'
+  *enddo
+*endif
+
+cmsel,s,COMPA_floor
+cmsel,u,COMPA_FLOOR_leftCorbel
+cmsel,u,COMPA_FLOOR_rightCorbel
+cm,COMPA_FLOOR_flat,area
+
 ! Roof struts
 csys,CS_tunnel
 asel,none
@@ -221,6 +260,30 @@ cmsel,s,COMPA_roof
 lsla
 lsel,r,loc,z,0
 cm,COMPL_ROOF_interfaceInlet2,line
+
+! Roof corbels
+csys,CS_tunnel
+
+*if,GEO_CORB_roofStatus,eq,1,then
+  *do,nthModule,1,GEO_TUN_modules,1
+    xWall  = nthModule*GEO_TUN_effW
+    xLeft  = xWall-GEO_corbelXOff_TOP
+    xRight = xWall+GEO_corbelXOff_TOP
+
+    cmsel,s,COMPA_roof
+    asel,r,loc,x,xWall,xLeft
+    cmpadd,'COMPA_ROOF_leftCorbel'
+
+    cmsel,s,COMPA_roof
+    asel,r,loc,x,xWall,xRight
+    cmpadd,'COMPA_ROOF_rightCorbel'
+  *enddo
+*endif
+
+cmsel,s,COMPA_roof
+cmsel,u,COMPA_ROOF_leftCorbel
+cmsel,u,COMPA_ROOF_rightCorbel
+cm,COMPA_ROOF_flat,area
 
 ! Roof precast girders
 csys,CS_tunnel

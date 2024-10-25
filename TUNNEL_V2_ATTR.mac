@@ -194,6 +194,17 @@ WARNING: Pin and corbel are incompatible. GEO_CORB_status set to 0 (OFF).
   *endif
 *endif
 
+GEO_CORB_floorStatus = 0
+GEO_CORB_roofStatus  = 0
+
+*if,GEO_CORB_status,eq,1,or,GEO_CORB_status,eq,3,then
+  GEO_CORB_floorStatus = 1
+*endif
+
+*if,GEO_CORB_status,eq,1,or,GEO_CORB_status,eq,2,then
+  GEO_CORB_roofStatus = 1
+*endif
+
 ! External right wall position
 *afun,deg
 GEO_RWALL_zBeg = tan(GEO_TUN_begSkewness)*GEO_TUN_totEffW

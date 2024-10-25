@@ -92,14 +92,6 @@ TUNNEL_V2_HDWBUILDCM
 
 
 !!                                                                                                !!
-!! 3.4  Split corbels                                                                             !!
-!!                                                                                                !!
-*if,GEO_CORB_status,ge,1,then
-  TUNNEL_V2_SMCORBEL
-*endif
-
-
-!!                                                                                                !!
 !! 3.5  Approach slabs                                                                            !!
 !!                                                                                                !!
 *if,GEO_APR_status,eq,1,then
