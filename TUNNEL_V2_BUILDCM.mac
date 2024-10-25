@@ -206,9 +206,12 @@ csys,CS_tunnel
   *enddo
 *endif
 
+cmsel,s,COMPA_FLOOR_leftCorbel
+cmsel,a,COMPA_FLOOR_rightCorbel
+cm,COMPA_FLOOR_corbel,area
+
 cmsel,s,COMPA_floor
-cmsel,u,COMPA_FLOOR_leftCorbel
-cmsel,u,COMPA_FLOOR_rightCorbel
+cmsel,u,COMPA_FLOOR_corbel
 cm,COMPA_FLOOR_flat,area
 
 ! Roof struts
@@ -280,9 +283,12 @@ csys,CS_tunnel
   *enddo
 *endif
 
+cmsel,s,COMPA_ROOF_leftCorbel
+cmsel,a,COMPA_ROOF_rightCorbel
+cm,COMPA_ROOF_corbel,area
+
 cmsel,s,COMPA_roof
-cmsel,u,COMPA_ROOF_leftCorbel
-cmsel,u,COMPA_ROOF_rightCorbel
+cmsel,u,COMPA_ROOF_corbel
 cm,COMPA_ROOF_flat,area
 
 ! Roof precast girders
