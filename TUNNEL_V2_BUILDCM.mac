@@ -14,6 +14,12 @@ csys,CS_tunnel
 asel,r,loc,x,0,GEO_TUN_totEffW
 cm,COMPA_tunnel,area
 
+cmsel,s,COMPA_tunnel
+lsla
+ksll
+cm,COMPL_tunnel,line
+cm,COMPK_tunnel,kp
+
 ! End frames
 csys,CS_begSkewed
 asel,s,loc,z,0
@@ -308,13 +314,6 @@ csys,CS_tunnel
   asel,r,loc,z,zi,GEO_TUN_Length
   cm,COMPA_RG%GEO_girderCount%,area
 *endif
-
-! Tunnel
-cmsel,s,COMPA_Tunnel
-lsla
-ksll
-cm,COMPL_Tunnel,line
-cm,COMPK_Tunnel,kp
 
 ! Clean up
 csrestore
