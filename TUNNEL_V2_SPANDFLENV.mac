@@ -1,0 +1,75 @@
+! TUNNEL_V2_SPANDFLENV , csysLeftBeg , csysLeftEnd , csysRightBeg , csysRightEnd , pthRoot , etName , envTable , lstep
+! TUNNEL_V2_SPANDFLENV , ARG1        , ARG2        , ARG3         , ARG4         , ARG5    , ARG6   , ARG7     , ARG8
+
+
+_pthRoot  = upcase(ARG5)
+_etName   = upcase(ARG6)
+_envTable = ARG7
+_lstep    = ARG8
+
+pathCount = 20
+pathDivs  = 20
+m2mm      = 1e3
+dflLabel  = 'DFL'
+
+*get,xiLeft,cdsy,ARG1,loc,x
+*get,yiLeft,cdsy,ARG1,loc,y
+*get,ziLeft,cdsy,ARG1,loc,z
+
+*get,xjLeft,cdsy,ARG2,loc,x
+*get,yjLeft,cdsy,ARG2,loc,y
+*get,zjLeft,cdsy,ARG2,loc,z
+
+*get,xiRight,cdsy,ARG3,loc,x
+*get,yiRight,cdsy,ARG3,loc,y
+*get,ziRight,cdsy,ARG3,loc,z
+
+*get,xjRight,cdsy,ARG4,loc,x
+*get,yjRight,cdsy,ARG4,loc,y
+*get,zjRight,cdsy,ARG4,loc,z
+
+xDeltaLeft  = xjLeft - xiLeft
+yDeltaLeft  = yjLeft - yiLeft
+zDeltaLeft  = zjLeft - ziLeft
+xDeltaRight = xjRight - xiRight
+yDeltaRight = yjRight - yiRight
+zDeltaRight = zjRight - ziRight
+
+*del , left_x  ,  , nopr
+*del , left_y  ,  , nopr
+*del , left_z  ,  , nopr
+*del , right_x ,  , nopr
+*del , right_y ,  , nopr
+*del , right_z ,  , nopr
+*dim , left_x  ,  , pathCount
+*dim , left_y  ,  , pathCount
+*dim , left_z  ,  , pathCount
+*dim , right_x ,  , pathCount
+*dim , right_y ,  , pathCount
+*dim , right_z ,  , pathCount
+
+*vfill , left_x  , ramp , xiLeft  , xDeltaLeft
+*vfill , left_y  , ramp , yiLeft  , yDeltaLeft
+*vfill , left_z  , ramp , ziLeft  , zDeltaLeft
+*vfill , right_x , ramp , xiRight , xDeltaRight
+*vfill , right_y , ramp , yiRight , yDeltaRight
+*vfill , right_z , ramp , ziRight , zDeltaRight
+
+*do,nthPath,1,pathCount,1
+  xi      = left_x(nthPath)
+  yi      = left_y(nthPath)
+  zi      = left_z(nthPath)
+  xj      = right_x(nthPath)
+  yj      = right_y(nthPath)
+  zj      = right_z(nthPath)
+  pthName = '%_pthRoot%_%nthPath%'
+
+  path,pthName,2,,pathDivs
+  ppath,1,xi,yi,zi
+  ppath,2,xj,yj,zj
+
+  pdef,'U',etab,%_etName%
+  pthrebase,'U',0,dflLabel,m2mm
+
+  pthenv,'UPDATE',_envTable,_lstep
+*enddo
