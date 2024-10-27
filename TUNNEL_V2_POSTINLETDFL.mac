@@ -1,0 +1,104 @@
+! TUNNEL_V2_POSTINLETDFL
+
+
+*del , inlet1_paths ,      , nopr
+*del , inlet2_paths ,      , nopr
+*del , dfl_labels   ,      , nopr
+*dim , inlet1_paths , char , 2
+*dim , inlet2_paths , char , 2
+*dim , dfl_labels   , char , 2
+
+inlet1_paths(1) = 'IN1SLB' , 'IN1SLB'
+inlet2_paths(1) = 'IN2SLB' , 'IN2SLB'
+dfl_labels(1)   = maxLabel , minLabel
+
+_inlet1_paths = 'inlet1_paths' $ __inlet1_paths = '_inlet1_paths'
+_inlet2_paths = 'inlet2_paths' $ __inlet2_paths = '_inlet2_paths'
+_dfl_labels   = 'dfl_labels'   $ __dfl_labels   = '_dfl_labels'
+
+view2w
+wincln,1
+wincln,2
+g_picres,GRAPH_picRes
+boldfont,1
+
+wintitle,1,'ACESSO 01','FLECHA','ELS-Freq [mm]',,1,13
+wintitle,2,'ACESSO 02','FLECHA','ELS-Freq [mm]',,1,13
+
+/gformat,f,2,2
+/plopts,leg3,on
+/eshape,1
+/type,1,3
+/udoc,1,cntr,bottom
+/udoc,2,cntr,bottom
+
+cmsel,s,COMPA_HDW_1
+cmsel,a,COMPA_HDW_2
+esla
+nsle
+cm,COMPE_bg,elem
+/color,cm,dgra,COMPE_bg
+
+/window,1,on
+/window,2,off
+cmsel,s,COMPA_HDW_1
+esla
+nsle
+wpcsys,1,CS_revTunnel
+/auto,1
+eplot
+/user,1
+
+/window,1,off
+/window,2,on
+cmsel,s,COMPA_HDW_2
+esla
+nsle
+wpcsys,2,CS_tunnel
+/auto,2
+eplot
+/user,2
+
+go2png,GRAPH_picRes
+  /window,1,on
+  /window,2,off
+  cmsel,s,COMPA_HDW_1
+  esla
+  nsle
+  eplot
+
+  /noerase
+
+  cleanplot,'mpathplot',baseScale,,'__inlet1_paths','__dfl_labels'
+
+  /device,vector,on
+  /color,cm,whit,COMPE_bg
+  eplot
+  /device,vector,off
+  /color,cm,dgra,COMPE_bg
+
+  esel,none
+  wpcsys,1,CS_tunnel
+
+  /window,1,off
+  /window,2,on
+  cmsel,s,COMPA_HDW_2
+  esla
+  nsle
+  eplot
+
+  cleanplot,'mpathplot',baseScale,,'__inlet2_paths','__dfl_labels'
+
+  /device,vector,on
+  /color,cm,whit,COMPE_bg
+  eplot
+
+endpng,'INLETS_deflection',,,,,FOLDER_results
+
+/erase
+/annot,dele
+/type,all,3
+/device,vector,off
+/eshape,0
+view1w
+windefa,1
