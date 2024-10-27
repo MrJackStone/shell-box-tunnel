@@ -1,8 +1,8 @@
-! TUNNEL_V2_SPANDFLENV , csysLeftBeg , csysLeftEnd , csysRightBeg , csysRightEnd , pthRoot , etName , envTable , lstep
-! TUNNEL_V2_SPANDFLENV , ARG1        , ARG2        , ARG3         , ARG4         , ARG5    , ARG6   , ARG7     , ARG8
+! TUNNEL_V2_SPANDFLENV , kpLeftBeg , kpLeftEnd , kpRightBeg , kpRightEnd , pthName , etName , envTable , lstep
+! TUNNEL_V2_SPANDFLENV , ARG1      , ARG2      , ARG3       , ARG4       , ARG5    , ARG6   , ARG7     , ARG8
 
 
-_pthRoot  = upcase(ARG5)
+_pthName  = upcase(ARG5)
 _etName   = upcase(ARG6)
 _envTable = ARG7
 _lstep    = ARG8
@@ -10,30 +10,33 @@ _lstep    = ARG8
 pathCount = 20
 pathDivs  = 20
 m2mm      = 1e3
-dflLabel  = 'DFL'
+dflLabel  = POST_slabDeflectionPathLabel
 
-*get,xiLeft,cdsy,ARG1,loc,x
-*get,yiLeft,cdsy,ARG1,loc,y
-*get,ziLeft,cdsy,ARG1,loc,z
+csbackup
+csys,0
 
-*get,xjLeft,cdsy,ARG2,loc,x
-*get,yjLeft,cdsy,ARG2,loc,y
-*get,zjLeft,cdsy,ARG2,loc,z
+xiLeft  = kx(ARG1)
+yiLeft  = ky(ARG1)
+ziLeft  = kz(ARG1)
 
-*get,xiRight,cdsy,ARG3,loc,x
-*get,yiRight,cdsy,ARG3,loc,y
-*get,ziRight,cdsy,ARG3,loc,z
+xjLeft  = kx(ARG2)
+yjLeft  = ky(ARG2)
+zjLeft  = kz(ARG2)
 
-*get,xjRight,cdsy,ARG4,loc,x
-*get,yjRight,cdsy,ARG4,loc,y
-*get,zjRight,cdsy,ARG4,loc,z
+xiRight = kx(ARG3)
+yiRight = ky(ARG3)
+ziRight = kz(ARG3)
 
-xDeltaLeft  = xjLeft - xiLeft
-yDeltaLeft  = yjLeft - yiLeft
-zDeltaLeft  = zjLeft - ziLeft
-xDeltaRight = xjRight - xiRight
-yDeltaRight = yjRight - yiRight
-zDeltaRight = zjRight - ziRight
+xjRight = kx(ARG4)
+yjRight = ky(ARG4)
+zjRight = kz(ARG4)
+
+xStepLeft  = (xjLeft - xiLeft)/(pathCount-1)
+yStepLeft  = (yjLeft - yiLeft)/(pathCount-1)
+zStepLeft  = (zjLeft - ziLeft)/(pathCount-1)
+xStepRight = (xjRight - xiRight)/(pathCount-1)
+yStepRight = (yjRight - yiRight)/(pathCount-1)
+zStepRight = (zjRight - ziRight)/(pathCount-1)
 
 *del , left_x  ,  , nopr
 *del , left_y  ,  , nopr
@@ -48,28 +51,30 @@ zDeltaRight = zjRight - ziRight
 *dim , right_y ,  , pathCount
 *dim , right_z ,  , pathCount
 
-*vfill , left_x  , ramp , xiLeft  , xDeltaLeft
-*vfill , left_y  , ramp , yiLeft  , yDeltaLeft
-*vfill , left_z  , ramp , ziLeft  , zDeltaLeft
-*vfill , right_x , ramp , xiRight , xDeltaRight
-*vfill , right_y , ramp , yiRight , yDeltaRight
-*vfill , right_z , ramp , ziRight , zDeltaRight
+*vfill , left_x  , ramp , xiLeft  , xStepLeft
+*vfill , left_y  , ramp , yiLeft  , yStepLeft
+*vfill , left_z  , ramp , ziLeft  , zStepLeft
+*vfill , right_x , ramp , xiRight , xStepRight
+*vfill , right_y , ramp , yiRight , yStepRight
+*vfill , right_z , ramp , ziRight , zStepRight
 
 *do,nthPath,1,pathCount,1
-  xi      = left_x(nthPath)
-  yi      = left_y(nthPath)
-  zi      = left_z(nthPath)
-  xj      = right_x(nthPath)
-  yj      = right_y(nthPath)
-  zj      = right_z(nthPath)
-  pthName = '%_pthRoot%_%nthPath%'
+  xi = left_x(nthPath)
+  yi = left_y(nthPath)
+  zi = left_z(nthPath)
+  xj = right_x(nthPath)
+  yj = right_y(nthPath)
+  zj = right_z(nthPath)
 
-  path,pthName,2,,pathDivs
-  ppath,1,xi,yi,zi
-  ppath,2,xj,yj,zj
+  padele,%_pthName%
+  path,_pthName,2,,pathDivs
+  ppath,1,,xi,yi,zi
+  ppath,2,,xj,yj,zj
 
   pdef,'U',etab,%_etName%
   pthrebase,'U',0,dflLabel,m2mm
 
   pthenv,'UPDATE',_envTable,_lstep
 *enddo
+
+csrestore
