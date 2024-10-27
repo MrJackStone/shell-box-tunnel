@@ -43,12 +43,18 @@
 ! UX_gk      UX_qk      UX_k       UX_frq
 ! UY_gk      UY_qk      UY_k       UY_frq
 ! UZ_gk      UZ_qk      UZ_k       UZ_frq
+! UX_g       UX_q       UX_d
+! UY_g       UY_q       UY_d
+! UZ_g       UZ_q       UZ_d
 !
 ! Legend:
 !    U?_gk   -  dead loads, characteristic value
 !    U?_qk   -  live loads, characteristic value
 !    U?_k    -  dead + live loads, characteristic values
 !    U?_frq  -  SLS frequent combination (uses PSI1)
+!    U?_g    -  dead loads, design value (ELU coefs.)
+!    U?_q    -  live loads, design value (ELU coefs.)
+!    U?_d    -  dead + live loads, design value (ELU coefs.)
 
 ! Reaction soil pressures: --------------------- 4
 ! SIGY_gk    SIGY_qk    SIGY_k     SIGY_a
@@ -192,9 +198,6 @@ sadd   , 'UX_q'   , 'UX_d'   , 'UX_g'  , 1             , -1
 sadd   , 'UX_qk'  , 'UX_q'   ,         , 1/LOAD_gammaQ
 sadd   , 'UX_k'   , 'UX_g'   , 'UX_q'  , 1             , 1
 sadd   , 'UX_frq' , 'UX_gk'  , 'UX_qk' , 1             , LOAD_psi1
-etable , 'UX_g'   , eras
-etable , 'UX_d'   , eras
-etable , 'UX_q'   , eras
 
 sadd   , 'UY_g'   , 'DW_UY'  ,         , 1
 sadd   , 'UY_d'   , 'EMN_UY' ,         , 1
@@ -203,9 +206,6 @@ sadd   , 'UY_q'   , 'UY_d'   , 'UY_g'  , 1             , -1
 sadd   , 'UY_qk'  , 'UY_q'   ,         , 1/LOAD_gammaQ
 sadd   , 'UY_k'   , 'UY_g'   , 'UY_q'  , 1             , 1
 sadd   , 'UY_frq' , 'UY_gk'  , 'UY_qk' , 1             , LOAD_psi1
-etable , 'UY_g'   , eras
-etable , 'UY_d'   , eras
-etable , 'UY_q'   , eras
 
 sadd   , 'UZ_g'   , 'DW_UZ'  ,         , 1
 sadd   , 'UZ_d'   , 'EMN_UZ' ,         , 1
@@ -214,9 +214,6 @@ sadd   , 'UZ_q'   , 'UZ_d'   , 'UZ_g'  , 1             , -1
 sadd   , 'UZ_qk'  , 'UZ_q'   ,         , 1/LOAD_gammaQ
 sadd   , 'UZ_k'   , 'UZ_g'   , 'UZ_q'  , 1             , 1
 sadd   , 'UZ_frq' , 'UZ_gk'  , 'UZ_qk' , 1             , LOAD_psi1
-etable , 'UZ_g'   , eras
-etable , 'UZ_d'   , eras
-etable , 'UZ_q'   , eras
 
 
 !! Soil pressure                                                                                  !!
