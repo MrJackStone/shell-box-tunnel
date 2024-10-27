@@ -8,8 +8,8 @@
 *del , RES_ENV_FRM2_backBeam    ,  , nopr
 *del , RES_ENV_FRM2_leftColumn  ,  , nopr
 *del , RES_ENV_FRM2_rightColumn ,  , nopr
-! *del , RES_ENV_FRM1_frontBeam   ,  , nopr
-! *del , RES_ENV_FRM2_frontBeam   ,  , nopr
+*del , RES_ENV_FRM1_frontBeam   ,  , nopr
+*del , RES_ENV_FRM2_frontBeam   ,  , nopr
 
 *do,nthIWall,1,GEO_IWALL_count,1
   *del , RES_ENV_IWALL%nthIWall%_botBeam    ,  , nopr
@@ -48,9 +48,9 @@
     TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_leftColumn'  , 'LCOL%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_leftColumn'
     TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_rightColumn' , 'RCOL%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_rightColumn'
 
-    ! ! Inlet front beam
-    ! TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW1_botBeam' , 'FBEAM1'  , 'RES_ENV_FRM1_frontBeam'
-    ! TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW2_botBeam' , 'FBEAM2'  , 'RES_ENV_FRM2_frontBeam'
+    *if,GEO_HDW%nthHDW%_type,eq,0,then
+      TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_botBeam' , 'FBEAM%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_frontBeam'
+    *endif
 
   *enddo
 
@@ -71,8 +71,8 @@
 *enddo
 
 ! TODO  this whole thing can be removed if PTH2BEAM outputs results in common units (kN, kNm, mm)
-pathCount = 8+(GEO_IWALL_count*(2+GEO_IWALL_columnCount))+(GEO_ROOF_gapStrutCount)
-iwallIdx  = 9
+pathCount = 10+(GEO_IWALL_count*(2+GEO_IWALL_columnCount))+(GEO_ROOF_gapStrutCount)
+iwallIdx  = 11
 strutIdx  = pathCount-GEO_ROOF_gapStrutCount
 
 *del , path_names    ,      , nopr
@@ -82,7 +82,7 @@ strutIdx  = pathCount-GEO_ROOF_gapStrutCount
 *dim , path_labels   , char , 10
 *dim , scale_factors ,      , 10
 
-path_names(1) = 'TBEAM1' , 'BBEAM1' , 'LCOL1' , 'RCOL1' , 'TBEAM2' , 'BBEAM2' , 'LCOL2' , 'RCOL2'
+path_names(1) = 'TBEAM1' , 'BBEAM1' , 'LCOL1' , 'RCOL1' , 'TBEAM2' , 'BBEAM2' , 'LCOL2' , 'RCOL2' , 'FBEAM1' , 'FBEAM2'
 *do,nthIWall,1,GEO_IWALL_count,1
   idx             = iwallIdx+(nthIWall-1)*(GEO_IWALL_columnCount+2)
   path_names(idx) = 'I%nthIWall%BBEAM' , 'I%nthIWall%TBEAM'
