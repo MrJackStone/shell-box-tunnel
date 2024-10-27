@@ -186,7 +186,7 @@ etable , 'DLT_ELU' , erase
 
 !! Element tables calculated based on DW & ENV values                                             !!
 ! NOTE: because of the AREMA approach to calculate impact coefficient (depth-dependent value),
-!       it is not possible to cleanly remove the influence of said impact coefficient in post.
+! N#5   it is not possible to cleanly remove the influence of said impact coefficient in post.
 !       Therefore, loads labeled as "characteristic" (k index) still include the effect of the
 !       impact coefficient, if one was applied.
 

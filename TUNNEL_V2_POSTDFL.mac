@@ -62,9 +62,9 @@ DENV_appl(1,1)  = 'APPL'
 DENV_appl(2,1)  = POST_slabDeflectionPathLabel
 DENV_appr(1,1)  = 'APPR'
 DENV_appr(2,1)  = POST_slabDeflectionPathLabel
-DENV_in1s(1,1)  = 'IN1S'
+DENV_in1s(1,1)  = 'IN1SLB'
 DENV_in1s(2,1)  = POST_slabDeflectionPathLabel
-DENV_in2s(1,1)  = 'IN2S'
+DENV_in2s(1,1)  = 'IN2SLB'
 DENV_in2s(2,1)  = POST_slabDeflectionPathLabel
 
 initPathCount = 2*GEO_TUN_modules+6
@@ -96,6 +96,9 @@ pthenv , 'CLEAR' , 'DENV_in2s'
 
 *do,nthLS,1,LoadStepCount,1
 
+  *msg,ui,nthLS,LoadStepCount
+POSTDFL: reading load step %I out of %I.
+
   allsel
   set,nthLS
 
@@ -103,15 +106,15 @@ pthenv , 'CLEAR' , 'DENV_in2s'
   etable , 'UY_d_i' , u , y
   etable , 'UZ_d_i' , u , z
 
-  sadd , 'UX_q_i'   , 'UX_d_i' , 'UX_g'    , 1             , -1
+  sadd , 'UX_q_i'   , 'UX_d_i' , 'UX_g'    , 1000          , -1
   sadd , 'UX_qk_i'  , 'UX_q_i' ,           , 1/LOAD_gammaQ
   sadd , 'UX_frq_i' , 'UX_gk'  , 'UX_qk_i' , 1             , LOAD_psi1
 
-  sadd , 'UY_q_i'   , 'UY_d_i' , 'UY_g'    , 1             , -1
+  sadd , 'UY_q_i'   , 'UY_d_i' , 'UY_g'    , 1000          , -1
   sadd , 'UY_qk_i'  , 'UY_q_i' ,           , 1/LOAD_gammaQ
   sadd , 'UY_frq_i' , 'UY_gk'  , 'UY_qk_i' , 1             , LOAD_psi1
 
-  sadd , 'UZ_q_i'   , 'UZ_d_i' , 'UZ_g'    , 1             , -1
+  sadd , 'UZ_q_i'   , 'UZ_d_i' , 'UZ_g'    , 1000          , -1
   sadd , 'UZ_qk_i'  , 'UZ_q_i' ,           , 1/LOAD_gammaQ
   sadd , 'UZ_frq_i' , 'UZ_gk'  , 'UZ_qk_i' , 1             , LOAD_psi1
 
