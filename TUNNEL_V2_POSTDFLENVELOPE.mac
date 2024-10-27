@@ -1,0 +1,185 @@
+! TUNNEL_V2_POSTDFLENVELOPE
+
+
+! Initialize deflection envelope arrays
+POST_slabDeflectionPathLabel = 'DFL'
+
+*del , DENV_roof  ,      , nopr
+*del , DENV_floor ,      , nopr
+*del , DENV_lwall ,      , nopr
+*del , DENV_rwall ,      , nopr
+*del , DENV_appl  ,      , nopr
+*del , DENV_appr  ,      , nopr
+*del , DENV_in1s  ,      , nopr
+*del , DENV_in2s  ,      , nopr
+*dim , DENV_roof  , char , 2    , GEO_TUN_modules
+*dim , DENV_floor , char , 2    , GEO_TUN_modules
+*dim , DENV_lwall , char , 2    , 1
+*dim , DENV_rwall , char , 2    , 1
+*dim , DENV_appl  , char , 2    , 1
+*dim , DENV_appr  , char , 2    , 1
+*dim , DENV_in1s  , char , 2    , 1
+*dim , DENV_in2s  , char , 2    , 1
+
+*do,nthModule,1,GEO_TUN_modules,1
+  DENV_roof(1,nthModule)  = 'ROOF%nthModule%'
+  DENV_roof(2,nthModule)  = POST_slabDeflectionPathLabel
+  DENV_floor(1,nthModule) = 'FLOOR%nthModule%'
+  DENV_floor(2,nthModule) = POST_slabDeflectionPathLabel
+*enddo
+
+DENV_lwall(1,1) = 'LWALL'
+DENV_lwall(2,1) = POST_slabDeflectionPathLabel
+DENV_rwall(1,1) = 'RWALL'
+DENV_rwall(2,1) = POST_slabDeflectionPathLabel
+DENV_appl(1,1)  = 'APPL'
+DENV_appl(2,1)  = POST_slabDeflectionPathLabel
+DENV_appr(1,1)  = 'APPR'
+DENV_appr(2,1)  = POST_slabDeflectionPathLabel
+DENV_in1s(1,1)  = 'IN1SLB'
+DENV_in1s(2,1)  = POST_slabDeflectionPathLabel
+DENV_in2s(1,1)  = 'IN2SLB'
+DENV_in2s(2,1)  = POST_slabDeflectionPathLabel
+
+initPathCount = 2*GEO_TUN_modules+6
+*del,init_paths,,nopr
+*dim,init_paths,char,initPathCount
+
+*do,nthModule,1,GEO_TUN_modules,1
+  init_paths(2*nthModule-1) = 'ROOF%nthModule%'
+  init_paths(2*nthModule)   = 'FLOOR%nthModule%'
+*enddo
+init_paths(2*GEO_TUN_modules+1) = 'LWALL' , 'RWALL' , 'APPL' , 'APPR' , 'IN1S' , 'IN2S'
+
+*do,nthPath,1,initPathCount,1
+  pthName = init_paths(nthPath)
+  path,%pthName%,2
+  ppath,1,,0,0,0
+  ppath,2,,1,0,0
+  pdef,POST_slabDeflectionPathLabel,u,x
+*enddo
+
+pthenv , 'CLEAR' , 'DENV_floor'
+pthenv , 'CLEAR' , 'DENV_roof'
+pthenv , 'CLEAR' , 'DENV_lwall'
+pthenv , 'CLEAR' , 'DENV_rwall'
+pthenv , 'CLEAR' , 'DENV_appl'
+pthenv , 'CLEAR' , 'DENV_appr'
+pthenv , 'CLEAR' , 'DENV_in1s'
+pthenv , 'CLEAR' , 'DENV_in2s'
+
+! Calculate deflection envelopes
+*do,nthLS,1,LoadStepCount,1
+
+  *msg,ui,nthLS,LoadStepCount
+POSTDFL: reading load step %I out of %I.
+
+  allsel
+  set,nthLS
+
+  etable , 'UX_d_i' , u , x
+  etable , 'UY_d_i' , u , y
+  etable , 'UZ_d_i' , u , z
+
+  sadd , 'UX_q_i'   , 'UX_d_i' , 'UX_g'    , 1000          , -1
+  sadd , 'UX_qk_i'  , 'UX_q_i' ,           , 1/LOAD_gammaQ
+  sadd , 'UX_frq_i' , 'UX_gk'  , 'UX_qk_i' , 1             , LOAD_psi1
+
+  sadd , 'UY_q_i'   , 'UY_d_i' , 'UY_g'    , 1000          , -1
+  sadd , 'UY_qk_i'  , 'UY_q_i' ,           , 1/LOAD_gammaQ
+  sadd , 'UY_frq_i' , 'UY_gk'  , 'UY_qk_i' , 1             , LOAD_psi1
+
+  sadd , 'UZ_q_i'   , 'UZ_d_i' , 'UZ_g'    , 1000          , -1
+  sadd , 'UZ_qk_i'  , 'UZ_q_i' ,           , 1/LOAD_gammaQ
+  sadd , 'UZ_frq_i' , 'UZ_gk'  , 'UZ_qk_i' , 1             , LOAD_psi1
+
+  *do,nthModule,1,GEO_TUN_modules,1
+    *if,nthModule,eq,1,then
+      floorLeftBeg = KP_FLOOR_leftBeg
+      floorLeftEnd = KP_FLOOR_leftEnd
+      roofLeftBeg  = KP_ROOF_leftBeg
+      roofLeftEnd  = KP_ROOF_leftEnd
+    *else
+      mthModule    = nthModule-1
+      floorLeftBeg = KP_IWALL%mthModule%_botBeg
+      floorLeftEnd = KP_IWALL%mthModule%_botEnd
+      roofLeftBeg  = KP_IWALL%mthModule%_topBeg
+      roofLeftEnd  = KP_IWALL%mthModule%_topEnd
+    *endif
+
+    *if,nthModule,eq,GEO_TUN_modules,then
+      floorRightBeg = KP_FLOOR_rightBeg
+      floorRightEnd = KP_FLOOR_rightEnd
+      roofRightBeg  = KP_ROOF_rightBeg
+      roofRightEnd  = KP_ROOF_rightEnd
+    *else
+      floorRightBeg = KP_IWALL%nthModule%_botBeg
+      floorRightEnd = KP_IWALL%nthModule%_botEnd
+      roofRightBeg  = KP_IWALL%nthModule%_topBeg
+      roofRightEnd  = KP_IWALL%nthModule%_topEnd
+    *endif
+
+    cmsel,s,COMPA_floor
+    esla
+    nsle
+    TUNNEL_V2_SPANDFLENV , floorLeftBeg , floorLeftEnd , floorRightBeg , floorRightEnd , 'FLOOR%nthModule%' , 'UY_frq_i' , 'DENV_floor' , nthLS
+
+    cmsel,s,COMPA_roof
+    esla
+    nsle
+    TUNNEL_V2_SPANDFLENV , roofLeftBeg  , roofLeftEnd  , roofRightBeg  , roofRightEnd  , 'ROOF%nthModule%'  , 'UY_frq_i' , 'DENV_roof'  , nthLS
+  *enddo
+
+  cmsel,s,COMPA_leftWall
+  esla
+  nsle
+  TUNNEL_V2_SPANDFLENV , KP_LWALL_botBeg    , KP_LWALL_botEnd    , KP_LWALL_topBeg   , KP_LWALL_topEnd   , 'LWALL'  , 'UX_frq_i' , 'DENV_lwall' , nthLS
+  cmsel,s,COMPA_rightWall
+  esla
+  nsle
+  TUNNEL_V2_SPANDFLENV , KP_RWALL_botBeg    , KP_RWALL_botEnd    , KP_RWALL_topBeg   , KP_RWALL_topEnd   , 'RWALL'  , 'UX_frq_i' , 'DENV_rwall' , nthLS
+
+  *if,GEO_APR_status,eq,1,then
+    cmsel,s,COMPA_approachL
+    esla
+    nsle
+    TUNNEL_V2_SPANDFLENV , KP_APPL_outBeg     , KP_APPL_outEnd     , KP_APPL_innBeg    , KP_APPL_outEnd    , 'APPL'   , 'UY_frq_i' , 'DENV_appl'  , nthLS
+    cmsel,s,COMPA_approachR
+    esla
+    nsle
+    TUNNEL_V2_SPANDFLENV , KP_APPR_outBeg     , KP_APPR_outEnd     , KP_APPR_innBeg    , KP_APPR_outEnd    , 'APPR'   , 'UY_frq_i' , 'DENV_appr'  , nthLS
+  *endif
+
+  *if,GEO_HDW1_status,eq,1,and,GEO_HDW1_type,eq,0,then
+    ! TODO  account for inlet type 2 (unconnected approach slab)
+    cmsel,s,COMPA_HDW1_slab
+    cmsel,a,COMPA_HDW1_leftStiffener
+    cmsel,a,COMPA_HDW1_rightStiffener
+    esla
+    nsle
+    TUNNEL_V2_SPANDFLENV , KP_IN1SLB_rightBeg , KP_IN1SLB_rightEnd , KP_IN1SLB_leftBeg , KP_IN1SLB_leftEnd , 'IN1SLB' , 'UY_frq_i' , 'DENV_in1s'  , nthLS
+  *endif
+  *if,GEO_HDW2_status,eq,1,and,GEO_HDW2_type,eq,0,then
+    cmsel,s,COMPA_HDW2_slab
+    cmsel,a,COMPA_HDW2_leftStiffener
+    cmsel,a,COMPA_HDW2_rightStiffener
+    esla
+    nsle
+    TUNNEL_V2_SPANDFLENV , KP_IN2SLB_rightBeg , KP_IN2SLB_rightEnd , KP_IN2SLB_leftBeg , KP_IN2SLB_leftEnd , 'IN2SLB' , 'UY_frq_i' , 'DENV_in2s'  , nthLS
+  *endif
+
+*enddo
+
+! Clean up
+etable , 'UX_d_i'   , eras
+etable , 'UY_d_i'   , eras
+etable , 'UZ_d_i'   , eras
+etable , 'UX_q_i'   , eras
+etable , 'UY_q_i'   , eras
+etable , 'UZ_q_i'   , eras
+etable , 'UX_qk_i'  , eras
+etable , 'UY_qk_i'  , eras
+etable , 'UZ_qk_i'  , eras
+etable , 'UX_frq_i' , eras
+etable , 'UY_frq_i' , eras
+etable , 'UZ_frq_i' , eras
