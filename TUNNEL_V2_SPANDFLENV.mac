@@ -9,7 +9,6 @@ _lstep    = ARG8
 
 pathCount = 20
 pathDivs  = 20
-m2mm      = 1e3
 dflLabel  = POST_slabDeflectionPathLabel
 
 csbackup
@@ -72,7 +71,7 @@ zStepRight = (zjRight - ziRight)/(pathCount-1)
   ppath,2,,xj,yj,zj
 
   pdef,'U',etab,%_etName%
-  pthrebase,'U',0,dflLabel,m2mm
+  pthrebase,'U',0,dflLabel
 
   pthenv,'UPDATE',_envTable,_lstep
 *enddo
