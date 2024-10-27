@@ -2,6 +2,8 @@
 
 
 baseScale = 10
+maxLabel  = '%POST_slabDeflectionPathLabel%+'
+minLabel  = '%POST_slabDeflectionPathLabel%-'
 
 ! Tunnel deflections
 *del , floor_paths ,      , nopr
@@ -17,8 +19,8 @@ baseScale = 10
 
 *do,nthModule,1,GEO_TUN_modules,1
   floor_paths(2*nthModule-1) = DENV_floor(1,nthModule) , DENV_floor(1,nthModule)
-  roof_paths(2*nthModule-1)  = DENV_roof(1,nthModule) , DENV_roof(1,nthModule)
-  dfl_labels(2*nthModule-1)  = '%POST_slabDeflectionPathLabel%+' , '%POST_slabDeflectionPathLabel%-'
+  roof_paths(2*nthModule-1)  = DENV_roof(1,nthModule)  , DENV_roof(1,nthModule)
+  dfl_labels(2*nthModule-1)  = maxLabel                , minLabel
 *enddo
 
 lwall_paths(1) = 'LWALL','LWALL'
@@ -91,9 +93,9 @@ windefa,1
 *dim , inlet2_paths , char , 2
 *dim , dfl_labels   , char , 2
 
-inlet1_paths(1) = 'IN1SLB'                          , 'IN1SLB'
-inlet2_paths(1) = 'IN2SLB'                          , 'IN2SLB'
-dfl_labels(1)   = '%POST_slabDeflectionPathLabel%+' , '%POST_slabDeflectionPathLabel%-'
+inlet1_paths(1) = 'IN1SLB' , 'IN1SLB'
+inlet2_paths(1) = 'IN2SLB' , 'IN2SLB'
+dfl_labels(1)   = maxLabel , minLabel
 
 _inlet1_paths = 'inlet1_paths' $ __inlet1_paths = '_inlet1_paths'
 _inlet2_paths = 'inlet2_paths' $ __inlet2_paths = '_inlet2_paths'
@@ -181,6 +183,63 @@ endpng,'INLETS_deflection',,,,,FOLDER_results
 /erase
 /annot,dele
 /type,all,3
+/device,vector,off
+/eshape,0
+view1w
+windefa,1
+
+! Approach slab deflections
+*del , appslab_paths ,      , nopr
+*del , dfl_labels    ,      , nopr
+*dim , appslab_paths , char , 4
+*dim , dfl_labels    , char , 4
+
+appslab_paths(1) = 'APPL'   , 'APPL'   , 'APPR'   , 'APPR'
+dfl_labels(1)    = maxLabel , minLabel , maxLabel , minLabel
+
+_appslab_paths = 'appslab_paths' $ __appslab_paths = '_appslab_paths'
+_dfl_labels    = 'dfl_labels'    $ __dfl_labels    = '_dfl_labels'
+
+view1w
+wincln,1
+g_picres,GRAPH_picRes
+boldfont,1
+wintitle,1,'LAJES DE APROX.','FLECHA','ELS-Freq. [mm]',,1,13
+
+/gformat,f,2,2
+/plopts,leg3,on
+/eshape,1
+/angle,1,0
+/type,1,3
+/udoc,1,cntr,bottom
+
+cmsel,s,COMPA_tunnel
+cmsel,a,COMPA_approach
+esla
+nsle
+cm,COMPE_bg,elem
+/color,cm,dgra,COMPE_bg
+wpcsys,1,CS_tunnel
+/auto,1
+eplot
+/user,1
+
+go2png,GRAPH_picRes
+  eplot
+  /noerase
+
+  cleanplot,'mpathplot',baseScale,,'__appslab_paths','__dfl_labels'
+
+  /device,vector,on
+  /type,1,3
+  /color,cm,whit,COMPE_bg
+  eplot
+
+endpng,'APPSLAB_deflections',,,,,FOLDER_results
+
+/erase
+/annot,dele
+/type,1,3
 /device,vector,off
 /eshape,0
 view1w
