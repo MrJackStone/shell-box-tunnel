@@ -1,5 +1,31 @@
 ! TUNNEL_V2_BUILDCM
 
+
+! Exported selection components:
+
+! Exported entities:
+! KP_FLOOR_leftBeg
+! KP_FLOOR_rightBeg
+! KP_FLOOR_leftEnd
+! KP_FLOOR_rightEnd
+! KP_ROOF_leftBeg
+! KP_ROOF_rightBeg
+! KP_ROOF_leftEnd
+! KP_ROOF_rightEnd
+! KP_LWALL_topBeg
+! KP_LWALL_topEnd
+! KP_LWALL_botBeg
+! KP_LWALL_botEnd
+! KP_RWALL_topBeg
+! KP_RWALL_topEnd
+! KP_RWALL_botBeg
+! KP_RWALL_botEnd
+
+! KP_IWALL<i>_botBeg
+! KP_IWALL<i>_topBeg
+! KP_IWALL<i>_botEnd
+! KP_IWALL<i>_topEnd
+
 ! Prepare environment
 csbackup
 
@@ -74,11 +100,31 @@ lsla
 lsel,r,loc,z,0
 cm,COMPL_LWALL_interfaceInlet1,line
 
+cmsel,s,COMPL_LWALL_floorInterface
+ksll
+ksel,r,loc,z,0
+KP_LWALL_botBeg = kpnext(0)
+
+cmsel,s,COMPL_LWALL_roofInterface
+ksll
+ksel,r,loc,z,0
+KP_LWALL_topBeg = kpnext(0)
+
 csys,CS_endSkewed
 cmsel,s,COMPA_leftWall
 lsla
 lsel,r,loc,z,0
 cm,COMPL_LWALL_interfaceInlet2,line
+
+cmsel,s,COMPL_LWALL_floorInterface
+ksll
+ksel,r,loc,z,0
+KP_LWALL_botEnd = kpnext(0)
+
+cmsel,s,COMPL_LWALL_roofInterface
+ksll
+ksel,r,loc,z,0
+KP_LWALL_topEnd = kpnext(0)
 
 ! Right tunnel wall
 csys,CS_tunnel
@@ -99,11 +145,31 @@ lsla
 lsel,r,loc,z,0
 cm,COMPL_RWALL_interfaceInlet1,line
 
+cmsel,s,COMPL_RWALL_floorInterface
+ksll
+ksel,r,loc,z,0
+KP_RWALL_botBeg = kpnext(0)
+
+cmsel,s,COMPL_RWALL_roofInterface
+ksll
+ksel,r,loc,z,0
+KP_RWALL_topBeg = kpnext(0)
+
 csys,CS_endSkewed
 cmsel,s,COMPA_rightWall
 lsla
 lsel,r,loc,z,0
 cm,COMPL_RWALL_interfaceInlet2,line
+
+cmsel,s,COMPL_RWALL_floorInterface
+ksll
+ksel,r,loc,z,0
+KP_RWALL_botEnd = kpnext(0)
+
+cmsel,s,COMPL_RWALL_roofInterface
+ksll
+ksel,r,loc,z,0
+KP_RWALL_topEnd = kpnext(0)
 
 ! Inner tunnel walls
 csys,CS_tunnel
@@ -173,6 +239,26 @@ cm,COMPA_Columns,area
     cmsel,r,COMPA_columns
     cm,COMPA_IWALL%nthWall%_column%mthColIdx%,area
   *enddo
+
+  ! Keypoints
+  csys,CS_begSkewed
+  cmsel,s,COMPA_IWALL_%nthWall%
+  lsla
+  ksll
+  ksel,r,loc,z,0
+  kpbbox,'xMin',,'yMin','yMax'
+  KP_IWALL%nthWall%_botBeg = kp(xMin , yMin , 0)
+  KP_IWALL%nthWall%_topBeg = kp(xMin , yMax , 0)
+
+  csys,CS_endSkewed
+  cmsel,s,COMPA_IWALL_%nthWall%
+  lsla
+  ksll
+  ksel,r,loc,z,0
+  kpbbox,'xMin',,'yMin','yMax'
+  KP_IWALL%nthWall%_botEnd = kp(xMin , yMin , 0)
+  KP_IWALL%nthWall%_topEnd = kp(xMin , yMax , 0)
+
 *enddo
 
 ! Floor slab
@@ -187,11 +273,33 @@ lsla
 lsel,r,loc,z,0
 cm,COMPL_FLOOR_interfaceInlet1,line
 
+cmsel,s,COMPL_FLOOR_interfaceInlet1
+ksll
+ksel,r,loc,x,0
+KP_FLOOR_leftBeg = kpnext(0)
+
+cmsel,s,COMPL_FLOOR_interfaceInlet1
+ksll
+*get,xMax,kp,,mxloc,x
+ksel,r,loc,x,xMax
+KP_FLOOR_rightBeg = kpnext(0)
+
 csys,CS_endSkewed
 cmsel,s,COMPA_floor
 lsla
 lsel,r,loc,z,0
 cm,COMPL_FLOOR_interfaceInlet2,line
+
+cmsel,s,COMPL_FLOOR_interfaceInlet2
+ksll
+ksel,r,loc,x,0
+KP_FLOOR_rightEnd = kpnext(0)
+
+cmsel,s,COMPL_FLOOR_interfaceInlet2
+ksll
+*get,xMax,kp,,mxloc,x
+ksel,r,loc,x,xMax
+KP_FLOOR_leftEnd = kpnext(0)
 
 ! Floor corbels
 csys,CS_tunnel
@@ -264,11 +372,33 @@ lsla
 lsel,r,loc,z,0
 cm,COMPL_ROOF_interfaceInlet1,line
 
+cmsel,s,COMPL_ROOF_interfaceInlet1
+ksll
+ksel,r,loc,x,0
+KP_ROOF_leftBeg = kpnext(0)
+
+cmsel,s,COMPL_ROOF_interfaceInlet1
+ksll
+*get,xMax,kp,,mxloc,x
+ksel,r,loc,x,xMax
+KP_ROOF_rightBeg = kpnext(0)
+
 csys,CS_endSkewed
 cmsel,s,COMPA_roof
 lsla
 lsel,r,loc,z,0
 cm,COMPL_ROOF_interfaceInlet2,line
+
+cmsel,s,COMPL_ROOF_interfaceInlet2
+ksll
+ksel,r,loc,x,0
+KP_ROOF_rightEnd = kpnext(0)
+
+cmsel,s,COMPL_ROOF_interfaceInlet2
+ksll
+*get,xMax,kp,,mxloc,x
+ksel,r,loc,x,xMax
+KP_ROOF_leftEnd = kpnext(0)
 
 ! Roof corbels
 csys,CS_tunnel

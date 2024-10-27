@@ -1,6 +1,27 @@
 ! TUNNEL_V2_SMAPPSLAB
 
 
+! Exported selection components:
+! COMPA_approach
+! COMPA_approachSup
+! COMPA_approachFree
+! COMPA_approachL
+! COMPA_approachR
+! COMPA_approachSupL
+! COMPA_approachSupR
+! COMPA_approachFreeL
+! COMPA_approachFreeR
+
+! Exported entities:
+! KP_APPL_outBeg
+! KP_APPL_outEnd
+! KP_APPL_innBeg
+! KP_APPL_innEnd
+! KP_APPR_outBeg
+! KP_APPR_outEnd
+! KP_APPR_innBeg
+! KP_APPR_innEnd
+
 asel,none
 csys,CS_approachLeft
 wpcsys,-1
@@ -43,6 +64,7 @@ cmsel,s,COMPA_approachR
 cmsel,u,COMPA_approachFreeR
 cm,COMPA_approachSupR,area
 
+! Selection components
 cmsel,s,COMPA_approachSupL
 cmsel,a,COMPA_approachSupR
 cm,COMPA_approachSup,area
@@ -54,3 +76,21 @@ cm,COMPA_approachFree,area
 cmsel,s,COMPA_approachL
 cmsel,a,COMPA_approachR
 cm,COMPA_approach,area
+
+csys,CS_approachLeft
+cmsel,s,COMPA_approachL
+lsla
+ksll
+KP_APPL_outBeg = kp(GEO_APR_obliqueLength , (-GEO_APR_obliqueWidth/2)-GEO_APR_axialSkewedLength , 0)
+KP_APPL_outEnd = kp(GEO_APR_obliqueLength , (GEO_APR_obliqueWidth/2)-GEO_APR_axialSkewedLength  , 0)
+KP_APPL_innBeg = kp(0                     , (-GEO_APR_obliqueWidth/2)                           , 0)
+KP_APPL_innEnd = kp(0                     , (GEO_APR_obliqueWidth/2)                            , 0)
+
+csys,CS_approachRight
+cmsel,s,COMPA_approachR
+lsla
+ksll
+KP_APPR_outBeg = kp(GEO_APR_obliqueLength , (-GEO_APR_obliqueWidth/2)+GEO_APR_axialSkewedLength , 0)
+KP_APPR_outEnd = kp(GEO_APR_obliqueLength , (GEO_APR_obliqueWidth/2)+GEO_APR_axialSkewedLength  , 0)
+KP_APPR_innBeg = kp(0                     , (-GEO_APR_obliqueWidth/2)                           , 0)
+KP_APPR_innEnd = kp(0                     , (GEO_APR_obliqueWidth/2)                            , 0)

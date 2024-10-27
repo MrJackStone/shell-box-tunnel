@@ -56,6 +56,17 @@
 ! COMPA_HDW2_topBeam
 ! COMPA_HDW2_slab
 
+! Exported entities:
+!
+! KP_IN1SLB_rightBeg
+! KP_IN1SLB_rightEnd
+! KP_IN1SLB_leftBeg
+! KP_IN1SLB_leftEnd
+! KP_IN2SLB_rightBeg
+! KP_IN2SLB_rightEnd
+! KP_IN2SLB_leftBeg
+! KP_IN2SLB_leftEnd
+
 
 *del,sides,,nopr
 *dim,sides,char,2
@@ -197,6 +208,50 @@ cmsel,s,COMPA_headwalls
 cmsel,u,COMPA_HDW_stiffener
 asel,r,loc,y,0
 cm,COMPA_HDW_slab,area
+
+csys,CS_HDW1_rightWall
+cmsel,s,COMPA_HDW_slab
+cmsel,a,COMPA_HDW_stiffener
+cmsel,r,COMPA_HDW_1
+lsla
+ksll
+ksel,r,loc,z,0
+kpbbox,'xMin','xMax'
+KP_IN1SLB_rightBeg = kp(0    , 0 , 0)
+KP_IN1SLB_rightEnd = kp(xMin , 0 , 0)
+
+csys,CS_HDW1_leftWall
+cmsel,s,COMPA_HDW_slab
+cmsel,a,COMPA_HDW_stiffener
+cmsel,r,COMPA_HDW_1
+lsla
+ksll
+ksel,r,loc,z,0
+kpbbox,'xMin','xMax'
+KP_IN1SLB_leftBeg = kp(0    , 0 , 0)
+KP_IN1SLB_leftEnd = kp(xMax , 0 , 0)
+
+csys,CS_HDW2_rightWall
+cmsel,s,COMPA_HDW_slab
+cmsel,a,COMPA_HDW_stiffener
+cmsel,r,COMPA_HDW_2
+lsla
+ksll
+ksel,r,loc,z,0
+kpbbox,'xMin','xMax'
+KP_IN2SLB_rightBeg = kp(0    , 0 , 0)
+KP_IN2SLB_rightEnd = kp(xMin , 0 , 0)
+
+csys,CS_HDW2_leftWall
+cmsel,s,COMPA_HDW_slab
+cmsel,a,COMPA_HDW_stiffener
+cmsel,r,COMPA_HDW_2
+lsla
+ksll
+ksel,r,loc,z,0
+kpbbox,'xMin','xMax'
+KP_IN2SLB_leftBeg = kp(0    , 0 , 0)
+KP_IN2SLB_leftEnd = kp(xMax , 0 , 0)
 
 ! Footings
 asel,none
