@@ -1,0 +1,116 @@
+! TUNNEL_V2_POSTFBEAMPICS
+
+
+baseScale = 10
+
+*del , beam_paths ,      , nopr
+*del , label_MP   ,      , nopr
+*del , label_N    ,      , nopr
+*del , label_V    ,      , nopr
+*del , label_D    ,      , nopr
+*dim , beam_paths , char , 2
+*dim , label_MP   , char , 2
+*dim , label_N    , char , 2
+*dim , label_V    , char , 2
+*dim , label_D    , char , 2
+
+beam_paths(1) = 'FBEAM1'  , 'FBEAM1'
+label_MP(1)   = 'MP_MIN'  , 'MP_MAX'
+label_N(1)    = 'N_MIN'   , 'N_MAX'
+label_V(1)    = 'V_MIN'   , 'V_MAX'
+label_D(1)    = 'DYB_MIN' , 'DYB_MAX'
+
+_beam_paths = 'beam_paths' $ __beam_paths = '_beam_paths'
+_label_MP   = 'label_MP'   $ __label_MP   = '_label_MP'
+_label_N    = 'label_N'    $ __label_N    = '_label_N'
+_label_V    = 'label_V'    $ __label_V    = '_label_V'
+_label_D    = 'label_D'    $ __label_D    = '_label_D'
+
+view1w
+wincln,1
+wintitle,1,'ACESSO 01','VIGA DE PISO','ELU-Normal',,1,13
+
+view2w ,   ,  , 1 ,   , 1 , 3
+view2w , 1 ,  , 1 , 1 , 1 , 2
+view2w , 1 ,  , 3 , 1 , 3 , 4
+
+wintitle , 1 , ' ' , 'MOMENTO FLETOR' , '[kNm]' ,  , 1 , 13
+wintitle , 2 , ' ' , 'FOR. CORTANTE'  , '[kN]'  ,  , 1 , 13
+wintitle , 3 , ' ' , 'FOR. NORMAL'    , '[kN]'  ,  , 1 , 13
+wintitle , 4 , ' ' , 'FLECHA'         , '[mm]'  ,  , 1 , 13
+
+allsel
+/type,all,3
+/udoc,1,cntr,bottom
+/udoc,2,cntr,bottom
+/udoc,3,cntr,bottom
+/udoc,4,cntr,bottom
+/plopts,leg3,on
+/eshape,0
+/gformat,f,2,1
+
+cmsel,s,COMPA_HDW1_botBeam
+esla
+nsle
+cm,COMPE_bg,elem
+/color,cm,dgra,COMPE_bg
+
+wpcsys,1,CS_tunnel
+wpcsys,2,CS_tunnel
+wpcsys,3,CS_tunnel
+wpcsys,4,CS_tunnel
+
+/auto,all
+/eshape,1
+cmsel,s,COMPA_HDW_1
+esla
+nsle
+eplot
+/user,all
+
+go2png,GRAPH_picRes
+  eplot
+  /noerase
+
+  cmsel,s,COMPA_HDW1_botBeam
+  esla
+  nsle
+
+  /window,1,on
+  /window,2,off
+  /window,3,off
+  /window,4,off
+  cleanplot ,'mpathplot' , baseScale , , '__beam_paths' , '__label_MP'
+
+  /window,1,off
+  /window,2,on
+  /window,3,off
+  /window,4,off
+  cleanplot ,'mpathplot' , baseScale , , '__beam_paths' , '__label_V'
+
+  /window,1,off
+  /window,2,off
+  /window,3,on
+  /window,4,off
+  cleanplot , 'mpathplot' , baseScale , , '__beam_paths' , '__label_N'
+
+  /window,1,off
+  /window,2,off
+  /window,3,off
+  /window,4,on
+  /gformat,f,2,2
+  cleanplot, 'mpathplot' , baseScale , , '__beam_paths' , '__label_D'
+
+  /window,all,on
+  /device,vector,on
+  /type,all,3
+  /color,cm,whit,COMPE_bg
+  eplot
+
+endpng,'INLET1_frontBeam',,,,,FOLDER_results
+
+/erase
+/annot,dele
+/eshape,0
+view1w
+windefa,1

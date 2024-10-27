@@ -1,0 +1,197 @@
+! TUNNEL_V2_POSTENVELOPES
+
+
+!! A.  Initialize params                                                                          !!
+! Initialize beam envelope params
+*del , RES_ENV_FRM1_topBeam     ,  , nopr
+*del , RES_ENV_FRM1_backBeam    ,  , nopr
+*del , RES_ENV_FRM1_leftColumn  ,  , nopr
+*del , RES_ENV_FRM1_rightColumn ,  , nopr
+*del , RES_ENV_FRM2_topBeam     ,  , nopr
+*del , RES_ENV_FRM2_backBeam    ,  , nopr
+*del , RES_ENV_FRM2_leftColumn  ,  , nopr
+*del , RES_ENV_FRM2_rightColumn ,  , nopr
+*del , RES_ENV_FRM1_frontBeam   ,  , nopr
+*del , RES_ENV_FRM2_frontBeam   ,  , nopr
+
+*do,nthIWall,1,GEO_IWALL_count,1
+  *del , RES_ENV_IWALL%nthIWall%_botBeam    ,  , nopr
+  *del , RES_ENV_IWALL%nthIWall%_topBeam    ,  , nopr
+  *do,nthColumn,1,GEO_IWALL_columnCount,1
+    *del , RES_ENV_IWALL%nthIWall%_column%nthColumn% ,  , nopr
+  *enddo
+*enddo
+
+*do,nthStrut,1,GEO_ROOF_gapStrutCount,1
+  *del,RES_ENV_strut%nthStrut%,,nopr
+*enddo
+
+! Initialize shell deflection params
+POST_slabDeflectionPathLabel = 'DFL'
+
+*del , DENV_roof  ,      , nopr
+*del , DENV_floor ,      , nopr
+*del , DENV_lwall ,      , nopr
+*del , DENV_rwall ,      , nopr
+*del , DENV_appl  ,      , nopr
+*del , DENV_appr  ,      , nopr
+*del , DENV_in1s  ,      , nopr
+*del , DENV_in2s  ,      , nopr
+*dim , DENV_roof  , char , 2    , GEO_TUN_modules
+*dim , DENV_floor , char , 2    , GEO_TUN_modules
+*dim , DENV_lwall , char , 2    , 1
+*dim , DENV_rwall , char , 2    , 1
+*dim , DENV_appl  , char , 2    , 1
+*dim , DENV_appr  , char , 2    , 1
+*dim , DENV_in1s  , char , 2    , 1
+*dim , DENV_in2s  , char , 2    , 1
+
+*do,nthModule,1,GEO_TUN_modules,1
+  DENV_roof(1,nthModule)  = 'ROOF%nthModule%'
+  DENV_roof(2,nthModule)  = POST_slabDeflectionPathLabel
+  DENV_floor(1,nthModule) = 'FLOOR%nthModule%'
+  DENV_floor(2,nthModule) = POST_slabDeflectionPathLabel
+*enddo
+
+DENV_lwall(1,1) = 'LWALL'
+DENV_lwall(2,1) = POST_slabDeflectionPathLabel
+DENV_rwall(1,1) = 'RWALL'
+DENV_rwall(2,1) = POST_slabDeflectionPathLabel
+DENV_appl(1,1)  = 'APPL'
+DENV_appl(2,1)  = POST_slabDeflectionPathLabel
+DENV_appr(1,1)  = 'APPR'
+DENV_appr(2,1)  = POST_slabDeflectionPathLabel
+DENV_in1s(1,1)  = 'IN1SLB'
+DENV_in1s(2,1)  = POST_slabDeflectionPathLabel
+DENV_in2s(1,1)  = 'IN2SLB'
+DENV_in2s(2,1)  = POST_slabDeflectionPathLabel
+
+initPathCount = 2*GEO_TUN_modules+6
+*del,init_paths,,nopr
+*dim,init_paths,char,initPathCount
+
+*do,nthModule,1,GEO_TUN_modules,1
+  init_paths(2*nthModule-1) = 'ROOF%nthModule%'
+  init_paths(2*nthModule)   = 'FLOOR%nthModule%'
+*enddo
+init_paths(2*GEO_TUN_modules+1) = 'LWALL' , 'RWALL' , 'APPL' , 'APPR' , 'IN1S' , 'IN2S'
+
+*do,nthPath,1,initPathCount,1
+  pthName = init_paths(nthPath)
+  path,%pthName%,2
+  ppath,1,,0,0,0
+  ppath,2,,1,0,0
+  pdef,POST_slabDeflectionPathLabel,u,x
+*enddo
+
+pthenv , 'CLEAR' , 'DENV_floor'
+pthenv , 'CLEAR' , 'DENV_roof'
+pthenv , 'CLEAR' , 'DENV_lwall'
+pthenv , 'CLEAR' , 'DENV_rwall'
+pthenv , 'CLEAR' , 'DENV_appl'
+pthenv , 'CLEAR' , 'DENV_appr'
+pthenv , 'CLEAR' , 'DENV_in1s'
+pthenv , 'CLEAR' , 'DENV_in2s'
+
+
+!! B.  Calculate envelopes                                                                        !!
+*do,nthLS,1,LoadStepCount,1
+
+  *msg,ui,nthLS,LoadStepCount
+POST envelopes: reading load step %I out of %I.
+
+  ! Update element tables
+  allsel
+  set,nthLS,last
+
+  etable , 'M11'   , smisc , 4
+  etable , 'SM_11' , smisc , 34
+  etable , 'SM_22' , smisc , 35
+  etable , 'SM_12' , smisc , 36
+  etable , 'SB_11' , smisc , 37
+  etable , 'SB_22' , smisc , 38
+  etable , 'SB_12' , smisc , 39
+
+  etable , 'UX_d_i' , u , x
+  etable , 'UY_d_i' , u , y
+  etable , 'UZ_d_i' , u , z
+
+  sadd , 'UX_q_i'   , 'UX_d_i' , 'UX_g'    , 1000          , -1
+  sadd , 'UX_qk_i'  , 'UX_q_i' ,           , 1/LOAD_gammaQ
+  sadd , 'UX_frq_i' , 'UX_gk'  , 'UX_qk_i' , 1             , LOAD_psi1
+
+  sadd , 'UY_q_i'   , 'UY_d_i' , 'UY_g'    , 1000          , -1
+  sadd , 'UY_qk_i'  , 'UY_q_i' ,           , 1/LOAD_gammaQ
+  sadd , 'UY_frq_i' , 'UY_gk'  , 'UY_qk_i' , 1             , LOAD_psi1
+
+  sadd , 'UZ_q_i'   , 'UZ_d_i' , 'UZ_g'    , 1000          , -1
+  sadd , 'UZ_qk_i'  , 'UZ_q_i' ,           , 1/LOAD_gammaQ
+  sadd , 'UZ_frq_i' , 'UZ_gk'  , 'UZ_qk_i' , 1             , LOAD_psi1
+
+  ! Update beam results
+  TUNNEL_V2_POSTBEAMENVELOPE
+
+  ! Update shell deflection results
+  TUNNEL_V2_POSTDFLENVELOPE , nthLS
+
+  ! Clean up
+  etable , 'M11'      , eras
+  etable , 'SM_11'    , eras
+  etable , 'SM_22'    , eras
+  etable , 'SM_12'    , eras
+  etable , 'SB_11'    , eras
+  etable , 'SB_22'    , eras
+  etable , 'SB_12'    , eras
+  etable , 'UX_d_i'   , eras
+  etable , 'UY_d_i'   , eras
+  etable , 'UZ_d_i'   , eras
+  etable , 'UX_q_i'   , eras
+  etable , 'UY_q_i'   , eras
+  etable , 'UZ_q_i'   , eras
+  etable , 'UX_qk_i'  , eras
+  etable , 'UY_qk_i'  , eras
+  etable , 'UZ_qk_i'  , eras
+  etable , 'UX_frq_i' , eras
+  etable , 'UY_frq_i' , eras
+  etable , 'UZ_frq_i' , eras
+
+*enddo
+
+! TODO  this whole thing can be removed if PTH2BEAM outputs results in common units (kN, kNm, mm)
+pathCount = 10+(GEO_IWALL_count*(2+GEO_IWALL_columnCount))+(GEO_ROOF_gapStrutCount)
+iwallIdx  = 11
+strutIdx  = pathCount-GEO_ROOF_gapStrutCount
+
+*del , path_names    ,      , nopr
+*del , path_labels   ,      , nopr
+*del , scale_factors ,      , nopr
+*dim , path_names    , char , pathCount
+*dim , path_labels   , char , 10
+*dim , scale_factors ,      , 10
+
+path_names(1) = 'TBEAM1' , 'BBEAM1' , 'LCOL1' , 'RCOL1' , 'TBEAM2' , 'BBEAM2' , 'LCOL2' , 'RCOL2' , 'FBEAM1' , 'FBEAM2'
+*do,nthIWall,1,GEO_IWALL_count,1
+  idx             = iwallIdx+(nthIWall-1)*(GEO_IWALL_columnCount+2)
+  path_names(idx) = 'I%nthIWall%BBEAM' , 'I%nthIWall%TBEAM'
+  *do,nthColumn,1,GEO_IWALL_columnCount,1
+    jdx             = idx+nthColumn+1
+    path_names(jdx) = 'I%nthIWall%COL%nthColumn%'
+  *enddo
+*enddo
+*do,nthStrut,1,GEO_ROOF_gapStrutCount,1
+  kdx             = strutIdx+nthStrut
+  path_names(kdx) = 'STRUT%nthStrut%'
+*enddo
+
+path_labels(1)   = 'MP_MIN' , 'MP_MAX' , 'MB_MIN' , 'MB_MAX' , 'N_MIN' , 'N_MAX' , 'V_MIN' , 'V_MAX' , 'DYB_MIN' , 'DYB_MAX'
+scale_factors(1) = 1e-3     , 1e-3     , 1e-3     , 1e-3     , 1e-3    , 1e-3    , 1e-3    , 1e-3    , 1e3       , 1e3
+
+*do,nthPath,1,pathCount,1
+  pthName = path_names(nthPath)
+  path,pthName
+  *do,nthLabel,1,10,1
+    pthLabel    = path_labels(nthLabel)
+    scaleFactor = scale_factors(nthLabel)
+    pcalc,add,pthLabel,pthLabel,,scaleFactor
+  *enddo
+*enddo

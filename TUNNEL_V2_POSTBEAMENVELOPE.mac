@@ -1,0 +1,28 @@
+! TUNNEL_V2_POSTBEAMENVELOPE
+
+
+*do,nthHDW,1,2,1
+
+  TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_topBeam'     , 'TBEAM%nthHDW%' , 'RES_ENV_FRM%nthHDW%_topBeam'
+  TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_backBeam'    , 'BBEAM%nthHDW%' , 'RES_ENV_FRM%nthHDW%_backBeam'
+  TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_leftColumn'  , 'LCOL%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_leftColumn'
+  TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_rightColumn' , 'RCOL%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_rightColumn'
+
+  *if,GEO_HDW%nthHDW%_type,eq,0,then
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_botBeam' , 'FBEAM%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_frontBeam'
+  *endif
+
+*enddo
+
+*do,nthIWall,1,GEO_IWALL_count,1
+  TUNNEL_V2_POSTS2BEAM , 'COMPA_IWALL%nthIWall%_bBeam'   , 'I%nthIWall%BBEAM' , 'RES_ENV_IWALL%nthIWall%_botBeam'
+  TUNNEL_V2_POSTS2BEAM , 'COMPA_IWALL%nthIWall%_tBeam'   , 'I%nthIWall%TBEAM' , 'RES_ENV_IWALL%nthIWall%_topBeam'
+
+  *do,nthColumn,1,GEO_IWALL_columnCount,1
+    TUNNEL_V2_POSTS2BEAM , 'COMPA_IWALL%nthIWall%_column%nthColumn%' , 'I%nthIWall%COL%nthColumn%'  , 'RES_ENV_IWALL%nthIWall%_column%nthColumn%'
+  *enddo
+*enddo
+
+*do,nthStrut,1,GEO_ROOF_gapStrutCount,1
+  TUNNEL_V2_POSTS2BEAM , 'COMPA_strut%nthStrut%' , 'STRUT%nthStrut%' , 'RES_ENV_strut%nthStrut%'
+*enddo
