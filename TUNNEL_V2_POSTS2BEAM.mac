@@ -2,6 +2,7 @@
 ! TUNNEL_V2_POSTS2BEAM , ARG1    , ARG2    , ARG2
 
 
+_cmaName      = ARG1
 _pthName      = ARG2
 _envelopeName = ARG3
 pathDivs      = 20
@@ -13,7 +14,7 @@ ebackup
 nbackup
 
 ! Collect attributes from representative element (based on current area selection)
-cmsel,s,%ARG1%
+cmsel,s,%_cmaName%
 esla
 nsle
 n1 = ndnext(0)

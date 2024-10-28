@@ -28,6 +28,7 @@ _label_D    = 'label_D'    $ __label_D    = '_label_D'
 
 view1w
 wincln,1
+g_picres,GRAPH_picRes
 wintitle,1,'ACESSO 01','VIGA DE PISO','ELU-Normal',,1,13
 
 view2w ,   ,  , 1 ,   , 1 , 3
@@ -55,10 +56,10 @@ nsle
 cm,COMPE_bg,elem
 /color,cm,dgra,COMPE_bg
 
-wpcsys,1,CS_tunnel
-wpcsys,2,CS_tunnel
-wpcsys,3,CS_tunnel
-wpcsys,4,CS_tunnel
+wpcsys,1,CS_revTunnel
+wpcsys,2,CS_revTunnel
+wpcsys,3,CS_revTunnel
+wpcsys,4,CS_revTunnel
 
 /auto,all
 /eshape,1
