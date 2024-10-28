@@ -1,15 +1,5 @@
 ! _post-guide
 
-COMPA_HDW_BotBeam
-! Frame bottom beam (Z points towards tunnel end):
-! ⌚  - PATH: shell to beam
-!   - Bending moment MZ (in-plane)
-!   - Bending moment MY (off-plane)
-!   - Shear force VY (in-plane)
-!   - Shear force VZ (off-plane)
-!   - Axial force NX
-!   - Deflection UY
-
 COMPA_HDW_LeftWall / COMPA_HDW_RightWall
 ! Inlet walls (Z points inwards at beginning inlet, outwards at ending inlet):
 ! ✅  - Bending moment MY (about horizontal axis)
