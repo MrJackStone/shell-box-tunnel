@@ -54,11 +54,11 @@ TUNNEL_V2_SPANDFLENV , KP_RWALL_botBeg    , KP_RWALL_botEnd    , KP_RWALL_topBeg
   cmsel,s,COMPA_approachL
   esla
   nsle
-  TUNNEL_V2_SPANDFLENV , KP_APPL_outBeg     , KP_APPL_outEnd     , KP_APPL_innBeg    , KP_APPL_outEnd    , 'APPL'   , 'UY_frq_i' , 'DENV_appl'  , _lsNum
+  TUNNEL_V2_SPANDFLENV , KP_APPL_outBeg     , KP_APPL_outEnd     , KP_APPL_innBeg    , KP_APPL_innEnd    , 'APPL'   , 'UY_frq_i' , 'DENV_appl'  , _lsNum
   cmsel,s,COMPA_approachR
   esla
   nsle
-  TUNNEL_V2_SPANDFLENV , KP_APPR_outBeg     , KP_APPR_outEnd     , KP_APPR_innBeg    , KP_APPR_outEnd    , 'APPR'   , 'UY_frq_i' , 'DENV_appr'  , _lsNum
+  TUNNEL_V2_SPANDFLENV , KP_APPR_outBeg     , KP_APPR_outEnd     , KP_APPR_innBeg    , KP_APPR_innEnd    , 'APPR'   , 'UY_frq_i' , 'DENV_appr'  , _lsNum
 *endif
 
 *if,GEO_HDW1_status,eq,1,and,GEO_HDW1_type,eq,0,then
