@@ -36,11 +36,15 @@ CS_HDW1_leftFoot  = 36
 CS_HDW1_rightFoot = 37
 CS_HDW2_leftFoot  = 38
 CS_HDW2_rightFoot = 39
+CS_HDW1_slab      = 40
+CS_HDW2_slab      = 41
+CS_HDW1_frontBeam = 42
+CS_HDW2_frontBeam = 43
 
-CS_approachLeft   = 40
-CS_approachRight  = 41
+CS_approachLeft   = 44
+CS_approachRight  = 45
 
-CS_free           = 42
+CS_free           = 46
 
 *del , CS_innerWalls    ,  , nopr
 *del , CS_IWALL_beams   ,  , nopr

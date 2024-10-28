@@ -149,6 +149,24 @@ wprota,,-90
 wpoffs,,,-GEO_HDW2_RIGHT_footDepth
 cswpla,CS_HDW2_rightFoot,cart
 
+! Slabs
+csys,CS_hdw1
+wpcsys,-1
+wprota,,90
+cswpla,CS_HDW1_slab,cart
+
+csys,CS_hdw2
+wpcsys,-1
+wprota,,90
+cswpla,CS_HDW2_slab,cart
+
+! Beams
+csys,CS_hdw1
+clocal,CS_HDW1_frontBeam,cart
+
+csys,CS_hdw2
+clocal,CS_HDW2_frontBeam,cart
+
 
 !! D.  Approach slabs                                                                             !!
 csys,CS_roof

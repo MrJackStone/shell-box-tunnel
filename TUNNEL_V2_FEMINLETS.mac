@@ -11,19 +11,19 @@ TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftWall'       , CS_HDW1_leftWall  , SEC_HDW1_L
 TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightWall'      , CS_HDW1_rightWall , SEC_HDW1_RIGHT_wall
 TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftFoot'       , CS_HDW1_leftFoot  , SEC_HDW1_LEFT_footing
 TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightFoot'      , CS_HDW1_rightFoot , SEC_HDW1_RIGHT_footing
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftStiffener'  , CS_bot            , SEC_HDW1_stiffener
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightStiffener' , CS_bot            , SEC_HDW1_stiffener
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_slab'           , CS_bot            , SEC_HDW1_slab
-TUNNEL_V2_FEMAATT , 'COMPA_HDW1_botBeam'        , CS_bot            , SEC_HDW1_frontBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_leftStiffener'  , CS_HDW1_slab      , SEC_HDW1_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_rightStiffener' , CS_HDW1_slab      , SEC_HDW1_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_slab'           , CS_HDW1_slab      , SEC_HDW1_slab
+TUNNEL_V2_FEMAATT , 'COMPA_HDW1_botBeam'        , CS_HDW1_frontBeam , SEC_HDW1_frontBeam
 
 TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftWall'       , CS_HDW2_leftWall  , SEC_HDW2_LEFT_wall
 TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightWall'      , CS_HDW2_rightWall , SEC_HDW2_RIGHT_wall
 TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftFoot'       , CS_HDW2_leftFoot  , SEC_HDW2_LEFT_footing
 TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightFoot'      , CS_HDW2_rightFoot , SEC_HDW2_RIGHT_footing
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftStiffener'  , CS_bot            , SEC_HDW2_stiffener
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightStiffener' , CS_bot            , SEC_HDW2_stiffener
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_slab'           , CS_bot            , SEC_HDW2_slab
-TUNNEL_V2_FEMAATT , 'COMPA_HDW2_botBeam'        , CS_bot            , SEC_HDW2_frontBeam
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_leftStiffener'  , CS_HDW2_slab      , SEC_HDW2_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_rightStiffener' , CS_HDW2_slab      , SEC_HDW2_stiffener
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_slab'           , CS_HDW2_slab      , SEC_HDW2_slab
+TUNNEL_V2_FEMAATT , 'COMPA_HDW2_botBeam'        , CS_HDW2_frontBeam , SEC_HDW2_frontBeam
 
 ! Mesh solid model
 cmsel,s,COMPA_headwalls
