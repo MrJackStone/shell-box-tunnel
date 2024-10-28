@@ -305,8 +305,8 @@ KP_FLOOR_leftEnd = kpnext(0)
 csys,CS_tunnel
 
 *if,GEO_CORB_floorStatus,eq,1,then
-  *do,nthModule,1,GEO_TUN_modules,1
-    xWall  = nthModule*GEO_TUN_effW
+  *do,nthWall,1,GEO_TUN_modules+1,1
+    xWall  = (nthWall-1)*GEO_TUN_effW
     xLeft  = xWall-GEO_corbelXOff_BOT
     xRight = xWall+GEO_corbelXOff_BOT
 
@@ -404,8 +404,8 @@ KP_ROOF_leftEnd = kpnext(0)
 csys,CS_tunnel
 
 *if,GEO_CORB_roofStatus,eq,1,then
-  *do,nthModule,1,GEO_TUN_modules,1
-    xWall  = nthModule*GEO_TUN_effW
+  *do,nthWall,1,GEO_TUN_modules+1,1
+    xWall  = (nthWall-1)*GEO_TUN_effW
     xLeft  = xWall-GEO_corbelXOff_TOP
     xRight = xWall+GEO_corbelXOff_TOP
 
