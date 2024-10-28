@@ -69,5 +69,5 @@ GEO_PILE_INT_diameter = 1
 LOAD_INNER_pavement = 0
 
 ! Analysis options
-FEM_nlgeom    = 1
-FEM_nlsprings = 0
+FEM_nlgeom    = 0
+FEM_nlsprings = 1
