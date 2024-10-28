@@ -126,8 +126,8 @@ csys,CS_tunnel
 ! Floor slab
 *if,GEO_CORB_floorStatus,eq,1,then
   cmsel,s,COMPA_floor
-  *do,nthModule,1,GEO_TUN_modules,1
-    xWall  = nthModule*GEO_TUN_effW
+  *do,nthWall,1,GEO_TUN_modules+1,1
+    xWall  = (nthWall-1)*GEO_TUN_effW
     xLeft  = xWall-GEO_corbelXOff_BOT
     xRight = xWall+GEO_corbelXOff_BOT
     cssliceyz,xLeft
@@ -138,8 +138,8 @@ csys,CS_tunnel
 ! Roof slab
 *if,GEO_CORB_roofStatus,eq,1,then
   cmsel,s,COMPA_roof
-  *do,nthModule,1,GEO_TUN_modules,1
-    xWall  = nthModule*GEO_TUN_effW
+  *do,nthWall,1,GEO_TUN_modules+1,1
+    xWall  = (nthWall-1)*GEO_TUN_effW
     xLeft  = xWall-GEO_corbelXOff_TOP
     xRight = xWall+GEO_corbelXOff_TOP
     cssliceyz,xLeft
@@ -148,7 +148,9 @@ csys,CS_tunnel
 *endif
 
 ! Walls
-cmsel,s,COMPA_walls
+cmsel,s,COMPA_leftWall
+cmsel,a,COMPA_rightWall
+cmsel,a,COMPA_innerWalls
 csslicexz,GEO_corbelYOff_BOT
 csslicexz,GEO_TUN_effH-GEO_corbelYOff_TOP
 
