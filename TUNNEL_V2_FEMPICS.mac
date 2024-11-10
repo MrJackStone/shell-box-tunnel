@@ -8,7 +8,7 @@ view4w
 /number,1
 eplot
 /graphics,FULL
-takepic,'MESH'
+takepic,'MESH',,,,,FOLDER_setup
 
 /device,vector,on
 /psymb,esys,on
@@ -16,9 +16,55 @@ takepic,'MESH'
 esel,s,mat,,MAT_conc
 eplot
 /graphics,full
-takepic,'ESYS',1200,1
-
+takepic,'ESYS',1200,1,,,FOLDER_setup
 /psymb,defa
+
+view1w
+wincln,1
+boldfont,1
+g_picres,GRAPH_picRes
+wintitle,1,'PASSAGEM INFERIOR','ESPESSURAS','[cm]',,1,13
+allsel
+/graphics,power
+/pnum,defa
+/color,defa
+annothkleg,1,,,'cm'
+asel,all
+esla
+nsle
+/view,1,1,1,1
+/auto,1
+/angle,0
+/gline,1,0
+/device,vector,off
+/type,1,6
+/eshape,1
+go2png,GRAPH_picRes
+  eplot
+  /noerase
+  /user,1
+  esel,s,ename,,180
+  cmsel,u,COMPE_SOILSPR_roof
+  cmsel,u,COMPE_SOILSPR_FRIC_roof
+  cmsel,u,COMPE_SOILSPR_FRIC_floor
+  cmsel,u,COMPE_SOILSPR_FRIC_leftWall
+  cmsel,u,COMPE_SOILSPR_FRIC_rightWall
+  *if,GEO_APR_status,eq,1,then
+    cmsel,u,COMPE_SOILSPR_approachAbove
+  *endif
+  nsle
+  cm,COMPE_bg,elem
+  /color,cm,dgra,COMPE_bg
+  /eshape,1
+  /gline,1,-1
+  eplot
+endpng,'MESH_thk',,,,,FOLDER_setup
+/erase
+/eshape,0
+/gline,1,0
+/annot,dele
+cmdele,COMPE_bg
+/color,defa
 
 esel,s,type,,1
 view1w
