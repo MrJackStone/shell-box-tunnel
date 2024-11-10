@@ -10,6 +10,7 @@ midTitle = 'APPLIED SOIL PRESSURES'
   midTitle = 'NET PRESSURE INCREASE'
 *endif
 
+_cmaName   = ARG1
 _lsNum     = ARG3
 _part      = ARG4
 _fileName  = 'PRES_%key%%_lsNum%_%lwcase(_part)%'
@@ -78,7 +79,7 @@ go2png,picRes
   /type,all,3
   /device,vector,off
 
-  cmsel,s,%ARG1%
+  cmsel,s,%_cmaName%
   esla,s
   nsle,s
   cleanplot,'pletab','ABS_P',1
