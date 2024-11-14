@@ -399,7 +399,7 @@ r,REAL_longSprings,SpringArea/20,0,0
 *if,FEM_nlsprings,eq,0,then
   r,REAL_roofSprings,FEM_ROOF_KRot,0,0,0,0,0
 *elseif,FEM_nlsprings,eq,1,then
-  r,REAL_roofSprings,FEM_ROOF_KRot,0,1,0,0,0
+  r,REAL_roofSprings,FEM_ROOF_KRot,1,1,0,0,0
 *endif
 
 ! Rigid struts to vertically connect approach and roof slabs one way
