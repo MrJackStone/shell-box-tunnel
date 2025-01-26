@@ -1,7 +1,7 @@
 ! TUNNEL_V2_HDWATTR
 
 
-*if,GEO_HDW1_LEFT_wallHeight ,eq,0,then
+*if,GEO_HDW1_LEFT_wallHeight,eq,0,then
   GEO_HDW1_LEFT_wallHeight  = GEO_TUN_effH+GEO_FRAME_headBeamHeight+GEO_HDW1_LEFT_footDepth
 *endif
 
