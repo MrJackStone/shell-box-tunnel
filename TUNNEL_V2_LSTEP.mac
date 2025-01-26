@@ -204,9 +204,105 @@ cm,COMPN_shadow,node
 
 
 !!                                                                                                !!
-!! 5.4  Remaining load steps: load train movement                                                 !!
+!! 5.4  Fourth load step: vehicle over inlet approach slabs                                       !!
 !!                                                                                                !!
-lsel,u,line,,all
+! TODO  fix this hardcoded load step
+LOAD_LTI_HDW1_position = -GEO_HDW1_slabLength+1.5
+LOAD_LTI_HDW2_position = GEO_TUN_length+GEO_HDW2_slabLength-1.5
+
+nsel,none
+cm,COMPN_HDW_shadow,node
+
+*get,parType,parm,LOAD_LTI_name,type
+*if,parType,eq,3,then
+  *if,GEO_HDW_status,gt,0,then
+    *if,LOAD_LTI_name,eq,'TB-450',then
+      ALLSEL
+      FDELE,ALL,ALL
+      LSREAD,1
+
+      csys,CS_Tunnel
+      LoadStepIndex=LoadStepIndex+1
+      cmsel,s,COMPA_HDW_slab
+      esla,s
+      nsle,s
+      cm,COMPN_HDW_slab,node
+
+      *do,nthHdw,1,2,1
+        *do,nthModule,1,GEO_TUN_modules,1
+          LV_xcen=(GEO_TUN_effW/2)+(GEO_TUN_effW*(nthModule-1))
+
+          nsel,s,loc,z,LOAD_LTI_HDW%nthHdw%_position-3,LOAD_LTI_HDW%nthHdw%_position+3
+          nsel,r,loc,x,LV_xcen-1.5,LV_xcen+1.5
+          cmsel,r,COMPN_HDW_slab
+          cmpadd,'COMPN_HDW_shadow'
+
+          cmsel,s,COMPN_HDW_slab
+          cmsel,a,COMPN_floor
+          n1 = node(LV_xcen-1,0,LOAD_LTI_HDW%nthHdw%_position-1.5)
+          n2 = node(LV_xcen+1,0,LOAD_LTI_HDW%nthHdw%_position-1.5)
+          n3 = node(LV_xcen-1,0,LOAD_LTI_HDW%nthHdw%_position)
+          n4 = node(LV_xcen+1,0,LOAD_LTI_HDW%nthHdw%_position)
+          n5 = node(LV_xcen-1,0,LOAD_LTI_HDW%nthHdw%_position+1.5)
+          n6 = node(LV_xcen+1,0,LOAD_LTI_HDW%nthHdw%_position+1.5)
+
+          nsel , s , node ,  , n1
+          nsel , a , node ,  , n2
+          nsel , a , node ,  , n3
+          nsel , a , node ,  , n4
+          nsel , a , node ,  , n5
+          nsel , a , node ,  , n6
+
+          f,all,fy,-75e3*LOAD_gammaQ
+        *enddo
+      *enddo
+
+      cmsel,s,COMPN_HDW_shadow
+      nsel,inve
+      cmsel,r,COMPN_HDW_slab
+      esln,s,1
+      cmsel,s,COMPA_HDW_slab
+      esla,r
+      sfe,all,1,pres,,5e3*LOAD_gammaQ
+
+      ALLSEL
+      TIME,LoadStepIndex
+
+      nsubst,SubstepCount
+
+      outres,erase
+      outres,all,last
+
+      LSWRITE,LoadStepIndex
+      xxxLS = LoadStepIndex
+
+      csys,0
+
+      /psymb,FBCS,0
+      /pbc,F,,1
+      /pbc,U,,0
+      /pbc,ROT,,0
+      /psf,pres,norm,2,0,on
+      /device,VECTOR,ON
+      /edge,ALL,1
+      /eshape,0
+      ESEL,S,MAT,,1
+      VIEW4W
+      EPLOT
+      fName='LOAD_HDW_vehicle'
+      /graphics,FULL
+      TAKEPIC,fName,1200,1,1
+      /device,VECTOR,OFF
+      /edge,ALL,0
+    *endif
+  *endif
+*endif
+
+/eof
+!!                                                                                                !!
+!! 5.5  Remaining load steps: load train movement                                                 !!
+!!                                                                                                !!
+lsel,none
 cm,COMPL_ltpos,line
 
 *do,xOffIndex,1,LOAD_LTA_positionCount,1
