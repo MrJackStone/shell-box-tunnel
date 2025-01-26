@@ -146,12 +146,12 @@ cm,COMPN_shadow,node
       cmpadd,'COMPN_shadow'
 
       cmsel,s,COMPN_floor
-      n1 = node(LV_xcen-1,0,LOAD_LTI_position-3)
-      n2 = node(LV_xcen+1,0,LOAD_LTI_position-3)
+      n1 = node(LV_xcen-1,0,LOAD_LTI_position-1.5)
+      n2 = node(LV_xcen+1,0,LOAD_LTI_position-1.5)
       n3 = node(LV_xcen-1,0,LOAD_LTI_position)
       n4 = node(LV_xcen+1,0,LOAD_LTI_position)
-      n5 = node(LV_xcen-1,0,LOAD_LTI_position+3)
-      n6 = node(LV_xcen+1,0,LOAD_LTI_position+3)
+      n5 = node(LV_xcen-1,0,LOAD_LTI_position+1.5)
+      n6 = node(LV_xcen+1,0,LOAD_LTI_position+1.5)
 
       nsel , s , node ,  , n1
       nsel , a , node ,  , n2
