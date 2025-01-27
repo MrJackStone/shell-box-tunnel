@@ -20,10 +20,13 @@
 *do,nthHdw,1,2,1
   *if,GEO_HDW%nthHdw%_status,eq,1,then
     *if,GEO_HDW%nthHdw%_type,ne,2,then
+      afunbackup
+      *afun,deg
       leftDeltaX  = GEO_HDW%nthHdw%_LEFT_wallLength*sin(GEO_HDW%nthHdw%_LEFT_wallAngle)
       rightDeltaX = GEO_HDW%nthHdw%_RIGHT_wallLength*sin(GEO_HDW%nthHdw%_RIGHT_wallAngle)
       leftDeltaZ  = GEO_HDW%nthHdw%_LEFT_wallLength*cos(GEO_HDW%nthHdw%_LEFT_wallAngle)
       rightDeltaZ = GEO_HDW%nthHdw%_RIGHT_wallLength*cos(GEO_HDW%nthHdw%_RIGHT_wallAngle)
+      afunrestore
 
       *if,nthHdw,eq,1,then
         zLeft  = 0
@@ -33,11 +36,14 @@
         zRight = GEO_RWALL_zEnd
       *endif
 
-      zDelta    = (zLeft+leftDeltaZ)-(zRight+rightDeltaZ)
-      xToCenter = leftDeltaX+(GEO_TUN_totEffW/2)
-      xToEnd    = leftDeltaX+rightDeltaX+GEO_TUN_totEffW
+      zDelta      = (zLeft+leftDeltaZ)-(zRight+rightDeltaZ)
+      xToCenter   = leftDeltaX+(GEO_TUN_totEffW/2)
+      xToEnd      = leftDeltaX+rightDeltaX+GEO_TUN_totEffW
+      xRatio      = xToCenter/xToEnd
+      skewDeltaZ  = zLeft-zRight
+      skewCenterZ = zLeft+(skewDeltaZ*xRatio)
 
-      GEO_HDW%nthHdw%_slabLength = zDelta*(xToCenter/xToEnd)
+      GEO_HDW%nthHdw%_slabLength = (zLeft+leftDeltaZ)-(zDelta*xRatio)-skewCenterZ
     *endif
   *endif
 *enddo
