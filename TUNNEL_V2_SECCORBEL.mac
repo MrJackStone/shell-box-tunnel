@@ -9,20 +9,23 @@ xWall=0
 
   *if,arg3,gt,0,then
 
-    corbelfcn , fcnName , arg2 , arg3 , arg4 , arg5 , arg6 , arg9 , nthCS
+    *msg,fatal
+CORBEL ERROR: varying section not implemented.
 
-    sectype,nthSEC,SHELL,,%fcnName%
-    secdata,arg4,MAT_CONC
-    !secoffset,BOT
-
-    *cfopen,'tmp_secfun',tmp
-      *vwrite,fcnName
-      ('SECFUNCTION,%',A8,'%,nthCS')
-    *cfclos
-    /nopr
-    /input,'tmp_secfun',tmp
-    /delete,'tmp_secfun',tmp
-    /gopr
+    ! corbelfcn , fcnName , arg2 , arg3 , arg4 , arg5 , arg6 , arg9 , nthCS
+    !
+    ! sectype,nthSEC,SHELL,,%fcnName%
+    ! secdata,arg4,MAT_CONC
+    ! !secoffset,BOT
+    !
+    ! *cfopen,'tmp_secfun',tmp
+    !   *vwrite,fcnName
+    !   ('SECFUNCTION,%',A8,'%,nthCS')
+    ! *cfclos
+    ! /nopr
+    ! /input,'tmp_secfun',tmp
+    ! /delete,'tmp_secfun',tmp
+    ! /gopr
 
   *elseif,arg3,lt,0,then
 
