@@ -160,7 +160,7 @@ cm,COMPN_shadow,node
       nsel , a , node ,  , n5
       nsel , a , node ,  , n6
 
-      f,all,fy,-75e3*LOAD_gammaQ
+      f,all,fy,-75e3*LOAD_gammaQ*1.35
     *enddo
 
     cmsel,s,COMPN_shadow
@@ -256,7 +256,7 @@ cm,COMPN_HDW_shadow,node
           nsel , a , node ,  , n5
           nsel , a , node ,  , n6
 
-          f,all,fy,-75e3*LOAD_gammaQ
+          f,all,fy,-75e3*LOAD_gammaQ*1.35
         *enddo
       *enddo
 
