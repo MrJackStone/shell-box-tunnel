@@ -443,6 +443,11 @@ MAT_SOIL_cohesion = 0
 ! Soil mass density
 MAT_SOIL_density = 1800
 
+! Option to include longitudinal springs, simulating friction:
+!   [0] Do not include (default)
+!   [1] Include
+SOIL_frictionOpt = 0
+
 
 !!                                                                                                !!
 !! 1.8  Loads                                                                                     !!

@@ -65,6 +65,9 @@ GEO_PILE_status       = 0
 GEO_PILE_EXT_diameter = 1
 GEO_PILE_INT_diameter = 1
 
+! Soil friction
+SOIL_frictionOpt = 0
+
 ! Loads
 LOAD_INNER_pavement = 0
 
