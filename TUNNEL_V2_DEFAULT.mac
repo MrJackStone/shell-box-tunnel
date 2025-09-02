@@ -13,8 +13,8 @@ GEO_IWALL_columnCount = 0
 
 ! Corbels
 GEO_CORB_status = 0
-GEO_CORB_width  = 1
-GEO_CORB_height = 1
+GEO_CORB_width  = 0
+GEO_CORB_height = 0
 
 ! Frame
 GEO_FRAME_status             = 0
