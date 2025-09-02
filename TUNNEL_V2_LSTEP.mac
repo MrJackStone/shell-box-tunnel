@@ -230,21 +230,24 @@ cm,COMPN_HDW_shadow,node
 
       *do,nthHdw,1,2,1
         *do,nthModule,1,GEO_TUN_modules,1
-          LV_xcen=(GEO_TUN_effW/2)+(GEO_TUN_effW*(nthModule-1))
+          afunbackup,'DEG'
+          LV_xcen = (GEO_TUN_effW/2)+(GEO_TUN_effW*(nthModule-1))
+          LV_zcen = LOAD_LTI_HDW%nthHdw%_position+(LV_xcen*tan(GEO_TUN_begSkewness))
+          afunrestore
 
-          nsel,s,loc,z,LOAD_LTI_HDW%nthHdw%_position-3,LOAD_LTI_HDW%nthHdw%_position+3
-          nsel,r,loc,x,LV_xcen-1.5,LV_xcen+1.5
+          nsel , s , loc , z , LV_zcen-3   , LV_zcen+3
+          nsel , r , loc , x , LV_xcen-1.5 , LV_xcen+1.5
           cmsel,r,COMPN_HDW_slab
           cmpadd,'COMPN_HDW_shadow'
 
           cmsel,s,COMPN_HDW_slab
           cmsel,a,COMPN_floor
-          n1 = node(LV_xcen-1,0,LOAD_LTI_HDW%nthHdw%_position-1.5)
-          n2 = node(LV_xcen+1,0,LOAD_LTI_HDW%nthHdw%_position-1.5)
-          n3 = node(LV_xcen-1,0,LOAD_LTI_HDW%nthHdw%_position)
-          n4 = node(LV_xcen+1,0,LOAD_LTI_HDW%nthHdw%_position)
-          n5 = node(LV_xcen-1,0,LOAD_LTI_HDW%nthHdw%_position+1.5)
-          n6 = node(LV_xcen+1,0,LOAD_LTI_HDW%nthHdw%_position+1.5)
+          n1 = node(LV_xcen-1 , 0 , LV_zcen-1.5)
+          n2 = node(LV_xcen+1 , 0 , LV_zcen-1.5)
+          n3 = node(LV_xcen-1 , 0 , LV_zcen)
+          n4 = node(LV_xcen+1 , 0 , LV_zcen)
+          n5 = node(LV_xcen-1 , 0 , LV_zcen+1.5)
+          n6 = node(LV_xcen+1 , 0 , LV_zcen+1.5)
 
           nsel , s , node ,  , n1
           nsel , a , node ,  , n2
