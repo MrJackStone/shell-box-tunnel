@@ -1,5 +1,5 @@
 ! TUNNEL_V2_POSTS2BEAM , cmaName , pthName , envelope_table
-! TUNNEL_V2_POSTS2BEAM , ARG1    , ARG2    , ARG2
+! TUNNEL_V2_POSTS2BEAM , ARG1    , ARG2    , ARG3
 
 
 _cmaName      = ARG1
