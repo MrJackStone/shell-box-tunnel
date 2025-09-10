@@ -44,6 +44,12 @@ modulus = width*(depth**2)/6
 ! Generate virtual beam results
 pth2beam,tn1,tn2,bn1,bn2,_pthName,1,pathDivs,modulus,area,,_envelopeName
 
+! Calculate internal reaction variations
+path  , _pthName
+pcalc , add      , 'MP_DLT' , 'MP_MAX' , 'MP_MIN' , 1 , -1
+pcalc , add      , 'MB_DLT' , 'MB_MAX' , 'MB_MIN' , 1 , -1
+pcalc , add      , 'V_DLT'  , 'V_MAX'  , 'V_MIN'  , 1 , -1
+
 ! Clean up
 csrestore
 arestore

@@ -166,8 +166,8 @@ strutIdx  = pathCount-GEO_ROOF_gapStrutCount
 *del , path_labels   ,      , nopr
 *del , scale_factors ,      , nopr
 *dim , path_names    , char , pathCount
-*dim , path_labels   , char , 10
-*dim , scale_factors ,      , 10
+*dim , path_labels   , char , 13
+*dim , scale_factors ,      , 13
 
 path_names(1) = 'TBEAM1' , 'BBEAM1' , 'LCOL1' , 'RCOL1' , 'TBEAM2' , 'BBEAM2' , 'LCOL2' , 'RCOL2' , 'FBEAM1' , 'FBEAM2'
 *do,nthIWall,1,GEO_IWALL_count,1
@@ -186,10 +186,14 @@ path_names(1) = 'TBEAM1' , 'BBEAM1' , 'LCOL1' , 'RCOL1' , 'TBEAM2' , 'BBEAM2' , 
 path_labels(1)   = 'MP_MIN' , 'MP_MAX' , 'MB_MIN' , 'MB_MAX' , 'N_MIN' , 'N_MAX' , 'V_MIN' , 'V_MAX' , 'DYB_MIN' , 'DYB_MAX'
 scale_factors(1) = 1e-3     , 1e-3     , 1e-3     , 1e-3     , 1e-3    , 1e-3    , 1e-3    , 1e-3    , 1e3       , 1e3
 
+! TODO  poor way to account for fatigue combination when plotting shell-to-beam results...
+path_labels(11)   = 'MP_DLT'         , 'MB_DLT'         , 'V_DLT'
+scale_factors(11) = 1e-3/LOAD_gammaQ , 1e-3/LOAD_gammaQ , 1e-3/LOAD_gammaQ
+
 *do,nthPath,1,pathCount,1
   pthName = path_names(nthPath)
   path,pthName
-  *do,nthLabel,1,10,1
+  *do,nthLabel,1,13,1
     pthLabel    = path_labels(nthLabel)
     scaleFactor = scale_factors(nthLabel)
     pcalc,add,pthLabel,pthLabel,,scaleFactor
