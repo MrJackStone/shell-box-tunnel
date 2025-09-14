@@ -272,6 +272,13 @@ MAT_CONC_E     = ElasticModulus
 ! Soil spring stiffness
 SpringConstant = MAT_SOIL_stiffness*ElementArea
 SpringArea     = SpringConstant*SpringLength/SpringElasticModulus
+*if,MAT_SOIL_floorFlatStiffnessMult,eq,0,then
+  MAT_SOIL_floorFlatStiffness = MAT_SOIL_stiffness
+*elseif,MAT_SOIL_floorFlatStiffnessMult,lt,0,then
+  MAT_SOIL_floorFlatStiffness = 0
+*else
+  MAT_SOIL_floorFlatStiffness = MAT_SOIL_stiffness*MAT_SOIL_floorFlatStiffnessMult
+*endif
 
 ! Active Earth Pressure Coeficient (Ka)
 ActiveEPCoefficient = TAN((45-(MAT_SOIL_frictionAngle/2))*pi/180)**2

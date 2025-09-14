@@ -60,27 +60,30 @@ TUNNEL_V2_FEMTUNNEL
 !! 4.5  Soil                                                                                      !!
 !!                                                                                                !!
 esel , none
-cm   , COMPE_SOILSPR_FRIC_roof      , elem
-cm   , COMPE_SOILSPR_FRIC_floor     , elem
-cm   , COMPE_SOILSPR_FRIC_leftWall  , elem
-cm   , COMPE_SOILSPR_FRIC_rightWall , elem
+cm   , COMPE_SOILSPR_FRIC_roof        , elem
+cm   , COMPE_SOILSPR_FRIC_floorFlat   , elem
+cm   , COMPE_SOILSPR_FRIC_floorCorbel , elem
+cm   , COMPE_SOILSPR_FRIC_leftWall    , elem
+cm   , COMPE_SOILSPR_FRIC_rightWall   , elem
 
 esel,s,type,,TYPE_shell181
 nsle,s,active
 apportionedstats,,'FEM_nodes_apportioned'
 
 ! Normal springs
-TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '+Y' , 'roof'
-TUNNEL_V2_ELASTICBASE , 'COMPA_floor'     , CS_tunnel , '-Y' , 'floor'
-TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall'  , CS_tunnel , '-X' , 'leftWall'
-TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall' , CS_tunnel , '+X' , 'rightWall'
+TUNNEL_V2_ELASTICBASE , 'COMPA_roof'         , CS_tunnel , '+Y' , 'roof'
+TUNNEL_V2_ELASTICBASE , 'COMPA_FLOOR_flat'   , CS_tunnel , '-Y' , 'floorFlat'   , MAT_SOIL_floorFlatStiffnessMult
+TUNNEL_V2_ELASTICBASE , 'COMPA_FLOOR_corbel' , CS_tunnel , '-Y' , 'floorCorbel'
+TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall'     , CS_tunnel , '-X' , 'leftWall'
+TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall'    , CS_tunnel , '+X' , 'rightWall'
 
 ! Tangential longitudinal springs (friction)
 *if,SOIL_frictionOpt,eq,1,then
-  TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall' , CS_tunnel , '-Z' , 'FRIC_rightWall' , 1e-1 , 1
-  TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '-Z' , 'FRIC_roof'      , 1e-1 , 1
-  TUNNEL_V2_ELASTICBASE , 'COMPA_floor'     , CS_tunnel , '-Z' , 'FRIC_floor'     , 1e-1 , 1
-  TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall'  , CS_tunnel , '-Z' , 'FRIC_leftWall'  , 1e-1 , 1
+  TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall'    , CS_tunnel , '-Z' , 'FRIC_rightWall'   , 1e-1 , 1
+  TUNNEL_V2_ELASTICBASE , 'COMPA_roof'         , CS_tunnel , '-Z' , 'FRIC_roof'        , 1e-1 , 1
+  TUNNEL_V2_ELASTICBASE , 'COMPA_FLOOR_flat'   , CS_tunnel , '-Z' , 'FRIC_floorFlat'   , 1e-1 , 1
+  TUNNEL_V2_ELASTICBASE , 'COMPA_FLOOR_corbel' , CS_tunnel , '-Z' , 'FRIC_floorCorbel' , 1e-1 , 1
+  TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall'     , CS_tunnel , '-Z' , 'FRIC_leftWall'    , 1e-1 , 1
 *endif
 
 

@@ -222,6 +222,15 @@ Nmm2kNm = 1e-6
 sadd , 'SIGY_gk' , 'UY_gk' ,  , MAT_SOIL_stiffness*Nmm2kNm*(-1)
 sadd , 'SIGY_qk' , 'UY_qk' ,  , MAT_SOIL_stiffness*Nmm2kNm*(-1)
 sadd , 'SIGY_k'  , 'UY_k'  ,  , MAT_SOIL_stiffness*Nmm2kNm*(-1)
+
+ebackup
+cmsel,s,COMPA_FLOOR_flat
+esla
+sadd , 'SIGY_gk' , 'UY_gk' ,  , MAT_SOIL_floorFlatStiffness*Nmm2kNm*(-1)
+sadd , 'SIGY_qk' , 'UY_qk' ,  , MAT_SOIL_floorFlatStiffness*Nmm2kNm*(-1)
+sadd , 'SIGY_k'  , 'UY_k'  ,  , MAT_SOIL_floorFlatStiffness*Nmm2kNm*(-1)
+elrestore
+
 sadd , 'SIGY_a' , 'SIGY_k' , 'SIGY_gk' , 1 , -1
 
 smax , 'SIGY_gk' , 'SIGY_gk' , 'ZEROS'

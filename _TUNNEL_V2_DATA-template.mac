@@ -443,6 +443,13 @@ MAT_SOIL_cohesion = 0
 ! Soil mass density
 MAT_SOIL_density = 1800
 
+! Soil stiffness under thin floor slab, for when slab stiffeners are adopted.
+! This value multiplies MAT_SOIL_stiffness, given the following rules:
+!   - when = 0 (default), use multiplier of 1.0
+!   - when > 0, use number as multiplier
+!   - when < 0, deactivate soil springs under slab
+MAT_SOIL_floorFlatStiffnessMult = 0
+
 ! Option to include longitudinal springs, simulating friction:
 !   [0] Do not include (default)
 !   [1] Include
