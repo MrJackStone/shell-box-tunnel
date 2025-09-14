@@ -78,9 +78,9 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall' , CS_tunnel , '+X' , 'rightWall'
 ! Tangential longitudinal springs (friction)
 *if,SOIL_frictionOpt,eq,1,then
   TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall' , CS_tunnel , '-Z' , 'FRIC_rightWall' , 1e-1 , 1
-  TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '-Z' , 'FRIC_roof' , 1e-1 , 1
-  TUNNEL_V2_ELASTICBASE , 'COMPA_floor'     , CS_tunnel , '-Z' , 'FRIC_floor' , 1e-1 , 1
-  TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall'  , CS_tunnel , '-Z' , 'FRIC_leftWall' , 1e-1 , 1
+  TUNNEL_V2_ELASTICBASE , 'COMPA_roof'      , CS_tunnel , '-Z' , 'FRIC_roof'      , 1e-1 , 1
+  TUNNEL_V2_ELASTICBASE , 'COMPA_floor'     , CS_tunnel , '-Z' , 'FRIC_floor'     , 1e-1 , 1
+  TUNNEL_V2_ELASTICBASE , 'COMPA_leftWall'  , CS_tunnel , '-Z' , 'FRIC_leftWall'  , 1e-1 , 1
 *endif
 
 
