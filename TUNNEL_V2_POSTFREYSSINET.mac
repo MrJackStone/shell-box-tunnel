@@ -1,0 +1,121 @@
+! TUNNEL_V2_POSTFREYSSINET
+
+
+NtokN     = 1e-3
+radtomrad = 1e3
+radtomDeg = 1e3*(180/pi)
+PIC_res   = 1500
+
+csys,CS_tunnel
+
+! Inlet approach slab
+
+
+! Roof approach slab
+cmsel,s,COMPL_APR_leftInterface
+nsll,s,1
+cm,COMPN_APR_leftInterface,node
+esln,s
+cmsel,s,COMPA_approachL
+esla,r
+cm,COMPE_APR_leftInterface,elem
+*get,nc,node,,count
+
+ndsort,'Z','A','ND_ROOFAPPR_left'
+
+! Create path
+path,'RF_AP_L',nc,50,1
+
+*do,nthNode,1,nc,1
+  nodeNum = ND_ROOFAPPR_left(nthNode)
+  ppath,nthNode,nodeNum
+*enddo
+
+! Initialize path
+*del,ENV_roofApproachSlab,,nopr
+*dim,ENV_roofApproachSlab,char,6,1
+ENV_roofApproachSlab(1,1) = 'RF_AP_L'
+ENV_roofApproachSlab(2,1) = 'FX'
+ENV_roofApproachSlab(3,1) = 'FY'
+ENV_roofApproachSlab(4,1) = 'FZ'
+ENV_roofApproachSlab(5,1) = 'ROTZ'
+ENV_roofApproachSlab(6,1) = 'FRATIO'
+
+pthenv , 'CLEAR' , 'ENV_roofApproachSlab'
+
+! Calculate envelopes
+*do,nthLS,LoadStepCount,1,-1
+
+  cmsel,s,COMPE_APR_leftInterface
+  cmsel,s,COMPN_APR_leftInterface
+  subset,nthLS,last
+
+  *msg,ui,nthLS,LoadStepCount
+POST FREYSSINET: working on LS %I/%I...
+
+  path,'RF_AP_L'
+
+  pdef,'ROTZ',rot,z
+  pcalc,add,'ROTZ','ROTZ',,radtomrad ! radtomDeg
+  pcalc,add,'ROTZ','ROTZ',,1/LOAD_gammaQ
+
+  *del , ROOFAPR_LEFT_fx ,  , nopr
+  *del , ROOFAPR_LEFT_fy ,  , nopr
+  *del , ROOFAPR_LEFT_fz ,  , nopr
+  *dim , ROOFAPR_LEFT_fx ,  , nc
+  *dim , ROOFAPR_LEFT_fy ,  , nc
+  *dim , ROOFAPR_LEFT_fz ,  , nc
+
+  *do,nthNode,1,nc,1
+    nodeNum = ND_ROOFAPPR_left(nthNode)
+    nsel,s,node,,nodeNum
+    esln,s
+    cmsel,r,COMPE_APR_leftInterface
+    *get,ec,elem,,count
+    enum    = 0
+    nodalFX = 0
+    nodalFY = 0
+    nodalFZ = 0
+
+    *do,nthElem,1,ec,1
+      enum = elnext(enum)
+      *get,nthFX,elem,enum,efor,nodeNum,fx
+      *get,nthFY,elem,enum,efor,nodeNum,fy
+      *get,nthFZ,elem,enum,efor,nodeNum,fz
+      nodalFX = nodalFX+nthFX
+      nodalFY = nodalFY+nthFY
+      nodalFZ = nodalFZ+nthFZ
+    *enddo
+
+    ROOFAPR_LEFT_fx(nthNode) = nodalFX*(NtokN)
+    ROOFAPR_LEFT_fy(nthNode) = nodalFY*(NtokN)
+    ROOFAPR_LEFT_fz(nthNode) = nodalFZ*(NtokN)
+
+  *enddo
+
+  ! *vscfun , meanFX          , mean , ROOFAPR_LEFT_fx
+  ! *vscfun , meanFY          , mean , ROOFAPR_LEFT_fy
+  ! *vscfun , meanFZ          , mean , ROOFAPR_LEFT_fz
+  ! *vfill  , ROOFAPR_LEFT_fx , ramp , meanFX          , 0
+  ! *vfill  , ROOFAPR_LEFT_fy , ramp , meanFY          , 0
+  ! *vfill  , ROOFAPR_LEFT_fz , ramp , meanFZ          , 0
+
+  arr2pth , 'ROOFAPR_LEFT_fx' , 'FX' , 6
+  arr2pth , 'ROOFAPR_LEFT_fy' , 'FY' , 7
+  arr2pth , 'ROOFAPR_LEFT_fz' , 'FZ' , 8
+
+  pcalc,div,FRATIO,FY,FX,1,1
+
+  pthenv, 'UPDATE' , 'ENV_roofApproachSlab' , nthLS
+
+*enddo
+
+! path,'FL_AP_R'
+
+!!                                                                                                !!
+
+
+TUNNEL_V2_POSTFREYPIC , 'COMPA_approachL' , 'RF_AP_L' , 'FX'   , 'ROOF APPROACH SLAB' , 'HORZ. SHEAR FORCE (FX)' , 'kN'   , 'ROOFAPR_linearFX'
+TUNNEL_V2_POSTFREYPIC , 'COMPA_approachL' , 'RF_AP_L' , 'FY'   , 'ROOF APPROACH SLAB' , 'NORMAL FORCE (FY)'      , 'kN'   , 'ROOFAPR_linearFY'
+TUNNEL_V2_POSTFREYPIC , 'COMPA_approachL' , 'RF_AP_L' , 'FZ'   , 'ROOF APPROACH SLAB' , 'HORZ. SHEAR FORCE (FZ)' , 'kN'   , 'ROOFAPR_linearFZ'
+TUNNEL_V2_POSTFREYPIC , 'COMPA_approachL' , 'RF_AP_L' , 'ROTZ' , 'ROOF APPROACH SLAB' , 'ROTATION (ROTZ)'        , 'mrad' , 'ROOFAPR_linearRZ'

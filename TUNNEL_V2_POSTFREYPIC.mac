@@ -1,0 +1,108 @@
+! TUNNEL_V2_POSTFREYPIC , cmaSlab , pthName , pthItem , leftTitle , midTitle , rightTitle , imgName
+! TUNNEL_V2_POSTFREYPIC , ARG1    , ARG2    , ARG3    , ARG4      , ARG5     , ARG6       , ARG7
+
+_pthItemEnv      = '%ARG3%*'
+_pthItemDead     = ARG3
+_leftTitle       = ARG4
+_midTitle        = ARG5
+_rightTitleTotal = 'ELU-Normal [%ARG6%]'
+_rightTitleDead  = 'ELU-Permanente [%ARG6%]'
+_imgNameTotal    = '%ARG7%_total'
+_imgNameDead     = '%ARG7%_dead'
+PIC_res          = 1500
+
+csys,CS_tunnel
+
+asel,all
+cm,COMPA_bg,area
+/color,cm,dgra,COMPA_bg
+
+!!                                                                                                !!
+
+view1w
+wincln,1
+boldfont,1
+g_picres,PIC_res
+axanno,1,'ULC','X','Z'
+wintitle,1,_leftTitle,_midTitle,_rightTitleTotal,,1,13
+
+/view,1,0,1,0
+/edge,1,0
+/angle,1,0
+/auto,1
+/udoc,1,cntr,right
+/plopts,leg3,on
+/gformat,f,1,1
+cmsel,s,ARG1
+aplot
+/user,1
+cmsel,s,COMPA_bg
+
+go2png,PIC_res
+
+  aplot
+  /noerase
+
+  path,ARG2
+  cleanplot,'plpagm',_pthItemEnv,10,'node'
+
+  cmsel,s,ARG1
+  esla
+  nsle
+  /device,vector,on
+  /edge,1,0
+  eplot
+  /device,vector,off
+
+endpng,_imgNameTotal
+
+/erase
+/annot,dele
+windefa,1
+
+!!                                                                                                !!
+
+view1w
+wincln,1
+boldfont,1
+g_picres,PIC_res
+axanno,1,'ULC','X','Z'
+wintitle,1,_leftTitle,_midTitle,_rightTitleDead,,1,13
+
+/view,1,0,1,0
+/edge,1,0
+/angle,1,0
+/auto,1
+/udoc,1,cntr,right
+/plopts,leg3,on
+/gformat,f,1,1
+cmsel,s,ARG1
+aplot
+/user,1
+cmsel,s,COMPA_bg
+
+go2png,PIC_res
+
+  aplot
+  /noerase
+
+  path,ARG2
+  cleanplot,'plpagm',_pthItemDead,10,'node'
+
+  cmsel,s,ARG1
+  esla
+  nsle
+  /device,vector,on
+  /edge,1,0
+  eplot
+  /device,vector,off
+
+endpng,_imgNameDead
+
+/erase
+/annot,dele
+windefa,1
+
+!!                                                                                                !!
+
+cmdele,COMPA_bg
