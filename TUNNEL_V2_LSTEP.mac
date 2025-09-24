@@ -183,22 +183,22 @@ cm,COMPN_shadow,node
 
     csys,0
 
-    /psymb,FBCS,0
-    /pbc,F,,1
-    /pbc,U,,0
-    /pbc,ROT,,0
+    /psymb,fbcs,0
+    /pbc,f,,1
+    /pbc,u,,0
+    /pbc,rot,,0
     /psf,pres,norm,2,0,on
-    /device,VECTOR,ON
-    /edge,ALL,1
+    /device,vector,on
+    /edge,all,1
     /eshape,0
-    ESEL,S,MAT,,1
-    VIEW4W
-    EPLOT
-    fName='LOAD_vehicle'
-    /graphics,FULL
-    TAKEPIC,fName,1200,1,1
-    /device,VECTOR,OFF
-    /edge,ALL,0
+    esel,s,mat,,1
+    view4w
+    eplot
+    fName = 'LOAD_vehicle'
+    /graphics,full
+    takepic,fName,1200,1,1
+    /device,vector,off
+    /edge,all,0
   *endif
 *endif
 
