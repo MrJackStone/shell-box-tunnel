@@ -181,24 +181,54 @@ cm,COMPN_shadow,node
 
     LSWRITE,LoadStepIndex
 
-    csys,0
+    csys,CS_tunnel
 
+    fName = 'LOAD_vehicle'
+    view4w
+    wincln,1
+    wincln,2
+    wincln,3
+    wincln,4
+    view1w
+    wintitle,-1,'INNER LOAD TRAIN','POSITION AND PRESSURES','[Pa]',,,13
+    view4w,,1
+    clims,,,,5
+    g_picres,1200
     /psymb,fbcs,0
     /pbc,f,,1
     /pbc,u,,0
     /pbc,rot,,0
     /psf,pres,norm,2,0,on
-    /device,vector,on
+    /gformat,f,1,0
+    /udoc,1,cntr,right
+    /udoc,3,cntr,right
+    /plopts,leg3,on
     /edge,all,1
     /eshape,0
+    /auto,all
+    /triad,on
     esel,s,mat,,1
-    view4w
     eplot
-    fName = 'LOAD_vehicle'
+    /user,all
     /graphics,full
-    takepic,fName,1200,1,1
-    /device,vector,off
+
+    go2png,1200
+      /device,vector,on
+      eplot
+      /noerase
+      cleanplot,'eplot'
+      /device,vector,off
+    endpng,fName
+
+    /erase
+    /annot,dele
+    windefa,1
+    windefa,2
+    windefa,3
+    windefa,4
+    clims
     /edge,all,0
+
   *endif
 *endif
 
@@ -277,26 +307,55 @@ cm,COMPN_HDW_shadow,node
       outres,all,last
 
       LSWRITE,LoadStepIndex
-      xxxLS = LoadStepIndex
 
-      csys,0
+      csys,CS_tunnel
 
-      /psymb,FBCS,0
-      /pbc,F,,1
-      /pbc,U,,0
-      /pbc,ROT,,0
+      fName = 'LOAD_HDW_vehicle'
+      view4w
+      wincln,1
+      wincln,2
+      wincln,3
+      wincln,4
+      view1w
+      wintitle,-1,'INNER LOAD TRAIN','POSITION AND PRESSURES','[Pa]',,,13
+      view4w,,1
+      clims,,,,5
+      g_picres,1200
+      /psymb,fbcs,0
+      /pbc,f,,1
+      /pbc,u,,0
+      /pbc,rot,,0
       /psf,pres,norm,2,0,on
-      /device,VECTOR,ON
-      /edge,ALL,1
+      /gformat,f,1,0
+      /udoc,1,cntr,right
+      /udoc,3,cntr,right
+      /plopts,leg3,on
+      /edge,all,1
       /eshape,0
-      ESEL,S,MAT,,1
-      VIEW4W
-      EPLOT
-      fName='LOAD_HDW_vehicle'
-      /graphics,FULL
-      TAKEPIC,fName,1200,1,1
-      /device,VECTOR,OFF
-      /edge,ALL,0
+      /auto,all
+      /triad,on
+      esel,s,mat,,1
+      eplot
+      /user,all
+      /graphics,full
+
+      go2png,1200
+        /device,vector,on
+        eplot
+        /noerase
+        cleanplot,'eplot'
+        /device,vector,off
+      endpng,fName
+
+      /erase
+      /annot,dele
+      windefa,1
+      windefa,2
+      windefa,3
+      windefa,4
+      clims
+      /edge,all,0
+
     *endif
   *endif
 *endif
