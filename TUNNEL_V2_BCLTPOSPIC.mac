@@ -1,0 +1,40 @@
+! TUNNEL_V2_BCLTPOSPIC
+
+PIC_res = 800
+
+asel,all
+cm,COMPA_bg,area
+/color,cm,dgra,COMPA_bg
+
+*do,nthPos,1,LOAD_LTA_positionCount,1
+
+  leadingPosition = LOAD_LTA_positions(nthPos)
+  leadPosStr      = nint(leadingPosition*100)/100
+
+  csys,CS_tunnel
+  view1w
+  wincln,1
+  boldfont,1
+  /gformat,f,1,1
+  g_picres,PIC_res
+  wintitle,1,'LOAD TRAIN POSITIONS','STEP #%nthPos%: x = %leadPosStr%','[m]',,1,13
+  /view,1,0,1,0
+  /auto,1
+  /angle,1,0
+  /triad,orig
+  asel,all
+  aplot
+  /user,1
+
+  go2png,PIC_res
+    aplot
+    /noerase
+    cmsel,s,LTx_%nthPos%
+    lplot
+  endpng,'LTPOS_%nthPos%',,,,,'_setup'
+
+  /erase
+  /annot,dele
+  windefa,1
+
+*enddo
