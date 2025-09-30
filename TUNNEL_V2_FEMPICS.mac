@@ -48,6 +48,8 @@ go2png,GRAPH_picRes
   cmsel,u,COMPE_SOILSPR_FRIC_roof
   cmsel,u,COMPE_SOILSPR_FRIC_floorFlat
   cmsel,u,COMPE_SOILSPR_FRIC_floorCorbel
+  cmsel,u,COMPE_SOILSPR_FRIX_floorFlat
+  cmsel,u,COMPE_SOILSPR_FRIX_floorCorbel
   cmsel,u,COMPE_SOILSPR_FRIC_leftWall
   cmsel,u,COMPE_SOILSPR_FRIC_rightWall
   *if,GEO_APR_status,eq,1,then

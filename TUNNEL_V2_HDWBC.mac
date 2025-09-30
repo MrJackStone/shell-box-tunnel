@@ -2,16 +2,16 @@
 
 
 ! Exposed retaining walls
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_leftWall'        , CS_HDW1_leftWall  , '-Z' , 'INLET1_leftWall'
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_leftWall'        , CS_HDW2_leftWall  , '-Z' , 'INLET2_leftWall'
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_rightWall'       , CS_HDW1_rightWall , '-Z' , 'INLET1_rightWall'
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_rightWall'       , CS_HDW2_rightWall , '-Z' , 'INLET2_rightWall'
+! TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_leftWall'        , CS_HDW1_leftWall  , '-Z' , 'INLET1_leftWall'
+! TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_leftWall'        , CS_HDW2_leftWall  , '-Z' , 'INLET2_leftWall'
+! TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_rightWall'       , CS_HDW1_rightWall , '-Z' , 'INLET1_rightWall'
+! TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_rightWall'       , CS_HDW2_rightWall , '-Z' , 'INLET2_rightWall'
 
 ! Buried retaining walls
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_leftWallBuried'  , CS_HDW1_leftWall  , '+Z' , 'INLET1_lwBuried'
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_leftWallBuried'  , CS_HDW2_leftWall  , '+Z' , 'INLET2_lwBuried'
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_rightWallBuried' , CS_HDW1_rightWall , '+Z' , 'INLET1_rwBuried'
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_rightWallBuried' , CS_HDW2_rightWall , '+Z' , 'INLET2_rwBuried'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_leftWallBuried'  , CS_HDW1_leftWall  , '+Z' , 'INLET1_lwBuried',,1
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_leftWallBuried'  , CS_HDW2_leftWall  , '+Z' , 'INLET2_lwBuried',,1
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_rightWallBuried' , CS_HDW1_rightWall , '+Z' , 'INLET1_rwBuried',,1
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_rightWallBuried' , CS_HDW2_rightWall , '+Z' , 'INLET2_rwBuried',,1
 
 ! Footings
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_footing'          , CS_tunnel         , '-Y' , 'inletFooting'
