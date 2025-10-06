@@ -1,0 +1,66 @@
+! TUNNEL_V2_NDFORCEPIC , lsNum , ltPosIdx
+! TUNNEL_V2_NDFORCEPIC , ARG1  , ARG2
+
+
+_lsNum    = ARG1
+_ltPosIdx = ARG2
+cmlName   = 'COMPL_LTA_arrowsLC%_ltPosIdx%'
+
+esel,s,ename,,181
+nsle
+fsum
+*get,fxSum,fsum,,item,fx
+*get,fySum,fsum,,item,fy
+*get,fzSum,fsum,,item,fz
+fxStr = chrval(nint(fxSum*1e-3))
+fyStr = chrval(nint(fySum*1e-3))
+fzStr = chrval(nint(fzSum*1e-3))
+
+view4w
+wincln,1
+wincln,2
+wincln,3
+wincln,4
+view1w
+wintitle,1,'NODAL FORCES (LS #%_lsNum%)','FX = %fxStr% | FY = %fyStr% | FZ = %fzStr%','[kN]',,1,13
+view4w,,1
+g_picres,1200
+boldfont,1
+
+/psymb,fbcs,0
+/pbc,f,,1
+/pbc,u,,0
+/triad,orig
+/psf,pres,norm,0
+/pbc,rot,,0
+/edge,all,1
+/eshape,0
+/graphics,full
+/auto,all
+
+go2png,1200
+
+  esel,s,ename,,181
+  nsle
+  /device,vector,on
+  eplot
+  /noerase
+  /user,all
+  /pbc,f,,0
+
+  *if,_ltPosIdx,gt,0,then
+    cmsel,s,%cmlName%
+    /color,cm,oran,%cmlName%
+    lplot
+  *endif
+
+endpng,'NDFORCES_LS%_lsNum%',,,,,FOLDER_setup
+
+/erase
+/device,vector,off
+/edge,all,0
+/annot,dele
+windefa,1
+windefa,2
+windefa,3
+windefa,4
