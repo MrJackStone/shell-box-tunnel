@@ -509,40 +509,4 @@ APPLYING LOADS ON WINGS...
 LoadStepCount = LoadStepIndex
 
 ! Capture images: load train positions
-allsel
-view1w
-/view,1,1,1,1
-/window,2,-1,0.335,0,1
-/view,2,0,0,1
-/auto,2
-
-/gtype,ALL,node,0
-/gtype,ALL,elem,0
-/gtype,ALL,area,1
-/gtype,ALL,line,1
-/gtype,ALL,keyp,0
-/auto,1
-gplot
-/focus,1,0.001,0.001,0.001,1
-/dist,1,0.8,1
-/focus,2,0.001,0.001,0.001,1
-/dist,2,0.8,1
-
-*do,nthLTPos,1,LOAD_LTA_positionCount,1
-  compName=strcat('LTx_',chrval(nthLTPos))
-  GO2PNG,800
-    aplot
-    /noerase
-    cmsel,s,%compName%
-    lplot
-    /replot
-    /erase
-  ENDPNG,compName
-*enddo
-
-/gtype,ALL,node,1
-/gtype,ALL,elem,1
-/gtype,ALL,area,1
-/gtype,ALL,line,1
-/gtype,ALL,keyp,1
-/window,2,dele
+TUNNEL_V2_BCLTPOSPIC
