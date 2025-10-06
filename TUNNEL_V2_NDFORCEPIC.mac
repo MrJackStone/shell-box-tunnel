@@ -6,15 +6,41 @@ _lsNum    = ARG1
 _ltPosIdx = ARG2
 cmlName   = 'COMPL_LTA_arrowsLC%_ltPosIdx%'
 
+*del , NLIST_num  ,  , nopr
+*del , NLIST_fx   ,  , nopr
+*del , NLIST_fy   ,  , nopr
+*del , NLIST_fz   ,  , nopr
+*del , NLIST_nsel ,  , nopr
+
+nsel,all
+*get  , nc        , node ,  , count
+*vget , NLIST_num , node ,  , nlist
+
+*dim , NLIST_fx ,  , nc
+*dim , NLIST_fy ,  , nc
+*dim , NLIST_fz ,  , nc
+
+*get , NLIST_fx(1:nc) , node , NLIST_num(1:nc) , f , fx
+*get , NLIST_fy(1:nc) , node , NLIST_num(1:nc) , f , fy
+*get , NLIST_fz(1:nc) , node , NLIST_num(1:nc) , f , fz
+
 esel,s,ename,,181
 nsle
-fsum
-*get,fxSum,fsum,,item,fx
-*get,fySum,fsum,,item,fy
-*get,fzSum,fsum,,item,fz
+*vget , NLIST_nsel , node ,  , nsel
+
+*vmask  , NLIST_nsel
+*vscfun , fxSum      , sum , NLIST_fx
+*vmask  , NLIST_nsel
+*vscfun , fySum      , sum , NLIST_fy
+*vmask  , NLIST_nsel
+*vscfun , fzSum      , sum , NLIST_fz
+
 fxStr = chrval(nint(fxSum*1e-3))
 fyStr = chrval(nint(fySum*1e-3))
 fzStr = chrval(nint(fzSum*1e-3))
+
+esel,s,ename,,181
+nsle
 
 view4w
 wincln,1
