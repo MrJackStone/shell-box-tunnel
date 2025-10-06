@@ -2,13 +2,16 @@
 ! TUNNEL_V2_LTPOS , arg1 , arg2 , arg3 , arg4 , arg5 , arg6
 
 
+! Prepare environment
+afunbackup,'RAD'
+
 ! Position of load with respect to pivot point (tunnel-railway axis intersection)
 QX_t = arg1-arg3
 QZ_t = arg2-arg4
 
 ! Load position when rotated around pivot point
-QX_prime = QX_t*cos(-LOAD_LTA_skewRad)-QZ_t*sin(arg5)
-QZ_prime = QX_t*sin(-LOAD_LTA_skewRad)+QZ_t*cos(arg5)
+QX_prime = QX_t*cos(ARG5)-QZ_t*sin(ARG5)
+QZ_prime = QX_t*sin(ARG5)+QZ_t*cos(ARG5)
 
 ! Rotated load position with respect to global cartesian
 QX = QX_prime+arg3
@@ -16,6 +19,13 @@ QZ = QZ_prime+arg4
 
 ! Draw arrows
 *if,arg6,eq,1,then
-    larrowyz , QX , QY , QZ-(LOAD_LTA_gauge/2)
-    larrowyz , QX , QY , QZ+(LOAD_LTA_gauge/2)
+  ! Calculate wheel positions when load train is rotated about its skewness axis
+  xWheelSkewnessOffset = (LOAD_LTA_gauge/2)*cos(-ARG5)
+  zWheelSkewnessOffset = (LOAD_LTA_gauge/2)*sin(-ARG5)
+
+  larrowyz , QX+xWheelSkewnessOffset , QY , QZ+zWheelSkewnessOffset
+  larrowyz , QX-xWheelSkewnessOffset , QY , QZ-zWheelSkewnessOffset
 *endif
+
+! Clean up
+afunrestore
