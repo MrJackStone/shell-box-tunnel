@@ -218,7 +218,7 @@ cm,COMPN_shadow,node
       /noerase
       cleanplot,'eplot'
       /device,vector,off
-    endpng,fName
+    endpng,fName,,,,,FOLDER_setup
 
     /erase
     /annot,dele
@@ -345,7 +345,7 @@ cm,COMPN_HDW_shadow,node
         /noerase
         cleanplot,'eplot'
         /device,vector,off
-      endpng,fName
+      endpng,fName,,,,,FOLDER_setup
 
       /erase
       /annot,dele
