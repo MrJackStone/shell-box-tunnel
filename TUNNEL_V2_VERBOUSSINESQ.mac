@@ -129,8 +129,9 @@ QZ_0 = LOAD_z0
   *enddo
 *enddo
 
-compName = strcat('LTx_',chrval(xOffIndex))
+compName = 'COMPL_LTA_arrowsLC%xOffIndex%'
 cm,%compName%,line
+/color,cm,oran,%compName%
 
 *del,vcolors
 *dim,vcolors,array,4

@@ -29,7 +29,7 @@ cm,COMPA_bg,area
   go2png,PIC_res
     aplot
     /noerase
-    cmsel,s,LTx_%nthPos%
+    cmsel,s,COMPL_LTA_arrowsLC%xOffIndex%
     lplot
   endpng,'LTPOS_%nthPos%',,,,,'_setup'
 
