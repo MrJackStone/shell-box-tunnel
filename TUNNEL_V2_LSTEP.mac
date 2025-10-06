@@ -506,7 +506,7 @@ APPLYING LOADS ON WINGS...
 
 *enddo
 
-LoadStepCount=LoadStepIndex
+LoadStepCount = LoadStepIndex
 
 ! Capture images: load train positions
 allsel

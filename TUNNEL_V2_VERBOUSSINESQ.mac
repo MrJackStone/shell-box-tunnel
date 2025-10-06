@@ -133,15 +133,7 @@ compName = 'COMPL_LTA_arrowsLC%xOffIndex%'
 cm,%compName%,line
 /color,cm,oran,%compName%
 
-*del,vcolors
-*dim,vcolors,array,4
-vcolors(1) = 12, 1, 2, 3
-
-cnum = mod(xOffIndex,4)+1
-/color,cm,cnum,%compName%
-
-cmsel,a,COMPL_ltpos
-cm,COMPL_ltpos,line
+cmpadd,'COMPL_ltpos'
 
 /solu
 /gopr
