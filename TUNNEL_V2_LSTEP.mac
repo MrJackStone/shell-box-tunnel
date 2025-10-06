@@ -355,6 +355,11 @@ cm,COMPL_ltpos,line
 
 *do,xOffIndex,1,LOAD_LTA_positionCount,1
 
+  *msg,ui,FILE_name,LoadStepIndex
+TUNNEL # %s %/&
+LOAD STEP %4I %/&
+APPLYING LOADS...
+
   xOffset       = LOAD_LTA_positions(xOffIndex)
   LoadStepIndex = LoadStepIndex+1
 
@@ -366,11 +371,6 @@ cm,COMPL_ltpos,line
 
 
   !! 5.4.1  Roof & approach slab                                                                !!
-  *msg,UI,FILE_name,LoadStepIndex
-TUNNEL # %s %/&
-LOAD STEP %4I %/&
-APPLYING LOADS ON ROOF SLAB...
-
   CMSEL,S,COMPA_Roof
   cmsel,a,COMPA_Approach
   NSLA,S,1
@@ -379,22 +379,12 @@ APPLYING LOADS ON ROOF SLAB...
 
 
   !! 5.4.2  Left wall                                                                           !!
-  *msg,UI,FILE_name,LoadStepIndex
-TUNNEL # %s %/&
-LOAD STEP %4I %/&
-APPLYING LOADS ON LEFT WALL...
-
   CMSEL,S,COMPA_LeftWall
   NSLA,S,1
   tunnel_v2_horboussinesq, 1, 'off', 0
   ALLSEL
 
   !! 5.4.3  Right wall                                                                          !!
-  *msg,UI,FILE_name,LoadStepIndex
-TUNNEL # %s %/&
-LOAD STEP %4I %/&
-APPLYING LOADS ON RIGHT WALL...
-
   CMSEL,S,COMPA_RightWall
   NSLA,S,1
   tunnel_v2_horboussinesq, -1, GEO_TUN_totEffW, 'off'
@@ -405,11 +395,6 @@ APPLYING LOADS ON RIGHT WALL...
   NSLA,S,1
   ! Water buoyancy pressure
   *if,WaterHeight,GT,0,THEN
-
-    *msg,UI,FILE_name,LoadStepIndex
-TUNNEL # %s %/&
-LOAD STEP %4I %/&
-APPLYING BUOYANCY LOADS ON FLOOR SLAB...
 
     ! TODO  needs to be revised to correctly use nodal apportioned area
     !       and to be converted to design value instead of characteristic value
@@ -424,11 +409,6 @@ Run terminated.
 
   !! 5.4.5  Wings                                                                               !!
   *if,GEO_HDW_type,EQ,1,THEN  ! TODO  param eliminated
-
-    *msg,UI,FILE_name,LoadStepIndex
-TUNNEL # %s %/&
-LOAD STEP %4I %/&
-APPLYING LOADS ON WINGS...
 
     CMSEL,S,COMPA_HDW_Walls
     CMSEL,A,COMPA_HDW_TopBeam
