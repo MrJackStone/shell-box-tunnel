@@ -23,13 +23,14 @@ cm,COMPA_bg,area
   /angle,1,0
   /triad,orig
   asel,all
+  lsla
   aplot
   /user,1
 
   go2png,PIC_res
     aplot
     /noerase
-    cmsel,s,COMPL_LTA_arrowsLC%xOffIndex%
+    cmsel,s,COMPL_LTA_arrowsLC%nthPos%
     lplot
   endpng,'LTPOS_%nthPos%',,,,,'_setup'
 
