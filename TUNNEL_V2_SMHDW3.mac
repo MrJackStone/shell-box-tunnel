@@ -2,8 +2,24 @@
 ! TUNNEL_V2_SMHDW3 , ARG1      , ARG2     , ARG3
 
 
+! Implicit arguments:
+! COMPA_floor
+! GEO_HDW[i]_slabLength
+! GEO_HDW[i]_slabSoilGapLength
+! GEO_HDW[i]_LEFT_wallStatus     GEO_HDW[i]_RIGHT_wallStatus
+! GEO_HDW[i]_LEFT_wallLength     GEO_HDW[i]_RIGHT_wallLength
+! GEO_HDW[i]_LEFT_wallHeight     GEO_HDW[i]_RIGHT_wallHeight
+! GEO_HDW[i]_LEFT_wallTopLength  GEO_HDW[i]_RIGHT_wallTopLength
+! GEO_HDW[i]_LEFT_cornerRadius   GEO_HDW[i]_RIGHT_cornerRadius
+! GEO_HDW[i]_LEFT_footWidth      GEO_HDW[i]_RIGHT_footWidth
+! GEO_HDW[i]_LEFT_xSign          GEO_HDW[i]_RIGHT_xSign
+! CS_HDW[i]_leftWall             CS_HDW[i]_rightWall
+! CS_HDW[i]_leftFoot             CS_HDW[i]_rightFoot
+
 ! Exported selection components:
 ! COMPA_HDW[i]_slab
+! COMPA_HDW[i]_slabUnsupported
+! COMPA_HDW[i]_slabSupported
 ! COMPL_HDW[i]_slabInterface
 ! COMPA_HDW[i]_LEFT_wall
 ! COMPA_HDW[i]_LEFT_footing
@@ -51,13 +67,33 @@ k , KP_slab(4) , xRight , yRight , zRight-GEO_HDW%ARG1%_slabLength
 asel,none
 a , KP_slab(1) , KP_slab(2) , KP_slab(4) , KP_slab(3)
 
+! Slice at frontier betwen with/without soil springs
+nextkp,'KP_slice',2
+
+k , KP_slice(1) , xLeft , yLeft , zLeft-GEO_HDW%ARG1%_slabSoilGapLength
+k , KP_slice(2) , xLeft , yLeft , zRight-GEO_HDW%ARG1%_slabSoilGapLength
+
+lsel,none
+l , KP_slice(1) , KP_slice(2)
+LI_slice = lsnext(0)
+
+asbl,all,LI_slice,,delete,delete
+
 ! Create exported selection components
+csys,ARG3
+
 cm,COMPA_HDW%ARG1%_slab,area
 
-csys,ARG3
 lsla
 lsel,r,loc,z,0
 cm,COMPL_HDW%ARG1%_slabTunnelInterface,line
+
+asll  , r
+cm    , COMPA_HDW%ARG1%_slabUnsupported , area
+cmsel , s , COMPA_HDW%ARG1%_slab
+cmsel , u , COMPA_HDW%ARG1%_slabUnsupported
+cm    , COMPA_HDW%ARG1%_slabSupported   , area
+cmsel , s , COMPA_HDW%ARG1%_slab
 
 
 !! B.  Draw retaining walls                                                                       !!
@@ -91,3 +127,4 @@ cm,COMPL_HDW%ARG1%_slabTunnelInterface,line
 !! C.  Clean up                                                                                   !!
 csrestore
 *del,KP_slab,,nopr
+*del,KP_slice,,nopr

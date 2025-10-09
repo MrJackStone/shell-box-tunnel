@@ -10,6 +10,7 @@
 ! COMPA_HDW_columns
 ! COMPA_HDW_footing
 ! COMPA_HDW_slab
+! COMPA_HDW_slabSupported
 ! COMPA_HDW_stiffener
 ! COMPA_HDW_topBeam
 ! COMPA_HDW_walls
@@ -208,6 +209,10 @@ cmsel,s,COMPA_headwalls
 cmsel,u,COMPA_HDW_stiffener
 asel,r,loc,y,0
 cm,COMPA_HDW_slab,area
+
+cmsel,s,COMPA_HDW1_slabSupported
+cmsel,a,COMPA_HDW2_slabSupported
+cm,COMPA_HDW_slabSupported,area
 
 csys,CS_HDW1_rightWall
 cmsel,s,COMPA_HDW_slab

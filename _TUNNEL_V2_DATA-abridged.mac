@@ -149,6 +149,8 @@ GEO_HDW1_type = 0
   GEO_HDW1_slabStfWidth = 1.0
   ! Length of floor slab (for GEO_HDW1_type=2 only)
   GEO_HDW1_slabLength = 4.0
+  ! Length of approach slab not supported by soil (design code recommendation: 2.0 meters)
+  GEO_HDW1_slabSoilGapLength = 2.0
 
   ! Width of front beam (below floor slab)
   GEO_HDW1_beamWidth = 0.3
@@ -245,6 +247,8 @@ GEO_HDW2_type = 0
   GEO_HDW2_slabStfWidth = 1.0
   ! Length of floor slab (for GEO_HDW2_type=2 only)
   GEO_HDW2_slabLength = 4.0
+  ! Length of approach slab not supported by soil (design code recommendation: 2.0 meters)
+  GEO_HDW2_slabSoilGapLength = 2.0
 
   ! Width of front beam (below floor slab)
   GEO_HDW2_beamWidth = 0.3

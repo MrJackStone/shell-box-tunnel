@@ -32,6 +32,9 @@ GEO_HDW1_RIGHT_wallHeight = 0
 GEO_HDW2_LEFT_wallHeight  = 0
 GEO_HDW2_RIGHT_wallHeight = 0
 
+GEO_HDW1_slabSoilGapLength = 0
+GEO_HDW2_slabSoilGapLength = 0
+
 GEO_HDW1_slabThk       = 1
 GEO_HDW1_beamWidth     = 1
 GEO_HDW1_LEFT_wallThk  = 1

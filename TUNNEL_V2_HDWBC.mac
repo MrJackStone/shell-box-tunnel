@@ -17,7 +17,7 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_rightWallBuried' , CS_HDW2_rightWall , '+Z' 
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_footing'          , CS_tunnel         , '-Y' , 'inletFooting'
 
 ! Floor slab
-TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_slab'             , CS_tunnel         , '-Y' , 'inletSlab'
+TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_slabSupported'    , CS_tunnel         , '-Y' , 'inletSlab'
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW_stiffener'        , CS_tunnel         , '-Y' , 'inletStiffener'
 
 ! Front beam  TODO  ensure springs are perpendicular to beam by creating front beam CSYS
