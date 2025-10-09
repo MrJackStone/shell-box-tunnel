@@ -80,7 +80,7 @@ go2png,1200
     lplot
   *endif
 
-endpng,'NDFORCES_LS%_lsNum%',,,,,FOLDER_setup
+endpng,'NDFORCES_LS%_lsNum%',,,,,FOLDER_bcs
 
 /erase
 /device,vector,off

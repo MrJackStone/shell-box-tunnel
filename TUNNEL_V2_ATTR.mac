@@ -53,6 +53,7 @@ POST_convolutionRadius = 0.50
 GRAPH_picRes = 1500
 
 FOLDER_setup   = '_setup'
+FOLDER_bcs     = '_bcs'
 FOLDER_results = '_results'
 
 

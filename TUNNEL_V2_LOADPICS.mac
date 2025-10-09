@@ -98,7 +98,7 @@ go2png,picRes
   cmsel,s,COMPL_embankment
   lplot
 
-endpng,_fileName,,,,,FOLDER_setup
+endpng,_fileName,,,,,FOLDER_bcs
 /erase
 /annot,dele
 /type,all,3
