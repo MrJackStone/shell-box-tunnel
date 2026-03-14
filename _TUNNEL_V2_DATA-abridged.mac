@@ -138,6 +138,7 @@ GEO_HDW_status = 1
 !   [0] Full inlet (walls, beam, feet, floor slab)
 !   [1] Wings (walls only, fixed to tunnel external walls)
 !   [2] Approach slab & unconnected retention walls
+!   [3] Closed end
 GEO_HDW1_type = 0
 
 ! > Params for GEO_HDW1_type=0 or GEO_HDW1_type=2 only:
@@ -230,12 +231,16 @@ GEO_HDW1_type = 0
   ! Vertical distance from the bottom of the wing to the tunnel's floor slab
   GEO_HDW1_RIGHT_wingBottomOffset = 1.15
 
+! > Params for GEO_HDW1_type=3 only:
+  GEO_HDW1_lidThk = 0.40
+
 
 !! 1.3.2  Second end                                                                              !!
 ! Inlet type:
 !   [0] Full inlet (walls, beam, feet, floor slab)
 !   [1] Wings (walls only, fixed to tunnel external walls)
 !   [2] Approach slab & unconnected retention walls
+!   [3] Closed end
 GEO_HDW2_type = 0
 
 ! > Params for GEO_HDW2_type=0 or GEO_HDW2_type=2 only:
@@ -327,6 +332,9 @@ GEO_HDW2_type = 0
   GEO_HDW2_RIGHT_wingChamferBase = 0.4
   ! Vertical distance from the bottom of the wing to the tunnel's floor slab
   GEO_HDW2_RIGHT_wingBottomOffset = 1.15
+
+! > Params for GEO_HDW2_type=3 only:
+  GEO_HDW2_lidThk = 0.40
 
 
 !!                                                                                                !!
