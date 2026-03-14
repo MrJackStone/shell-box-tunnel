@@ -112,6 +112,8 @@ stfWidth = GEO_HDW%ARG1%_slabStfWidth
   cm,COMPA_HDW%ARG1%_rightStiffener,area
 *endif
 
+! Slice at frontier between zones with & without soil support
+
 ! Create exported selection components
 cmsel,s,COMPA_HDW%ARG1%_slab
 cmsel,a,COMPA_HDW%ARG1%_leftStiffener
@@ -168,7 +170,7 @@ agen,2,beamArea,,,0,0,0,0
 adele,beamArea,,,1
 cm,COMPA_HDW%ARG1%_botBeam,area
 
-! Created exported selection components
+! Create exported selection components
 cmsel,s,COMPA_HDW%ARG1%_botBeam
 lsla
 cm,COMPL_temp,line
