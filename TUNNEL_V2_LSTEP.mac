@@ -61,6 +61,8 @@ allsel
   TUNNEL_V2_HDWLOAD
 *endif
 
+TUNNEL_V2_ENDCAPDEADLOAD
+
 *if,GEO_PILE_status,eq,1,then
   cmsel,s,COMPK_pileBot
   dk,all,ux,0,,,uy,uz,roty
@@ -433,11 +435,26 @@ Run terminated.
     allsel
   *endif
 
-  !! 5.4.6  Capture image                                                                       !!
+  !! 5.4.7  End caps                                                                              !!
+  *if,GEO_ENDCAP1_status,eq,1,then
+    cmsel,s,COMPA_endcap1
+    nsla,s,1
+    tunnel_v2_hdwboussinesq
+  *endif
+
+  *if,GEO_ENDCAP2_status,eq,1,then
+    cmsel,s,COMPA_endcap2
+    nsla,s,1
+    tunnel_v2_hdwboussinesq
+  *endif
+
+  allsel
+
+  !! 5.4.8  Capture image                                                                       !!
   TUNNEL_V2_NDFORCEPIC , LoadStepIndex , xOffIndex
 
 
-  !! 5.4.7  Write load step                                                                     !!
+  !! 5.4.9  Write load step                                                                     !!
   ANTYPE,0,NEW
   ALLSEL
   TIME,LoadStepIndex
