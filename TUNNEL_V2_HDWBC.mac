@@ -32,5 +32,9 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_HDW1_backBeam'        , CS_begSkewed      , '-Z' 
 TUNNEL_V2_ELASTICBASE , 'COMPA_frame2'               , CS_endSkewed      , '+Z' , 'frame2'
 TUNNEL_V2_ELASTICBASE , 'COMPA_HDW2_backBeam'        , CS_endSkewed      , '-Z' , 'frame2'
 
+! End caps
+TUNNEL_V2_ELASTICBASE , 'COMPA_endcap1'              , CS_begSkewed      , '+X' , 'endcap1'
+TUNNEL_V2_ELASTICBASE , 'COMPA_endcap2'              , CS_endSkewed      , '+X' , 'endcap2'
+
 allsel
 csys,0
