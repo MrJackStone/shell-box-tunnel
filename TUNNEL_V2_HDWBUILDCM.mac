@@ -56,6 +56,14 @@
 ! COMPA_HDW2_botBeam
 ! COMPA_HDW2_topBeam
 ! COMPA_HDW2_slab
+!
+! COMPA_frame1
+! COMPA_frame2
+! COMPA_frames
+!
+! COMPA_endcap1
+! COMPA_endcap2
+! COMPA_endcaps
 
 ! Exported entities:
 !
@@ -73,11 +81,38 @@
 *dim,sides,char,2
 sides(1)='LEFT','RIGHT'
 
+! Auxiliary points: skewed tunnel ends
+csys,CS_begSkewed
+cmsel,s,COMPA_tunnel
+lsla
+ksll
+ksel,r,loc,z,0
+*get,xMinBegSkew,kp,,mnloc,x
+*get,xMaxBegSkew,kp,,mxloc,x
+*get,yMinBegSkew,kp,,mnloc,y
+*get,yMaxBegSkew,kp,,mxloc,y
+
+csys,CS_endSkewed
+cmsel,s,COMPA_tunnel
+lsla
+ksll
+ksel,r,loc,z,0
+*get,xMinEndSkew,kp,,mnloc,x
+*get,xMaxEndSkew,kp,,mxloc,x
+*get,yMinEndSkew,kp,,mnloc,y
+*get,yMaxEndSkew,kp,,mxloc,y
+
 !! A.  Global, multi-part components                                                              !!
 ! First inlet
 csys,CS_begSkewed
 
 asel,s,loc,z,0
+asel,r,loc,x,xMinBegSkew,xMaxBegSkew
+asel,r,loc,y,yMinBegSkew,yMaxBegSkew
+cm,COMPA_endcap1,area
+
+asel,s,loc,z,0
+cmsel,u,COMPA_endcap1
 cm,COMPA_frame1,area
 
 asel,s,loc,z,-1e6,0
@@ -88,6 +123,12 @@ cm,COMPA_HDW_1,area
 csys,CS_endSkewed
 
 asel,s,loc,z,0
+asel,r,loc,x,xMinEndSkew,xMaxEndSkew
+asel,r,loc,y,yMinEndSkew,yMaxEndSkew
+cm,COMPA_endcap2,area
+
+asel,s,loc,z,0
+cmsel,u,COMPA_endcap2
 cm,COMPA_frame2,area
 
 asel,s,loc,z,-1e6,0
@@ -103,6 +144,11 @@ cm,COMPA_frames,area
 cmsel,s,COMPA_HDW_1
 cmsel,a,COMPA_HDW_2
 cm,COMPA_headwalls,area
+
+! All endcap areas
+cmsel,s,COMPA_endcap1
+cmsel,a,COMPA_endcap2
+cm,COMPA_endcaps,area
 
 ! Left side
 csys,CS_hdw1
@@ -292,23 +338,6 @@ cmpadd,'COMPA_HDW_footing'
 ! csys,CS_tunnel
 ! cmsel,r,COMPA_headwalls
 ! cm,COMPA_HDW_botBeam,area
-
-! Auxiliary points: skewed tunnel ends
-csys,CS_begSkewed
-cmsel,s,COMPA_tunnel
-lsla
-ksll
-ksel,r,loc,z,0
-*get,xMinBegSkew,kp,,mnloc,x
-*get,xMaxBegSkew,kp,,mxloc,x
-
-csys,CS_endSkewed
-cmsel,s,COMPA_tunnel
-lsla
-ksll
-ksel,r,loc,z,0
-*get,xMinEndSkew,kp,,mnloc,x
-*get,xMaxEndSkew,kp,,mxloc,x
 
 ! Frame bottom beam
 asel,none
