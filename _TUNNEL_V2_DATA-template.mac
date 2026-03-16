@@ -175,7 +175,6 @@ GEO_HDW_status = 1
 !   [0] Full inlet (walls, beam, feet, floor slab)
 !   [1] Wings (walls only, fixed to tunnel external walls)
 !   [2] Approach slab & unconnected retention walls
-!   [3] Closed end
 GEO_HDW1_type = 0
 
 ! > Params for GEO_HDW1_type=0 or GEO_HDW1_type=2 only:
@@ -274,16 +273,11 @@ GEO_HDW1_type = 0
   ! Vertical distance from the bottom of the wing to the tunnel's floor slab
   GEO_HDW1_RIGHT_wingBottomOffset = 1.15
 
-! > Params for GEO_HDW1_type=3 only:
-  GEO_HDW1_lidThk = 0.40
-
-
 !! 1.3.2  Second end                                                                              !!
 ! Inlet type:
 !   [0] Full inlet (walls, beam, feet, floor slab)
 !   [1] Wings (walls only, fixed to tunnel external walls)
 !   [2] Approach slab & unconnected retention walls
-!   [3] Closed end
 GEO_HDW2_type = 0
 
 ! > Params for GEO_HDW2_type=0 or GEO_HDW2_type=2 only:
@@ -380,12 +374,29 @@ GEO_HDW2_type = 0
   ! Vertical distance from the bottom of the wing to the tunnel's floor slab
   GEO_HDW2_RIGHT_wingBottomOffset = 1.15
 
-! > Params for GEO_HDW2_type=3 only:
-  GEO_HDW2_lidThk = 0.40
+
+!!                                                                                                !!
+!! 1.4  End caps                                                                                  !!
+!!                                                                                                !!
+! First end:
+!   [0] Off (no endcap)
+!   [1] On
+GEO_ENDCAP1_status = 0
+
+! Wall thickness
+GEO_ENDCAP1_thk = 0.40
+
+! Second end:
+!   [0] Off (no endcap)
+!   [1] On
+GEO_ENDCAP2_status = 0
+
+! Wall thickness
+GEO_ENDCAP2_thk = 0.40
 
 
 !!                                                                                                !!
-!! 1.4  Embankment                                                                                !!
+!! 1.5  Embankment                                                                                !!
 !!                                                                                                !!
 ! Height of soil above roof slab
 GEO_EMB_height = 8.3
@@ -400,7 +411,7 @@ GEO_EMB_waterDepth = 2.4
 
 
 !!                                                                                                !!
-!! 1.5  Approach slabs                                                                            !!
+!! 1.6  Approach slabs                                                                            !!
 !!                                                                                                !!
 ! Approach slab option:
 !   [0] Off
@@ -423,7 +434,7 @@ GEO_APR_thk = 0.4
 
 
 !!                                                                                                !!
-!! 1.6  Piles                                                                                     !!
+!! 1.7  Piles                                                                                     !!
 !!                                                                                                !!
 ! Pile option:
 !   [0] Off
@@ -445,7 +456,7 @@ GEO_PILE_INT_diameter = 0.41
 
 
 !!                                                                                                !!
-!! 1.7  Soil                                                                                      !!
+!! 1.8  Soil                                                                                      !!
 !!                                                                                                !!
 ! Soil stiffness
 MAT_SOIL_stiffness = 14e6
@@ -470,10 +481,10 @@ SOIL_frictionOpt = 0
 
 
 !!                                                                                                !!
-!! 1.8  Loads                                                                                     !!
+!! 1.9  Loads                                                                                     !!
 !!                                                                                                !!
 
-!! 1.8.0  Load combination coefficients                                                           !!
+!! 1.9.0  Load combination coefficients                                                           !!
 ! Dead load factor
 LOAD_gammaG = 1.4
 
@@ -486,7 +497,7 @@ LOAD_psi1 = 0.6
 LOAD_psi2 = 0.4
 
 
-!! 1.8.1  Load train above embankment                                                             !!
+!! 1.9.1  Load train above embankment                                                             !!
 ! Name of load train
 LOAD_LTA_name = 'COOPER E-80'
 
@@ -521,7 +532,7 @@ LOAD_LTA_impactOpt = 2
   LOAD_LTA_impactCoefficient = 1.6
 
 
-!! 1.8.2  Load inside tunnel                                                                      !!
+!! 1.9.2  Load inside tunnel                                                                      !!
 ! Pavement dead weight
 LOAD_INNER_pavement = 2e3
 
@@ -532,7 +543,7 @@ LOAD_LTI_position = 10.3
 
 
 !!                                                                                                !!
-!! 1.9  Analysis                                                                                  !!
+!! 1.10  Analysis                                                                                 !!
 !!                                                                                                !!
 ! Element size for tunnel parts
 FEM_TUN_esize = 0.25

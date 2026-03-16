@@ -57,6 +57,13 @@ GEO_HDW2_RIGHT_footThk = 1
 GEO_HDW2_LEFT_wingThk  = 1
 GEO_HDW2_RIGHT_wingThk = 1
 
+! End caps
+GEO_ENDCAP1_status = 0
+GEO_ENDCAP2_status = 0
+
+GEO_ENDCAP1_thk    = 1
+GEO_ENDCAP2_thk    = 1
+
 ! Approach slabs
 GEO_APR_status   = 0
 GEO_APR_oneWay   = 0
