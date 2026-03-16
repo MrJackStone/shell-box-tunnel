@@ -525,26 +525,6 @@ TUNNEL_V2_HDWATTR
 
 
 !!                                                                                                !!
-!! 2.12  End cap                                                                                  !!
-!!                                                                                                !!
-closedEndCheck = GEO_HDW1_status*GEO_HDW1_type
-*if,closedEndCheck,eq,3,and,GEO_FRM1_status,eq,1,then
-  *msg,warn
-TUNNEL_V2 warning: FRAME setting (ON) conflicts with inlet type (CLOSED) for tunnel end 1.%/&
-CLOSED setting takes precedence and FRAME option was set to OFF.
-  GEO_FRM1_status = 0
-*endif
-
-closedEndCheck = GEO_HDW2_status*GEO_HDW2_type
-*if,closedEndCheck,eq,3,and,GEO_FRM2_status,eq,1,then
-  *msg,warn
-TUNNEL_V2 warning: FRAME setting (ON) conflicts with inlet type (CLOSED) for tunnel end 2.%/&
-CLOSED setting takes precedence and FRAME option was set to OFF.
-  GEO_FRM2_status = 0
-*endif
-
-
-!!                                                                                                !!
 !! 2.12  Param refactoring                                                                        !!
 !!                                                                                                !!
 MAT_CONC_Poisson   = Poisson
