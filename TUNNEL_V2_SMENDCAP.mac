@@ -1,0 +1,60 @@
+! TUNNEL_V2_SMENDCAP , hdwNumber , tunnelCS , endCS
+! TUNNEL_V2_SMENDCAP , ARG1      , ARG2     , ARG3
+
+
+! Prepare environment
+csbackup
+
+! Get anchor positions in tunnel CS
+csys,ARG3
+
+cmsel,s,COMPA_floor
+lsla
+ksll
+ksel,r,loc,z,0
+ksel,r,loc,y,0
+*get,xMax,kp,,mxloc,x
+kBotLeft  = kp(0    , 0 , 0)
+kBotRight = kp(xMax , 0 , 0)
+
+cmsel,s,COMPA_roof
+lsla
+ksll
+ksel,r,loc,z,0
+*get,yMax,kp,,mxloc,y
+kTopLeft  = kp(0    , yMax , 0)
+kTopRight = kp(xMax , yMax , 0)
+
+csys,ARG2
+
+xBotLeft  = kx(kBotLeft)
+yBotLeft  = ky(kBotLeft)
+zBotLeft  = kz(kBotLeft)
+xBotRight = kx(kBotRight)
+yBotRight = ky(kBotRight)
+zBotRight = kz(kBotRight)
+
+xTopLeft  = kx(kTopLeft)
+yTopLeft  = ky(kTopLeft)
+zTopLeft  = kz(kTopLeft)
+xTopRight = kx(kTopRight)
+yTopRight = ky(kTopRight)
+zTopRight = kz(kTopRight)
+
+! Draw lid
+nextkp,'KP_lid',4
+
+k , KP_lid(1) , xBotLeft  , yBotLeft  , zBotLeft
+k , KP_lid(2) , xBotRight , yBotRight , zBotRight
+k , KP_lid(3) , xTopRight , yTopRight , zTopRight
+k , KP_lid(4) , xTopLeft  , yTopLeft  , zTopLeft
+
+asel,none
+a , KP_lid(1) , KP_lid(2) , KP_lid(4) , KP_lid(3)
+
+! Export selection components
+cm,COMPA_endcap%ARG1%,area
+
+! Clean up
+csrestore
+*del,KP_lid,,nopr

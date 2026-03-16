@@ -88,6 +88,15 @@ TUNNEL_V2_SMTUNNEL
   *endif
 *endif
 
+! Draw end caps
+*if,GEO_ENDCAP1_status,eq,1,then
+  TUNNEL_V2_SMENDCAP , 1 , CS_tunnel    , CS_begSkewed
+*endif
+
+*if,GEO_ENDCAP2_status,eq,1,then
+  TUNNEL_V2_SMENDCAP , 2 , CS_revTunnel , CS_endSkewed
+*endif
+
 ! Build inlet selection components
 TUNNEL_V2_HDWBUILDCM
 
