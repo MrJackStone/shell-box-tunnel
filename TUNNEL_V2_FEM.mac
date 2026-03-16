@@ -36,7 +36,13 @@ TUNNEL_V2_FEMTUNNEL
 
 
 !!                                                                                                !!
-!! 4.3  Approach slab                                                                             !!
+!! 4.4  End caps                                                                                  !!
+!!                                                                                                !!
+TUNNEL_V2_FEMENDCAPS
+
+
+!!                                                                                                !!
+!! 4.5  Approach slab                                                                             !!
 !!                                                                                                !!
 *if,GEO_APR_status,eq,1,then
   cmsel,s,COMPA_approach
@@ -49,7 +55,7 @@ TUNNEL_V2_FEMTUNNEL
 
 
 !!                                                                                                !!
-!! 4.4  Piles                                                                                     !!
+!! 4.6  Piles                                                                                     !!
 !!                                                                                                !!
 *if,GEO_PILE_status,eq,1,then
   TUNNEL_V2_FEMPILE
@@ -57,7 +63,7 @@ TUNNEL_V2_FEMTUNNEL
 
 
 !!                                                                                                !!
-!! 4.5  Soil                                                                                      !!
+!! 4.7  Soil                                                                                      !!
 !!                                                                                                !!
 esel , none
 cm   , COMPE_SOILSPR_FRIC_roof        , elem
@@ -87,11 +93,11 @@ TUNNEL_V2_ELASTICBASE , 'COMPA_rightWall'    , CS_tunnel , '+X' , 'rightWall'
 *endif
 
 
-!! 4.5.7  Headwalls                                                                               !!
+!! 4.7.7  Headwalls                                                                               !!
 TUNNEL_V2_HDWBC
 
 
-!! 4.5.8  Approach slabs                                                                          !!
+!! 4.7.8  Approach slabs                                                                          !!
 *if,GEO_APR_status,eq,1,then
   TUNNEL_V2_ELASTICBASE , 'COMPA_approachSup' , CS_tunnel , '-Y' , 'approach'
   TUNNEL_V2_ELASTICBASE , 'COMPA_approachSup' , CS_tunnel , '+Y' , 'approachAbove'
@@ -99,7 +105,7 @@ TUNNEL_V2_HDWBC
 
 
 !!                                                                                                !!
-!! 4.6  Soil friction                                                                             !!
+!! 4.8  Soil friction                                                                             !!
 !!                                                                                                !!
 *get,parmType,PARM,LOAD_thermal,TYPE
 *if,parmType,EQ,0,AND,LOAD_thermal,NE,0,THEN
@@ -108,13 +114,13 @@ TUNNEL_V2_HDWBC
 
 
 !!                                                                                                !!
-!! 4.7  Capture images                                                                            !!
+!! 4.9  Capture images                                                                            !!
 !!                                                                                                !!
 TUNNEL_V2_FEMPICS
 
 
 !!                                                                                                !!
-!! 4.8  Create special selection components                                                       !!
+!! 4.10  Create special selection components                                                      !!
 !!                                                                                                !!
 ! Tunnel roof elements that should be considered for shear force design
 csys,CS_tunnel
