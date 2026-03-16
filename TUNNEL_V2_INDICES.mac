@@ -100,10 +100,13 @@ SEC_FRAME_Column   = 24
 SEC_FRAME_headBeam = 25
 SEC_FRAME_backBeam = 26
 
-SEC_pileInt = 27
-SEC_pileExt = 28
+SEC_endcap1 = 27
+SEC_endcap2 = 28
 
-SEC_strut = 29
+SEC_pileInt = 29
+SEC_pileExt = 30
+
+SEC_strut = 31
 
 SEC_ROOF_lcorbeL  = 400
 SEC_ROOF_rcorbel  = 500

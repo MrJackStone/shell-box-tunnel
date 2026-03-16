@@ -82,3 +82,7 @@ GEO_HDW2_RIGHT_xSign = -1
 TUNNEL_V2_CONCSEC , SEC_FRAME_headBeam , GEO_FRAME_headBeamWidth , 'HBEAM'
 TUNNEL_V2_CONCSEC , SEC_FRAME_backBeam , GEO_FRAME_backBeamWidth , 'BBEAM'
 TUNNEL_V2_CONCSEC , SEC_FRAME_column   , GEO_FRAME_columnThk     , 'COLUMN'
+
+! End cap sections
+TUNNEL_V2_CONCSEC , SEC_endcap1 , GEO_ENDCAP1_thk , 'CAP1'
+TUNNEL_V2_CONCSEC , SEC_endcap2 , GEO_ENDCAP2_thk , 'CAP2'
