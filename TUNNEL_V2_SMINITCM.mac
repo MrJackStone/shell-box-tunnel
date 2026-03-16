@@ -21,6 +21,8 @@ cm , COMPA_struts     , area
 cm , COMPL_Tunnel     , line
 cm , COMPL_Embankment , line
 cm , COMPL_Railway    , line
+cm , COMPL_tunnelBeg  , line
+cm , COMPL_tunnelEnd  , line
 
 cm , COMPK_Tunnel , kp
 

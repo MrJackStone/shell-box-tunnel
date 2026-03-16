@@ -65,6 +65,9 @@
 ! COMPA_endcap2
 ! COMPA_endcaps
 
+! COMPL_tunnelBeg
+! COMPL_tunnelEnd
+
 ! Exported entities:
 !
 ! KP_IN1SLB_rightBeg
@@ -471,3 +474,14 @@ cmname_roots(1,4) = 'topBeam'
     cm,COMPA_HDW%nthFRM%_%root%,area
   *enddo
 *enddo
+
+!! E.  Interfaces                                                                                 !!
+csys,CS_begSkewed
+cmsel,s,COMPL_tunnel
+lsel,r,loc,z,0
+cm,COMPL_tunnelBeg,line
+
+csys,CS_endSkewed
+cmsel,s,COMPL_tunnel
+lsel,r,loc,z,0
+cm,COMPL_tunnelEnd,line
