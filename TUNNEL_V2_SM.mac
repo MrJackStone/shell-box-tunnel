@@ -172,14 +172,14 @@ KSEL,R,LOC,Y,GEO_TUN_effH
 ! Draw embankment contour in global cartesian CS
 CSYS,0
 yREF = KY(KRef)
-zREF = KZ(KRef)
+zREF = KZ(KRef)+GEO_EMB_endExtension
 
 ! Calculate vertex location for embankment keypoints
 *afun,DEG
 xPT          = GEO_TUN_totEffW/2
 yPT1         = COS(TunnelSlope)*(GEO_TUN_effH+(GEO_ROOF_thk/2))
 yPT2         = yPT1+GEO_EMB_height
-zPT1         = -SIN(TunnelSlope)*(GEO_TUN_effH+(GEO_ROOF_thk/2))
+zPT1         = -GEO_EMB_begExtension-SIN(TunnelSlope)*(GEO_TUN_effH+(GEO_ROOF_thk/2))
 zPT2         = zPT1+(GEO_EMB_height/TAN(GEO_EMB_slopeBeg))
 yPT3         = yPT2
 yPT4         = yREF+COS(TunnelSlope)*(GEO_ROOF_thk/2)

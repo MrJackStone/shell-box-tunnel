@@ -75,6 +75,10 @@ GEO_PILE_status       = 0
 GEO_PILE_EXT_diameter = 1
 GEO_PILE_INT_diameter = 1
 
+! Embankment
+GEO_EMB_begExtension = 0
+GEO_EMB_endExtension = 0
+
 ! Soil stiffness under thin floor slab, for when slab stiffeners are adopted
 MAT_SOIL_floorFlatStiffnessMult = 0
 

@@ -406,6 +406,10 @@ GEO_EMB_slopeBeg = 33
 ! Soil slope at the end of the tunnel
 GEO_EMB_slopeEnd = 33
 
+! Embankment extensions
+GEO_EMB_begExtension = 0
+GEO_EMB_endExtension = 0
+
 ! Depth of water level (measured from the floor slab level) !! TODO: change this?
 GEO_EMB_waterDepth = 2.4
 
