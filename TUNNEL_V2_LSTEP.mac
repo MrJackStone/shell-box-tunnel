@@ -46,6 +46,9 @@ LoadStepIndex=1
 
 ACEL,,LOAD_g_d
 
+! Create dummy nonlinear spring to force compression-only behavior for LINK180, if needed
+TUNNEL_V2_DUMMYNLSPRING
+
 ! Apply soil pressures
 TUNNEL_V2_DEADLOADS
 

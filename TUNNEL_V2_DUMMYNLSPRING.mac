@@ -1,0 +1,60 @@
+! TUNNEL_V2_DUMMYNLSPRING
+
+
+! Initialize selection component
+nsel,none
+cm,COMPN_dummy,node
+
+! Break clauses: avoid creating dummy element if it's not needed
+*if,FFEM_nlsprings,eq,0,then
+  *msg,note
+TUNNEL_V2 note: dummy nonlinear spring not created because FEM_nlsprings was set to 0.
+  *return,-1
+*endif
+
+*if,FEM_nlgeom,eq,1,then
+  *msg,note
+TUNNEL_V2 note: dummy nonlinear spring not created because FEM_nlgeom was set to 1.
+  *return,-1
+*endif
+
+*if,GEO_ROOF_type,eq,1,and,GEO_ROOF_continuity,eq,0,then
+  *msg,note
+TUNNEL_V2 note: dummy nonlinear spring not created because nonlinear springs were already used to connect roof precast girders.
+  *return,-1
+*endif
+
+! Prepare environment
+csys,CS_tunnel
+
+! Define position
+xDummy = GEO_TUN_moduleWidth/2
+yDummy = GEO_TUN_height/2
+zDummy = GEO_TUN_length/2
+
+! Create dummy nodes
+nsel,none
+nextnd,'ND_dummy',2
+n , ND_dummy(1) , xDummy , yDummy , zDummy
+n , ND_dummy(2) , xDummy , yDummy , zDummy
+cm,COMPN_dummy,node
+
+! Create point mass elements
+mat  , MAT_conc
+type , TYPE_mass21
+real , REAL_mass
+e,ND_dummy(1)
+e,ND_dummy(2)
+
+! Connect point masses with nonlinear spring
+mat  , MAT_conc
+type , TYPE_combin
+real , REAL_roofSprings
+e,ND_dummy(1),ND_dummy(2)
+
+! Restrain nodes
+d , ND_dummy(1) , all , 0
+d , ND_dummy(2) , ux  , 0 ,  ,  ,  , uy , uz , roty , rotz
+
+! Clean up
+*del,ND_dummy,,nopr
