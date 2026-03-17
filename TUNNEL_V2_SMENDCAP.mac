@@ -50,7 +50,7 @@ k , KP_lid(3) , xTopRight , yTopRight , zTopRight
 k , KP_lid(4) , xTopLeft  , yTopLeft  , zTopLeft
 
 asel,none
-a , KP_lid(1) , KP_lid(2) , KP_lid(4) , KP_lid(3)
+a , KP_lid(1) , KP_lid(2) , KP_lid(3) , KP_lid(4)
 
 ! Export selection components
 cm,COMPA_endcap%ARG1%,area
