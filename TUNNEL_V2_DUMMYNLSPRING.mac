@@ -6,7 +6,7 @@ nsel,none
 cm,COMPN_dummy,node
 
 ! Break clauses: avoid creating dummy element if it's not needed
-*if,FFEM_nlsprings,eq,0,then
+*if,FEM_nlsprings,eq,0,then
   *msg,note
 TUNNEL_V2 note: dummy nonlinear spring not created because FEM_nlsprings was set to 0.
   *return,-1
