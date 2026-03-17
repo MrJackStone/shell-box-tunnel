@@ -7,6 +7,7 @@
 
   cmsel,s,COMPA_endcap%nthCap%
   nsla,s,1
+  esla,s
   *get,nc,node,,count
 
   *del , endcap_nodes  ,  , nopr
