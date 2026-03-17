@@ -40,6 +40,7 @@ N2kN = 1e-3
   *if,nthLS,gt,1,then
     sadd , NET%nthLS%_PX , LS%nthLS%_PX , LS1_PX , 1 , -1
     sadd , NET%nthLS%_PY , LS%nthLS%_PY , LS1_PY , 1 , -1
+    sadd , NET%nthLS%_PZ , LS%nthLS%_PZ , LS1_PZ , 1 , -1
     ! TUNNEL_V2_LOADPICS , 'COMPA_roof'        , 'Y' , nthLS , 'TUNNEL ROOF'   , 1
     ! TUNNEL_V2_LOADPICS , 'COMPA_walls'       , 'X' , nthLS , 'TUNNEL WALLS'  , 1
     ! TUNNEL_V2_LOADPICS , 'COMPA_HDW_walls'   , 'Z' , nthLS , 'INLET WALLS'   , 1
