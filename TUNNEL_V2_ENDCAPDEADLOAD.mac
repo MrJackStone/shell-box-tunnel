@@ -32,7 +32,7 @@
     HorEffectivePressure   = EffectiveSoilPressure*RestEPCoefficient-2*MAT_SOIL_cohesion*sqrt(RestEPCoefficient)
     HorEffectivePressure   = (HorEffectivePressure>0)
     WaterPressure          = (nthWaterY-yNode)*LOAD_WATER_gammaw_d
-    DeadNodalLoad          = apportionedArea*(HorEffectivePressure+WaterPressure)
+    DeadNodalLoad          = ndArea*(HorEffectivePressure+WaterPressure)
     endcap_nodes(nthNode)  = ndnum
     endcap_forces(nthNode) = DeadNodalLoad
 
