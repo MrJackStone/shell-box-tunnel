@@ -120,6 +120,7 @@ cm,COMPA_frame1,area
 
 asel,s,loc,z,-1e6,0
 cmsel,u,COMPA_frame1
+cmsel,u,COMPA_endcap1
 cm,COMPA_HDW_1,area
 
 ! Second inlet
@@ -136,6 +137,7 @@ cm,COMPA_frame2,area
 
 asel,s,loc,z,-1e6,0
 cmsel,u,COMPA_frame2
+cmsel,u,COMPA_endcap2
 cm,COMPA_HDW_2,area
 
 ! All frame areas
