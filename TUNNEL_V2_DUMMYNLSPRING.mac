@@ -25,6 +25,9 @@ TUNNEL_V2 note: dummy nonlinear spring not created because nonlinear springs wer
 *endif
 
 ! Prepare environment
+pcbackup
+csbackup
+/prep7
 csys,CS_tunnel
 
 ! Define position
@@ -58,3 +61,5 @@ d , ND_dummy(2) , ux  , 0 ,  ,  ,  , uy , uz , roty , rotz
 
 ! Clean up
 *del,ND_dummy,,nopr
+csrestore
+pcrestore
