@@ -386,6 +386,11 @@ GEO_ENDCAP1_status = 0
 ! Wall thickness
 GEO_ENDCAP1_thk = 0.40
 
+! Connection type:
+!   [0] Fixed (default)
+!   [1] Pinned
+GEO_ENDCAP1_connection = 0
+
 ! Second end:
 !   [0] Off (no endcap)
 !   [1] On
@@ -394,6 +399,10 @@ GEO_ENDCAP2_status = 0
 ! Wall thickness
 GEO_ENDCAP2_thk = 0.40
 
+! Connection type:
+!   [0] Fixed (default)
+!   [1] Pinned
+GEO_ENDCAP2_connection = 0
 
 !!                                                                                                !!
 !! 1.5  Embankment                                                                                !!
