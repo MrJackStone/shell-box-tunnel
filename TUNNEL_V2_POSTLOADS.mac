@@ -34,6 +34,7 @@ N2kN = 1e-3
   TUNNEL_V2_LOADPICS , 'COMPA_HDW_footing' , 'Y' , nthLS , 'INLET FOOTING'
   TUNNEL_V2_LOADPICS , 'COMPA_HDW_slab'    , 'Y' , nthLS , 'INLET SLABS'
   TUNNEL_V2_LOADPICS , 'COMPA_approach'    , 'Y' , nthLS , 'APPROACH SLAB'
+  TUNNEL_V2_LOADPICS , 'COMPA_endcaps'     , 'Z' , nthLS , 'END CAPS'
 
   ! Net live load pressure increases
   *if,nthLS,gt,1,then
@@ -43,6 +44,7 @@ N2kN = 1e-3
     ! TUNNEL_V2_LOADPICS , 'COMPA_walls'       , 'X' , nthLS , 'TUNNEL WALLS'  , 1
     ! TUNNEL_V2_LOADPICS , 'COMPA_HDW_walls'   , 'Z' , nthLS , 'INLET WALLS'   , 1
     ! TUNNEL_V2_LOADPICS , 'COMPA_HDW_footing' , 'Y' , nthLS , 'INLET FOOTING' , 1
+    TUNNEL_V2_LOADPICS , 'COMPA_endcaps' , 'Z' , nthLS , 'END CAPS' , 1
 
     ! Delete ETABLEs to make room
     etable , LS%nthLS%_PX  , eras
