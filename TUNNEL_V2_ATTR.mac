@@ -367,6 +367,9 @@ keyopt,TYPE_combin,2,4
 ! Piles
 et,type_beam188,188
 
+! Point mass
+et,TYPE_mass21,21
+
 
 !!                                                                                                !!
 !! 2.8  Materials TODO: repeated header                                                           !!
@@ -419,6 +422,9 @@ r,REAL_longSprings,SpringArea/20,0,0
 
 ! Rigid struts to vertically connect approach and roof slabs one way
 r,REAL_rigidStrut,REAL_rigidStrut_A,0,-1
+
+! Point mass
+r,REAL_mass,0
 
 ! Tunnel left wall
 sectype,SEC_LWALL,SHELL,,'LWALL'

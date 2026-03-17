@@ -128,6 +128,7 @@ TYPE_shell181 = 1
 TYPE_link180  = 2
 TYPE_combin   = 3
 TYPE_beam188  = 4
+TYPE_mass21   = 5
 
 
 !! E.  Real constants                                                                             !!
@@ -137,3 +138,4 @@ REAL_longSprings = 3
 REAL_hdwSprings  = 4  ! TODO  deleted? ELASTICBASE doesn't use this
 REAL_roofSprings = 5
 REAL_rigidStrut  = 6
+REAL_mass        = 7
