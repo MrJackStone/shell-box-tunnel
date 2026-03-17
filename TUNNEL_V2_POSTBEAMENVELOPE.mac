@@ -3,6 +3,8 @@
 
 *do,nthHDW,1,2,1
 
+  *if,GEO_HDW%nthHDW%_status,eq,0,cycle
+
   TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_topBeam'     , 'TBEAM%nthHDW%' , 'RES_ENV_FRM%nthHDW%_topBeam'
   TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_backBeam'    , 'BBEAM%nthHDW%' , 'RES_ENV_FRM%nthHDW%_backBeam'
   TUNNEL_V2_POSTS2BEAM , 'COMPA_HDW%nthHDW%_leftColumn'  , 'LCOL%nthHDW%'  , 'RES_ENV_FRM%nthHDW%_leftColumn'
