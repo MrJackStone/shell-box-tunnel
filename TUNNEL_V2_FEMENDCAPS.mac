@@ -1,6 +1,10 @@
 ! TUNNEL_V2_FEMENDCAPS
 
 
+*if,GEO_ENDCAP1_status,eq,0,and,GEO_ENDCAP2_status,eq,0,then
+  *return,-1
+*endif
+
 ! Set attributes
 TUNNEL_V2_FEMAATT , 'COMPA_endcap1' , CS_begSkewed , SEC_endcap1
 TUNNEL_V2_FEMAATT , 'COMPA_endcap2' , CS_endSkewed , SEC_endcap2
