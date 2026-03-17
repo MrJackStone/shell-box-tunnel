@@ -382,7 +382,6 @@ APPLYING LOADS...
   tunnel_v2_verboussinesq
   ALLSEL
 
-
   !! 5.4.2  Left wall                                                                           !!
   CMSEL,S,COMPA_LeftWall
   NSLA,S,1
