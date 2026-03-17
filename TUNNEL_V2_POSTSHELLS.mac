@@ -2,7 +2,7 @@
 
 
 ! Internal reaction contours
-partCount = 10
+partCount = 11
 *del , area_components ,  , nopr
 *del , part_names      ,  , nopr
 *del , fname_roots     ,  , nopr
@@ -20,6 +20,7 @@ area_components(1,7)  = 'COMPA_HDW_stiffener'
 area_components(1,8)  = 'COMPA_HDW_footing'
 area_components(1,9)  = 'COMPA_approach'
 area_components(1,10) = 'COMPA_FLOOR_corbel'
+area_components(1,11) = 'COMPA_endcaps'
 
 part_names(1,1)  = 'TUNNEL ROOF'
 part_names(1,2)  = 'TUNNEL FLOOR'
@@ -31,6 +32,7 @@ part_names(1,7)  = 'INLET SLAB STIFFENERS'
 part_names(1,8)  = 'INLET WALL FOOTINGS'
 part_names(1,9)  = 'ROOF APPROACH SLABS'
 part_names(1,10) = 'TUNNEL FLOOR (CORBELS)'
+part_names(1,11) = 'END CAPS'
 
 fname_roots(1,1)  = 'ROOF'
 fname_roots(1,2)  = 'FLOOR'
@@ -42,6 +44,7 @@ fname_roots(1,7)  = 'HDWSTF'
 fname_roots(1,8)  = 'HDWFOOT'
 fname_roots(1,9)  = 'TOPAPPR'
 fname_roots(1,10) = 'FLOORCORBEL'
+fname_roots(1,11) = 'ENDCAPS'
 
 *do,nthPart,1,partCount,1
   cmaName   = area_components(1,nthPart)
