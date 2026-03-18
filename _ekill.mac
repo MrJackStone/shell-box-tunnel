@@ -275,6 +275,17 @@ esel , a    , elem ,  , 7706
 
 nsle,s
 
+/auto,1
+/view,1,1,1,1
+lplot
+/user,1
+asel,all
+lsla
+asel,none
+ksel,none
+gplot
+takepic,'ekill'
+
 modmsh,detach
 edele,all
 esln,s,1
