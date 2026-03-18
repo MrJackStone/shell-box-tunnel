@@ -39,8 +39,7 @@ wintitle,1,'PASSAGEM INFERIOR','FLECHA','ELS-Freq. [mm]',,1,13
 /angle,1,0
 /type,1,3
 
-cmsel,s,COMPA_tunnel
-esla
+cmsel,s,COMPE_tunnel
 nsle
 cm,COMPE_bg,elem
 /color,cm,dgra,COMPE_bg

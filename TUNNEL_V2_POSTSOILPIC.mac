@@ -6,7 +6,7 @@ _etableName = ARG1
 _imgTitle   = ARG2
 _fileName   = ARG3
 _leftTitle  = ARG4
-_cmaName    = ARG5
+_cmaName    = strcat('COMPE_',strsub(ARG5,7,32))
 
 boldfont,1
 g_picres,GRAPH_picRes
@@ -37,7 +37,6 @@ go2png,GRAPH_picRes
   /device,vector,off
 
   cmsel,s,%_cmaName%
-  esla,s
   nsle,s
   cleanplot,'pletab',_etableName,'1'
 

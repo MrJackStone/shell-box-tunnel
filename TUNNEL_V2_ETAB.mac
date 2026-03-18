@@ -224,8 +224,7 @@ sadd , 'SIGY_qk' , 'UY_qk' ,  , MAT_SOIL_stiffness*Nmm2kNm*(-1)
 sadd , 'SIGY_k'  , 'UY_k'  ,  , MAT_SOIL_stiffness*Nmm2kNm*(-1)
 
 ebackup
-cmsel,s,COMPA_FLOOR_flat
-esla
+cmsel,s,COMPE_FLOOR_flat
 sadd , 'SIGY_gk' , 'UY_gk' ,  , MAT_SOIL_floorFlatStiffness*Nmm2kNm*(-1)
 sadd , 'SIGY_qk' , 'UY_qk' ,  , MAT_SOIL_floorFlatStiffness*Nmm2kNm*(-1)
 sadd , 'SIGY_k'  , 'UY_k'  ,  , MAT_SOIL_floorFlatStiffness*Nmm2kNm*(-1)

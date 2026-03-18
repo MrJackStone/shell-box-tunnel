@@ -25,9 +25,8 @@ wintitle,1,'LAJES DE APROX.','FLECHA','ELS-Freq. [mm]',,1,13
 /type,1,3
 /udoc,1,cntr,bottom
 
-cmsel,s,COMPA_tunnel
-cmsel,a,COMPA_approach
-esla
+cmsel,s,COMPE_tunnel
+cmsel,a,COMPE_approach
 nsle
 cm,COMPE_bg,elem
 /color,cm,dgra,COMPE_bg

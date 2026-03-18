@@ -1,6 +1,6 @@
 ! TUNNEL_V2_LOADPICS , cmaName , presDir , lsNum , part , netPres
 ! TUNNEL_V2_LOADPICS , ARG1    , ARG2    , ARG3  , ARG4 , ARG5
-/eof
+
 
 ! Parse inputs
 key      = 'LS'
@@ -10,7 +10,7 @@ midTitle = 'APPLIED SOIL PRESSURES'
   midTitle = 'NET PRESSURE INCREASE'
 *endif
 
-_cmaName   = ARG1
+_cmaName   = strcat('COMPE_',strsub(ARG1,7,32))
 _lsNum     = ARG3
 _part      = ARG4
 _fileName  = 'PRES_%key%%_lsNum%_%lwcase(_part)%'
@@ -80,7 +80,6 @@ go2png,picRes
   /device,vector,off
 
   cmsel,s,%_cmaName%
-  esla,s
   nsle,s
   cleanplot,'pletab','ABS_P',1
 

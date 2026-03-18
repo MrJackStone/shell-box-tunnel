@@ -78,6 +78,7 @@ cm , COMPA_frame1              , area  $  cm , COMPA_frame2              , area 
 cm , COMPA_endcap1             , area  $  cm , COMPA_endcap2             , area  $  cm , COMPA_endcaps , area
 
 ! Corbels
-cm , COMPA_ROOF_leftCorbel  , area  $  cm , COMPA_ROOF_rightCorbel  , area $ cm , COMPA_ROOF_flat  , area
-cm , COMPA_FLOOR_leftCorbel , area  $  cm , COMPA_FLOOR_rightCorbel , area $ cm , COMPA_FLOOR_flat , area
-cm , COMPA_WALL_topCorbel   , area  $  cm , COMPA_WALL_botCorbel    , area $ cm , COMPA_WALL_flat  , area
+cm , COMPA_ROOF_leftCorbel  , area  $  cm , COMPA_ROOF_rightCorbel  , area $ cm , COMPA_ROOF_flat          , area
+cm , COMPA_FLOOR_leftCorbel , area  $  cm , COMPA_FLOOR_rightCorbel , area $ cm , COMPA_FLOOR_flat         , area
+cm , COMPA_WALL_topCorbel   , area  $  cm , COMPA_WALL_botCorbel    , area $ cm , COMPA_WALL_flat          , area
+cm , COMPA_FLOOR_corbel     , area  $  cm , COMPA_FLOOR_leftCorbel  , area $ cm , COMPA_FLOOR_rightCorbel  , area

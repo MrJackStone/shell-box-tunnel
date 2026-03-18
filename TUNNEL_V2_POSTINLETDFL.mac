@@ -32,17 +32,15 @@ wintitle,2,'ACESSO 02','FLECHA','ELS-Freq [mm]',,1,13
 /udoc,1,cntr,bottom
 /udoc,2,cntr,bottom
 
-cmsel,s,COMPA_HDW_1
-cmsel,a,COMPA_HDW_2
-esla
+cmsel,s,COMPE_HDW_1
+cmsel,a,COMPE_HDW_2
 nsle
 cm,COMPE_bg,elem
 /color,cm,dgra,COMPE_bg
 
 /window,1,on
 /window,2,off
-cmsel,s,COMPA_HDW_1
-esla
+cmsel,s,COMPE_HDW_1
 nsle
 wpcsys,1,CS_revTunnel
 /auto,1
@@ -51,8 +49,7 @@ eplot
 
 /window,1,off
 /window,2,on
-cmsel,s,COMPA_HDW_2
-esla
+cmsel,s,COMPE_HDW_2
 nsle
 wpcsys,2,CS_tunnel
 /auto,2
@@ -62,8 +59,7 @@ eplot
 go2png,GRAPH_picRes
   /window,1,on
   /window,2,off
-  cmsel,s,COMPA_HDW_1
-  esla
+  cmsel,s,COMPE_HDW_1
   nsle
   eplot
 
@@ -82,8 +78,7 @@ go2png,GRAPH_picRes
 
   /window,1,off
   /window,2,on
-  cmsel,s,COMPA_HDW_2
-  esla
+  cmsel,s,COMPE_HDW_2
   nsle
   eplot
 

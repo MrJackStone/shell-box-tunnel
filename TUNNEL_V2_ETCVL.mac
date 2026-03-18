@@ -23,29 +23,24 @@ convolution_etnames(1)  = 'DW_Q'    , 'EAB_Q'
 *enddo
 
 ! Apply convolution to tunnel shells
-cmsel,s,COMPA_roof
-esla,s
+cmsel,s,COMPE_roof
 nsle,s
 etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 
-cmsel,s,COMPA_floor
-esla,s
+cmsel,s,COMPE_floor
 nsle,s
 etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 
-cmsel,s,COMPA_leftWall
-esla,s
+cmsel,s,COMPE_leftWall
 nsle,s
 etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 
-cmsel,s,COMPA_rightWall
-esla,s
+cmsel,s,COMPE_rightWall
 nsle,s
 etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 
 *if,GEO_IWALL_count,eq,0,then
-  cmsel,s,COMPA_innerWalls
-  esla,s
+  cmsel,s,COMPE_innerWalls
   nsle,s
   etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 *endif
@@ -54,33 +49,28 @@ etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 *if,GEO_HDW_status,ge,1,then
   *do,nthInlet,1,2,1
 
-    cmsel,s,COMPA_HDW_leftWall
-    cmsel,r,COMPA_HDW_%nthInlet%
-    esla,s
+    cmsel,s,COMPE_HDW_leftWall
+    cmsel,r,COMPE_HDW_%nthInlet%
     nsle,s
     etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 
-    cmsel,s,COMPA_HDW_rightWall
-    cmsel,r,COMPA_HDW_%nthInlet%
-    esla,s
+    cmsel,s,COMPE_HDW_rightWall
+    cmsel,r,COMPE_HDW_%nthInlet%
     nsle,s
     etbcvl,POST_convolutionRadius,'convolution_etnames','YZ'
 
-    cmsel,s,COMPA_HDW_slab
-    cmsel,r,COMPA_HDW_%nthInlet%
-    esla,s
+    cmsel,s,COMPE_HDW_slab
+    cmsel,r,COMPE_HDW_%nthInlet%
     nsle,s
     etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 
-    cmsel,s,COMPA_HDW_stiffener
-    cmsel,r,COMPA_HDW_%nthInlet%
-    esla,s
+    cmsel,s,COMPE_HDW_stiffener
+    cmsel,r,COMPE_HDW_%nthInlet%
     nsle,s
     etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 
-    cmsel,s,COMPA_HDW_footing
-    cmsel,r,COMPA_HDW_%nthInlet%
-    esla,s
+    cmsel,s,COMPE_HDW_footing
+    cmsel,r,COMPE_HDW_%nthInlet%
     nsle,s
     etbcvl,POST_convolutionRadius,'convolution_etnames','XZ'
 

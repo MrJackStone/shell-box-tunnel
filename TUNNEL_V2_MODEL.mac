@@ -33,6 +33,7 @@ cm,COMPA_endcap2,area
 !!                                                                                                !!
 TUNNEL_V2_FEM
 
+/input,'D:\Tools\Code\shell-box-tunnel\_cmatoe',mac
 /input,'D:\Tools\Code\shell-box-tunnel\_estroncas',mac
 !!                                                                                                !!
 !! 5.  Load steps                                                                                 !!
