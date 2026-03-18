@@ -112,6 +112,7 @@ csys,CS_begSkewed
 asel,s,loc,z,0
 asel,r,loc,x,xMinBegSkew,xMaxBegSkew
 asel,r,loc,y,yMinBegSkew,yMaxBegSkew
+cmsel,a,COMPA_endcap2
 cm,COMPA_endcap1,area
 
 asel,s,loc,z,0

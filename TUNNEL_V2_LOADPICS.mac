@@ -1,6 +1,6 @@
 ! TUNNEL_V2_LOADPICS , cmaName , presDir , lsNum , part , netPres
 ! TUNNEL_V2_LOADPICS , ARG1    , ARG2    , ARG3  , ARG4 , ARG5
-
+/eof
 
 ! Parse inputs
 key      = 'LS'

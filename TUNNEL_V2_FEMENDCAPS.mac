@@ -31,5 +31,9 @@ nrotat,all
 *endif
 
 *if,GEO_ENDCAP2_status,eq,1,then
-  l2acnt , 'COMPA_endcap2' , 'COMPL_tunnelEnd' ,  , GEO_ENDCAP2_connection
+  ! l2acnt , 'COMPA_endcap2' , 'COMPL_tunnelEnd' ,  , GEO_ENDCAP2_connection
+  l2acnt , 'COMPA_roof'      , 'COMPL_ENDCAP_top'    ,  , 1
+  l2acnt , 'COMPA_floor'     , 'COMPL_ENDCAP_bottom' ,  , 1
+  l2acnt , 'COMPA_leftWall'  , 'COMPL_ENDCAP_left'   ,  , 1
+  l2acnt , 'COMPA_rightWall' , 'COMPL_ENDCAP_right'  ,  , 1
 *endif

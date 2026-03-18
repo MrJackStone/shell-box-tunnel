@@ -42,18 +42,38 @@ yTopRight = ky(kTopRight)
 zTopRight = kz(kTopRight)
 
 ! Draw lid
+zManual = 2
+
 nextkp,'KP_lid',4
 
-k , KP_lid(1) , xBotLeft  , yBotLeft  , zBotLeft
-k , KP_lid(2) , xBotRight , yBotRight , zBotRight
-k , KP_lid(3) , xTopRight , yTopRight , zTopRight
-k , KP_lid(4) , xTopLeft  , yTopLeft  , zTopLeft
+k , KP_lid(1) , xBotLeft  , yBotLeft  , zManual ! zBotLeft
+k , KP_lid(2) , xBotRight , yBotRight , zManual ! zBotRight
+k , KP_lid(3) , xTopRight , yTopRight , zManual ! zTopRight
+k , KP_lid(4) , xTopLeft  , yTopLeft  , zManual ! zTopLeft
 
 asel,none
+lsel,none
 a , KP_lid(1) , KP_lid(2) , KP_lid(3) , KP_lid(4)
 
 ! Export selection components
 cm,COMPA_endcap%ARG1%,area
+cm,COMPL_endcap%ARG1%,line
+
+cmsel,s,COMPL_endcap%ARG1%
+lsel,r,loc,y,yBotLeft
+cm,COMPL_ENDCAP_bottom,line
+
+cmsel,s,COMPL_endcap%ARG1%
+lsel,r,loc,y,yTopLeft
+cm,COMPL_ENDCAP_top,line
+
+cmsel,s,COMPL_endcap%ARG1%
+lsel,r,loc,x,xBotLeft
+cm,COMPL_ENDCAP_right,line
+
+cmsel,s,COMPL_endcap%ARG1%
+lsel,r,loc,x,xBotRight
+cm,COMPL_ENDCAP_left,line
 
 ! Clean up
 csrestore

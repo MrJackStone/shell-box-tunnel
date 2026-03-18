@@ -46,7 +46,7 @@ SubstepCount = 10
 MinimumSoilCover = 0.01
 
 ! Cross-sectional area of rigid struts
-REAL_rigidStrut_A=1
+REAL_rigidStrut_A = 29e-4
 
 POST_convolutionRadius = 0.50
 

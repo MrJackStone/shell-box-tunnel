@@ -1,0 +1,27 @@
+
+csys,0
+nsel,s,loc,x,0
+esel,s,ename,,181
+nsle,r
+n1447 = nnear(1447)
+n4789 = nnear(4789)
+n4895 = nnear(4895)
+
+nsel , none
+nsel , a    , node ,  , n1447
+nsel , a    , node ,  , n4789
+nsel , a    , node ,  , n4895
+nsel , a    , node ,  , 1447
+nsel , a    , node ,  , 4789
+nsel , a    , node ,  , 4895
+
+type,TYPE_link180
+mat,MAT_conc
+real,REAL_rigidStrut
+e , 1447 , n1447
+e , 4789 , n4789
+e , 4895 , n4895
+
+/eof
+
+/input,'D:\Tools\Code\shell-box-tunnel\_estroncas',mac

@@ -26,19 +26,22 @@ TUNNEL_V2_ATTR
 !!                                                                                                !!
 TUNNEL_V2_SM
 
-
+cmsel,s,COMPA_endcaps
+cm,COMPA_endcap2,area
 !!                                                                                                !!
 !! 4.  Finite element model                                                                       !!
 !!                                                                                                !!
 TUNNEL_V2_FEM
 
-
+/input,'D:\Tools\Code\shell-box-tunnel\_estroncas',mac
 !!                                                                                                !!
 !! 5.  Load steps                                                                                 !!
 !!                                                                                                !!
 TUNNEL_V2_LSTEP
 
-
+/prep7
+/input,'D:\Tools\Code\shell-box-tunnel\_ekill',mac
+/solu
 !!                                                                                                !!
 !! 6.  Solution                                                                                   !!
 !!                                                                                                !!
