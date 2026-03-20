@@ -29,8 +29,7 @@ allsel
 /pnum,defa
 /color,defa
 annothkleg,1,,,'cm'
-asel,all
-esla
+esel,s,ename,,181
 nsle
 /view,1,1,1,1
 /auto,1
